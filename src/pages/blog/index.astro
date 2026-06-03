@@ -1,0 +1,252 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { SITE } from "../../lib/site";
+import "../../styles/blog.css";
+import { getCollection } from "astro:content";
+
+const POSTS_PER_PAGE = 9;
+
+let posts = await getCollection("blog");
+
+posts = posts.sort(
+  (a, b) => new Date(b.data.date) - new Date(a.data.date)
+);
+
+// pagination
+const currentPage =
+  Number(Astro.url.searchParams.get("page")) || 1;
+
+const totalPages =
+  Math.ceil(posts.length / POSTS_PER_PAGE);
+
+const start =
+  (currentPage - 1) * POSTS_PER_PAGE;
+
+const end =
+  start + POSTS_PER_PAGE;
+
+const paginatedPosts =
+  posts.slice(start, end);
+---
+
+<MainLayout
+  title={`Blog | ${SITE.title}`}
+  description={SITE.description}
+  canonical={SITE.url("/blog")}
+>
+
+<section class="blog-page">
+
+  <div class="container">
+
+    <div class="page-wrap">
+
+      <div class="page-hero center small">
+
+        <h1>
+          Blog
+        </h1>
+
+        <p>
+          Explore modern articles, AI tools,
+          Cloudflare Workers tutorials,
+          Astro guides, and web development insights.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- POSTS -->
+    <div class="blog-grid">
+
+      {paginatedPosts.map((post) => (
+
+        <article class="blog-card">
+
+          <a
+            href={`/blog/${post.slug}/`}
+            class="blog-card-link"
+          >
+
+            <div class="blog-card-image">
+
+              <img
+                src={SITE.url(`/api/og/${post.slug}.svg`)}
+                alt={post.data.title}
+                loading="lazy"
+                width="1200"
+                height="630"
+              />
+
+            </div>
+
+            <div class="blog-card-content">
+
+              <div class="blog-card-meta">
+                {post.data.date}
+              </div>
+
+              <h2>
+                {post.data.title}
+              </h2>
+
+              {post.data.description && (
+                <p>
+                  {post.data.description}
+                </p>
+              )}
+
+              <span class="readmore">
+                Read Article →
+              </span>
+
+            </div>
+
+          </a>
+
+        </article>
+
+      ))}
+
+    </div>
+
+    <!-- PAGINATION -->
+    {totalPages > 1 && (
+
+      <div class="pagination">
+
+        {/* PREV */}
+        {currentPage > 1 && (
+          <a
+            href={
+              currentPage === 2
+                ? "/blog"
+                : `/blog?page=${currentPage - 1}`
+            }
+            class="pagination-btn"
+          >
+            ← Previous
+          </a>
+        )}
+
+        {/* NUMBERS */}
+        <div class="pagination-pages">
+
+          {Array.from(
+            { length: totalPages },
+            (_, i) => i + 1
+          ).map((page) => (
+
+            <a
+              href={
+                page === 1
+                  ? "/blog"
+                  : `/blog?page=${page}`
+              }
+              class:list={[
+                "pagination-number",
+                page === currentPage && "active"
+              ]}
+            >
+              {page}
+            </a>
+
+          ))}
+
+        </div>
+
+        {/* NEXT */}
+        {currentPage < totalPages && (
+          <a
+            href={`/blog?page=${currentPage + 1}`}
+            class="pagination-btn"
+          >
+            Next →
+          </a>
+        )}
+
+      </div>
+
+    )}
+
+  </div>
+
+</section>
+
+<style>
+.pagination{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+
+  margin-top:60px;
+
+  flex-wrap:wrap;
+}
+
+.pagination-pages{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  flex-wrap:wrap;
+}
+
+.pagination-btn,
+.pagination-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-width:44px;
+  height:44px;
+
+  padding:0 16px;
+
+  border:1px solid var(--border);
+  border-radius:14px;
+
+  background:var(--card);
+
+  color:var(--text-soft);
+  text-decoration:none;
+
+  backdrop-filter:var(--blur);
+
+  transition:var(--transition);
+}
+
+.pagination-btn:hover,
+.pagination-number:hover{
+  transform:translateY(-2px);
+
+  border-color:var(--border-strong);
+
+  color:var(--text);
+}
+
+.pagination-number.active{
+  background:var(--primary);
+
+  color:#fff;
+
+  border:none;
+}
+
+@media(max-width:640px){
+
+  .pagination{
+    gap:10px;
+  }
+
+  .pagination-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+}
+</style>
+
+</MainLayout>

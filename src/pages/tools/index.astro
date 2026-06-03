@@ -1,0 +1,126 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { SITE } from "../../lib/site";
+
+const tools = await getCollection("tools");
+---
+
+<MainLayout
+  title={`Tools | ${SITE.title}`}
+  description="Kumpulan tools yang tersedia."
+>
+  <section class="tools-page">
+    <div class="container">
+      <div class="page-header">
+        <h1>Tools</h1>
+        <p>Kumpulan AI tools dan utility yang tersedia.</p>
+      </div>
+
+      <div class="tools-grid">
+        {tools.map((tool) => (
+          <article class="tool-card">
+            <h2>
+              <a href={`/tools/${tool.slug}/`}>
+                {tool.data.title}
+              </a>
+            </h2>
+
+            <p>{tool.data.description}</p>
+
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="tool-button"
+            >
+              Buka Tool →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .tools-page {
+    padding: 4rem 1rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header p {
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tool-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .tool-card h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+  }
+
+  .tool-card h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tool-card h2 a:hover {
+    color: var(--accent-color, #2563eb);
+  }
+
+  .tool-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .tool-button {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .tools-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

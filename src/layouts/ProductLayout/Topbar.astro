@@ -1,0 +1,150 @@
+---
+// src/layouts/ProductLayout/Topbar.astro
+---
+
+<div class="topbar">
+
+  <div class="topbar-container">
+
+    <div class="topbar-left">
+
+      <span>
+        🚀 Free Shipping Worldwide
+      </span>
+
+      <span>
+        ⚡ Astro Ultra Fast Ecommerce
+      </span>
+
+    </div>
+
+    <div class="topbar-right">
+
+      <a href="#">
+        Help
+      </a>
+
+      <a href="#">
+        Track Order
+      </a>
+
+      <a href="#">
+        USD $
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+.topbar{
+background:
+linear-gradient(
+90deg,
+#5865f2,
+#7c3aed
+);
+
+color:#fff;
+
+font-size:14px;
+
+position:relative;
+
+z-index:1000;
+}
+
+.topbar-container{
+max-width:1440px;
+
+margin:auto;
+
+padding:10px 20px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:20px;
+}
+
+/* =========================
+   LEFT
+========================= */
+
+.topbar-left{
+display:flex;
+
+align-items:center;
+
+gap:24px;
+
+font-weight:600;
+
+flex-wrap:wrap;
+}
+
+/* =========================
+   RIGHT
+========================= */
+
+.topbar-right{
+display:flex;
+
+align-items:center;
+
+gap:18px;
+}
+
+.topbar-right a{
+color:#fff;
+
+opacity:.9;
+
+transition:.2s;
+}
+
+.topbar-right a:hover{
+opacity:1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+.topbar{
+font-size:12px;
+}
+
+.topbar-container{
+padding:10px 14px;
+
+flex-direction:column;
+
+justify-content:center;
+
+text-align:center;
+
+gap:8px;
+}
+
+.topbar-left{
+justify-content:center;
+
+gap:12px;
+}
+
+.topbar-right{
+justify-content:center;
+
+gap:12px;
+}
+
+}
+</style>

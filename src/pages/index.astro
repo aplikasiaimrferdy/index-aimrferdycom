@@ -1,0 +1,521 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { SITE } from '../lib/site';
+import "../styles/blog.css";
+import { getCollection } from 'astro:content';
+
+let posts = await getCollection('blog');
+
+const latestPosts = [...posts]
+  .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+  .slice(0, 3);
+
+const popularPosts = [...posts]
+  .filter((post) => post.data.popular)
+  .slice(0, 3);
+
+const pageTitle =
+  'AI Mr Ferdy - AI Tools, SEO Systems & Digital Platform';
+
+const pageDescription =
+  'AI Mr Ferdy membangun aplikasi AI, SEO systems, automation tools dan platform digital modern untuk bisnis, creator dan internet ecosystem.';
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={SITE.url()}
+>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+
+      <div class="hero-grid">
+
+        <div class="hero-left">
+
+          <div class="hero-tag">
+            AI • SEO • AUTOMATION
+          </div>
+
+          <h1>
+            AI Mr Ferdy
+          </h1>
+
+          <p>
+            AI developer Indonesia yang membangun aplikasi AI,
+            SEO systems, automation tools dan platform digital modern
+            untuk bisnis, creator dan internet ecosystem modern.
+          </p>
+
+          <div class="hero-btns">
+
+            <a
+              href="https://aimrdennis.com"
+              class="btn btn-primary"
+            >
+              Official Website
+            </a>
+
+            <a
+              href="https://news.aimrdennis.com"
+              class="btn btn-secondary"
+            >
+              Latest Articles
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="hero-right">
+
+          <div class="hero-card">
+
+            <div class="hero-badge">
+              AI SYSTEMS
+            </div>
+
+            <h3>
+              Modern AI Solutions
+            </h3>
+
+            <p>
+              AI tools, smart automation dan digital workflow modern
+              untuk produktivitas dan bisnis online.
+            </p>
+
+          </div>
+
+          <div class="hero-card">
+
+            <div class="hero-badge">
+              SEO PERFORMANCE
+            </div>
+
+            <h3>
+              Fast & Optimized
+            </h3>
+
+            <p>
+              Website ultra cepat, mobile first dan optimized
+              untuk modern search engine.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIN ECOSYSTEM -->
+  <section class="section">
+    <div class="container">
+
+      <h2 class="section-title">
+        AI Tools & Digital Ecosystem
+      </h2>
+
+      <p class="section-desc">
+        Platform, tools dan website utama dalam ecosystem AI Mr Ferdy.
+      </p>
+
+      <div class="pricing">
+
+        <div class="price-card">
+
+          <h3>
+            Official Website
+          </h3>
+
+          <p>
+            Website utama AI Mr Ferdy untuk platform digital modern.
+          </p>
+
+          <a
+            href="https://aimrdennis.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            Visit Website
+          </a>
+
+        </div>
+
+        <div class="price-card">
+
+          <h3>
+            News & Articles
+          </h3>
+
+          <p>
+            Artikel AI, SEO, automation dan teknologi modern terbaru.
+          </p>
+
+          <a
+            href="https://news.aimrdennis.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            Open News
+          </a>
+
+        </div>
+
+        <div class="price-card">
+
+          <h3>
+            AI Tools
+          </h3>
+
+          <p>
+            Tools digital modern, utility online dan automation systems.
+          </p>
+
+          <a
+            href="https://tools.aimrdennis.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            Open Tools
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section">
+    <div class="container">
+
+      <h2 class="section-title">
+        AI & Digital Services
+      </h2>
+
+      <p class="section-desc">
+        Fokus pada AI systems, SEO technology dan digital platform modern.
+      </p>
+
+      <div class="features">
+
+        <div class="feature-card">
+
+          <h3>
+            AI Projects
+          </h3>
+
+          <p>
+            AI applications, smart systems dan automation workflow modern.
+          </p>
+
+        </div>
+
+        <div class="feature-card">
+
+          <h3>
+            SEO Systems
+          </h3>
+
+          <p>
+            Website optimized, scalable dan search engine friendly.
+          </p>
+
+        </div>
+
+        <div class="feature-card">
+
+          <h3>
+            Modern UI
+          </h3>
+
+          <p>
+            Clean interface, ultra fast performance dan mobile first design.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LATEST ARTICLES -->
+<!-- LATEST ARTICLES -->
+<section class="section">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Latest AI Articles
+    </h2>
+
+    <p class="section-desc">
+      Artikel terbaru tentang AI, SEO dan teknologi modern.
+    </p>
+
+    <div class="blog-grid">
+
+      {
+        latestPosts.map((post) => (
+
+          <article class="blog-card">
+
+            <a
+              href={`/blog/${post.slug}/`}
+              class="blog-card-link"
+            >
+
+              <div class="blog-card-image">
+
+                <img
+                  src={SITE.url(`/api/og/${post.slug}.svg`)}
+                  alt={post.data.title}
+                  loading="lazy"
+                  width="1200"
+                  height="630"
+                />
+
+              </div>
+
+              <div class="blog-card-content">
+
+                <div class="blog-card-meta">
+                  {post.data.date}
+                </div>
+
+                <h2>
+                  {post.data.title}
+                </h2>
+
+                {post.data.description && (
+                  <p>
+                    {post.data.description}
+                  </p>
+                )}
+
+                <span class="readmore">
+                  Read Article →
+                </span>
+
+              </div>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- POPULAR GUIDES -->
+<section class="section">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Popular SEO & AI Guides
+    </h2>
+
+    <p class="section-desc">
+      Artikel populer dalam ecosystem AI Mr Ferdy.
+    </p>
+
+    <div class="blog-grid">
+
+      {
+        popularPosts.map((post) => (
+
+          <article class="blog-card">
+
+            <a
+              href={`/blog/${post.slug}/`}
+              class="blog-card-link"
+            >
+
+              <div class="blog-card-image">
+
+                <img
+                  src={SITE.url(`/api/og/${post.slug}.svg`)}
+                  alt={post.data.title}
+                  loading="lazy"
+                  width="1200"
+                  height="630"
+                />
+
+              </div>
+
+              <div class="blog-card-content">
+
+                <div class="blog-card-meta">
+                  {post.data.date}
+                </div>
+
+                <h2>
+                  {post.data.title}
+                </h2>
+
+                {post.data.description && (
+                  <p>
+                    {post.data.description}
+                  </p>
+                )}
+
+                <span class="readmore">
+                  Read Guide →
+                </span>
+
+              </div>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+.price-image{
+  display:block;
+
+  overflow:hidden;
+
+  margin-bottom:18px;
+
+  border-radius:22px;
+
+  border:1px solid var(--border);
+
+  background:var(--card);
+}
+
+.price-image img{
+  width:100%;
+  height:auto;
+
+  display:block;
+
+  transition:transform .35s ease;
+}
+
+.price-card:hover .price-image img{
+  transform:scale(1.03);
+}
+</style>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+
+      <h2 class="section-title">
+        FAQ
+      </h2>
+
+      <p class="section-desc">
+        Pertanyaan umum tentang AI Mr Ferdy.
+      </p>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+          <span>
+            Apa itu AI Mr Ferdy?
+          </span>
+
+          <div class="faq-icon"></div>
+        </div>
+
+        <div class="faq-answer">
+          <p>
+            AI Mr Ferdy adalah platform digital yang fokus pada
+            AI systems, SEO technology, automation dan website modern.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+          <span>
+            Apakah website mobile friendly?
+          </span>
+
+          <div class="faq-icon"></div>
+        </div>
+
+        <div class="faq-answer">
+          <p>
+            Ya, seluruh platform dibangun mobile first dan optimized
+            untuk performa cepat.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+          <span>
+            Apakah tersedia AI tools online?
+          </span>
+
+          <div class="faq-icon"></div>
+        </div>
+
+        <div class="faq-answer">
+          <p>
+            Ya, tersedia berbagai AI tools, utility online dan
+            automation systems modern.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+
+      <h2>
+        Explore AI Tools & Modern SEO Systems
+      </h2>
+
+      <p>
+        AI, SEO, automation dan digital ecosystem modern
+        dalam satu platform.
+      </p>
+
+      <a
+        href="https://aimrdennis.com"
+        class="btn btn-primary"
+      >
+        Explore Now
+      </a>
+
+    </div>
+  </section>
+
+</MainLayout>

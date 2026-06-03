@@ -1,0 +1,103 @@
+---
+import { SITE } from "../../lib/site";
+import { getFooterData } from "../../lib/footer-data";
+
+const {
+  latestPosts,
+  popularTools,
+  featuredProducts,
+} = await getFooterData();
+---
+
+<footer class="footer">
+
+  <div class="footer-grid">
+
+    <div>
+      <h3>{SITE.name}</h3>
+
+      <p>
+        Modern AI marketplace, tools, dan produk digital.
+      </p>
+    </div>
+
+    <div>
+      <h4>Latest Posts</h4>
+
+      {latestPosts.map((post) => (
+        <a href={`/blog/${post.slug}/`}>
+          {post.data.title}
+        </a>
+      ))}
+    </div>
+
+    <div>
+      <h4>Popular Tools</h4>
+
+      {popularTools.map((tool) => (
+        <a href={`/tools/${tool.slug}/`}>
+          {tool.data.title}
+        </a>
+      ))}
+    </div>
+
+    <div>
+      <h4>Featured Products</h4>
+
+      {featuredProducts.map((product) => (
+        <a href={`/product/${product.slug}/`}>
+          {product.data.title}
+        </a>
+      ))}
+    </div>
+
+  </div>
+
+</footer>
+
+<style>
+.footer{
+  margin-top:80px;
+  background:#0f172a;
+  color:#fff;
+  padding:70px 20px;
+}
+
+.footer-grid{
+  max-width:1440px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:
+    1.5fr
+    1fr
+    1fr
+    1fr;
+  gap:40px;
+}
+
+.footer h3,
+.footer h4{
+  margin-bottom:16px;
+}
+
+.footer a{
+  display:block;
+  color:#cbd5e1;
+  text-decoration:none;
+  margin-bottom:10px;
+}
+
+.footer a:hover{
+  color:#fff;
+}
+
+.footer p{
+  color:#94a3b8;
+}
+
+@media (max-width: 768px){
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>

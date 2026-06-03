@@ -1,0 +1,106 @@
+---
+import Header from './ProductLayout/Header.astro';
+import Footer from './ProductLayout/Footer.astro';
+import Scripts from './ProductLayout/Scripts.astro';
+import Topbar from './ProductLayout/Topbar.astro';
+import Categories from './ProductLayout/Categories.astro';
+
+import SeoHead from '../components/SeoHead.astro';
+
+const {
+  title = 'AI PRINT',
+  description = 'Modern marketplace',
+  slug = '',
+  product = {}
+} = Astro.props;
+---
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<SeoHead
+  title={title}
+  description={description}
+  slug={slug}
+/>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    image: product.image,
+    description: product.description,
+    category: product.category,
+    offers: {
+      "@type": "Offer",
+      price: product.price?.replace("$", ""),
+      priceCurrency: "USD"
+    }
+  })}
+/>
+</head>
+
+<body>
+
+<Topbar />
+
+<Header />
+
+<Categories />
+
+<main class="container">
+  <slot />
+</main>
+
+<Footer />
+
+<Scripts />
+
+</body>
+</html>
+
+<style is:global>
+:root{
+--bg:#f4f6fb;
+--card:#fff;
+--text:#111827;
+--muted:#6b7280;
+--primary:#5865f2;
+--dark:#0f172a;
+--border:#e5e7eb;
+--shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:var(--bg);
+font-family:Inter,sans-serif;
+color:var(--text);
+}
+
+.container{
+max-width:1440px;
+margin:auto;
+padding:40px 20px;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+img{
+max-width:100%;
+display:block;
+}
+</style>

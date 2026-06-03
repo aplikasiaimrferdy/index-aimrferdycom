@@ -1,0 +1,77 @@
+---
+import {
+  slugify
+} from "../lib/utils";
+
+const {
+  html = ""
+} = Astro.props;
+
+const regex =
+  /^(##|###|####)\s+(.*)$/gm;
+
+const items = [];
+
+let match;
+
+while ((match = regex.exec(html)) !== null) {
+
+  const level =
+    match[1].length;
+
+  const text =
+    match[2].trim();
+
+  items.push({
+
+    level,
+
+    text,
+
+    id:
+      slugify(text)
+
+  });
+
+}
+---
+
+{items.length > 0 && (
+
+<details
+  class="toc"
+  open>
+
+  <summary class="toc-title">
+
+    <span>
+      📑 Daftar Isi
+    </span>
+
+    <span class="toc-toggle">
+    </span>
+
+  </summary>
+
+  <ul>
+
+    {items.map((item) => (
+
+      <li
+        class={`toc-level-${item.level}`}>
+
+        <a href={`#${item.id}`}>
+
+          {item.text}
+
+        </a>
+
+      </li>
+
+    ))}
+
+  </ul>
+
+</details>
+
+)}

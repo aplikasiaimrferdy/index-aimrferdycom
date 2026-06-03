@@ -1,0 +1,248 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout
+  title="Disclaimer - Ai Mr Ferdy"
+  description="Disclaimer dan ketentuan informasi pada website Ai Mr Ferdy."
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="badge">Legal Information</span>
+
+      <h1>Disclaimer Ai Mr Ferdy</h1>
+
+      <p>
+        Seluruh informasi yang tersedia di website Ai Mr Ferdy
+        disediakan untuk tujuan informasi umum, edukasi,
+        dan kebutuhan digital growth.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="content-section">
+    <div class="container">
+      <div class="content-card">
+        <div class="content-block">
+          <h2>Informasi Umum</h2>
+
+          <p>
+            Semua konten yang dipublikasikan pada website ini dibuat
+            dengan itikad baik untuk memberikan informasi seputar
+            SEO, digital marketing, website optimization,
+            dan strategi pertumbuhan digital.
+          </p>
+
+          <p>
+            Ai Mr Ferdy tidak memberikan jaminan atas
+            kelengkapan, keakuratan, reliabilitas,
+            atau ketersediaan informasi yang terdapat pada website ini.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h2>Bukan Jaminan Hasil</h2>
+
+          <p>
+            Strategi SEO dan digital growth memiliki banyak faktor
+            yang dapat mempengaruhi hasil akhir, termasuk:
+          </p>
+
+          <ul>
+            <li>Persaingan keyword</li>
+            <li>Perubahan algoritma search engine</li>
+            <li>Kondisi website</li>
+            <li>Kualitas konten</li>
+            <li>Authority domain</li>
+          </ul>
+
+          <p>
+            Oleh karena itu, Ai Mr Ferdy tidak memberikan
+            jaminan ranking tertentu di Google
+            ataupun hasil instan dalam periode waktu tertentu.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h2>Tanggung Jawab Penggunaan</h2>
+
+          <p>
+            Segala tindakan yang Anda lakukan berdasarkan informasi
+            dari website ini sepenuhnya merupakan tanggung jawab pengguna.
+          </p>
+
+          <p>
+            Ai Mr Ferdy tidak bertanggung jawab atas kerugian,
+            kehilangan data, atau dampak bisnis
+            yang mungkin terjadi akibat penggunaan informasi
+            dari website ini.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h2>External Link</h2>
+
+          <p>
+            Website ini dapat berisi tautan menuju website pihak ketiga
+            untuk referensi tambahan atau kebutuhan informasi tertentu.
+          </p>
+
+          <p>
+            Kami tidak memiliki kontrol terhadap isi,
+            kebijakan, atau perubahan pada website eksternal tersebut.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h2>Perubahan Disclaimer</h2>
+
+          <p>
+            Ai Mr Ferdy berhak untuk mengubah,
+            memperbarui, atau memodifikasi isi disclaimer ini
+            kapan saja tanpa pemberitahuan sebelumnya.
+          </p>
+
+          <p>
+            Pengguna disarankan untuk memeriksa halaman ini
+            secara berkala agar tetap mengetahui perubahan terbaru.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h2>Kontak</h2>
+
+          <p>
+            Jika Anda memiliki pertanyaan terkait disclaimer ini,
+            silakan hubungi Ai Mr Ferdy melalui halaman contact
+            atau email resmi kami.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  :global(:root) {
+    --bg: #0f172a;
+    --card: #111827;
+    --soft: #1e293b;
+    --border: rgba(255,255,255,.08);
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --primary: #3b82f6;
+    --radius: 24px;
+    --container: 920px;
+  }
+
+  section {
+    padding: 90px 20px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin: auto;
+  }
+
+  .hero {
+    padding-top: 120px;
+    padding-bottom: 70px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 760px;
+  }
+
+  .badge {
+    display: inline-flex;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(59,130,246,.12);
+    border: 1px solid rgba(59,130,246,.25);
+    color: #93c5fd;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 7vw, 68px);
+    line-height: 1.1;
+    margin: 24px 0;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  .content-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    padding: 50px;
+  }
+
+  .content-block + .content-block {
+    margin-top: 50px;
+    padding-top: 50px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+
+  .content-block h2 {
+    font-size: 30px;
+    margin-bottom: 18px;
+    line-height: 1.2;
+  }
+
+  .content-block p {
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 18px;
+    font-size: 16px;
+  }
+
+  ul {
+    margin: 20px 0;
+    padding-left: 20px;
+    color: var(--muted);
+  }
+
+  li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    section {
+      padding: 70px 20px;
+    }
+
+    .hero {
+      padding-top: 90px;
+      padding-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+    }
+
+    .content-card {
+      padding: 30px 24px;
+      border-radius: 24px;
+    }
+
+    .content-block + .content-block {
+      margin-top: 40px;
+      padding-top: 40px;
+    }
+
+    .content-block h2 {
+      font-size: 24px;
+    }
+  }
+</style>

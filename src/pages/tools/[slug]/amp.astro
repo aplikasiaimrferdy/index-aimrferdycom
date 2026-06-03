@@ -1,0 +1,115 @@
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const tools = await getCollection("tools");
+
+  return tools.map((tool) => ({
+    params: {
+      slug: tool.slug,
+    },
+    props: {
+      tool,
+    },
+  }));
+}
+
+const { tool } = Astro.props;
+
+const canonicalUrl = `/tools/${tool.slug}/`;
+---
+
+<!doctype html>
+<html amp lang="id">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>{tool.data.title}</title>
+
+    <meta
+      name="description"
+      content={tool.data.description}
+    />
+
+    <link
+      rel="canonical"
+      href={canonicalUrl}
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1,initial-scale=1"
+    />
+
+    <script
+      async
+      src="https://cdn.ampproject.org/v0.js"
+    ></script>
+
+    <style amp-boilerplate>
+      body {
+        visibility: hidden;
+      }
+    </style>
+
+    <noscript>
+      <style amp-boilerplate>
+        body {
+          visibility: visible;
+        }
+      </style>
+    </noscript>
+
+    <style amp-custom>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 24px;
+        line-height: 1.7;
+        color: #222;
+      }
+
+      .card {
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 24px;
+        margin-top: 40px;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+      }
+
+      p {
+        color: #555;
+      }
+
+      .button {
+        display: inline-block;
+        margin-top: 24px;
+        padding: 12px 24px;
+        background: #2563eb;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <h1>{tool.data.title}</h1>
+
+      <p>{tool.data.description}</p>
+
+      <a
+        href={`/tools/${tool.slug}/`}
+        class="button"
+      >
+        Gunakan Tool
+      </a>
+    </div>
+  </body>
+</html>

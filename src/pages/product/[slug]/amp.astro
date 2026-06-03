@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths(){
+
+  const products =
+    await getCollection('product');
+
+  return products.map(product => ({
+    params:{
+      slug:product.slug
+    },
+
+    props:{
+      product
+    }
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<!doctype html>
+
+<html amp lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+
+<title>
+  {product.data.title}
+</title>
+
+<link
+  rel="canonical"
+  href={`/product/${product.slug}`}
+/>
+
+<meta
+  name="viewport"
+  content="width=device-width,minimum-scale=1,initial-scale=1"
+/>
+
+<script
+  async
+  src="https://cdn.ampproject.org/v0.js"
+></script>
+
+<style amp-boilerplate>
+body{
+visibility:hidden
+}
+</style>
+
+<noscript>
+<style amp-boilerplate>
+body{
+visibility:visible
+}
+</style>
+</noscript>
+
+<style amp-custom>
+
+body{
+font-family:Arial,sans-serif;
+background:#fff;
+margin:0;
+padding:20px;
+color:#111;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+font-size:34px;
+line-height:1.2;
+margin-bottom:20px;
+}
+
+.price{
+font-size:40px;
+font-weight:900;
+margin:20px 0;
+}
+
+.desc{
+line-height:1.8;
+color:#555;
+}
+
+.btn{
+display:block;
+margin-top:30px;
+background:#111827;
+color:#fff;
+padding:18px;
+border-radius:14px;
+text-align:center;
+font-weight:700;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>
+    {product.data.title}
+  </h1>
+
+  <amp-img
+    src={product.data.image}
+    width="800"
+    height="800"
+    layout="responsive"
+    alt={product.data.title}
+  >
+  </amp-img>
+
+  <div class="price">
+    {product.data.price}
+  </div>
+
+  <div class="desc">
+    {product.data.description}
+  </div>
+
+  <a
+    href={`/product/${product.slug}`}
+    class="btn"
+  >
+    View Full Product
+  </a>
+
+</div>
+
+</body>
+</html>
