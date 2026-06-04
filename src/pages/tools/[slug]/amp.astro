@@ -30,28 +30,17 @@ const canonicalUrl = `/tools/${tool.slug}/`;
   name="viewport"
   content="width=device-width,minimum-scale=1,initial-scale=1"
 />
+    <title>{tool.data.title}</title>
 
-<title>{title}</title>
+    <meta
+      name="description"
+      content={tool.data.description}
+    />
 
-<meta
-  name="description"
-  content={description}
-/>
-
-<meta
-  name="robots"
-  content="index,follow"
-/>
-
-<meta
-  name="robots"
-  content="noarchive"
-/>
-
-<link
-  rel="canonical"
-  href={canonical}
-/>
+    <link
+      rel="canonical"
+      href={canonicalUrl}
+    />
 
 <link
   rel="icon"
@@ -59,35 +48,6 @@ const canonicalUrl = `/tools/${tool.slug}/`;
   href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgCqfcwPP6IfdweZeUxoU20EXaj_0GnIqT36H5kLA_45n1Rsoqxc6YV3W8_jwY994wb4DEnMF0dTVXCODVdZVY-DXnsYz_-Ozc2yCfcPUXEg14Jw26OE99bZ487hqm0gHluX03L2lVBkdrzcZf52NJXrLJ7xP_o1-WgzV1ljL14V8c3NTRmJ77t3BSZlM8L/s1600/fav.png"
 />
 
-<!-- OG -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={imageUrl} />
-<meta property="og:image:alt" content={SITE.name} />
-<meta property="og:url" content={canonical} />
-<meta property="og:site_name" content={SITE.name} />
-
-<!-- Twitter -->
-<meta
-  name="twitter:card"
-  content="summary_large_image"
-/>
-
-<meta
-  name="twitter:title"
-  content={title}
-/>
-
-<meta
-  name="twitter:description"
-  content={description}
-/>
-
-<meta
-  name="twitter:image"
-  content={imageUrl}
-/>
 
 <link
   rel="preload"
