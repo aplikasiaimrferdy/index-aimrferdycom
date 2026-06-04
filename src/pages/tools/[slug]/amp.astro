@@ -19,30 +19,22 @@ const { tool } = Astro.props;
 const canonicalUrl = `/tools/${tool.slug}/`;
 ---
 <!doctype html>
-<html ⚡ lang="id">
+<html amp lang="id">
 <head>
 <meta charset="utf-8">
 
-<title>{tool.data.title} - AI Mr Ferdy</title>
+<title>{tool.data.title}</title>
 
-<meta
-  name="description"
-  content={tool.data.description}
-/>
+<link rel="canonical" href={canonicalUrl}>
 
 <meta
   name="viewport"
-  content="width=device-width,minimum-scale=1,initial-scale=1"
-/>
+  content="width=device-width,minimum-scale=1,initial-scale=1">
 
-<link
-  rel="canonical"
-  href={canonicalUrl}
-/>
-
-<meta name="robots" content="index,follow,max-image-preview:large">
-
-<script async src="https://cdn.ampproject.org/v0.js"></script>
+<script
+  async
+  src="https://cdn.ampproject.org/v0.js">
+</script>
 
 <style amp-boilerplate>
 body{
@@ -51,191 +43,71 @@ body{
   -ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
   animation:-amp-start 8s steps(1,end) 0s 1 normal both
 }
-@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
-@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+@-webkit-keyframes -amp-start{
+  from{visibility:hidden}
+  to{visibility:visible}
+}
+@keyframes -amp-start{
+  from{visibility:hidden}
+  to{visibility:visible}
+}
 </style>
 
 <noscript>
 <style amp-boilerplate>
 body{
   -webkit-animation:none;
-  -moz-animation:none;
-  -ms-animation:none;
   animation:none
 }
 </style>
 </noscript>
 
 <style amp-custom>
-:root{
-  --primary:#2563eb;
-  --text:#111827;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --bg:#f8fafc;
-}
-
-*{
-  box-sizing:border-box;
-}
-
 body{
+  font-family:Arial,sans-serif;
+  background:#f8fafc;
   margin:0;
-  font-family:
-    Inter,
-    Arial,
-    sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.7;
-}
-
-.container{
-  max-width:860px;
-  margin:auto;
   padding:20px;
 }
 
-.hero{
+.card{
+  max-width:800px;
+  margin:auto;
   background:#fff;
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:32px;
-  margin-top:30px;
-  box-shadow:
-    0 4px 20px rgba(0,0,0,.04);
-}
-
-.badge{
-  display:inline-block;
-  background:#dbeafe;
-  color:#1d4ed8;
-  font-size:13px;
-  font-weight:600;
-  padding:6px 12px;
-  border-radius:999px;
-  margin-bottom:16px;
+  border:1px solid #e5e7eb;
+  border-radius:20px;
+  padding:30px;
 }
 
 h1{
-  margin:0 0 14px;
-  font-size:32px;
-  line-height:1.25;
-}
-
-.desc{
-  color:var(--muted);
-  font-size:17px;
-  margin-bottom:24px;
+  margin-top:0;
 }
 
 .button{
   display:inline-block;
-  background:var(--primary);
+  padding:12px 20px;
+  background:#2563eb;
   color:#fff;
   text-decoration:none;
-  font-weight:700;
-  padding:14px 24px;
-  border-radius:12px;
-}
-
-.button:hover{
-  opacity:.9;
-}
-
-.info{
-  margin-top:24px;
-  padding-top:24px;
-  border-top:1px solid var(--border);
-  color:var(--muted);
-  font-size:14px;
-}
-
-.related{
-  margin-top:30px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:24px;
-}
-
-.related h2{
-  margin-top:0;
-  font-size:22px;
-}
-
-.related ul{
-  padding-left:18px;
-}
-
-.related a{
-  color:var(--primary);
-  text-decoration:none;
-}
-
-.footer{
-  text-align:center;
-  margin:40px 0;
-  color:var(--muted);
-  font-size:14px;
-}
-
-@media(max-width:768px){
-
-  .hero{
-    padding:24px;
-  }
-
-  h1{
-    font-size:26px;
-  }
-
-  .button{
-    width:100%;
-    text-align:center;
-  }
-
+  border-radius:10px;
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="card">
 
-  <article class="hero">
+<h1>{tool.data.title}</h1>
 
-    <div class="badge">
-      Gratis Online Tool
-    </div>
+<p>{tool.data.description}</p>
 
-    <h1>
-      {tool.data.title}
-    </h1>
-
-    <p class="desc">
-      {tool.data.description}
-    </p>
-
-    <a
-      href={`/tools/${tool.slug}/`}
-      class="button"
-    >
-      🚀 Gunakan Tool Sekarang
-    </a>
-
-    <div class="info">
-      Tanpa instalasi • Gratis digunakan • Mobile Friendly
-    </div>
-
-  </article>
-
-  <div class="footer">
-    © 2026 AI Mr Ferdy
-  </div>
+<a
+  class="button"
+  href={`/tools/${tool.slug}/`}>
+  Gunakan Tool
+</a>
 
 </div>
 
