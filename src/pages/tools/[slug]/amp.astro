@@ -545,13 +545,37 @@ header{
   </h1>
 </div>
 
+<div class="button-group">
+<a
+  class="btn-login"
+  href="https://apk.aimrferdy.workers.dev"
+  rel="noreferrer noopener"
+  target="_blank">
+  AKTIVASI
+</a>
+
+<a
+  class="btn-daftar"
+    href={`/tools/${tool.slug}/`}>
+  Gunakan Tool
+</a>
+</div>
+
+
 <a
   class="button"
   href={`/tools/${tool.slug}/`}>
   Gunakan Tool
 </a>
-
+<details class="content">
+<summary>
+Deskripsi
+</summary>
 {tool.data.description}
+</details>
+
+</div>
+
 
 <p class="copyright">
 © 2026 TZ8008 •
