@@ -528,7 +528,7 @@ header{
 <center>
 <a href="#">
 <amp-img
-  alt={title}
+  alt={tool.data.title}
   height="100"
   width="300"
   layout="intrinsic"
@@ -541,7 +541,7 @@ header{
 
 <div class="welcome">
   <h1>
-     {title}
+     {tool.data.title}
   </h1>
 </div>
 
@@ -551,11 +551,10 @@ header{
   Gunakan Tool
 </a>
 
+{tool.data.description}
+
 <p class="copyright">
 © 2026 TZ8008 •
-<a href="#">
-{SITE.name}
-</a>
 • All Rights Reserved.
 </p>
 
