@@ -18,98 +18,226 @@ const { tool } = Astro.props;
 
 const canonicalUrl = `/tools/${tool.slug}/`;
 ---
-
 <!doctype html>
-<html amp lang="id">
-  <head>
-    <meta charset="utf-8" />
+<html ⚡ lang="id">
+<head>
+<meta charset="utf-8">
 
-    <title>{tool.data.title}</title>
+<title>{tool.data.title} - AI Mr Ferdy</title>
 
-    <meta
-      name="description"
-      content={tool.data.description}
-    />
+<meta
+  name="description"
+  content={tool.data.description}
+/>
 
-    <link
-      rel="canonical"
-      href={canonicalUrl}
-    />
+<meta
+  name="viewport"
+  content="width=device-width,minimum-scale=1,initial-scale=1"
+/>
 
-    <meta
-      name="viewport"
-      content="width=device-width,minimum-scale=1,initial-scale=1"
-    />
+<link
+  rel="canonical"
+  href={canonicalUrl}
+/>
 
-    <script
-      async
-      src="https://cdn.ampproject.org/v0.js"
-    ></script>
+<meta name="robots" content="index,follow,max-image-preview:large">
 
-    <style amp-boilerplate>
-      body {
-        visibility: hidden;
-      }
-    </style>
+<script async src="https://cdn.ampproject.org/v0.js"></script>
 
-    <noscript>
-      <style amp-boilerplate>
-        body {
-          visibility: visible;
-        }
-      </style>
-    </noscript>
+<style amp-boilerplate>
+body{
+  -webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+  -moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+  -ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+  animation:-amp-start 8s steps(1,end) 0s 1 normal both
+}
+@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+</style>
 
-    <style amp-custom>
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 24px;
-        line-height: 1.7;
-        color: #222;
-      }
+<noscript>
+<style amp-boilerplate>
+body{
+  -webkit-animation:none;
+  -moz-animation:none;
+  -ms-animation:none;
+  animation:none
+}
+</style>
+</noscript>
 
-      .card {
-        border: 1px solid #e5e7eb;
-        border-radius: 16px;
-        padding: 24px;
-        margin-top: 40px;
-      }
+<style amp-custom>
+:root{
+  --primary:#2563eb;
+  --text:#111827;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --bg:#f8fafc;
+}
 
-      h1 {
-        margin: 0 0 16px;
-      }
+*{
+  box-sizing:border-box;
+}
 
-      p {
-        color: #555;
-      }
+body{
+  margin:0;
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
 
-      .button {
-        display: inline-block;
-        margin-top: 24px;
-        padding: 12px 24px;
-        background: #2563eb;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 600;
-      }
-    </style>
-  </head>
+.container{
+  max-width:860px;
+  margin:auto;
+  padding:20px;
+}
 
-  <body>
-    <div class="card">
-      <h1>{tool.data.title}</h1>
+.hero{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:32px;
+  margin-top:30px;
+  box-shadow:
+    0 4px 20px rgba(0,0,0,.04);
+}
 
-      <p>{tool.data.description}</p>
+.badge{
+  display:inline-block;
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-size:13px;
+  font-weight:600;
+  padding:6px 12px;
+  border-radius:999px;
+  margin-bottom:16px;
+}
 
-      <a
-        href={`/tools/${tool.slug}/`}
-        class="button"
-      >
-        Gunakan Tool
-      </a>
+h1{
+  margin:0 0 14px;
+  font-size:32px;
+  line-height:1.25;
+}
+
+.desc{
+  color:var(--muted);
+  font-size:17px;
+  margin-bottom:24px;
+}
+
+.button{
+  display:inline-block;
+  background:var(--primary);
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  padding:14px 24px;
+  border-radius:12px;
+}
+
+.button:hover{
+  opacity:.9;
+}
+
+.info{
+  margin-top:24px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:14px;
+}
+
+.related{
+  margin-top:30px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+}
+
+.related h2{
+  margin-top:0;
+  font-size:22px;
+}
+
+.related ul{
+  padding-left:18px;
+}
+
+.related a{
+  color:var(--primary);
+  text-decoration:none;
+}
+
+.footer{
+  text-align:center;
+  margin:40px 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+@media(max-width:768px){
+
+  .hero{
+    padding:24px;
+  }
+
+  h1{
+    font-size:26px;
+  }
+
+  .button{
+    width:100%;
+    text-align:center;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <article class="hero">
+
+    <div class="badge">
+      Gratis Online Tool
     </div>
-  </body>
+
+    <h1>
+      {tool.data.title}
+    </h1>
+
+    <p class="desc">
+      {tool.data.description}
+    </p>
+
+    <a
+      href={`/tools/${tool.slug}/`}
+      class="button"
+    >
+      🚀 Gunakan Tool Sekarang
+    </a>
+
+    <div class="info">
+      Tanpa instalasi • Gratis digunakan • Mobile Friendly
+    </div>
+
+  </article>
+
+  <div class="footer">
+    © 2026 AI Mr Ferdy
+  </div>
+
+</div>
+
+</body>
 </html>
