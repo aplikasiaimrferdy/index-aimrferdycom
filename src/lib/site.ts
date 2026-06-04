@@ -1,9 +1,9 @@
 export const SITE = {
-  name: "Ai Mr Dennis",
+  name: "AI Mr Ferdy",
 
-  title: "Ai Mr Dennis",
+  title: "AI Mr Ferdy | Website Resmi Platform AI Indonesia",
 
-  description: "Ai Mr Dennis Website modern",
+  description: "Website resmi AI Mr Ferdy. Akses platform AI Indonesia untuk produktivitas digital, pembuatan konten, dan solusi otomatisasi modern.",
 
   author: "OpenPobo",
 
@@ -58,7 +58,7 @@ export const SITE = {
   ],
 
   social: {
-    twitter: "@openpobo",
-    github: "https://github.com/openpobo"
+    twitter: "@ai_mr_ferdy",
+    github: "https://github.com/aimrferdy"
   }
 };
