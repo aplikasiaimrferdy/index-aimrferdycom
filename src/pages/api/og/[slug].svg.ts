@@ -152,7 +152,7 @@ export async function GET({ params }) {
   font-family="Arial,sans-serif"
   font-weight="800"
 >
-LEBAHHACK ⚡ ${escapeXML(SITE.title)}
+⚡ ${escapeXML(SITE.title)}
 </text>
 
 <!-- title -->
