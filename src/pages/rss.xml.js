@@ -41,7 +41,7 @@ export async function GET() {
 
   <title><![CDATA[${SITE.title}]]></title>
 
-  <link>${SITE.url()}/</link>
+  <link>${SITE.url()}</link>
 
   <description><![CDATA[
     ${SITE.description}
