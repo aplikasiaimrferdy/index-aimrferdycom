@@ -5,7 +5,7 @@ export const SITE = {
 
   description: "Website resmi AI Mr Ferdy. Akses platform AI Indonesia untuk produktivitas digital, pembuatan konten, dan solusi otomatisasi modern.",
 
-  author: "OpenPobo",
+  author: "AI Mr Ferdy",
 
   locale: "id-ID",
 
