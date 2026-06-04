@@ -1,6 +1,6 @@
 ---
 title: "Review AI Mr Ferdy Real 2026: Pengalaman Asli, Hasil Nyata & Apakah Layak Digunakan?"
-description: "Profil AI Mr Dennis sebagai developer website, automation workflow, dan sistem digital modern di Indonesia."
+description: "AI Mr Ferdy adalah platform berbasis kecerdasan buatan yang dirancang untuk membantu berbagai kebutuhan digital seperti membuat konten, menjawab pertanyaan"
 pubDate: 2026-04-27
 updatedDate: 2026-06-04
 author: "Ai Mr Ferdy"
