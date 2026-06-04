@@ -4,7 +4,7 @@ description: "AI Mr Ferdy adalah platform berbasis kecerdasan buatan yang diranc
 pubDate: 2026-04-27
 updatedDate: 2026-06-04
 author: "Ai Mr Ferdy"
-image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhWFfArsRyLiWyAJKTTssYYkMuBfx7k3cYRlWUzAlpTXjV6Hqr8JwviqG2csp8SMb-ADl8a0Bmxt2xx8Ws4OeCfT8I82h_gfdwhMLOLGOys8gbWWHsz7P0723vLFWyxPe36VpLwLOtchkgxYr3hAgdxiniKUDW5LjZrJVBLQKimp92s9Os_9VaJ79YgDyn0/s1600/mr-dennis-1.webp"
+image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgrNSCtzEAvflHDQjGeXOrmh5B2Ugk4b7RpRTB_SUru6QaZc6rkzcuVgTTYTGjOntZRiY5hOr64lGLEuRavDQ3XXFHB9aGNJOSat_JWv9EuC_B9mxXi3o395JN5Lqyzo8yxBibZNkFmN6P0EOkM5B_DWJXEhDZSX6_0MofuiXxHQtfWCimEuXqUTWw80kB-/s600/Review%20AI%20Mr%20Ferdy%20Real%202026%20Pengalaman%20Asli,%20Hasil%20Nyata%20&amp;%20Apakah%20Layak%20Digunakan.png"
 popular: true
 ---
 
