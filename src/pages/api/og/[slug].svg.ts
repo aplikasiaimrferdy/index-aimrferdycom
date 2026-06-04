@@ -152,7 +152,7 @@ export async function GET({ params }) {
   font-family="Arial,sans-serif"
   font-weight="800"
 >
-⚡ ${escapeXML(SITE.title)}
+⚡ AI MR FERDY
 </text>
 
 <!-- title -->
