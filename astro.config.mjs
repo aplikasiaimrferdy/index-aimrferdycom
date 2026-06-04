@@ -7,7 +7,7 @@ export default defineConfig({
 
   site:
     process.env.SITE_URL ||
-    'https://web.aipro.id',
+    'https://aimrferdy.com',
 
 integrations: [
     sitemap({
