@@ -1,0 +1,211 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const tools = await getCollection("tools");
+const products = await getCollection("product");
+
+const q =
+  Astro.url.searchParams.get("q")?.toLowerCase() || "";
+
+const type =
+  Astro.url.searchParams.get("type") || "all";
+
+const results = [
+  ...posts.map(post => ({
+    type: "blog",
+    slug: post.slug,
+    title: post.data.title,
+    description: post.data.description,
+    url: `/blog/${post.slug}/`
+  })),
+
+  ...tools.map(tool => ({
+    type: "tool",
+    slug: tool.slug,
+    title: tool.data.title,
+    description: tool.data.description,
+    url: `/tools/${tool.slug}/`
+  })),
+
+  ...products.map(product => ({
+    type: "product",
+    slug: product.slug,
+    title: product.data.title,
+    description: product.data.description,
+    url: `/product/${product.slug}/`
+  }))
+].filter(item => {
+
+  const text =
+    `${item.title} ${item.description}`
+      .toLowerCase();
+
+  const matchKeyword =
+    q === "" || text.includes(q);
+
+  const matchType =
+    type === "all" ||
+    item.type === type;
+
+  return matchKeyword && matchType;
+
+});
+---
+
+<MainLayout
+  title={`Search: ${q || "All"} | AI Mr Ferdy`}
+  description="Search AI Mr Ferdy"
+>
+
+<section class="search-page">
+
+  <h1>
+    Search Results
+  </h1>
+
+  <p class="search-info">
+
+    Keyword:
+
+    <strong>
+      {q || "All"}
+    </strong>
+
+    {type !== "all" && (
+      <>
+        {" "}· Type:
+        <strong>
+          {type}
+        </strong>
+      </>
+    )}
+
+  </p>
+
+  {
+    results.length > 0 ? (
+
+      <div class="results">
+
+        {
+          results.map(item => (
+
+            <a
+              href={item.url}
+              class="result-card"
+            >
+
+              <span class="badge">
+                {item.type}
+              </span>
+
+              <h2>
+                {item.title}
+              </h2>
+
+              <p>
+                {item.description}
+              </p>
+
+            </a>
+
+          ))
+        }
+
+      </div>
+
+    ) : (
+
+      <p>
+        Tidak ada hasil ditemukan.
+      </p>
+
+    )
+  }
+
+</section>
+
+
+
+<form action="/searchresult/">
+
+  <input
+    name="q"
+    placeholder="Cari..."
+  />
+
+  <select name="type">
+
+    <option value="all">
+      Semua
+    </option>
+
+    <option value="blog">
+      Blog
+    </option>
+
+    <option value="tool">
+      Tools
+    </option>
+
+    <option value="product">
+      Product
+    </option>
+
+  </select>
+
+  <button type="submit">
+    Search
+  </button>
+
+</form>
+
+
+</MainLayout>
+
+<style>
+.search-page{
+  max-width:900px;
+  margin:80px auto;
+  padding:0 20px;
+}
+
+.search-info{
+  margin-bottom:30px;
+  opacity:.7;
+}
+
+.results{
+  display:grid;
+  gap:16px;
+}
+
+.result-card{
+  display:block;
+  padding:20px;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  text-decoration:none;
+  color:inherit;
+}
+
+.result-card:hover{
+  transform:translateY(-2px);
+}
+
+.result-card h2{
+  margin:10px 0;
+  font-size:20px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#f3f4f6;
+  font-size:12px;
+  text-transform:capitalize;
+}
+</style>
