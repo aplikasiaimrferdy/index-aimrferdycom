@@ -3,7 +3,7 @@ title: "AI Humanizer"
 description: "Humanize AI text online gratis. Ubah teks ChatGPT, Gemini, Claude, dan AI lainnya menjadi lebih natural dan human-friendly."
 icon: "🎨"
 category: "AI Tools"
-featured: true
+popular: true
 ---
 
 # AI Humanizer
