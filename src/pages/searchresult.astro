@@ -7,55 +7,70 @@ const tools = await getCollection("tools");
 const products = await getCollection("product");
 
 const q =
-  Astro.url.searchParams.get("q")?.toLowerCase() || "";
+  Astro.url.searchParams
+    .get("q")
+    ?.trim()
+    .toLowerCase() || "";
 
 const type =
   Astro.url.searchParams.get("type") || "all";
 
-const results = [
-  ...posts.map(post => ({
-    type: "blog",
-    slug: post.slug,
-    title: post.data.title,
-    description: post.data.description,
-    url: `/blog/${post.slug}/`
-  })),
+let results = [];
 
-  ...tools.map(tool => ({
-    type: "tool",
-    slug: tool.slug,
-    title: tool.data.title,
-    description: tool.data.description,
-    url: `/tools/${tool.slug}/`
-  })),
+if (q !== "") {
 
-  ...products.map(product => ({
-    type: "product",
-    slug: product.slug,
-    title: product.data.title,
-    description: product.data.description,
-    url: `/product/${product.slug}/`
-  }))
-].filter(item => {
+  results = [
 
-  const text =
-    `${item.title} ${item.description}`
-      .toLowerCase();
+    ...posts.map(post => ({
+      type: "blog",
+      slug: post.slug,
+      title: post.data.title,
+      description: post.data.description,
+      url: `/blog/${post.slug}/`
+    })),
 
-  const matchKeyword =
-    q === "" || text.includes(q);
+    ...tools.map(tool => ({
+      type: "tool",
+      slug: tool.slug,
+      title: tool.data.title,
+      description: tool.data.description,
+      url: `/tools/${tool.slug}/`
+    })),
 
-  const matchType =
-    type === "all" ||
-    item.type === type;
+    ...products.map(product => ({
+      type: "product",
+      slug: product.slug,
+      title: product.data.title,
+      description: product.data.description,
+      url: `/product/${product.slug}/`
+    }))
 
-  return matchKeyword && matchType;
+  ].filter(item => {
 
-});
+    const text =
+      `${item.title} ${item.description}`
+        .toLowerCase();
+
+    const matchKeyword =
+      text.includes(q);
+
+    const matchType =
+      type === "all" ||
+      item.type === type;
+
+    return matchKeyword && matchType;
+
+  });
+
+}
 ---
 
 <MainLayout
-  title={`Search: ${q || "All"} | AI Mr Ferdy`}
+  title={
+    q
+      ? `Search: ${q} | AI Mr Ferdy`
+      : "Search Results | AI Mr Ferdy"
+  }
   description="Search AI Mr Ferdy"
 >
 
@@ -65,27 +80,34 @@ const results = [
     Search Results
   </h1>
 
-  <p class="search-info">
+  {
+    q && (
+      <p class="search-info">
 
-    Keyword:
+        Keyword:
+        <strong>{q}</strong>
 
-    <strong>
-      {q || "All"}
-    </strong>
+        {
+          type !== "all" && (
+            <>
+              {" "}· Type:
+              <strong>{type}</strong>
+            </>
+          )
+        }
 
-    {type !== "all" && (
-      <>
-        {" "}· Type:
-        <strong>
-          {type}
-        </strong>
-      </>
-    )}
-
-  </p>
+      </p>
+    )
+  }
 
   {
-    results.length > 0 ? (
+    q === "" ? (
+
+      <p class="empty">
+        Masukkan kata kunci pencarian.
+      </p>
+
+    ) : results.length > 0 ? (
 
       <div class="results">
 
@@ -118,7 +140,7 @@ const results = [
 
     ) : (
 
-      <p>
+      <p class="empty">
         Tidak ada hasil ditemukan.
       </p>
 
@@ -128,12 +150,11 @@ const results = [
 </section>
 
 
-
 <form action="/searchresult/">
 
   <input
     name="q"
-    placeholder="Cari..."
+    placeholder="Cari artikel, tools, atau produk..."
   />
 
   <select name="type">
@@ -162,18 +183,22 @@ const results = [
 
 </form>
 
-
 </MainLayout>
 
 <style>
+
 .search-page{
   max-width:900px;
   margin:80px auto;
   padding:0 20px;
 }
 
+.search-page h1{
+  margin-bottom:20px;
+}
+
 .search-info{
-  margin-bottom:30px;
+  margin-bottom:24px;
   opacity:.7;
 }
 
@@ -189,6 +214,7 @@ const results = [
   border-radius:16px;
   text-decoration:none;
   color:inherit;
+  transition:.2s;
 }
 
 .result-card:hover{
@@ -200,12 +226,23 @@ const results = [
   font-size:20px;
 }
 
+.result-card p{
+  opacity:.75;
+}
+
 .badge{
   display:inline-block;
   padding:4px 10px;
   border-radius:999px;
   background:#f3f4f6;
   font-size:12px;
+  font-weight:600;
   text-transform:capitalize;
 }
+
+.empty{
+  opacity:.7;
+  padding:20px 0;
+}
+
 </style>
