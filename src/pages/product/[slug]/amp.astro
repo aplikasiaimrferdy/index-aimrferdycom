@@ -22,30 +22,6 @@ const canonical =
   `${Astro.site}product/${product.slug}/`;
 ---
 
----
-import { getCollection } from "astro:content";
-
-export async function getStaticPaths() {
-  const products = await getCollection("product");
-
-  return products.map((product) => ({
-    params: {
-      slug: product.slug
-    },
-    props: {
-      product
-    }
-  }));
-}
-
-const { product } = Astro.props;
-
-const { Content } = await product.render();
-
-const canonical =
-  `${Astro.site}product/${product.slug}/`;
----
-
 <!doctype html>
 <html ⚡ lang="id">
 
@@ -635,7 +611,7 @@ set:html={JSON.stringify({
   </h1>
 </div>
 
-
+{product.data.image && (
 <amp-img
   class="banner"
   height="500"
@@ -643,6 +619,7 @@ set:html={JSON.stringify({
   layout="intrinsic"
   src={product.data.image} >
 </amp-img>
+)}
 
 <div class="button-group">
 <a
@@ -697,5 +674,6 @@ BACA ARTIKEL
 </body>
 
 </html>
+
 
 </html>
