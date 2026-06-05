@@ -8,6 +8,13 @@ const products = await getCollection("product");
 ---
 
 <MainLayout title="Search - AI Mr Ferdy">
+ <Fragment slot="head">
+    <meta
+      name="robots"
+      content="noindex,follow"
+    />
+  </Fragment>
+
 
   <div class="search-page">
 
