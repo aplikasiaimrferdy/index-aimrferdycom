@@ -3,7 +3,7 @@ title: "AI Prompt Generator"
 description: "Generate prompt AI profesional untuk ChatGPT, Gemini, Claude, DeepSeek, dan AI lainnya."
 icon: "🎨"
 category: "AI Tools"
-featured: true
+popular: true
 ---
 
 # AI Prompt Generator
