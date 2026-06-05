@@ -1,4 +1,3 @@
-
 import { SITE } from "./site";
 
 export function buildSeo({
@@ -11,6 +10,6 @@ export function buildSeo({
     title: title || SITE.title,
     description: description || SITE.description,
     image: image || SITE.image,
-    canonical: canonical || SITE.url()
+    canonical
   };
 }
