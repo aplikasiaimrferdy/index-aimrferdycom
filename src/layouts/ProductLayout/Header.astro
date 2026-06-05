@@ -269,19 +269,19 @@ const input =
 
 form?.addEventListener(
   'submit',
-  e=>{
+  e => {
 
     e.preventDefault();
 
     const value =
       input.value.trim();
 
-    if(!value) return;
+    if (!value) return;
 
     window.location.href =
-      `/product/search/${
+      `/searchresult/?q=${
         encodeURIComponent(value)
-      }`;
+      }&type=product`;
 
   }
 );
