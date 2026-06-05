@@ -561,29 +561,6 @@ header{
 </style>
 
 
-<script
-type="application/ld+json"
-set:html={JSON.stringify({
-  "@context":"https://schema.org",
-  "@type":"Product",
-
-  name:product.data.title,
-
-  image:product.data.image,
-
-  description:product.data.description,
-
-  url:canonical,
-
-  category:product.data.category,
-
-  offers:{
-    "@type":"Offer",
-    price:product.data.price?.replace("$",""),
-    priceCurrency:"USD"
-  }
-})}
-/>
 </head>
 
 <body>
@@ -647,17 +624,7 @@ set:html={JSON.stringify({
 <summary>
 BACA ARTIKEL
 </summary>
-<div class="price">
-  {product.data.price}
-</div>
-
-<p>
-  {product.data.description}
-</p>
-
-<div class="content">
-  <Content />
-</div>
+<Content />
 </details>
 
 </div>
