@@ -23,32 +23,25 @@ const canonical =
 ---
 
 <!doctype html>
-<html ⚡ lang="id">
+
+<html amp lang="id">
 
 <head>
 
 <meta charset="utf-8" />
+
+<title>
+  {product.data.title} | AI PRINT
+</title>
 
 <meta
   name="viewport"
   content="width=device-width,minimum-scale=1,initial-scale=1"
 />
 
-<title>{product.data.title} | AI PRINT</title>
-
 <meta
   name="description"
   content={product.data.description}
-/>
-
-<meta
-  name="robots"
-  content="index,follow"
-/>
-
-<meta
-  name="robots"
-  content="noarchive"
 />
 
 <link
@@ -56,41 +49,7 @@ const canonical =
   href={canonical}
 />
 
-<link
-  rel="icon"
-  type="image/x-icon"
-  href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgCqfcwPP6IfdweZeUxoU20EXaj_0GnIqT36H5kLA_45n1Rsoqxc6YV3W8_jwY994wb4DEnMF0dTVXCODVdZVY-DXnsYz_-Ozc2yCfcPUXEg14Jw26OE99bZ487hqm0gHluX03L2lVBkdrzcZf52NJXrLJ7xP_o1-WgzV1ljL14V8c3NTRmJ77t3BSZlM8L/s1600/fav.png"
-/>
 
-<!-- OG -->
-<meta property="og:type" content="article" />
-<meta property="og:title" content={product.data.title} | AI PRINT />
-<meta property="og:description" content={product.data.description} />
-<meta property="og:image" content={product.data.image} />
-<meta property="og:image:alt" content={SITE.name} />
-<meta property="og:url" content={canonical} />
-<meta property="og:site_name" content={SITE.name} />
-
-<!-- Twitter -->
-<meta
-  name="twitter:card"
-  content="summary_large_image"
-/>
-
-<meta
-  name="twitter:title"
-  content={product.data.title} | AI PRINT
-/>
-
-<meta
-  name="twitter:description"
-  content={product.data.description}
-/>
-
-<meta
-  name="twitter:image"
-  content={product.data.image}
-/>
 
 <link
   rel="preload"
@@ -560,87 +519,61 @@ header{
 }
 </style>
 
+<script
+type="application/ld+json"
+set:html={JSON.stringify({
+  "@context":"https://schema.org",
+  "@type":"Product",
+
+  name:product.data.title,
+
+  image:product.data.image,
+
+  description:product.data.description,
+
+  url:canonical,
+
+  category:product.data.category,
+
+  offers:{
+    "@type":"Offer",
+    price:product.data.price?.replace("$",""),
+    priceCurrency:"USD"
+  }
+})}
+/>
 
 </head>
 
 <body>
 
-<div class="layout">
-
-<header>
-<center>
-<a href="#">
-<amp-img
-  alt={product.data.title} | AI PRINT
-  height="100"
-  width="300"
-  layout="intrinsic"
-  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTnc-aod6rEOutLuZ2u1HdKaI-UOdCUMqfWwm4c6RCNrzH9qskb2zeu5br6I7tzbUtsVJZT_VPoI9bhmNzbTekU5tFUcL_To-xtIE5rV1D2ZpV8CCPuw20l010yc9KdOxoFwbxSejMBqQnMwbUP2RiQfesEXLiHrHNaNANgvs_efhpijL7QS9xlWN86C7Q/s1600/logo.png">
-</amp-img>
-</a>
-</center>
-</header>
-
-
-<div class="welcome">
-  <h1>
-     {product.data.title} | AI PRINT
-  </h1>
-</div>
+<h1>
+  {product.data.title}
+</h1>
 
 {product.data.image && (
-<amp-img
-  class="banner"
-  height="500"
-  width="500"
-  layout="intrinsic"
-  src={product.data.image} >
-</amp-img>
+  <amp-img
+    src={product.data.image}
+    width="1200"
+    height="1200"
+    layout="responsive"
+    alt={product.data.title}
+    class="product-image"
+  />
 )}
 
-<div class="button-group">
-<a
-  class="btn-login"
-  href="https://apk.aimrferdy.workers.dev"
-  rel="noreferrer noopener"
-  target="_blank">
-  AKTIVASI
-</a>
-
-<a
-  class="btn-daftar"
-  href="https://heylink.me/mrferdy"
-  rel="noreferrer noopener"
-  target="_blank">
-  APK
-</a>
+<div class="price">
+  {product.data.price}
 </div>
 
-
-
-
-
-<details class="content">
-<summary>
-BACA ARTIKEL
-</summary>
-<Content />
-</details>
-
-</div>
-
-
-<p class="copyright">
-© 2026 TZ8008 •
-<a href="#">
-
-</a>
-• All Rights Reserved.
+<p>
+  {product.data.description}
 </p>
 
+<div class="content">
+  <Content />
+</div>
+
 </body>
-
-</html>
-
 
 </html>
