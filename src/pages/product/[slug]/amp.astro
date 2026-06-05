@@ -22,6 +22,30 @@ const canonical =
   `${Astro.site}product/${product.slug}/`;
 ---
 
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const products = await getCollection("product");
+
+  return products.map((product) => ({
+    params: {
+      slug: product.slug
+    },
+    props: {
+      product
+    }
+  }));
+}
+
+const { product } = Astro.props;
+
+const { Content } = await product.render();
+
+const canonical =
+  `${Astro.site}product/${product.slug}/`;
+---
+
 <!doctype html>
 <html ⚡ lang="id">
 
@@ -617,7 +641,7 @@ set:html={JSON.stringify({
   height="500"
   width="500"
   layout="intrinsic"
-  src={imageUrl} >
+  src={product.data.image} >
 </amp-img>
 
 <div class="button-group">
@@ -626,7 +650,7 @@ set:html={JSON.stringify({
   href="https://apk.aimrferdy.workers.dev"
   rel="noreferrer noopener"
   target="_blank">
-  AKTIVASI {SITE.name}
+  AKTIVASI
 </a>
 
 <a
@@ -634,7 +658,7 @@ set:html={JSON.stringify({
   href="https://heylink.me/mrferdy"
   rel="noreferrer noopener"
   target="_blank">
-  {SITE.name} APK
+  APK
 </a>
 </div>
 
@@ -671,5 +695,7 @@ BACA ARTIKEL
 </p>
 
 </body>
+
+</html>
 
 </html>
