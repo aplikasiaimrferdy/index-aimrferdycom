@@ -1,11 +1,10 @@
 ---
-
 title: "Terminal"
 description: "Buat gambar AI dari prompt teks dengan cepat."
 icon: "🎨"
 category: "AI Tools"
-featured: true
---------------
+popular: true
+---
 
 # AI Image Generator
 
