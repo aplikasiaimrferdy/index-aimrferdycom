@@ -2,6 +2,14 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
+
+console.log(Astro.url.toString());
+
+const q =
+  Astro.url.searchParams.get("q");
+
+console.log("Q =", q);
+
 const posts = await getCollection("blog");
 const tools = await getCollection("tools");
 const products = await getCollection("product");
