@@ -547,52 +547,13 @@ set:html={JSON.stringify({
 
 <body>
 
-<h1>
-  {product.data.title}
-</h1>
-
-{product.data.image && (
-  <amp-img
-    src={product.data.image}
-    width="1200"
-    height="1200"
-    layout="responsive"
-    alt={product.data.title}
-    class="product-image"
-  />
-)}
-
-<div class="price">
-  {product.data.price}
-</div>
-
-<p>
-  {product.data.description}
-</p>
-
-<div class="content">
-  <Content />
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="layout">
 
 <header>
 <center>
 <a href="#">
 <amp-img
-  alt={product.data.title} | AI PRINT
+  alt={product.data.title}
   height="100"
   width="300"
   layout="intrinsic"
@@ -605,7 +566,7 @@ set:html={JSON.stringify({
 
 <div class="welcome">
   <h1>
-     {product.data.title} | AI PRINT
+     {product.data.title}
   </h1>
 </div>
 
