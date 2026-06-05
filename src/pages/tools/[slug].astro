@@ -27,6 +27,25 @@ const relatedTools = tools
   .filter((t) => t.slug !== tool.slug)
   .slice(0, 6);
 
+
+
+const softwareSchema = {
+  "@context": "https://schema.org",
+
+  "@type": "SoftwareApplication",
+
+  name: tool.data.title,
+
+  description: tool.data.description,
+
+  url: SITE.url(`/tools/${tool.slug}/`),
+
+  applicationCategory: "WebApplication",
+
+  operatingSystem: "Any"
+};
+
+
 const breadcrumbs = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
