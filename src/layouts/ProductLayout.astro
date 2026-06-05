@@ -29,13 +29,14 @@ const {
 />
 
 <script
-  type="application/ld+json"
+type="application/ld+json"
   set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
     image: product.image,
     description: product.description,
+    url: SITE.url(`/product/${slug}/`),
     category: product.category,
     offers: {
       "@type": "Offer",
