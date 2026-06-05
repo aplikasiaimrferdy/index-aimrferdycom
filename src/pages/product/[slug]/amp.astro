@@ -1,45 +1,52 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-export async function getStaticPaths(){
+export async function getStaticPaths() {
+  const products = await getCollection("product");
 
-  const products =
-    await getCollection('product');
-
-  return products.map(product => ({
-    params:{
-      slug:product.slug
+  return products.map((product) => ({
+    params: {
+      slug: product.slug
     },
-
-    props:{
+    props: {
       product
     }
   }));
 }
 
 const { product } = Astro.props;
+
+const { Content } = await product.render();
+
+const canonical =
+  `${Astro.site}product/${product.slug}/`;
 ---
 
 <!doctype html>
 
-<html amp lang="en">
+<html amp lang="id">
 
 <head>
 
 <meta charset="utf-8" />
 
 <title>
-  {product.data.title}
+  {product.data.title} | AI PRINT
 </title>
-
-<link
-  rel="canonical"
-  href={`/product/${product.slug}`}
-/>
 
 <meta
   name="viewport"
   content="width=device-width,minimum-scale=1,initial-scale=1"
+/>
+
+<meta
+  name="description"
+  content={product.data.description}
+/>
+
+<link
+  rel="canonical"
+  href={canonical}
 />
 
 <script
@@ -49,14 +56,36 @@ const { product } = Astro.props;
 
 <style amp-boilerplate>
 body{
-visibility:hidden
+-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;
+animation:-amp-start 8s steps(1,end) 0s 1 normal both
+}
+@-webkit-keyframes -amp-start{
+from{visibility:hidden}
+to{visibility:visible}
+}
+@-moz-keyframes -amp-start{
+from{visibility:hidden}
+to{visibility:visible}
+}
+@-ms-keyframes -amp-start{
+from{visibility:hidden}
+to{visibility:visible}
+}
+@keyframes -amp-start{
+from{visibility:hidden}
+to{visibility:visible}
 }
 </style>
 
 <noscript>
 <style amp-boilerplate>
 body{
-visibility:visible
+-webkit-animation:none;
+-moz-animation:none;
+-ms-animation:none;
+animation:none
 }
 </style>
 </noscript>
@@ -65,83 +94,87 @@ visibility:visible
 
 body{
 font-family:Arial,sans-serif;
-background:#fff;
-margin:0;
 padding:20px;
-color:#111;
-}
-
-.container{
+line-height:1.8;
 max-width:900px;
 margin:auto;
 }
 
 h1{
-font-size:34px;
-line-height:1.2;
-margin-bottom:20px;
+margin-bottom:12px;
 }
 
 .price{
-font-size:40px;
-font-weight:900;
+font-size:28px;
+font-weight:700;
 margin:20px 0;
 }
 
-.desc{
-line-height:1.8;
-color:#555;
+.product-image{
+margin:20px 0;
 }
 
-.btn{
-display:block;
+.content{
 margin-top:30px;
-background:#111827;
-color:#fff;
-padding:18px;
-border-radius:14px;
-text-align:center;
-font-weight:700;
-text-decoration:none;
 }
 
 </style>
+
+<script
+type="application/ld+json"
+set:html={JSON.stringify({
+  "@context":"https://schema.org",
+  "@type":"Product",
+
+  name:product.data.title,
+
+  image:product.data.image,
+
+  description:product.data.description,
+
+  url:canonical,
+
+  category:product.data.category,
+
+  offers:{
+    "@type":"Offer",
+    price:product.data.price?.replace("$",""),
+    priceCurrency:"USD"
+  }
+})}
+/>
 
 </head>
 
 <body>
 
-<div class="container">
+<h1>
+  {product.data.title}
+</h1>
 
-  <h1>
-    {product.data.title}
-  </h1>
-
+{product.data.image && (
   <amp-img
     src={product.data.image}
-    width="800"
-    height="800"
+    width="1200"
+    height="1200"
     layout="responsive"
     alt={product.data.title}
-  >
-  </amp-img>
+    class="product-image"
+  />
+)}
 
-  <div class="price">
-    {product.data.price}
-  </div>
+<div class="price">
+  {product.data.price}
+</div>
 
-  <div class="desc">
-    {product.data.description}
-  </div>
+<p>
+  {product.data.description}
+</p>
 
-  <a
-    href={`/product/${product.slug}`}
-    class="btn"
-  >
-    View Full Product
-  </a>
-
+<div class="content">
+  <Content />
 </div>
 
 </body>
+
 </html>
