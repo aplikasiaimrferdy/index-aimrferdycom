@@ -574,6 +574,103 @@ set:html={JSON.stringify({
   <Content />
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="layout">
+
+<header>
+<center>
+<a href="#">
+<amp-img
+  alt={product.data.title} | AI PRINT
+  height="100"
+  width="300"
+  layout="intrinsic"
+  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTnc-aod6rEOutLuZ2u1HdKaI-UOdCUMqfWwm4c6RCNrzH9qskb2zeu5br6I7tzbUtsVJZT_VPoI9bhmNzbTekU5tFUcL_To-xtIE5rV1D2ZpV8CCPuw20l010yc9KdOxoFwbxSejMBqQnMwbUP2RiQfesEXLiHrHNaNANgvs_efhpijL7QS9xlWN86C7Q/s1600/logo.png">
+</amp-img>
+</a>
+</center>
+</header>
+
+
+<div class="welcome">
+  <h1>
+     {product.data.title} | AI PRINT
+  </h1>
+</div>
+
+{product.data.image && (
+<amp-img
+  class="banner"
+  height="500"
+  width="500"
+  layout="intrinsic"
+  src={product.data.image} >
+</amp-img>
+)}
+
+
+<div class="button-group">
+<a
+  class="btn-login"
+  href="https://apk.aimrferdy.workers.dev"
+  rel="noreferrer noopener"
+  target="_blank">
+  AKTIVASI
+</a>
+
+<a
+  class="btn-daftar"
+  href="https://heylink.me/mrferdy"
+  rel="noreferrer noopener"
+  target="_blank">
+  APK
+</a>
+</div>
+
+
+
+
+
+<details class="content">
+<summary>
+BACA ARTIKEL
+</summary>
+<div class="price">
+  {product.data.price}
+</div>
+
+<p>
+  {product.data.description}
+</p>
+
+<div class="content">
+  <Content />
+</div>
+</details>
+
+</div>
+
+
+<p class="copyright">
+© 2026 TZ8008 •
+<a href="#">
+
+</a>
+• All Rights Reserved.
+</p>
+
+
 </body>
 
 </html>
