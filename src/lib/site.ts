@@ -20,6 +20,14 @@ export const SITE = {
       .replace(/([^:]\/)\/+/g, "$1");
   },
 
+  product(slug = "") {
+  return this.url(`product/${slug}`);
+},
+
+tools(slug = "") {
+  return this.url(`tools/${slug}`);
+},
+
   blog(slug = "") {
     return this.url(`blog/${slug}`);
   },
