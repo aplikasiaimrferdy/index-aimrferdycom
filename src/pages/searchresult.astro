@@ -2,255 +2,365 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
-
-console.log(Astro.url.toString());
-
-const q =
-  Astro.url.searchParams.get("q");
-
-console.log("Q =", q);
-
 const posts = await getCollection("blog");
 const tools = await getCollection("tools");
 const products = await getCollection("product");
-
-const q =
-  Astro.url.searchParams
-    .get("q")
-    ?.trim()
-    .toLowerCase() || "";
-
-const type =
-  Astro.url.searchParams.get("type") || "all";
-
-let results = [];
-
-if (q !== "") {
-
-  results = [
-
-    ...posts.map(post => ({
-      type: "blog",
-      slug: post.slug,
-      title: post.data.title,
-      description: post.data.description,
-      url: `/blog/${post.slug}/`
-    })),
-
-    ...tools.map(tool => ({
-      type: "tool",
-      slug: tool.slug,
-      title: tool.data.title,
-      description: tool.data.description,
-      url: `/tools/${tool.slug}/`
-    })),
-
-    ...products.map(product => ({
-      type: "product",
-      slug: product.slug,
-      title: product.data.title,
-      description: product.data.description,
-      url: `/product/${product.slug}/`
-    }))
-
-  ].filter(item => {
-
-    const text =
-      `${item.title} ${item.description}`
-        .toLowerCase();
-
-    const matchKeyword =
-      text.includes(q);
-
-    const matchType =
-      type === "all" ||
-      item.type === type;
-
-    return matchKeyword && matchType;
-
-  });
-
-}
 ---
 
-<MainLayout
-  title={
-    q
-      ? `Search: ${q} | AI Mr Ferdy`
-      : "Search Results | AI Mr Ferdy"
-  }
-  description="Search AI Mr Ferdy"
+<MainLayout title="Search - AI Mr Ferdy">
+
+<div class="search-page">
+
+<h1>Search AI Mr Ferdy</h1>
+
+<form id="searchForm">
+
+<input
+  id="searchInput"
+  placeholder="Cari artikel, tools, atau produk..."
+/>
+
+<select id="typeFilter">
+
+  <option value="all">
+    Semua
+  </option>
+
+  <option value="blog">
+    Blog
+  </option>
+
+  <option value="tool">
+    Tools
+  </option>
+
+  <option value="product">
+    Product
+  </option>
+
+</select>
+
+<button
+  type="submit"
+  class="search-btn"
 >
-
-<section class="search-page">
-
-  <h1>
-    Search Results
-  </h1>
-
-  {
-    q && (
-      <p class="search-info">
-
-        Keyword:
-        <strong>{q}</strong>
-
-        {
-          type !== "all" && (
-            <>
-              {" "}· Type:
-              <strong>{type}</strong>
-            </>
-          )
-        }
-
-      </p>
-    )
-  }
-
-  {
-    q === "" ? (
-
-      <p class="empty">
-        Masukkan kata kunci pencarian.
-      </p>
-
-    ) : results.length > 0 ? (
-
-      <div class="results">
-
-        {
-          results.map(item => (
-
-            <a
-              href={item.url}
-              class="result-card"
-            >
-
-              <span class="badge">
-                {item.type}
-              </span>
-
-              <h2>
-                {item.title}
-              </h2>
-
-              <p>
-                {item.description}
-              </p>
-
-            </a>
-
-          ))
-        }
-
-      </div>
-
-    ) : (
-
-      <p class="empty">
-        Tidak ada hasil ditemukan.
-      </p>
-
-    )
-  }
-
-</section>
-
-
-<form action="/searchresult/">
-
-  <input
-    name="q"
-    placeholder="Cari artikel, tools, atau produk..."
-  />
-
-  <select name="type">
-
-    <option value="all">
-      Semua
-    </option>
-
-    <option value="blog">
-      Blog
-    </option>
-
-    <option value="tool">
-      Tools
-    </option>
-
-    <option value="product">
-      Product
-    </option>
-
-  </select>
-
-  <button type="submit">
-    Search
-  </button>
+  Search
+</button>
 
 </form>
 
+<p id="emptyState">
+  Ketik kata kunci lalu klik Search.
+</p>
+
+<div id="results">
+
+  {posts.map((post) => (
+
+    <a
+      class="item"
+      data-type="blog"
+      href={`/blog/${post.slug}/`}
+    >
+
+      <span class="badge">
+        Blog
+      </span>
+
+      <h3>
+        {post.data.title}
+      </h3>
+
+      <p>
+        {post.data.description}
+      </p>
+
+    </a>
+
+  ))}
+
+  {tools.map((tool) => (
+
+    <a
+      class="item"
+      data-type="tool"
+      href={`/tools/${tool.slug}/`}
+    >
+
+      <span class="badge">
+        Tool
+      </span>
+
+      <h3>
+        {tool.data.title}
+      </h3>
+
+      <p>
+        {tool.data.description}
+      </p>
+
+    </a>
+
+  ))}
+
+  {products.map((product) => (
+
+    <a
+      class="item"
+      data-type="product"
+      href={`/product/${product.slug}/`}
+    >
+
+      <span class="badge">
+        Product
+      </span>
+
+      <h3>
+        {product.data.title}
+      </h3>
+
+      <p>
+        {product.data.description}
+      </p>
+
+    </a>
+
+  ))}
+
+</div>
+
+</div>
+
 </MainLayout>
+
+<script is:inline>
+
+const form =
+  document.getElementById("searchForm");
+
+const input =
+  document.getElementById("searchInput");
+
+const filter =
+  document.getElementById("typeFilter");
+
+const items =
+  document.querySelectorAll(".item");
+
+const emptyState =
+  document.getElementById("emptyState");
+
+/* hide all initially */
+
+items.forEach(item => {
+  item.style.display = "none";
+});
+
+/* load query from URL */
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+input.value =
+  params.get("q") || "";
+
+filter.value =
+  params.get("type") || "all";
+
+function runSearch() {
+
+  const keyword =
+    input.value.trim().toLowerCase();
+
+  const selectedType =
+    filter.value;
+
+  let found = false;
+
+  items.forEach(item => {
+
+    const text =
+      item.innerText.toLowerCase();
+
+    const itemType =
+      item.dataset.type;
+
+    const matchKeyword =
+      keyword !== "" &&
+      text.includes(keyword);
+
+    const matchType =
+      selectedType === "all" ||
+      itemType === selectedType;
+
+    const show =
+      matchKeyword &&
+      matchType;
+
+    item.style.display =
+      show ? "block" : "none";
+
+    if (show) {
+      found = true;
+    }
+
+  });
+
+  if (keyword === "") {
+
+    emptyState.textContent =
+      "Ketik kata kunci lalu klik Search.";
+
+    emptyState.style.display =
+      "block";
+
+    items.forEach(item => {
+      item.style.display = "none";
+    });
+
+    return;
+
+  }
+
+  emptyState.style.display =
+    found ? "none" : "block";
+
+  if (!found) {
+
+    emptyState.textContent =
+      "Tidak ada hasil ditemukan.";
+
+  }
+
+}
+
+form.addEventListener(
+  "submit",
+  (e) => {
+
+    e.preventDefault();
+
+    const keyword =
+      input.value.trim();
+
+    const selectedType =
+      filter.value;
+
+    const params =
+      new URLSearchParams();
+
+    if (keyword) {
+      params.set("q", keyword);
+    }
+
+    if (
+      selectedType &&
+      selectedType !== "all"
+    ) {
+      params.set(
+        "type",
+        selectedType
+      );
+    }
+
+    history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${params.toString()}`
+    );
+
+    runSearch();
+
+  }
+);
+
+</script>
 
 <style>
 
 .search-page{
-  max-width:900px;
-  margin:80px auto;
-  padding:0 20px;
+max-width:800px;
+margin:80px auto;
+padding:0 20px;
 }
 
 .search-page h1{
-  margin-bottom:20px;
+font-size:36px;
+margin-bottom:20px;
 }
 
-.search-info{
-  margin-bottom:24px;
-  opacity:.7;
+#searchForm{
+display:flex;
+flex-direction:column;
+gap:16px;
+margin-bottom:20px;
 }
 
-.results{
-  display:grid;
-  gap:16px;
+#searchInput,
+#typeFilter{
+width:100%;
+padding:14px;
+border:1px solid var(--border,#ddd);
+border-radius:12px;
+font-size:16px;
+outline:none;
 }
 
-.result-card{
-  display:block;
-  padding:20px;
-  border:1px solid #e5e7eb;
-  border-radius:16px;
-  text-decoration:none;
-  color:inherit;
-  transition:.2s;
+.search-btn{
+padding:14px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:16px;
+font-weight:700;
 }
 
-.result-card:hover{
-  transform:translateY(-2px);
+#emptyState{
+opacity:.6;
+margin-bottom:20px;
 }
 
-.result-card h2{
-  margin:10px 0;
-  font-size:20px;
+#results{
+display:flex;
+flex-direction:column;
+gap:14px;
 }
 
-.result-card p{
-  opacity:.75;
+.item{
+display:block;
+padding:16px;
+border:1px solid var(--border,#eee);
+border-radius:14px;
+text-decoration:none;
+color:inherit;
+transition:.2s;
+}
+
+.item:hover{
+transform:translateY(-2px);
+}
+
+.item h3{
+margin:0 0 8px;
+font-size:18px;
+}
+
+.item p{
+margin:0;
+opacity:.7;
+font-size:14px;
 }
 
 .badge{
-  display:inline-block;
-  padding:4px 10px;
-  border-radius:999px;
-  background:#f3f4f6;
-  font-size:12px;
-  font-weight:600;
-  text-transform:capitalize;
-}
-
-.empty{
-  opacity:.7;
-  padding:20px 0;
+display:inline-block;
+margin-bottom:10px;
+padding:4px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:600;
+background:#f3f4f6;
 }
 
 </style>
