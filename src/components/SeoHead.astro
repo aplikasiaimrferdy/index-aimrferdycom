@@ -8,7 +8,8 @@ import {
 const {
   title = SITE.title,
   description = SITE.description,
-  canonical = SITE.url(),
+canonical = SITE.url(canonical || Astro.url.pathname),
+
   image = null,
   slug = "",
   type = "website",
