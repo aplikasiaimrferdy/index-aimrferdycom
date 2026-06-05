@@ -169,6 +169,10 @@ input.value =
 filter.value =
   params.get("type") || "all";
 
+if (input.value.trim()) {
+  runSearch();
+}
+
 function runSearch() {
 
   const keyword =
