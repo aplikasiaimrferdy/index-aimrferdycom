@@ -17,6 +17,7 @@ const {
   type = "website",
   faqSchema = null,
   articleSchema = null,
+  softwareSchema = null,
   breadcrumbs = null,
   amp = null
 } = Astro.props;
@@ -100,6 +101,13 @@ const imageUrl = slug
   <script
     type="application/ld+json"
     set:html={JSON.stringify(articleSchema)}
+  />
+)}
+
+{softwareSchema && (
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(softwareSchema)}
   />
 )}
 
