@@ -2,17 +2,49 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { SITE } from '../lib/site';
 import "../styles/blog.css";
+
 import { getCollection } from 'astro:content';
 
-let posts = await getCollection('blog');
+const posts = await getCollection('blog');
+const tools = await getCollection('tools');
+const products = await getCollection('product');
+
+/* LATEST ARTICLES */
 
 const latestPosts = [...posts]
-  .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+  .sort(
+    (a, b) =>
+      new Date(b.data.date) -
+      new Date(a.data.date)
+  )
   .slice(0, 3);
 
-const popularPosts = [...posts]
-  .filter((post) => post.data.popular)
-  .slice(0, 3);
+/* POPULAR ARTICLES */
+
+const popularPosts =
+  posts.filter(post => post.data.popular).length > 0
+    ? posts
+        .filter(post => post.data.popular)
+        .slice(0, 3)
+    : posts.slice(0, 3);
+
+/* POPULAR TOOLS */
+
+const popularTools =
+  tools.filter(tool => tool.data.popular).length > 0
+    ? tools
+        .filter(tool => tool.data.popular)
+        .slice(0, 3)
+    : tools.slice(0, 3);
+
+/* POPULAR PRODUCTS */
+
+const popularProducts =
+  products.filter(product => product.data.popular).length > 0
+    ? products
+        .filter(product => product.data.popular)
+        .slice(0, 3)
+    : products.slice(0, 3);
 
 const pageTitle =
   'AI Mr Ferdy | Website Resmi Platform AI Indonesia';
@@ -656,6 +688,153 @@ const pageDescription =
   </div>
 
 </section>
+
+
+
+<!-- POPULAR TOOLS -->
+<section class="section">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Popular AI Tools
+    </h2>
+
+    <p class="section-desc">
+      Tools AI pilihan dalam ecosystem AI Mr Ferdy.
+    </p>
+
+    <div class="blog-grid">
+
+      {
+        popularTools.map((tool) => (
+
+          <article class="blog-card">
+
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="blog-card-link"
+            >
+
+              <div class="blog-card-image">
+
+                <img
+                  src={SITE.url(`/api/og/${tool.slug}.svg`)}
+                  alt={tool.data.title}
+                  loading="lazy"
+                  width="1200"
+                  height="630"
+                />
+
+              </div>
+
+              <div class="blog-card-content">
+
+                <h2>
+                  {tool.data.title}
+                </h2>
+
+                {tool.data.description && (
+                  <p>
+                    {tool.data.description}
+                  </p>
+                )}
+
+                <span class="readmore">
+                  Open Tool →
+                </span>
+
+              </div>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- POPULAR PRODUCTS -->
+<section class="section">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Popular AI Products
+    </h2>
+
+    <p class="section-desc">
+      Produk digital populer dari AI Mr Ferdy.
+    </p>
+
+    <div class="blog-grid">
+
+      {
+        popularProducts.map((product) => (
+
+          <article class="blog-card">
+
+            <a
+              href={`/product/${product.slug}/`}
+              class="blog-card-link"
+            >
+
+              <div class="blog-card-image">
+
+                <img
+                  src={SITE.url(`/api/og/${product.slug}.svg`)}
+                  alt={product.data.title}
+                  loading="lazy"
+                  width="1200"
+                  height="630"
+                />
+
+              </div>
+
+              <div class="blog-card-content">
+
+                <h2>
+                  {product.data.title}
+                </h2>
+
+                {product.data.description && (
+                  <p>
+                    {product.data.description}
+                  </p>
+                )}
+
+                {product.data.price && (
+                  <div class="blog-card-meta">
+                    {product.data.price}
+                  </div>
+                )}
+
+                <span class="readmore">
+                  View Product →
+                </span>
+
+              </div>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </div>
+
+</section>
+
 
 <!-- POPULAR GUIDES -->
 <section class="section">
