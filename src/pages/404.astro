@@ -1,0 +1,23 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { SITE } from '../lib/site';
+
+const title = `404 - Halaman Tidak Ditemukan | ${SITE.name}`;
+const description = 'Halaman yang Anda cari tidak ditemukan.';
+---
+
+<MainLayout
+  title={title}
+  description={description}
+>
+  <section class="container">
+    <h1>404</h1>
+    <h2>Halaman Tidak Ditemukan</h2>
+
+    <p>
+      Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.
+    </p>
+
+    <a href="/">Kembali ke Beranda</a>
+  </section>
+</MainLayout>
