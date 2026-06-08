@@ -36,7 +36,7 @@ type="application/ld+json"
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
-    image: product.image,
+    image: product.image || `${SITE.site}/api/og/${slug}.svg`,
     description: product.description,
     url: SITE.url(`/product/${slug}/`),
     category: product.category,
