@@ -31,19 +31,59 @@ const {
 />
 
 <script
-type="application/ld+json"
+  type="application/ld+json"
   set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Product",
+
     name: product.title,
     image: product.image || `${SITE.site}/api/og/${slug}.svg`,
     description: product.description,
     url: SITE.url(`/product/${slug}/`),
     category: product.category,
+
+    brand: {
+      "@type": "Brand",
+      name: "AI Mr Ferdy"
+    },
+
     offers: {
       "@type": "Offer",
       price: product.price?.replace("$", ""),
-      priceCurrency: "USD"
+      priceCurrency: "USD",
+
+      availability: "https://schema.org/InStock",
+
+     shippingDetails: {
+  "@type": "OfferShippingDetails",
+  shippingRate: {
+    "@type": "MonetaryAmount",
+    value: 0,
+    currency: "USD"
+  }
+},
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 0,
+            maxValue: 1,
+            unitCode: "DAY"
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 7,
+            unitCode: "DAY"
+          }
+        }
+      },
+
+hasMerchantReturnPolicy: {
+  "@type": "MerchantReturnPolicy",
+  returnPolicyCategory:
+    "https://schema.org/MerchantReturnNotPermitted"
+}
     }
   })}
 />
