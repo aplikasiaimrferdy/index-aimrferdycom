@@ -37,7 +37,7 @@ const {
     "@type": "Product",
 
     name: product.title,
-    image: product.image || `${SITE.site}/api/og/${slug}.svg`,
+    image: product.image || SITE.url(`/api/og/${slug}.svg`)
     description: product.description,
     url: SITE.url(`/product/${slug}/`),
     category: product.category,
