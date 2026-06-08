@@ -37,7 +37,7 @@ const {
     "@type": "Product",
 
     name: product.title,
-    image: product.image || SITE.url(`/api/og/${slug}.svg`)
+    image: product.image || SITE.url(`/api/og/${slug}.svg`),
     description: product.description,
     url: SITE.url(`/product/${slug}/`),
     category: product.category,
@@ -54,22 +54,25 @@ const {
 
       availability: "https://schema.org/InStock",
 
-     shippingDetails: {
-  "@type": "OfferShippingDetails",
-  shippingRate: {
-    "@type": "MonetaryAmount",
-    value: 0,
-    currency: "USD"
-  }
-},
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: 0,
+          currency: "USD"
+        },
+
         deliveryTime: {
           "@type": "ShippingDeliveryTime",
+
           handlingTime: {
             "@type": "QuantitativeValue",
             minValue: 0,
             maxValue: 1,
             unitCode: "DAY"
           },
+
           transitTime: {
             "@type": "QuantitativeValue",
             minValue: 1,
@@ -79,11 +82,11 @@ const {
         }
       },
 
-hasMerchantReturnPolicy: {
-  "@type": "MerchantReturnPolicy",
-  returnPolicyCategory:
-    "https://schema.org/MerchantReturnNotPermitted"
-}
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        returnPolicyCategory:
+          "https://schema.org/MerchantReturnNotPermitted"
+      }
     }
   })}
 />
