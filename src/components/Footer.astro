@@ -17,7 +17,7 @@ const {
 
       <!-- LATEST POSTS -->
       <div class="footer-links latest">
-        <h4>Latest Posts</h4>
+        <p class="footer-title">Latest Posts</hp>
 
         {latestPosts.map((post) => (
           <a href={`/blog/${post.slug}/`}>
@@ -28,7 +28,7 @@ const {
 
       <!-- POPULAR TOOLS -->
       <div class="footer-links popular">
-        <h4>Popular Tools</h4>
+        <p class="footer-title">Popular Tools</p>
 
         {popularTools.map((tool) => (
           <a href={`/tools/${tool.slug}/`}>
@@ -61,7 +61,7 @@ const {
    <!-- COMPANY -->
 <div class="footer-service">
   <div class="footer-col">
-    <h4>Company</h4>
+    <p class="footer-title">Company</p>
 
     <a href="/about">About</a>
     <a href="/services">Services</a>
@@ -81,7 +81,7 @@ const {
 
       <!-- ABOUT -->
       <div class="footer-about">
-        <h3>AIMRFERDY.COM</h3>
+        <p class="footer-brand">AIMRFERDY.COM</p>
 
         <p>
          Ai Mr Ferdy adalah bukan hanya tempat pusat hiburan terkemuka di Asia, tetapi juga tempat bagi para pemain untuk percaya dan menjadi kaya, bangga memiliki lebih dari 1000 permainan dengan beragam latar belakang.
@@ -252,16 +252,13 @@ footer{
    ABOUT
 ========================= */
 
-.footer-about h3{
+.footer-brand{
+  margin:0 0 20px;
   font-size:18px;
+  font-weight:700;
   line-height:1.2;
-
   letter-spacing:1px;
-  margin-bottom:20px;
-
   color:var(--text);
-
-  word-break:break-word;
 }
 
 .footer-about p{
@@ -279,17 +276,15 @@ footer{
    TITLES
 ========================= */
 
-.footer-service h4,
-.footer-links h4{
+.footer-title{
+  margin:0 0 18px;
   font-size:18px;
-  margin-bottom:18px;
-
-  color:var(--text);
-
+  font-weight:700;
   line-height:1.3;
+  color:var(--text);
 }
 
-.footer-service h4:not(:first-child){
+.footer-title:not(:first-child){
   margin-top:28px;
 }
 
