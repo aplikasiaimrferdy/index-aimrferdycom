@@ -4,6 +4,7 @@ import SeoHead from "../components/SeoHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { generateFaqSchema } from "../lib/faq-schema";
+import { homeSchemas } from "../lib/home-schema";
 
 const {
   title,
@@ -13,7 +14,8 @@ const {
   articleSchema,
   breadcrumbs,
   amp,
-  slug
+  slug,
+  isHome = false
 } = Astro.props;
 
 const faqSchema = generateFaqSchema(html);
@@ -35,6 +37,16 @@ const faqSchema = generateFaqSchema(html);
   amp={amp}
   slug={slug}
 />
+
+{isHome &&
+    homeSchemas.map((schema) => (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(schema)}
+      />
+    ))
+  }
+
   <link rel="stylesheet" href="/styles/global.css" />
 <script is:inline>
   if (localStorage.getItem("theme") === "light") {
