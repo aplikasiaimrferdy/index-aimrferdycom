@@ -4,16 +4,22 @@ import { SITE } from "./site";
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE.url()}#organization`,
   name: SITE.name,
   url: SITE.url(),
-  logo: SITE.imageUrl(SITE.image)
+  logo: SITE.imageUrl(SITE.image),
+  image: SITE.imageUrl(SITE.image)
 };
 
 export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${SITE.url()}#website`,
   name: SITE.title,
   url: SITE.url(),
+  publisher: {
+    "@id": `${SITE.url()}#organization`
+  },
   potentialAction: {
     "@type": "SearchAction",
     target: `${SITE.url("search")}?q={search_term_string}`,
