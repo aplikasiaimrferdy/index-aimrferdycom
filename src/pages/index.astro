@@ -3,8 +3,6 @@ import MainLayout from '../layouts/MainLayout.astro';
 import { SITE } from '../lib/site';
 import "../styles/blog.css";
 
-import { homeSchemas } from "../lib/home-schema";
-
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
@@ -59,6 +57,7 @@ const pageDescription =
   title={pageTitle}
   description={pageDescription}
   canonical={SITE.url()}
+  isHome={true}
 >
 
 <section class="hero">
@@ -700,12 +699,6 @@ const pageDescription =
     </div>
   </section>
 
-{homeSchemas.map((schema) => (
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(schema)}
-  />
-))}
 
 <style is:global>
 /* ====================================
