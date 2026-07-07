@@ -282,6 +282,77 @@ const pageDescription =
     </div>
   </section>
 
+
+<!-- POPULAR TOOLS -->
+<section class="section">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Popular AI Tools
+    </h2>
+
+    <p class="section-desc">
+      Tools AI pilihan dalam ecosystem AI Mr Ferdy.
+    </p>
+
+    <div class="blog-grid">
+
+      {
+        popularTools.map((tool) => (
+
+          <article class="blog-card">
+
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="blog-card-link"
+            >
+
+              <div class="blog-card-image">
+
+                <img
+                  src={SITE.url(`/api/og/${tool.slug}.svg`)}
+                  alt={tool.data.title}
+                  loading="lazy"
+                  width="1200"
+                  height="630"
+                />
+
+              </div>
+
+              <div class="blog-card-content">
+
+                <h2>
+                  {tool.data.title}
+                </h2>
+
+                {tool.data.description && (
+                  <p>
+                    {tool.data.description}
+                  </p>
+                )}
+
+                <span class="readmore">
+                  Open Tool →
+                </span>
+
+              </div>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
   <!-- LATEST ARTICLES -->
 <!-- LATEST ARTICLES -->
 <section class="section">
@@ -356,37 +427,37 @@ const pageDescription =
 </section>
 
 
-
-<!-- POPULAR TOOLS -->
+  <!-- LATEST ARTICLES -->
+<!-- LATEST ARTICLES -->
 <section class="section">
 
   <div class="container">
 
     <h2 class="section-title">
-      Popular AI Tools
+      Latest AI Articles
     </h2>
 
     <p class="section-desc">
-      Tools AI pilihan dalam ecosystem AI Mr Ferdy.
+      Artikel terbaru tentang AI, SEO dan teknologi modern.
     </p>
 
     <div class="blog-grid">
 
       {
-        popularTools.map((tool) => (
+        latestPosts.map((post) => (
 
           <article class="blog-card">
 
             <a
-              href={`/tools/${tool.slug}/`}
+              href={`/blog/${post.slug}/`}
               class="blog-card-link"
             >
 
               <div class="blog-card-image">
 
                 <img
-                  src={SITE.url(`/api/og/${tool.slug}.svg`)}
-                  alt={tool.data.title}
+                  src={SITE.url(`/api/og/${post.slug}.svg`)}
+                  alt={post.data.title}
                   loading="lazy"
                   width="1200"
                   height="630"
@@ -396,18 +467,22 @@ const pageDescription =
 
               <div class="blog-card-content">
 
-                <h2>
-                  {tool.data.title}
-                </h2>
+                <div class="blog-card-meta">
+                  {post.data.date}
+                </div>
 
-                {tool.data.description && (
+                <h3>
+                  {post.data.title}
+                </h3>
+
+                {post.data.description && (
                   <p>
-                    {tool.data.description}
+                    {post.data.description}
                   </p>
                 )}
 
                 <span class="readmore">
-                  Open Tool →
+                  Read Article →
                 </span>
 
               </div>
@@ -424,6 +499,7 @@ const pageDescription =
   </div>
 
 </section>
+
 
 
 
@@ -502,150 +578,153 @@ const pageDescription =
 </section>
 
 
-<!-- POPULAR GUIDES -->
-<section class="section">
 
+  <!-- FAQ -->
+<section class="section">
   <div class="container">
 
     <h2 class="section-title">
-      Popular SEO & AI Guides
+      Pertanyaan Umum AI Mr Ferdy (FAQ)
     </h2>
 
     <p class="section-desc">
-      Artikel populer dalam ecosystem AI Mr Ferdy.
+      Temukan jawaban mengenai AI Mr Ferdy, mulai dari fitur, AI Tools,
+      cara penggunaan, keamanan, hingga layanan yang tersedia di website resmi.
     </p>
 
-    <div class="blog-grid">
+    <!-- FAQ 1 -->
+    <div class="faq-item">
 
-      {
-        popularPosts.map((post) => (
+      <div class="faq-question">
+        <span>
+          Apa itu AI Mr Ferdy?
+        </span>
 
-          <article class="blog-card">
+        <div class="faq-icon"></div>
+      </div>
 
-            <a
-              href={`/blog/${post.slug}/`}
-              class="blog-card-link"
-            >
+      <div class="faq-answer">
+        <p>
+          AI Mr Ferdy adalah platform AI Indonesia yang menyediakan
+          berbagai AI Tools, solusi otomatisasi, teknologi,
+          pembuatan konten, dan layanan digital untuk membantu
+          meningkatkan produktivitas individu maupun bisnis.
+        </p>
+      </div>
 
-              <div class="blog-card-image">
+    </div>
 
-                <img
-                  src={SITE.url(`/api/og/${post.slug}.svg`)}
-                  alt={post.data.title}
-                  loading="lazy"
-                  width="1200"
-                  height="630"
-                />
+    <!-- FAQ 2 -->
+    <div class="faq-item">
 
-              </div>
+      <div class="faq-question">
+        <span>
+          Apa saja layanan yang tersedia di AI Mr Ferdy?
+        </span>
 
-              <div class="blog-card-content">
+        <div class="faq-icon"></div>
+      </div>
 
-                <div class="blog-card-meta">
-                  {post.data.date}
-                </div>
+      <div class="faq-answer">
+        <p>
+          AI Mr Ferdy menyediakan AI Tools, prompt generator,
+          AI Humanizer, solusi SEO, automasi digital,
+          artikel edukasi, serta berbagai produk digital
+          yang terus dikembangkan.
+        </p>
+      </div>
 
-                <h2>
-                  {post.data.title}
-                </h2>
+    </div>
 
-                {post.data.description && (
-                  <p>
-                    {post.data.description}
-                  </p>
-                )}
+    <!-- FAQ 3 -->
+    <div class="faq-item">
 
-                <span class="readmore">
-                  Read Guide →
-                </span>
+      <div class="faq-question">
+        <span>
+          Apakah AI Mr Ferdy dapat digunakan secara gratis?
+        </span>
 
-              </div>
+        <div class="faq-icon"></div>
+      </div>
 
-            </a>
+      <div class="faq-answer">
+        <p>
+          Beberapa fitur dapat digunakan secara gratis,
+          sementara fitur atau layanan tertentu mungkin
+          memiliki paket premium sesuai kebutuhan pengguna.
+        </p>
+      </div>
 
-          </article>
+    </div>
 
-        ))
-      }
+    <!-- FAQ 4 -->
+    <div class="faq-item">
+
+      <div class="faq-question">
+        <span>
+          Apakah AI Mr Ferdy aman digunakan?
+        </span>
+
+        <div class="faq-icon"></div>
+      </div>
+
+      <div class="faq-answer">
+        <p>
+          Ya. AI Mr Ferdy dikembangkan dengan memperhatikan
+          keamanan, performa, dan pengalaman pengguna sehingga
+          layanan dapat digunakan secara nyaman melalui website resmi.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- FAQ 5 -->
+    <div class="faq-item">
+
+      <div class="faq-question">
+        <span>
+          Apakah AI Mr Ferdy dapat digunakan di perangkat mobile?
+        </span>
+
+        <div class="faq-icon"></div>
+      </div>
+
+      <div class="faq-answer">
+        <p>
+          Ya. Seluruh website dan AI Tools AI Mr Ferdy
+          dirancang menggunakan pendekatan mobile-first
+          sehingga dapat diakses melalui smartphone,
+          tablet, maupun desktop.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- FAQ 6 -->
+    <div class="faq-item">
+
+      <div class="faq-question">
+        <span>
+          Di mana website resmi AI Mr Ferdy?
+        </span>
+
+        <div class="faq-icon"></div>
+      </div>
+
+      <div class="faq-answer">
+        <p>
+          Website resmi AI Mr Ferdy adalah
+          <strong>https://aimrferdy.com</strong>,
+          yang menyediakan informasi terbaru,
+          AI Tools, artikel, produk digital,
+          dan layanan resmi AI Mr Ferdy.
+        </p>
+      </div>
 
     </div>
 
   </div>
-
 </section>
-
-
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container">
-
-      <h2 class="section-title">
-        FAQ
-      </h2>
-
-      <p class="section-desc">
-        Pertanyaan umum tentang AI Mr Ferdy.
-      </p>
-
-      <div class="faq-item">
-
-        <div class="faq-question">
-          <span>
-            Apa itu AI Mr Ferdy?
-          </span>
-
-          <div class="faq-icon"></div>
-        </div>
-
-        <div class="faq-answer">
-          <p>
-            AI Mr Ferdy adalah platform digital yang fokus pada
-            AI systems, SEO technology, automation dan website modern.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="faq-item">
-
-        <div class="faq-question">
-          <span>
-            Apakah website mobile friendly?
-          </span>
-
-          <div class="faq-icon"></div>
-        </div>
-
-        <div class="faq-answer">
-          <p>
-            Ya, seluruh platform dibangun mobile first dan optimized
-            untuk performa cepat.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="faq-item">
-
-        <div class="faq-question">
-          <span>
-            Apakah tersedia AI tools online?
-          </span>
-
-          <div class="faq-icon"></div>
-        </div>
-
-        <div class="faq-answer">
-          <p>
-            Ya, tersedia berbagai AI tools, utility online dan
-            automation systems modern.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
 
   <!-- CTA -->
   <section class="cta">
