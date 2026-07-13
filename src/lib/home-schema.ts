@@ -1,3 +1,5 @@
+// src/lib/home-schema.ts
+
 export const homeSchema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -9,10 +11,10 @@ export const homeSchema = {
 	  "description": "Platform AI Indonesia yang menyediakan AI Tools, SEO, automation, dan solusi digital modern.",
       "url": "https://aimrferdy.com/",
       "logo": {
-        "@id": "https://aimrferdy.com/#primaryimage"
+        "@id": "https://aimrferdy.com/aimrferdy.png"
       },
       "image": {
-        "@id": "https://aimrferdy.com/#primaryimage"
+        "@id": "https://aimrferdy.com/aimrferdy.png"
       },
 	  "knowsAbout": [
   "Artificial Intelligence",
@@ -23,9 +25,12 @@ export const homeSchema = {
   "Web Development"
 ],
       "sameAs": [
-        "https://github.com/USERNAME",
-        "https://linkedin.com/in/USERNAME",
-        "https://x.com/USERNAME"
+    "https://www.youtube.com/@ai-mr-ferdy",
+    "https://www.instagram.com/aimrferdyofficial",
+    "https://medium.com/@aimrferdy",
+    "https://github.com/aimrfredy",
+    "https://web.facebook.com/groups/aimrferdyofficial",
+    "https://heylink.me/mrferdy"
       ]
     },
 
@@ -37,7 +42,7 @@ export const homeSchema = {
 	  "description": "Founder dan pengembang AI Mr Ferdy.",
       "url": "https://aimrferdy.com/",
       "image": {
-        "@id": "https://aimrferdy.com/#primaryimage"
+        "@id": "https://aimrferdy.com/aimrferdy.png"
       },
       "worksFor": {
         "@id": "https://aimrferdy.com/#organization"
@@ -68,7 +73,7 @@ export const homeSchema = {
     // Image
     {
       "@type": "ImageObject",
-      "@id": "https://aimrferdy.com/#primaryimage",
+      "@id": "https://aimrferdy.com/aimrferdy.png",
       "url": "https://aimrferdy.com/images/og-cover.jpg",
       "contentUrl": "https://aimrferdy.com/images/og-cover.jpg",
       "caption": "AI Mr Ferdy",
@@ -110,7 +115,7 @@ export const homeSchema = {
         "@id": "https://aimrferdy.com/#breadcrumb"
       },
       "primaryImageOfPage": {
-        "@id": "https://aimrferdy.com/#primaryimage"
+        "@id": "https://aimrferdy.com/aimrferdy.png"
       },
 	  "mainEntity": {
      "@id": "https://aimrferdy.com/#faq"
