@@ -1,5 +1,3 @@
-// src/lib/home-schema.ts
-
 export const homeSchema = {
   "@context": "https://schema.org",
   "@graph": [
