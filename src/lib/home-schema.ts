@@ -37,7 +37,7 @@ export const homeSchema = {
     // Person
     {
       "@type": "Person",
-      "@id": "https://aimrferdy.com/#person",
+      "@id": "https://aimrferdy.com/about#person",
       "name": "AI Mr Ferdy",
 	  "description": "Founder dan pengembang AI Mr Ferdy.",
       "url": "https://aimrferdy.com/",
