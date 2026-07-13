@@ -4,7 +4,7 @@ import SeoHead from "../components/SeoHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { generateFaqSchema } from "../lib/faq-schema";
-import { homeSchemas } from "../lib/home-schema";
+import { homeSchema } from "../lib/home-schema";
 
 const {
   title,
@@ -38,14 +38,13 @@ const faqSchema = generateFaqSchema(html);
   slug={slug}
 />
 
-{isHome &&
-    homeSchemas.map((schema) => (
-      <script
-        type="application/ld+json"
-        set:html={JSON.stringify(schema)}
-      />
-    ))
-  }
+{isHome && (
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(homeSchema)}
+  />
+)}
+
 
   <link rel="stylesheet" href="/styles/global.css" />
 <script is:inline>
