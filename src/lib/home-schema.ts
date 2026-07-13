@@ -11,10 +11,10 @@ export const homeSchema = {
 	  "description": "Platform AI Indonesia yang menyediakan AI Tools, SEO, automation, dan solusi digital modern.",
       "url": "https://aimrferdy.com/",
       "logo": {
-        "@id": "https://aimrferdy.com/aimrferdy.png"
+        "@id": "https://aimrferdy.com/images/og-cover.jpg"
       },
       "image": {
-        "@id": "https://aimrferdy.com/aimrferdy.png"
+        "@id": "https://aimrferdy.com/images/og-cover.jpg"
       },
 	  "knowsAbout": [
   "Artificial Intelligence",
@@ -42,7 +42,7 @@ export const homeSchema = {
 	  "description": "Founder dan pengembang AI Mr Ferdy.",
       "url": "https://aimrferdy.com/",
       "image": {
-        "@id": "https://aimrferdy.com/aimrferdy.png"
+        "@id": "https://aimrferdy.com/images/og-cover.jpg"
       },
       "worksFor": {
         "@id": "https://aimrferdy.com/#organization"
@@ -73,7 +73,7 @@ export const homeSchema = {
     // Image
     {
       "@type": "ImageObject",
-      "@id": "https://aimrferdy.com/aimrferdy.png",
+      "@id": "https://aimrferdy.com/images/og-cover.jpg",
       "url": "https://aimrferdy.com/images/og-cover.jpg",
       "contentUrl": "https://aimrferdy.com/images/og-cover.jpg",
       "caption": "AI Mr Ferdy",
@@ -115,7 +115,7 @@ export const homeSchema = {
         "@id": "https://aimrferdy.com/#breadcrumb"
       },
       "primaryImageOfPage": {
-        "@id": "https://aimrferdy.com/aimrferdy.png"
+        "@id": "https://aimrferdy.com/images/og-cover.jpg"
       },
 	  "mainEntity": {
      "@id": "https://aimrferdy.com/#faq"
