@@ -19,7 +19,8 @@ const {
   articleSchema = null,
   softwareSchema = null,
   breadcrumbs = null,
-  amp = null
+  amp = null,
+  isHome = false
 } = Astro.props;
 
 // AUTO OG IMAGE
@@ -86,15 +87,19 @@ const imageUrl = slug
 />
 
 <!-- schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify(organizationSchema)}
-/>
+{!isHome && (
+  <>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
 
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify(websiteSchema)}
-/>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(websiteSchema)}
+    />
+  </>
+)}
 
 {breadcrumbs && (
   <script
