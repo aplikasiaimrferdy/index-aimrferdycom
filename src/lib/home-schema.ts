@@ -125,41 +125,42 @@ export const homeSchema = {
 
     // Navigation
     {
-      "@type": "ItemList",
-      "@id": "https://aimrferdy.com/#navigation",
-      "itemListElement": [
-        {
-          "@type": "SiteNavigationElement",
-          "name": "Home",
-          "url": "https://aimrferdy.com/"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "name": "Blog",
-          "url": "https://aimrferdy.com/blog"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "name": "Tools",
-          "url": "https://aimrferdy.com/tools"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "name": "Product",
-          "url": "https://aimrferdy.com/product"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "name": "About",
-          "url": "https://aimrferdy.com/about"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "name": "Contact",
-          "url": "https://aimrferdy.com/contact"
-        }
-      ]
+  "@type": "SiteNavigationElement",
+  "@id": "https://aimrferdy.com/#navigation",
+  "name": "Main Navigation",
+  "hasPart": [
+    {
+      "@type": "WebPage",
+      "name": "Home",
+      "url": "https://aimrferdy.com/"
     },
+    {
+      "@type": "WebPage",
+      "name": "Blog",
+      "url": "https://aimrferdy.com/blog"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Tools",
+      "url": "https://aimrferdy.com/tools"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Product",
+      "url": "https://aimrferdy.com/product"
+    },
+    {
+      "@type": "WebPage",
+      "name": "About",
+      "url": "https://aimrferdy.com/about"
+    },
+    {
+      "@type": "WebPage",
+      "name": "Contact",
+      "url": "https://aimrferdy.com/contact"
+    }
+  ]
+},
 	// Service
 	{
   "@type": "Service",
