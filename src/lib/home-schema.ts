@@ -219,7 +219,7 @@ export const homeSchema = {
       "name": "Apakah AI Mr Ferdy dapat digunakan secara gratis?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Beberapa fitur AI Mr Ferdy dapat digunakan secara gratis, sementara fitur atau layanan tertentu mungkin tersedia dalam paket premium sesuai kebutuhan pengguna."
+        "text": "AI Mr Ferdy menyediakan berbagai AI Tools yang dapat digunakan secara gratis. Beberapa layanan lanjutan tersedia dalam paket premium dengan fitur tambahan."
       }
     },
     {
