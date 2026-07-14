@@ -65,7 +65,7 @@ export const homeSchema = {
       "inLanguage": "id-ID",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://aimrferdy.com/search?q={search_term_string}",
+        "target": "https://aimrferdy.com/searchresult/?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     },
