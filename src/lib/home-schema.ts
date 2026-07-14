@@ -118,7 +118,7 @@ export const homeSchema = {
         "@id": "https://aimrferdy.com/images/og-cover.jpg"
       },
 	  "mainEntity": {
-     "@id": "https://aimrferdy.com/#faq"
+     "@id": "https://aimrferdy.com/#organization"
      },
       "inLanguage": "id-ID"
     },
