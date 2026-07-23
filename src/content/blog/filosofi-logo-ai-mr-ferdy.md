@@ -4,7 +4,7 @@ description: "Mengenal filosofi logo AI Mr Ferdy, mulai dari makna warna, bentuk
 pubDate: 2026-07-23
 updatedDate: 2026-07-23
 author: "Ai Mr Ferdy"
-image: "https://cdn-my.pages.dev/logo/logo.png"
+image: "https://cdn-my.pages.dev/logo/bnr1.jpeg"
 popular: true
 ---
 <p>Logo bukan sekadar identitas visual, tetapi juga representasi dari visi, nilai, dan arah sebuah perusahaan. Logo <strong>AI Mr Ferdy (AMF)</strong> dirancang untuk menggambarkan perpaduan antara kecerdasan buatan, kreativitas manusia, serta komitmen menghadirkan solusi digital yang modern, inovatif, dan mudah diakses oleh masyarakat Indonesia.</p>
@@ -157,7 +157,7 @@ popular: true
 <p><strong>Ide &rarr; Inovasi &rarr; Teknologi &rarr; Masa Depan</strong></p>
 
 <p>Gradasi juga menggambarkan bahwa perkembangan AI selalu bergerak maju tanpa henti.</p>
-<img src="https://cdn-my.pages.dev/logo/bnr1.jpeg" alt="Logo Text Ai Mr Ferdy">
+<img src="https://cdn-my.pages.dev/logo/logo.png" alt="Logo Ai Mr Ferdy">
 <hr />
 <h1>Efek 3D</h1>
 
