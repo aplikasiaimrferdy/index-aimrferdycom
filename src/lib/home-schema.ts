@@ -26,7 +26,6 @@ export const homeSchema = {
 ],
       "sameAs": [
     "https://www.youtube.com/@ai-mr-ferdy",
-    "https://www.instagram.com/aimrferdyofficial",
     "https://medium.com/@aimrferdy",
     "https://github.com/aimrfredy",
     "https://web.facebook.com/groups/aimrferdyofficial",
