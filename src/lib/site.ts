@@ -9,7 +9,7 @@ export const SITE = {
 
   locale: "id-ID",
 
-  themeColor: "#ffffff",
+  themeColor: "#0b0f19",
 
   image: "/images/og-cover.jpg",
 
