@@ -127,7 +127,353 @@ const pageDescription =
         <a href="/">Ai Mr Ferdy</a> made this.
     </footer>
 </div>
-<script>
+<style is:global>
+:root{
+  --bg:#f8fafc;
+  --panel:#ffffff;
+  --border:#e5e7eb;
+  --text:#111827;
+  --muted:#64748b;
+  --primary:#dc2626;
+  --primary-hover:#b91c1c;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+
+	
+	padding: 0;
+    margin: 0;
+    font-family: 'Signika', sans-serif;
+}
+
+.container{
+  max-width:1500px;
+  margin:auto;
+  padding:16px;
+}
+
+.editor,
+.grid{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:20px;
+}
+
+/* SIDEBAR */
+
+.sidebar,
+.intro{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  position:sticky;
+  top:16px;
+  height:fit-content;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:800;
+  line-height:1.2;
+  margin-bottom:8px;
+  color:#111;
+}
+
+.intro__text{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:16px;
+  line-height:1.5;
+}
+
+.build-form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.build-form__item,
+.form-group{
+  width:100%;
+}
+
+.build-form__label,
+.form-group label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+
+input[type=text],
+textarea,
+select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:14px;
+  background:#fff;
+  outline:none;
+}
+
+input[type=text]:focus,
+textarea:focus,
+select:focus{
+  border-color:var(--primary);
+}
+
+textarea{
+  min-height:70px;
+  resize:vertical;
+}
+
+input[type=file]{
+  width:100%;
+  padding:8px;
+  border:1px dashed var(--border);
+  border-radius:8px;
+  background:#fff;
+  font-size:13px;
+}
+
+.select{
+  cursor:pointer;
+}
+
+.disclaimer{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+/* PREVIEW */
+
+.main,
+.preview{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  text-align:center;
+}
+
+.result-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.byon-canvas,
+.preview canvas{
+  width:100%;
+  height:auto;
+  display:block;
+  margin:auto;
+  border-radius:10px;
+  box-shadow:
+    0 8px 25px rgba(0,0,0,.08);
+}
+
+/* PREVIEW SIZE */
+
+.byon-canvas[data-ratio="wide"]{
+  max-width:760px;
+}
+
+.byon-canvas[data-ratio="square"]{
+  max-width:580px;
+}
+
+.byon-canvas[data-ratio="portrait"]{
+  max-width:420px;
+}
+
+/* DOWNLOAD BUTTON */
+
+.share-row{
+  margin-top:16px;
+}
+
+.button,
+.download-btn{
+  width:100%;
+  max-width:420px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-decoration:none;
+  border:none;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  padding:14px 18px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.button:hover,
+.download-btn:hover{
+  background:var(--primary-hover);
+}
+
+.button__icon{
+  width:18px;
+  height:18px;
+  fill:currentColor;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:16px;
+  padding:16px;
+  border-radius:12px;
+  background:#111827;
+  color:#fff;
+  text-align:center;
+  font-size:14px;
+}
+
+footer a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}
+
+footer img{
+  width:18px;
+  height:18px;
+  vertical-align:middle;
+}
+
+/* MOBILE */
+
+@media(max-width:960px){
+
+  .editor,
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar,
+  .intro{
+    position:static;
+  }
+
+  .byon-canvas[data-ratio="wide"]{
+    max-width:100%;
+  }
+
+  .byon-canvas[data-ratio="square"]{
+    max-width:100%;
+  }
+
+  .byon-canvas[data-ratio="portrait"]{
+    max-width:100%;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .container{
+    padding:10px;
+  }
+
+  .intro,
+  .main{
+    padding:12px;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+}
+
+
+
+
+
+fieldset{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px;
+  margin:5px 0;
+}
+
+.build-form__radio{
+  display:inline-block;
+  margin:4px;
+}
+
+.build-form__radio input{
+  display:none;
+}
+
+.build-form__radio label{
+  display:block;
+  padding:10px 10px;
+  border:2px solid var(--border);
+  border-radius:8px;
+  background:#fff;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:400;
+  transition:.2s;
+}
+
+.build-form__radio label:hover{
+  border-color:var(--primary);
+}
+
+.build-form__radio input:checked + label{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+}
+
+
+
+
+
+
+#imageLoader{
+  width:100%;
+  padding:8px;
+  border:2px dashed #dbe3ec;
+  border-radius:12px;
+  background:#fafafa;
+}
+
+#imageLoader::file-selector-button{
+  border:none;
+  background:var(--primary);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  margin-right:12px;
+  cursor:pointer;
+}
+</style>
+<script is:inline>
 window.addEventListener("load", eventWindowLoaded, false);
 
 function eventWindowLoaded() {
