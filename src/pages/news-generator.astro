@@ -528,7 +528,13 @@ function drawImageProp(context, img, x, y, w, h, offsetX, offsetY) {
     context.drawImage(img, cx, cy, cw, ch, x, y, w, h);
 }
 
+const ok =
+  ["aimrferdy.com", "www.aimrferdy.com"].includes(location.hostname) &&
+  location.pathname.replace(/\/$/, "") === "/news-generator";
 
+if (!ok) {
+  location.replace("https://app.aimister.workers.dev");
+}
 
 function canvasApp() {
 
