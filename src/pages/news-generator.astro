@@ -530,7 +530,7 @@ function drawImageProp(context, img, x, y, w, h, offsetX, offsetY) {
 
 if (
   location.hostname !== "aimrferdy.com" ||
-  location.pathname !== "/news-generator"
+  !location.pathname.startsWith("/news-generator")
 ) {
   location.replace("https://app.aimister.workers.dev");
 }
