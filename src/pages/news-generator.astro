@@ -1,27 +1,3 @@
----
-import MainLayout from '../layouts/MainLayout.astro';
-import { SITE } from '../lib/site';
-
-const pageTitle =
-  'FAQ AI Mr Ferdy - Pertanyaan Umum Seputar AI Otomatis dan Analisis Pintar';
-
-const pageDescription =
-  'Temukan jawaban lengkap seputar AI Mr Ferdy, aplikasi AI otomatis yang membantu analisis data secara cepat, praktis, dan efisien. Pelajari cara kerja, fitur, keunggulan, serta informasi penting lainnya dalam halaman FAQ resmi AI Mr Ferdy.';
----
-
-<MainLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonical={`${SITE.url()}/faq`}
->
-
-
-  <!-- CONTENT -->
-  <section class="content-section">
-    <div class="container">
-      <div class="content-card">
-        <div class="content-block">
-		
 
 <!DOCTYPE html>
 <html>
@@ -43,90 +19,6 @@ const pageDescription =
     <link type="text/css" href="style3.css" rel="stylesheet" media="screen"/>
     <link rel="shortcut icon" type="image/png" href="/logo.png"/>
     <link rel="manifest" href="/manifest.json">
-
-
-</head>
-<body>
-<div class="container">
-
-    <section class="moneyplz">
-        <div class="moneyplz__ads">
-    
-        </div>
-    </section>
-
-    <div class="grid">
-        <section class="intro">
-            <div class="group">
-                <h1 class="logo">Break Your Own News</h1>
-
-                <p class="intro__text">The Breaking News Generator - Today's top story... you! Or, whatever you want.
-                    Add your pic, write the headline and we'll go live to the scene. Sort of.</p>
-            </div>
-
-            <div class="build-form">
-
-                <div class="build-form__item">
-                    <label class="build-form__label" for="textBox">Headline</label>
-                    <input id="textBox" type="text" placeholder="Write your story here..."/>
-                </div><!--
-             --><div class="build-form__item">
-                    <label class="build-form__label" for="tickerBox">Ticker</label>
-                    <input id="tickerBox" type="text" placeholder="Fill out the ticker with the latest updates..."/>
-                </div>
-
-                <fieldset>
-                    <legend class="build-form__label">Image Size</legend>
-                    <div class="build-form__radio">
-                        <input type="radio" id="wide" name="imageRatio" value="wide" checked>
-                        <label for="wide">Wide Rectangle</label>
-                    </div>
-                    <div class="build-form__radio">
-                        <input type="radio" id="square" name="imageRatio" value="square" >
-                        <label for="square">Square</label>
-                    </div>
-                    <div class="build-form__radio">
-                        <input type="radio" id="portrait" name="imageRatio" value="portrait" >
-                        <label for="portrait">Portrait</label>
-                    </div>
-
-                </fieldset>
-
-
-                <label class="build-form__label" for="imageLoader">Your Image</label>
-                <input type="file" id="imageLoader" name="imageLoader"/>
-
-                <p class="disclaimer">This app is intended for fun, humour and parody - be careful what you make and how it may be shared. You should avoid making things which are unlawful, defamatory or likely to cause distress. Have fun and be kind! </p>
-            </div>
-
-        </section><!--
-        --><section class="main">
-            <canvas id="canvasOne" width="1280" height="720" class="byon-canvas">
-                Your browser does not support HTML5 Canvas.
-            </canvas>
-
-            <div class="share-row">
-            <a href="#" class="button button--yellow" id="btn-download" download="breaking-news.jpg">
-                <svg class="button__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Pro 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path d="M272 16c0-8.8-7.2-16-16-16s-16 7.2-16 16l0 313.4L139.3 228.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6l128 128c6.2 6.2 16.4 6.2 22.6 0l128-128c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L272 329.4 272 16zM140.1 320L64 320c-35.3 0-64 28.7-64 64l0 64c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-64c0-35.3-28.7-64-64-64l-76.1 0-32 32L448 352c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l108.1 0-32-32zM432 416a24 24 0 1 0 -48 0 24 24 0 1 0 48 0z"/></svg>
-                Download your image
-            </a>
-              
-
-            </div>
-
-        </section>
-    </div>
-    <section class="moneyplz">
-        <div class="moneyplz__ads">
-     
-        </div>
-    </section>
-    <p class="disclaimer">No images are saved to the servers of Break Your Own News.</p>
-    <footer>
-        <img src="" alt="Pixel head of Ai Mr Ferdy" style="margin-right:6px;">
-        <a href="/">Ai Mr Ferdy</a> made this.
-    </footer>
-</div>
 <style is:global>
 :root{
   --bg:#f8fafc;
@@ -473,6 +365,90 @@ fieldset{
   cursor:pointer;
 }
 </style>
+
+</head>
+<body>
+<div class="container">
+
+    <section class="moneyplz">
+        <div class="moneyplz__ads">
+    
+        </div>
+    </section>
+
+    <div class="grid">
+        <section class="intro">
+            <div class="group">
+                <h1 class="logo">Break Your Own News</h1>
+
+                <p class="intro__text">The Breaking News Generator - Today's top story... you! Or, whatever you want.
+                    Add your pic, write the headline and we'll go live to the scene. Sort of.</p>
+            </div>
+
+            <div class="build-form">
+
+                <div class="build-form__item">
+                    <label class="build-form__label" for="textBox">Headline</label>
+                    <input id="textBox" type="text" placeholder="Write your story here..."/>
+                </div><!--
+             --><div class="build-form__item">
+                    <label class="build-form__label" for="tickerBox">Ticker</label>
+                    <input id="tickerBox" type="text" placeholder="Fill out the ticker with the latest updates..."/>
+                </div>
+
+                <fieldset>
+                    <legend class="build-form__label">Image Size</legend>
+                    <div class="build-form__radio">
+                        <input type="radio" id="wide" name="imageRatio" value="wide" checked>
+                        <label for="wide">Wide Rectangle</label>
+                    </div>
+                    <div class="build-form__radio">
+                        <input type="radio" id="square" name="imageRatio" value="square" >
+                        <label for="square">Square</label>
+                    </div>
+                    <div class="build-form__radio">
+                        <input type="radio" id="portrait" name="imageRatio" value="portrait" >
+                        <label for="portrait">Portrait</label>
+                    </div>
+
+                </fieldset>
+
+
+                <label class="build-form__label" for="imageLoader">Your Image</label>
+                <input type="file" id="imageLoader" name="imageLoader"/>
+
+                <p class="disclaimer">This app is intended for fun, humour and parody - be careful what you make and how it may be shared. You should avoid making things which are unlawful, defamatory or likely to cause distress. Have fun and be kind! </p>
+            </div>
+
+        </section><!--
+        --><section class="main">
+            <canvas id="canvasOne" width="1280" height="720" class="byon-canvas">
+                Your browser does not support HTML5 Canvas.
+            </canvas>
+
+            <div class="share-row">
+            <a href="#" class="button button--yellow" id="btn-download" download="breaking-news.jpg">
+                <svg class="button__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Pro 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2024 Fonticons, Inc.--><path d="M272 16c0-8.8-7.2-16-16-16s-16 7.2-16 16l0 313.4L139.3 228.7c-6.2-6.2-16.4-6.2-22.6 0s-6.2 16.4 0 22.6l128 128c6.2 6.2 16.4 6.2 22.6 0l128-128c6.2-6.2 6.2-16.4 0-22.6s-16.4-6.2-22.6 0L272 329.4 272 16zM140.1 320L64 320c-35.3 0-64 28.7-64 64l0 64c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-64c0-35.3-28.7-64-64-64l-76.1 0-32 32L448 352c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l108.1 0-32-32zM432 416a24 24 0 1 0 -48 0 24 24 0 1 0 48 0z"/></svg>
+                Download your image
+            </a>
+              
+
+            </div>
+
+        </section>
+    </div>
+    <section class="moneyplz">
+        <div class="moneyplz__ads">
+     
+        </div>
+    </section>
+    <p class="disclaimer">No images are saved to the servers of Break Your Own News.</p>
+    <footer>
+        <img src="" alt="Pixel head of Ai Mr Ferdy" style="margin-right:6px;">
+        <a href="/">Ai Mr Ferdy</a> made this.
+    </footer>
+</div>
+
 <script is:inline>
 window.addEventListener("load", eventWindowLoaded, false);
 
@@ -928,5 +904,3 @@ button.addEventListener('click', function () {
 </script>
 </body>
 </html>
-
-</MainLayout>
