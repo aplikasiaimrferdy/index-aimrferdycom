@@ -1,138 +1,44 @@
 ---
-import "../styles/global.css";
-import SeoHead from "../components/SeoHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { generateFaqSchema } from "../lib/faq-schema";
-import { homeSchema } from "../lib/home-schema";
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import "../../styles/tools.css";
+import { SITE } from "../../lib/site";
 
-const {
-  title,
-  description,
-  canonical,
-  html = "",
-  articleSchema,
-  breadcrumbs,
-  amp,
-  slug,
-  isHome = false,
-pageCSS = []
-} = Astro.props;
-
-const faqSchema = generateFaqSchema(html);
-
-
-
+const tools = await getCollection("tools");
 ---
 
-<!doctype html>
-<html lang="id">
-<head>
-  <SeoHead
-  title={title}
-  description={description}
-  canonical={canonical}
-  articleSchema={articleSchema}
-  breadcrumbs={breadcrumbs}
-  faqSchema={faqSchema}
-  amp={amp}
-  slug={slug}
-  isHome={isHome}
-/>
+<MainLayout
+  title={`Tools | ${SITE.title}`}
+  description="Kumpulan tools yang tersedia."
+>
+  <section class="tools-page">
+    <div class="container">
+      <div class="page-header">
+        <h1>Tools</h1>
+        <p>Kumpulan AI tools dan utility yang tersedia.</p>
+      </div>
 
-{pageCSS.map(css => (
-  <link rel="stylesheet" href={`/styles/${css}.css`}>
-))}
+      <div class="tools-grid">
+        {tools.map((tool) => (
+          <article class="tool-card">
+            <h2>
+              <a href={`/tools/${tool.slug}/`}>
+                {tool.data.title}
+              </a>
+            </h2>
 
-{isHome && (
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(homeSchema)}
-  />
-)}
+            <p>{tool.data.description}</p>
 
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="tool-button"
+            >
+              Buka Tool →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
 
-
-<script is:inline>
-  if (localStorage.getItem("theme") === "light") {
-    document.documentElement.classList.add("light-mode");
-  }
-</script>
-</head>
-
-<body>
-
-  <Header />
-
-  <main>
-    <slot />
-  </main>
-
-  <Footer />
-
-<script is:inline>
-
-const html = document.documentElement;
-
-const themeBtn =
-  document.getElementById("themeToggle");
-
-/* LOAD */
-
-if(localStorage.getItem("theme")==="light"){
-  html.classList.add("light-mode");
-}
-
-/* TOGGLE */
-
-themeBtn?.addEventListener("click",()=>{
-
-  html.classList.toggle("light-mode");
-
-  localStorage.setItem(
-    "theme",
-    html.classList.contains("light-mode")
-      ? "light"
-      : "dark"
-  );
-
-});
-
-</script>
-
-<script is:inline>
-
-function openMenu(){
-  document
-    .getElementById("mobileMenu")
-    .classList.add("active");
-}
-
-function closeMenu(){
-  document
-    .getElementById("mobileMenu")
-    .classList.remove("active");
-}
-
-
-/* FAQ */
-
-const faqItems =
-  document.querySelectorAll(".faq-item");
-
-faqItems.forEach(item=>{
-
-  item
-    .querySelector(".faq-question")
-    .addEventListener("click",()=>{
-
-      item.classList.toggle("active");
-
-    });
-
-});
-
-</script>
-
-</body>
-</html>
