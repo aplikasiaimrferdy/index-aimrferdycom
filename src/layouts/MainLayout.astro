@@ -103,8 +103,9 @@ const faqSchema = generateFaqSchema(html);
 <body>
 
   <Header />
-
-{autoBreadcrumbs.length > 1 && (
+{Astro.url.pathname.startsWith("/tools") &&
+  autoBreadcrumbs &&
+  autoBreadcrumbs.length > 1 && (
   <nav class="breadcrumb" aria-label="Breadcrumb">
     {autoBreadcrumbs.map((item, index) => (
       <>
