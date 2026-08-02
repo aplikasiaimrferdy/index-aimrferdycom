@@ -307,6 +307,73 @@ const pageDescription =
   </section>
 
 
+<!-- POPULAR TOOLS -->
+<section class="section">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Popular AI Tools
+    </h2>
+
+    <p class="section-desc">
+      Tools AI pilihan dalam ecosystem AI Mr Ferdy.
+    </p>
+
+    <div class="blog-grid">
+
+      {
+        popularTools.map((tool) => (
+
+          <article class="blog-card">
+
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="blog-card-link"
+            >
+
+              <div class="blog-card-image">
+
+                <img
+                  src={SITE.url(`/api/og/${tool.slug}.svg`)}
+                  alt={tool.data.title}
+                  loading="lazy"
+                  width="1200"
+                  height="630"
+                />
+
+              </div>
+
+              <div class="blog-card-content">
+
+                <h2>
+                  {tool.data.title}
+                </h2>
+
+                {tool.data.description && (
+                  <p>
+                    {tool.data.description}
+                  </p>
+                )}
+
+                <span class="readmore">
+                  Open Tool →
+                </span>
+
+              </div>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </div>
+
+</section>
 
 
 
