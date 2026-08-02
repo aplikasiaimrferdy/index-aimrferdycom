@@ -138,82 +138,126 @@ copyBtn.textContent =
 
 </script>
 
-<style>
+<style is:global>
+/* =========================
+   PROMPT GENERATOR
+========================= */
 
 .prompt-generator{
-margin:40px 0;
-padding:30px;
-border:1px solid #e5e7eb;
-border-radius:20px;
-background:#fff;
+  margin:40px 0;
+  padding:30px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(12px);
 }
 
 .form-group{
-margin-bottom:20px;
+  margin-bottom:20px;
 }
 
 .form-group label{
-display:block;
-font-weight:700;
-margin-bottom:8px;
+  display:block;
+  margin-bottom:8px;
+  font-weight:700;
+  color:var(--text);
 }
 
 .prompt-generator input,
 .prompt-generator select,
 .prompt-generator textarea{
-width:100%;
-padding:14px;
-border:1px solid #d1d5db;
-border-radius:12px;
-font-size:16px;
-box-sizing:border-box;
+  width:100%;
+  padding:14px;
+  box-sizing:border-box;
+
+  background:transparent;
+  color:var(--text);
+
+  border:1px solid var(--border);
+  border-radius:12px;
+
+  font:inherit;
+  transition:.2s ease;
+}
+
+.prompt-generator input::placeholder,
+.prompt-generator textarea::placeholder{
+  color:var(--soft);
+}
+
+.prompt-generator select{
+  cursor:pointer;
+}
+
+.prompt-generator input:focus,
+.prompt-generator select:focus,
+.prompt-generator textarea:focus{
+  outline:none;
+  border-color:var(--accent,#3b82f6);
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
 }
 
 .prompt-generator textarea{
-height:260px;
-resize:vertical;
+  min-height:260px;
+  resize:vertical;
+  line-height:1.6;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 
 #generatePrompt,
 #copyPrompt{
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:700;
-font-size:16px;
-margin-top:10px;
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
 #generatePrompt{
-background:#111827;
-color:#fff;
+  border:none;
+  background:linear-gradient(135deg,var(--accent,#3b82f6),var(--accent-hover,#2563eb));
+  color:#fff;
 }
 
 #copyPrompt{
-background:#f3f4f6;
-color:#111827;
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--border);
 }
 
 #generatePrompt:hover,
 #copyPrompt:hover{
-opacity:.9;
+  transform:translateY(-2px);
 }
 
-@media(max-width:768px){
-
-.prompt-generator{
-padding:20px;
-border-radius:16px;
+#generatePrompt:active,
+#copyPrompt:active{
+  transform:scale(.98);
 }
 
-.prompt-generator textarea{
-height:220px;
-}
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+  .prompt-generator{
+    padding:20px;
+    border-radius:16px;
+  }
+
+  .prompt-generator textarea{
+    min-height:220px;
+  }
 
 }
-
 </style>
 
 ## Apa Itu AI Prompt Generator?
