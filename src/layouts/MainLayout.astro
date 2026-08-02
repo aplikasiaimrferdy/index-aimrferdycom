@@ -57,11 +57,10 @@ const autoBreadcrumbs = breadcrumbs ?? (() => {
   return items;
 })();
 
-const faqSchema = generateFaqSchema(html);
-
-
 console.log(Astro.url.pathname);
 console.log(autoBreadcrumbs);
+
+const faqSchema = generateFaqSchema(html);
 ---
 
 <!doctype html>
