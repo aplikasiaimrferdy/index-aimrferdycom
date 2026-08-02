@@ -1,98 +1,285 @@
 /* ========================================
-PAGE
+   BLOG PAGE
+======================================== */
+
+.blog-page{
+  position:relative;
+
+  min-height:100vh;
+
+  overflow:hidden;
+
+  background:var(--bg);
+}
+
+
+/* ========================================
+   PAGE HERO
 ======================================== */
 
 .page-hero{
-padding:160px 0 70px;
+  position:relative;
 
-border-bottom:1px solid var(--border);
+  /* Sebelumnya 160px, dibuat lebih dekat */
+  padding:105px 28px 60px;
+
+  overflow:hidden;
+
+  border:1px solid var(--border);
+  border-radius:32px;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255,255,255,.08),
+      transparent 55%
+    ),
+    var(--card);
+
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
+
+
+/* HERO VERSI KECIL */
 
 .page-hero.small{
-padding:140px 0 50px;
+  /* Sebelumnya 140px */
+  padding:100px 28px 55px;
 }
+
+
+/* ========================================
+   EFFECT BACKGROUND
+======================================== */
+
+.page-hero::before{
+  content:"";
+
+  position:absolute;
+
+  width:420px;
+  height:420px;
+
+  top:-260px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.06);
+
+  filter:blur(70px);
+
+  pointer-events:none;
+}
+
+
+/* ========================================
+   HERO ALIGNMENT
+======================================== */
 
 .page-hero.center{
-text-align:center;
+  text-align:center;
 }
+
+.page-hero.center p{
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+/* ========================================
+   HERO TITLE
+======================================== */
 
 .page-hero h1{
-font-size:72px;
-line-height:1.05;
+  position:relative;
+  z-index:1;
 
-margin-bottom:20px;
+  margin:0 0 16px;
 
-letter-spacing:-1px;
+  color:var(--text);
+
+  font-size:clamp(
+    42px,
+    7vw,
+    68px
+  );
+
+  line-height:1.05;
+
+  letter-spacing:-1.5px;
 }
+
+
+/* ========================================
+   HERO DESCRIPTION
+======================================== */
 
 .page-hero p{
-max-width:760px;
+  position:relative;
+  z-index:1;
 
-font-size:20px;
-line-height:1.8;
+  max-width:700px;
 
-color:var(--soft);
+  margin-bottom:0;
+
+  color:var(--soft);
+
+  font-size:18px;
+  line-height:1.75;
 }
+
+
+/* ========================================
+   PAGE WRAPPER
+======================================== */
 
 .page-wrap{
-max-width:860px;
-margin:auto;
+  max-width:860px;
+
+  margin:auto;
 }
 
+
+/* ========================================
+   PAGE CONTENT
+======================================== */
+
 .page-content{
-padding:70px 0 120px;
+  padding:60px 0 110px;
 }
 
 .page-content h2{
-font-size:22px;
-line-height:1.2;
+  margin:55px 0 18px;
 
-margin-top:60px;
-margin-bottom:18px;
+  color:var(--text);
+
+  font-size:30px;
+  line-height:1.25;
+
+  letter-spacing:-.4px;
 }
 
 .page-content h3{
-font-size:28px;
-line-height:1.3;
+  margin:38px 0 14px;
 
-margin-top:42px;
-margin-bottom:14px;
+  color:var(--text);
+
+  font-size:23px;
+  line-height:1.35;
 }
 
 .page-content p{
-font-size:18px;
-line-height:1.9;
+  margin-bottom:22px;
 
-margin-bottom:24px;
+  color:var(--soft);
 
-color:var(--soft);
+  font-size:17px;
+  line-height:1.9;
 }
 
 .page-content ul,
 .page-content ol{
-padding-left:24px;
-margin-bottom:28px;
+  padding-left:24px;
+
+  margin-bottom:28px;
 }
 
 .page-content li{
-margin:10px 0;
+  margin:10px 0;
 
-color:var(--soft);
+  color:var(--soft);
+
+  line-height:1.75;
 }
 
 .page-content strong{
-color:var(--text);
+  color:var(--text);
 }
 
+
+/* ========================================
+   BLOCKQUOTE
+======================================== */
+
 .page-content blockquote{
-padding:24px 28px;
+  margin:34px 0;
 
-margin:34px 0;
+  padding:24px 28px;
 
-border:1px solid var(--border);
-border-radius:24px;
+  border:1px solid var(--border);
+  border-left:3px solid var(--text);
 
-background:var(--card);
+  border-radius:20px;
+
+  background:var(--card);
+
+  color:var(--text);
+
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media(max-width:768px){
+
+  .page-hero{
+    padding:
+      85px
+      20px
+      48px;
+
+    border-radius:24px;
+  }
+
+  .page-hero.small{
+    padding:
+      80px
+      20px
+      45px;
+  }
+
+  .page-hero h1{
+    margin-bottom:14px;
+
+    font-size:44px;
+  }
+
+  .page-hero p{
+    font-size:16px;
+    line-height:1.7;
+  }
+
+  .page-content{
+    padding:
+      45px
+      0
+      80px;
+  }
+
+  .page-content h2{
+    margin-top:42px;
+
+    font-size:26px;
+  }
+
+  .page-content h3{
+    font-size:21px;
+  }
+
+  .page-content p{
+    font-size:16px;
+    line-height:1.85;
+  }
+
 }
 
 /* ========================================
