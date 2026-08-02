@@ -10,13 +10,6 @@ const blog = defineCollection({
   }),
 });
 
-const tools = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    popular: z.boolean().optional(),
-  }),
-});
 
 const product = defineCollection({
   type: 'content',
@@ -40,6 +33,5 @@ const product = defineCollection({
 
 export const collections = {
   blog,
-  tools,
   product,
 };
