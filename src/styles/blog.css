@@ -21,7 +21,7 @@
   position:relative;
 
   /* Sebelumnya 160px, dibuat lebih dekat */
-  padding:105px 28px 60px;
+  padding:105px 0px 60px;
 
   overflow:hidden;
 
@@ -45,8 +45,9 @@
 
 .page-hero.small{
   /* Sebelumnya 140px */
-  padding:100px 28px 55px;
+  padding:100px 0px 55px;
 }
+
 
 
 /* ========================================
