@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import "../../styles/tools.css";
+import { SITE } from "../../lib/site";
+
+const tools = await getCollection("tools");
+---
+
+<MainLayout
+  title={`Tools | ${SITE.title}`}
+  description="Kumpulan tools yang tersedia."
+>
+  <section class="tools-page">
+    <div class="container">
+      <div class="page-header">
+        <h1>Tools</h1>
+        <p>Kumpulan AI tools dan utility yang tersedia.</p>
+      </div>
+
+      <div class="tools-grid">
+        {tools.map((tool) => (
+          <article class="tool-card">
+            <h2>
+              <a href={`/tools/${tool.slug}/`}>
+                {tool.data.title}
+              </a>
+            </h2>
+
+            <p>{tool.data.description}</p>
+
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="tool-button"
+            >
+              Buka Tool →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
