@@ -1,294 +1,146 @@
-/* TOOLS LAYOUT */
+/* ==========================================
+   TOOLS CSS
+   ========================================== */
 
-.tools-page{
-margin-top:150px;
+/* ===== Layout ===== */
+.tools-page {
+  max-width: 1000px;
+  margin: 80px auto 0;
+  padding: 150px 0 100px;
 }
-.tools-page,
+
 .tool-container,
 .category-page {
-  max-width:1000px;
-  margin:auto;
-  padding:150px 0 100px;
+  max-width: 1000px;
+  margin: auto;
+  padding: 150px 0 100px;
 }
 
-/* GRID */
+/* ===== Hero ===== */
+.tools-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* ===== Grid ===== */
 .tools-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
-/* CARD */
+/* ===== Card ===== */
 .tool-card {
-  display:block;
-  padding:18px;
-  border-radius:14px;
-  background:var(--card);
-  border:1px solid var(--border);
-  text-decoration:none;
-  color:var(--text);
-  transition:.25s;
-  position:relative;
+  display: block;
+  position: relative;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--text);
+  text-decoration: none;
+  transition: .25s ease;
 }
 
 .tool-card:hover {
-  transform:translateY(-4px);
-  border-color:var(--accent);
+  transform: translateY(-4px);
+  border-color: var(--accent);
 }
 
-/* ICON */
+/* ===== Icon ===== */
 .tool-icon {
-  font-size:24px;
-  margin-bottom:10px;
-}
-
-/* BADGE */
-.badge {
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:10px;
-  background:red;
-  color:#fff;
-  padding:4px 6px;
-  border-radius:6px;
-}
-
-/* TOOL BOX */
-.tool-box {
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:20px;
-  border-radius:16px;
-  margin-bottom:20px;
-}
-
-/* INPUT */
-.tool-input,
-.tool-select,
-.tool-textarea,
-input,
-textarea {
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--text);
-  margin-bottom:12px;
-}
-
-.tool-textarea {
-  min-height:120px;
-}
-
-.btn-group{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  margin-top:25px;
-  flex-wrap:wrap;
-}
-
-/* RESET yang bikin rusak */
-.btn-primary,
-.btn-secondary{
-  width:auto !important; text-decoration:none;
-}
-
-
-/* BASE */
-.btn{
-  padding:12px 20px;
-  border-radius:10px;
-  font-size:14px;
-  font-weight:600;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  transition:.25s ease;
-}
-
-/* PRIMARY */
-.btn-primary{
-  background:linear-gradient(135deg,#3b82f6,#2563eb);
-  color:#fff;
-  box-shadow:0 6px 18px rgba(37,99,235,.35);
-}
-
-.btn-primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(37,99,235,.45);
-}
-
-/* SECONDARY */
-.btn-secondary{
-  background:#fff;
-  border:1px solid var(--border);
-  color:var(--text);
-}
-
-.btn-secondary:hover{
-  border-color:var(--accent);
-  transform:translateY(-2px);
-}
-
-/* MOBILE tetap full */
-@media(max-width:480px){
-  .btn-group{
-    flex-direction:column;
-    align-items:stretch;
-  }
-
-  .btn{
-    width:100%;
-    justify-content:center;
-  }
-}
-
-/* RESULT */
-.tool-result {
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px;
-}
-
-/* CATEGORY */
-.category-header {
-  padding:14px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:10px;
-  cursor:pointer;
-  display:flex;
-  justify-content:space-between;
-}
-
-.category-content {
-  display:none;
-  padding:10px;
-}
-
-.category-content.active {
-  display:grid;
-  gap:10px;
-}
-
-/* TOOLS HERO */
-.tools-hero {
-  text-align:center;
-  margin-bottom:40px;
-}
-
-/* TOOLS STATS (yang tadi lu minta) */
-.tools-stats{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  flex-wrap:wrap;
-}
-
-.tools-stats div{
-  background:var(--card);
-  padding:14px 18px;
-  border-radius:12px;
-  text-align:center;
-  transition:.25s;
-
-  /* INI KUNCI */
-  width:auto;
-  min-width:80px;
-}
-
-/* TEXT */
-.tools-stats strong{
-  display:block;
-  font-size:16px;
-  margin-bottom:2px;
-}
-
-.tools-stats span{
-  font-size:12px;
-  opacity:.7;
-}
-
-/* MOBILE */
-@media(max-width:480px){
-.tools-stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.tools-stats div{
-  min-width:0; /* ðŸ”¥ penting biar tidak maksa turun */
-  padding:12px;
-}
-}
-
-/* SEARCH */
-.tools-search input {
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-}
-
-/* MOBILE */
-@media (max-width:768px){
-  .tools-grid {
-    grid-template-columns:1fr;
-  }
-
-  .tool-container,
-  .tools-page {
-    padding:14px;
-  }
-}
-
-/* ================================
-   TOOLS UI ENHANCEMENT (MERGED)
-   Tempel di paling bawah tools.css
-================================ */
-
-/* ===== TYPO & HEADER ===== */
-.tool-box h1 {
   font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* ===== Badge ===== */
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: red;
+  color: #fff;
+  font-size: 10px;
+}
+
+/* ===== Tool Box ===== */
+.tool-box {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  transition: .25s ease;
+}
+
+.tool-box:hover {
+  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.tool-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    transparent,
+    var(--accent),
+    transparent
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: .12;
+}
+
+/* ===== Heading ===== */
+.tool-box h1 {
   margin-bottom: 6px;
+  font-size: 24px;
 }
 
 .tool-box .desc {
-  font-size: 14px;
-  opacity: 0.7;
   margin-bottom: 18px;
+  font-size: 14px;
+  opacity: .7;
 }
 
-/* ===== FORM GROUP ===== */
+/* ===== Form ===== */
 .form-group {
   margin-bottom: 14px;
 }
 
 .form-group label {
-  font-size: 13px;
-  margin-bottom: 5px;
   display: block;
-  opacity: 0.8;
+  margin-bottom: 5px;
+  font-size: 13px;
+  opacity: .8;
 }
 
-/* ===== INPUT / SELECT / TEXTAREA (UNIFIED) ===== */
 .tool-input,
 .tool-select,
 .tool-textarea,
 input,
 textarea,
 select {
-  transition: 0.2s ease;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  transition: .2s ease;
 }
 
-/* focus glow (pakai accent yang sudah ada) */
 .tool-input:focus,
 .tool-select:focus,
 .tool-textarea:focus,
@@ -296,10 +148,10 @@ input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+  outline: none;
 }
 
-/* textarea improvement */
 .tool-textarea,
 textarea {
   min-height: 120px;
@@ -307,75 +159,211 @@ textarea {
   font-family: inherit;
 }
 
-/* ===== RESULT ===== */
-.tool-result,
-#result {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* ===== BUTTON GROUP (MERGE TANPA DOUBLING) ===== */
+/* ===== Buttons ===== */
 .btn-group {
-  justify-content: space-between; /* override center */
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.btn-group .btn,
+.btn,
 .btn-group button {
-  flex: 1;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: .25s ease;
 }
 
-/* ===== BUTTON INTERACTION ===== */
-.btn-primary:active,
-.btn-secondary:active {
-  transform: scale(0.96);
-}
-
-/* ===== TOOL BOX HOVER ===== */
-.tool-box {
-  transition: 0.25s ease;
-}
-
-.tool-box:hover {
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
-
-/* ===== SUBTLE BORDER EFFECT (OPTIONAL, TIDAK TABRAK) ===== */
-.tool-box::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  padding: 1px;
-  background: linear-gradient(135deg, transparent, var(--accent), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.12;
-}
-
-/* pastikan parent punya positioning */
-.tool-box {
-  position: relative;
-}
-
-/* ===== FIX KECIL (HAPUS KEBUTUHAN !important) ===== */
-/* kamu sebelumnya pakai !important â€” kita override lebih halus */
 .btn-primary,
 .btn-secondary {
   width: auto;
 }
 
-/* ===== MOBILE IMPROVE ===== */
-@media(max-width:480px){
-  .btn-group{
-    flex-direction:column;
-    align-items:stretch;
+.btn-primary {
+  background: linear-gradient(135deg,#3b82f6,#2563eb);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(37,99,235,.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37,99,235,.45);
+}
+
+.btn-secondary {
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(.96);
+}
+
+/* ===== Result ===== */
+.tool-result,
+#result {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ===== Category ===== */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.category-content {
+  display: none;
+  padding: 10px;
+}
+
+.category-content.active {
+  display: grid;
+  gap: 10px;
+}
+
+/* ===== Stats ===== */
+.tools-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tools-stats div {
+  min-width: 80px;
+  width: auto;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--card);
+  text-align: center;
+  transition: .25s;
+}
+
+.tools-stats strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 16px;
+}
+
+.tools-stats span {
+  font-size: 12px;
+  opacity: .7;
+}
+
+/* ===== Search ===== */
+.tools-search input {
+  width: 100%;
+}
+
+/* ===== Breadcrumb ===== */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: 2rem;
+  font-size: .9rem;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
+
+/* ===== TOC ===== */
+.toc {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.toc ul {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+}
+
+.toc li {
+  margin: .4rem 0;
+}
+
+/* ===== Tool Content ===== */
+.tool-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.tool-content h1 {
+  margin-bottom: 1rem;
+}
+
+.tool-description {
+  margin-bottom: 2rem;
+  color: var(--text-soft);
+}
+
+/* ===== Responsive ===== */
+@media (max-width:768px) {
+
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tools-page,
+  .tool-container,
+  .category-page {
+    padding: 14px;
+  }
+
+}
+
+@media (max-width:480px) {
+
+  .btn-group {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .btn,
-  .btn-group button{
-    width:100%;
+  .btn-group button {
+    width: 100%;
   }
+
+  .tools-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+  }
+
+  .tools-stats div {
+    min-width: 0;
+    padding: 12px;
+  }
+
 }
