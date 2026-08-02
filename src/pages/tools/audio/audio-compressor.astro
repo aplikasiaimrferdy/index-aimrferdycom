@@ -10,7 +10,7 @@ export const meta = {
 ---
 
 <MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tool"]}>
-
+<div class="page-tools">
 <!-- HERO -->
 <section class="tool-hero">
   <h1>🎧 Audio Compressor</h1>
@@ -90,7 +90,7 @@ export const meta = {
   </details>
 
 </section>
-
+</div>
 <script is:inline>
 const qualityInput = document.getElementById("quality");
 const qLabel = document.getElementById("qLabel");
