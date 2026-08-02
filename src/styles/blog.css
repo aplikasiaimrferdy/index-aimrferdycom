@@ -280,89 +280,147 @@ line-height:1.8;
 color:var(--soft);
 }
 
-/* STICKY CTA */
+/* =========================
+   STICKY CTA
+========================= */
 
 .sticky-cta{
-position:sticky;
-top:90px;
+  position:sticky;
+  top:90px;
+  z-index:50;
 
-z-index:50;
+  margin-bottom:40px;
+  padding:18px 22px;
 
-margin-bottom:40px;
+  border:1px solid var(--border);
+  border-radius:24px;
 
-padding:18px 22px;
+  /* Menggunakan --card dari root */
+  background:var(--card);
 
-border:1px solid var(--border);
-border-radius:24px;
-
-background:rgba(255,255,255,.78);
-
-backdrop-filter:blur(14px);
--webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
 }
 
-body.dark .sticky-cta{
-background:rgba(10,10,10,.72);
-}
+
+/* =========================
+   STICKY CONTENT
+========================= */
 
 .sticky-content{
-display:grid;
+  display:grid;
 
-grid-template-columns:
-minmax(0,1fr) auto;
+  grid-template-columns:
+    minmax(0,1fr) auto;
 
-align-items:center;
-gap:18px;
+  align-items:center;
+  gap:18px;
 }
 
+
+/* =========================
+   STICKY TEXT
+========================= */
+
 .sticky-text{
-min-width:0;
+  min-width:0;
 }
 
 .sticky-text strong{
-display:block;
+  display:block;
 
-margin-bottom:4px;
+  margin-bottom:4px;
 
-font-size:15px;
-font-weight:700;
+  /* Menggunakan --text */
+  color:var(--text);
 
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
+  font-size:15px;
+  font-weight:700;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .sticky-text p{
-font-size:14px;
-line-height:1.6;
+  /* Menggunakan --soft */
+  color:var(--soft);
 
-color:var(--soft);
+  font-size:14px;
+  line-height:1.6;
 
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
+
+/* =========================
+   CTA BUTTON
+========================= */
+
 .cta-btn{
-display:inline-flex;
-align-items:center;
-justify-content:center;
+  display:inline-flex;
 
-padding:12px 18px;
+  align-items:center;
+  justify-content:center;
 
-border-radius:14px;
+  padding:12px 18px;
 
-background:var(--text);
-color:var(--bg);
+  border-radius:14px;
 
-font-size:14px;
-font-weight:700;
+  /* Warna otomatis mengikuti mode */
+  background:var(--text);
+  color:var(--bg);
 
-transition:.25s ease;
+  font-size:14px;
+  font-weight:700;
+
+  white-space:nowrap;
+
+  transition:
+    transform .25s ease,
+    opacity .25s ease;
 }
 
 .cta-btn:hover{
-transform:translateY(-2px);
+  transform:translateY(-2px);
+  opacity:.85;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+  .sticky-cta{
+    top:72px;
+
+    padding:15px;
+
+    border-radius:20px;
+  }
+
+  .sticky-content{
+    gap:12px;
+  }
+
+  .sticky-text strong{
+    font-size:14px;
+  }
+
+  .sticky-text p{
+    font-size:12px;
+  }
+
+  .cta-btn{
+    padding:11px 14px;
+
+    font-size:13px;
+  }
+
 }
 
 /* article-image */
