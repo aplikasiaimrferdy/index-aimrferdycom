@@ -5,7 +5,488 @@ popular: true
 ---
 
 
-<style is:global>>:root{--primary:#00d084;--primary-dark:#00a86b;--neutral-950:#07110d;--neutral-900:#0d1b15;--neutral-800:#14251d;--neutral-700:#294235;--neutral-400:#9db3a7;--neutral-200:#e0ece5;--surface:#102018;--accent:#ffd56a;--danger:#e14c4c;--shadow:0 12px 35px rgba(0,0,0,.32);--radius:12px;--radius-lg:18px;--font-family:Arial,Helvetica,sans-serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--neutral-200);background:radial-gradient( circle at top,rgba(0,208,132,.14),transparent 35% ),linear-gradient( 180deg,#07110d,#020805 );font-family:var(--font-family)}.app{width:min(1450px,96%);margin:25px auto}.header{padding:25px;margin-bottom:18px;border:1px solid rgba(0,208,132,.25);border-radius:var(--radius-lg);background:rgba(16,32,24,.95);box-shadow:var(--shadow)}.header h1{margin:0 0 10px;color:var(--primary);font-size:clamp( 25px,4vw,40px );letter-spacing:.5px}.header p{margin:0;color:var(--neutral-400);line-height:1.7}.warning{margin-top:15px;padding:14px;color:#f4e4ac;background:rgba(255,213,106,.08);border-left:4px solid var(--accent);border-radius:8px;line-height:1.7;font-size:14px}.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px}button{padding:12px 17px;border:0;border-radius:10px;background:var(--primary);color:#06110c;font-weight:700;cursor:pointer;transition:.2s ease}button:hover{transform:translateY(-1px);filter:brightness(1.12)}.secondary{background:var(--neutral-700);color:var(--neutral-200)}.danger{background:var(--danger);color:#fff}.status{min-height:25px;margin:10px 0;color:var(--primary);font-weight:700}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{overflow:hidden;border:1px solid var(--neutral-700);border-radius:var(--radius-lg);background:rgba(16,32,24,.96);box-shadow:var(--shadow)}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--neutral-700)}.panel-head h2{margin:0;font-size:17px;color:var(--primary)}.counter{font-size:13px;color:var(--neutral-400)}textarea{display:block;width:100%;min-height:560px;padding:16px;resize:vertical;border:0;outline:none;background:#07130d;color:#dff7e9;font:13px/1.6 Consolas,"Courier New",monospace}textarea:focus{box-shadow:inset 0 0 0 1px var(--primary)}.result-list,.report{margin-top:18px;padding:18px;border:1px solid var(--neutral-700);border-radius:var(--radius);background:rgba(16,32,24,.96)}.result-list h2{margin-top:0;color:var(--primary)}.report{color:var(--neutral-400);line-height:1.7}.report strong{color:var(--primary)}code{padding:2px 5px;border-radius:5px;color:var(--accent);background:rgba(255,213,106,.08)}textarea::-webkit-scrollbar{width:8px}textarea::-webkit-scrollbar-track{background:#020805}textarea::-webkit-scrollbar-thumb{background:var(--neutral-700);border-radius:20px}@media(max-width:900px){.grid{grid-template-columns:1fr}textarea{min-height:420px}}@media(max-width:600px){.app{width:94%;margin:15px auto}.toolbar{display:grid;grid-template-columns:1fr 1fr}button{width:100%}.header{padding:18px}textarea{min-height:350px}}</style>
+<style is:global>/* ==========================================================
+   THEME
+   Default = Dark
+========================================================== */
+
+:root{
+
+  --primary:#00d084;
+  --primary-dark:#00a86b;
+
+  --accent:#ffd56a;
+  --danger:#e14c4c;
+
+  --bg:#07110d;
+  --bg-gradient:#020805;
+
+  --surface:#102018;
+  --surface-alt:#07130d;
+
+  --card:rgba(16,32,24,.96);
+
+  --text:#e0ece5;
+  --text-soft:#9db3a7;
+
+  --border:#294235;
+
+  --shadow:0 12px 35px rgba(0,0,0,.32);
+
+  --radius:12px;
+  --radius-lg:18px;
+
+  --font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+}
+
+/* ==========================================================
+   LIGHT MODE
+========================================================== */
+
+html.light-mode{
+
+  --primary:#00a86b;
+  --primary-dark:#008f5b;
+
+  --accent:#d99b00;
+  --danger:#dc2626;
+
+  --bg:#f4f8f5;
+  --bg-gradient:#ffffff;
+
+  --surface:#ffffff;
+  --surface-alt:#f7faf8;
+
+  --card:rgba(255,255,255,.95);
+
+  --text:#1d2b22;
+  --text-soft:#5f7267;
+
+  --border:#d8e4dc;
+
+  --shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+
+  margin:0;
+  min-height:100vh;
+
+  color:var(--text);
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(0,208,132,.14),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      var(--bg),
+      var(--bg-gradient)
+    );
+
+  font-family:var(--font-family);
+
+}
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.app{
+
+  width:min(1450px,96%);
+  margin:25px auto;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.header{
+
+  padding:25px;
+  margin-bottom:18px;
+
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+
+  background:var(--card);
+
+  box-shadow:var(--shadow);
+
+}
+
+.header h1{
+
+  margin:0 0 10px;
+
+  color:var(--primary);
+
+  font-size:clamp(25px,4vw,40px);
+
+  letter-spacing:.5px;
+
+}
+
+.header p{
+
+  margin:0;
+
+  color:var(--text-soft);
+
+  line-height:1.7;
+
+}
+
+/* ==========================================================
+   WARNING
+========================================================== */
+
+.warning{
+
+  margin-top:15px;
+  padding:14px;
+
+  color:var(--accent);
+
+  background:rgba(255,213,106,.08);
+
+  border-left:4px solid var(--accent);
+
+  border-radius:8px;
+
+  line-height:1.7;
+  font-size:14px;
+
+}
+
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+.toolbar{
+
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+
+  margin-bottom:15px;
+
+}
+
+button{
+
+  padding:12px 17px;
+
+  border:0;
+  border-radius:10px;
+
+  background:var(--primary);
+
+  color:#06110c;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+
+}
+
+button:hover{
+
+  transform:translateY(-2px);
+
+  filter:brightness(1.08);
+
+}
+
+.secondary{
+
+  background:var(--border);
+
+  color:var(--text);
+
+}
+
+.danger{
+
+  background:var(--danger);
+
+  color:#fff;
+
+}
+
+/* ==========================================================
+   STATUS
+========================================================== */
+
+.status{
+
+  min-height:25px;
+
+  margin:10px 0;
+
+  color:var(--primary);
+
+  font-weight:700;
+
+}
+
+/* ==========================================================
+   GRID
+========================================================== */
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:18px;
+
+}
+
+/* ==========================================================
+   PANEL
+========================================================== */
+
+.panel{
+
+  overflow:hidden;
+
+  border:1px solid var(--border);
+
+  border-radius:var(--radius-lg);
+
+  background:var(--card);
+
+  box-shadow:var(--shadow);
+
+}
+
+.panel-head{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+  padding:14px 16px;
+
+  border-bottom:1px solid var(--border);
+
+}
+
+.panel-head h2{
+
+  margin:0;
+
+  font-size:17px;
+
+  color:var(--primary);
+
+}
+
+.counter{
+
+  font-size:13px;
+
+  color:var(--text-soft);
+
+}
+
+/* ==========================================================
+   TEXTAREA
+========================================================== */
+
+textarea{
+
+  display:block;
+
+  width:100%;
+
+  min-height:560px;
+
+  padding:16px;
+
+  resize:vertical;
+
+  border:0;
+
+  outline:none;
+
+  background:var(--surface-alt);
+
+  color:var(--text);
+
+  font:13px/1.6 Consolas,"Courier New",monospace;
+
+}
+
+textarea:focus{
+
+  box-shadow:inset 0 0 0 1px var(--primary);
+
+}
+
+/* ==========================================================
+   RESULT
+========================================================== */
+
+.result-list,
+.report{
+
+  margin-top:18px;
+
+  padding:18px;
+
+  border:1px solid var(--border);
+
+  border-radius:var(--radius);
+
+  background:var(--card);
+
+}
+
+.result-list h2{
+
+  margin-top:0;
+
+  color:var(--primary);
+
+}
+
+.report{
+
+  color:var(--text-soft);
+
+  line-height:1.7;
+
+}
+
+.report strong{
+
+  color:var(--primary);
+
+}
+
+code{
+
+  padding:2px 5px;
+
+  border-radius:5px;
+
+  color:var(--accent);
+
+  background:rgba(255,213,106,.08);
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+textarea::-webkit-scrollbar{
+
+  width:8px;
+
+}
+
+textarea::-webkit-scrollbar-track{
+
+  background:var(--bg-gradient);
+
+}
+
+textarea::-webkit-scrollbar-thumb{
+
+  background:var(--border);
+
+  border-radius:20px;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width:900px){
+
+  .grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+  textarea{
+
+    min-height:420px;
+
+  }
+
+}
+
+@media (max-width:600px){
+
+  .app{
+
+    width:94%;
+
+    margin:15px auto;
+
+  }
+
+  .toolbar{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+  }
+
+  button{
+
+    width:100%;
+
+  }
+
+  .header{
+
+    padding:18px;
+
+  }
+
+  textarea{
+
+    min-height:350px;
+
+  }
+
+}</style>
 <main class="app"><header class="header"><h1>
 UnJS Offline Full HTML Cleaner
 </h1><p>
