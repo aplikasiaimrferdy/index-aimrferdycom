@@ -11,7 +11,7 @@ export const meta = {
 
 <MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
 
-<header class="page-tools"><h1>
+<div class="page-tools"><h1>
 UnJS Online Full HTML Cleaner
 </h1><p>
 Membersihkan JavaScript yang kemungkinan tidak digunakan
@@ -22,7 +22,9 @@ Fungsi JavaScript yang dipanggil secara dinamis,
 melalui file eksternal, framework,
 atau event tertentu dapat terbaca sebagai tidak digunakan.
 Selalu cek hasil sebelum dipasang ke website.
-</div></header><div class="toolbar"><button
+</div></div>
+
+<div class="toolbar"><button
 type="button"
 onclick="analyzeAndRemove()">
 Analisis & Hapus Otomatis
