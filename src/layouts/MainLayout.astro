@@ -101,7 +101,7 @@ const faqSchema = generateFaqSchema(html);
 <body>
 
   <Header />
-
+  <main>
 {autoBreadcrumbs.length > 1 && (
   <nav class="breadcrumb" aria-label="Breadcrumb">
     {autoBreadcrumbs.map((item, index) => (
@@ -117,7 +117,7 @@ const faqSchema = generateFaqSchema(html);
   </nav>
 )}
 
-  <main>
+
     <slot />
   </main>
 
