@@ -1,1 +1,421 @@
 
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+
+const modules = Object.entries(import.meta.glob("./**/*.astro",{ eager:true }));
+
+const tools = modules
+  .filter(([file])=>!file.endsWith("/index.astro"))
+  .map(([file,mod])=>{
+
+    if(!mod.meta?.title) return null;
+
+    const url=file
+      .replace("/src/pages","")
+      .replace(/\.astro$/,"");
+
+    const slug=url.replace("/tools/","");
+
+    return{
+      slug,
+      url,
+      title:mod.meta.title,
+      description:mod.meta.description??"",
+      category:mod.meta.category??"Other",
+      featured:mod.meta.featured??false,
+      icon:mod.meta.icon??"🛠️",
+      order:mod.meta.order??9999,
+    };
+
+  })
+  .filter(Boolean)
+  .sort((a,b)=>a.order===b.order?a.title.localeCompare(b.title):a.order-b.order);
+
+const featured=tools.filter(t=>t.featured);
+
+const categories=[...new Set(tools.map(t=>t.category))].sort();
+
+const grouped=Object.fromEntries(
+  categories.map(cat=>[
+    cat,
+    tools.filter(t=>t.category===cat)
+  ])
+);
+
+const total=tools.length;
+
+const jsonLd={
+  "@context":"https://schema.org",
+  "@type":"ItemList",
+  name:"Free Online Tools",
+  itemListElement:tools.map((tool,i)=>({
+    "@type":"ListItem",
+    position:i+1,
+    name:tool.title,
+    url:new URL(tool.url,Astro.site).href
+  }))
+};
+---
+
+<MainLayout
+  title="AI Mr Ferdy - Free Online Tools"
+  description="Kumpulan AI Tools, Developer Tools, Generator, Converter, SEO Tools, dan Utility gratis tanpa instalasi."
+  url={new URL("/tools", Astro.site).href}
+  pageCSS={["hometools.css"]}
+>
+
+<div class="tools-page">
+
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="tools-hero">
+
+      <div class="hero-badge">
+        🚀 {total}+ Free Online Tools
+      </div>
+
+      <h1>AI Mr Ferdy Tools</h1>
+
+      <p>
+        Gunakan berbagai AI Tools, Generator, Converter,
+        Developer Tools, SEO Tools, dan Utility gratis
+        langsung dari browser.
+      </p>
+
+    </section>
+
+    <!-- STATS -->
+    <section class="tools-stats">
+
+      <div>
+        <strong>{total}</strong>
+        <span>Tools</span>
+      </div>
+
+      <div>
+        <strong>{categories.length}</strong>
+        <span>Kategori</span>
+      </div>
+
+      <div>
+        <strong>100%</strong>
+        <span>Gratis</span>
+      </div>
+
+    </section>
+
+    <!-- SEARCH -->
+    <section class="tools-search">
+
+      <input
+        id="searchTools"
+        type="search"
+        placeholder="Cari tools..."
+      />
+
+    </section>
+
+    <!-- FEATURED -->
+    {featured.length > 0 && (
+
+      <section>
+
+        <h2 class="section-title">
+          🔥 Popular Tools
+        </h2>
+
+     <div class="blog-grid">
+
+  {popularTools.map((tool) => (
+
+    <article class="blog-card">
+
+      <a
+        href={tool.url}
+        class="blog-card-link"
+      >
+
+        <div class="blog-card-content">
+
+          {tool.popular && (
+            <div class="blog-card-meta">
+              🔥 Popular
+            </div>
+          )}
+
+          <h2>{tool.title}</h2>
+
+          {tool.description && (
+            <p>{tool.description}</p>
+          )}
+
+          <span class="readmore">
+            Open Tool →
+          </span>
+
+        </div>
+
+      </a>
+
+    </article>
+
+  ))}
+
+</div>
+
+      </section>
+
+    )}
+
+    <!-- CATEGORY -->
+    {categories.map(cat => (
+
+      <section class="category">
+
+        <div
+          class="category-header"
+          onclick="toggleCat(this)"
+        >
+
+          {cat}
+
+          <span>+</span>
+
+        </div>
+
+        <div class="category-content">
+
+          <div class="tools-grid">
+
+            {grouped[cat].map(tool => (
+
+              <a
+                href={tool.url}
+                class="tool-card"
+                data-search={`${tool.title} ${tool.description} ${tool.category}`.toLowerCase()}
+              >
+
+                <div class="tool-icon">
+                  {tool.icon}
+                </div>
+
+                <h3>{tool.title}</h3>
+
+                <p>{tool.description}</p>
+
+              </a>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      </section>
+
+    ))}
+
+    <div
+      id="emptyState"
+      class="tools-empty"
+      style="display:none"
+    >
+
+      Tidak ada tools ditemukan.
+
+    </div>
+
+  </div>
+
+</div>
+
+<script is:inline>
+const search=document.getElementById("searchTools");
+const cards=document.querySelectorAll(".tool-card");
+
+search?.addEventListener("input",(e)=>{
+const q=e.target.value.toLowerCase();
+let visible=0;
+
+cards.forEach(card=>{
+const ok=card.dataset.search.includes(q);
+card.style.display=ok?"":"none";
+if(ok) visible++;
+});
+
+document.getElementById("emptyState").style.display=visible?"none":"block";
+});
+
+window.toggleCat=function(el){
+const content=el.nextElementSibling;
+content.classList.toggle("active");
+el.querySelector("span").textContent=content.classList.contains("active")?"−":"+";
+};
+</script>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(jsonLd)}
+></script>
+
+<style is:global>
+/* Layout */
+.page-tools{
+  width:100%;
+  max-width:1280px;
+  margin:auto;
+  padding:96px 24px 24px;
+  box-sizing:border-box;
+}
+
+@media(max-width:1024px){
+  .page-tools{
+    padding:96px 20px 20px;
+  }
+}
+
+@media(max-width:768px){
+  .page-tools{
+    padding:96px 16px 16px;
+  }
+}
+
+@media(max-width:480px){
+  .page-tools{
+    padding:90px 14px 14px;
+  }
+}
+
+
+.tools-page{
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Hero */
+.tools-hero{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+/* Stats */
+.tools-stats{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.tools-stats div{
+  min-width:80px;
+  padding:14px 18px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  text-align:center;
+}
+
+.tools-stats strong{
+  display:block;
+  font-size:16px;
+}
+
+.tools-stats span{
+  font-size:12px;
+  opacity:.7;
+}
+
+/* Search */
+.tools-search input{
+  width:100%;
+  margin:24px 0;
+}
+
+/* Grid */
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+/* Card */
+.tool-card{
+  display:block;
+  position:relative;
+  padding:18px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  color:var(--text);
+  text-decoration:none;
+  transition:.25s;
+}
+
+.tool-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent);
+}
+
+.tool-icon{
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+.badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  padding:4px 6px;
+  border-radius:6px;
+  background:#b91c1c;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+}
+
+/* Category */
+.category-header{
+  display:flex;
+  justify-content:space-between;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--card);
+  cursor:pointer;
+}
+
+.category-content{
+  display:none;
+  padding-top:12px;
+}
+
+.category-content.active{
+  display:block;
+}
+
+@media(max-width:768px){
+  .tools-grid{
+    grid-template-columns:1fr;
+  }
+
+  .tools-page{
+    padding:14px;
+  }
+}
+
+@media(max-width:480px){
+
+  .tools-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .tools-stats div{
+    min-width:0;
+  }
+
+}
+</style>
+</MainLayout>
