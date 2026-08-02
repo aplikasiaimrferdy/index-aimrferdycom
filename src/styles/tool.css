@@ -1,7 +1,9 @@
 .page-content{
   padding-top:80px;
 }
-
+.tools-page{
+    padding:4rem 0; margin-top:40px;
+}
 .tool-container{
   max-width:1000px;
   margin:auto;
