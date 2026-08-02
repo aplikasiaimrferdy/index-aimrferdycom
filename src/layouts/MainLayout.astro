@@ -19,6 +19,16 @@ const {
 pageCSS = []
 } = Astro.props;
 
+const autoPageCSS = [...pageCSS];
+
+const pathname = Astro.url.pathname;
+
+if (pathname.startsWith("/tools") && !autoPageCSS.includes("tools")) {
+  autoPageCSS.push("tools");
+}
+
+
+
 const autoBreadcrumbs = breadcrumbs ?? (() => {
   const parts = Astro.url.pathname
     .split("/")
@@ -68,7 +78,7 @@ const faqSchema = generateFaqSchema(html);
   isHome={isHome}
 />
 
-{pageCSS.map(css => (
+{autoPageCSS.map(css => (
   <link rel="stylesheet" href={`/styles/${css}.css`}>
 ))}
 
