@@ -52,9 +52,11 @@ transition:
 background .3s ease,
 color .3s ease;
 }
-main{
-  padding-top:calc(var(--header-height) + 24px);
+
+.page-content{
+  padding-top:72px);
 }
+
 a{
 text-decoration:none;
 color:inherit;
