@@ -19,6 +19,34 @@ const {
 pageCSS = []
 } = Astro.props;
 
+const autoBreadcrumbs = breadcrumbs ?? (() => {
+  const parts = Astro.url.pathname
+    .split("/")
+    .filter(Boolean);
+
+  const items = [
+    {
+      name: "Home",
+      url: "/",
+    },
+  ];
+
+  let path = "";
+
+  for (const part of parts) {
+    path += `/${part}`;
+
+    items.push({
+      name: part
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, c => c.toUpperCase()),
+      url: path,
+    });
+  }
+
+  return items;
+})();
+
 const faqSchema = generateFaqSchema(html);
 
 
@@ -33,7 +61,7 @@ const faqSchema = generateFaqSchema(html);
   description={description}
   canonical={canonical}
   articleSchema={articleSchema}
-  breadcrumbs={breadcrumbs}
+  breadcrumbs={autoBreadcrumbs}
   faqSchema={faqSchema}
   amp={amp}
   slug={slug}
