@@ -15,8 +15,7 @@ const {
   breadcrumbs,
   amp,
   slug,
-  isHome = false,
-pageCSS = []
+  isHome = false
 } = Astro.props;
 
 const faqSchema = generateFaqSchema(html);
@@ -39,10 +38,6 @@ const faqSchema = generateFaqSchema(html);
   slug={slug}
   isHome={isHome}
 />
-
-{pageCSS.map(css => (
-  <link rel="stylesheet" href={`/styles/${css}.css`}>
-))}
 
 {isHome && (
   <script
