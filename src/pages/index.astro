@@ -341,45 +341,34 @@ const pageDescription =
 <section class="section">
   <div class="container">
 
-    <h2 class="section-title">
-      Popular AI Tools
-    </h2>
+    <h2 class="section-title">Popular AI Tools</h2>
 
     <p class="section-desc">
-      Jelajahi AI Tools terbaik dari AI Mr Ferdy untuk membantu produktivitas, SEO, pembuatan konten, dan kebutuhan digital lainnya.
+      Tools AI pilihan dalam ecosystem AI Mr Ferdy.
     </p>
 
-    <div class="features">
+    <div class="blog-grid">
+      {popularTools.map((tool) => (
+        <article class="blog-card">
+          <a href={tool.url} class="blog-card-link">
+            <div class="blog-card-content">
+              <h2>{tool.title}</h2>
 
-      {
-        popularTools.map((tool) => (
+              {tool.description && (
+                <p>{tool.description}</p>
+              )}
 
-          <a
-            href={tool.url}
-            class="feature-card"
-            style="text-decoration:none;color:inherit;"
-          >
-
-            <h3>{tool.title}</h3>
-
-            {tool.description && (
-              <p>{tool.description}</p>
-            )}
-
-            <span class="readmore">
-              Open Tool →
-            </span>
-
+              <span class="readmore">
+                Open Tool →
+              </span>
+            </div>
           </a>
-
-        ))
-      }
-
+        </article>
+      ))}
     </div>
 
   </div>
 </section>
-
 
   <!-- LATEST ARTICLES -->
 
