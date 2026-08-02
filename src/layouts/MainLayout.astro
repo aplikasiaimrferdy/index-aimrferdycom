@@ -29,36 +29,38 @@ if (pathname.startsWith("/tools") && !autoPageCSS.includes("tools")) {
 
 
 
-const autoBreadcrumbs = breadcrumbs ?? (() => {
-  const parts = Astro.url.pathname
-    .split("/")
-    .filter(Boolean);
+const autoBreadcrumbs =
+  breadcrumbs ??
+  (Astro.url.pathname.startsWith("/tools")
+    ? (() => {
+        const parts = Astro.url.pathname
+          .split("/")
+          .filter(Boolean);
 
-  const items = [
-    {
-      name: "Home",
-      url: "/",
-    },
-  ];
+        const items = [
+          {
+            name: "Home",
+            url: "/",
+          },
+        ];
 
-  let path = "";
+        let path = "";
 
-  for (const part of parts) {
-    path += `/${part}`;
+        for (const part of parts) {
+          path += `/${part}`;
 
-    items.push({
-      name: part
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, c => c.toUpperCase()),
-      url: path,
-    });
-  }
+          items.push({
+            name: part
+              .replace(/-/g, " ")
+              .replace(/\b\w/g, c => c.toUpperCase()),
+            url: path,
+          });
+        }
 
-  return items;
-})();
+        return items;
+      })()
+    : breadcrumbs);
 
-console.log(Astro.url.pathname);
-console.log(autoBreadcrumbs);
 
 const faqSchema = generateFaqSchema(html);
 ---
