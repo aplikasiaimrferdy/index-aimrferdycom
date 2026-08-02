@@ -121,78 +121,111 @@ copyBtn.textContent =
 
 </script>
 
-<style>
+<style is:global>
+/* =========================
+   SEO TITLE GENERATOR
+========================= */
 
 .seo-tool{
-margin:40px 0;
-padding:30px;
-background:#fff;
-border:1px solid #e5e7eb;
-border-radius:20px;
-}
-
-.form-group{
-margin-bottom:20px;
-}
-
-.form-group label{
-display:block;
-font-weight:700;
-margin-bottom:8px;
+  margin:40px 0;
+  padding:30px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(12px);
 }
 
 .seo-tool input,
 .seo-tool textarea{
-width:100%;
-padding:16px;
-font-size:16px;
-border:1px solid #d1d5db;
-border-radius:12px;
-box-sizing:border-box;
+  width:100%;
+  padding:16px;
+  box-sizing:border-box;
+
+  background:transparent;
+  color:var(--text);
+
+  border:1px solid var(--border);
+  border-radius:12px;
+
+  font:inherit;
+  transition:.2s ease;
+}
+
+.seo-tool input::placeholder,
+.seo-tool textarea::placeholder{
+  color:var(--soft);
+}
+
+.seo-tool input:focus,
+.seo-tool textarea:focus{
+  outline:none;
+  border-color:var(--accent,#3b82f6);
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
 }
 
 .seo-tool textarea{
-min-height:320px;
-resize:vertical;
+  min-height:320px;
+  resize:vertical;
+  line-height:1.6;
 }
+
+/* =========================
+   BUTTONS
+========================= */
 
 #generateTitleBtn,
 #copyBtn{
-width:100%;
-padding:15px;
-border:none;
-border-radius:12px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-margin-top:10px;
+  width:100%;
+  margin-top:10px;
+  padding:15px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
 #generateTitleBtn{
-background:#111827;
-color:#fff;
+  border:none;
+  background:linear-gradient(
+    135deg,
+    var(--accent,#3b82f6),
+    var(--accent-hover,#2563eb)
+  );
+  color:#fff;
 }
 
 #copyBtn{
-background:#f3f4f6;
-color:#111827;
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--border);
 }
 
 #generateTitleBtn:hover,
 #copyBtn:hover{
-opacity:.9;
+  transform:translateY(-2px);
 }
 
-@media(max-width:768px){
-
-.seo-tool{
-padding:20px;
-border-radius:16px;
+#generateTitleBtn:active,
+#copyBtn:active{
+  transform:scale(.98);
 }
 
-.seo-tool textarea{
-min-height:250px;
-}
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+  .seo-tool{
+    padding:20px;
+    border-radius:16px;
+  }
+
+  .seo-tool textarea{
+    min-height:250px;
+  }
 
 }
 
