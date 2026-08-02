@@ -1,0 +1,153 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { SITE } from "../../lib/site";
+
+const tools = await getCollection("tools");
+---
+
+<MainLayout
+  title={`Tools | ${SITE.title}`}
+  description="Kumpulan tools yang tersedia."
+>
+  <section class="tools-page">
+    <div class="container">
+      <div class="page-header">
+        <h1>Tools</h1>
+        <p>Kumpulan AI tools dan utility yang tersedia.</p>
+      </div>
+
+      <div class="tools-grid">
+        {tools.map((tool) => (
+          <article class="tool-card">
+            <h2>
+              <a href={`/tools/${tool.slug}/`}>
+                {tool.data.title}
+              </a>
+            </h2>
+
+            <p>{tool.data.description}</p>
+
+            <a
+              href={`/tools/${tool.slug}/`}
+              class="tool-button"
+            >
+              Buka Tool →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+.tools-page{
+  padding:4rem 1rem;
+}
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.page-header{
+  text-align:center;
+  margin-bottom:3rem;
+}
+
+.page-header h1{
+  font-size:2.5rem;
+  margin-bottom:.75rem;
+  color:var(--text);
+}
+
+.page-header p{
+  color:var(--soft);
+  max-width:600px;
+  margin:0 auto;
+  line-height:1.7;
+}
+
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.5rem;
+}
+
+.tool-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.5rem;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  transition:.25s ease;
+}
+
+.tool-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(59,130,246,.4);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.25);
+}
+
+.tool-card h2{
+  margin:0 0 .75rem;
+  font-size:1.25rem;
+}
+
+.tool-card h2 a{
+  color:var(--text);
+  text-decoration:none;
+  transition:.2s;
+}
+
+.tool-card h2 a:hover{
+  color:#3b82f6;
+}
+
+.tool-card p{
+  color:var(--soft);
+  line-height:1.7;
+  margin-bottom:1rem;
+}
+
+.tool-button{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.75rem 1rem;
+  border-radius:10px;
+  background:#2563eb;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  transition:.2s;
+}
+
+.tool-button:hover{
+  transform:translateY(-2px);
+  background:#1d4ed8;
+}
+
+@media(max-width:768px){
+
+  .tools-page{
+    padding:3rem 1rem;
+  }
+
+  .page-header{
+    margin-bottom:2rem;
+  }
+
+  .page-header h1{
+    font-size:2rem;
+  }
+
+  .tools-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
