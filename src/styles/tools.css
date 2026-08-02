@@ -1,14 +1,14 @@
 /* TOOLS LAYOUT */
 
 .tools-page{
-padding:150px 0 100px;
+
 }
 .tools-page,
 .tool-container,
 .category-page {
   max-width:1000px;
   margin:auto;
-  padding:20px;
+  padding:150px 0 100px;
 }
 
 /* GRID */
