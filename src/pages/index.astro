@@ -1,1089 +1,138 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import { SITE } from '../lib/site';
-import "../styles/blog.css";
+import "../styles/global.css";
+import SeoHead from "../components/SeoHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { generateFaqSchema } from "../lib/faq-schema";
+import { homeSchema } from "../lib/home-schema";
 
-import { getCollection } from 'astro:content';
+const {
+  title,
+  description,
+  canonical,
+  html = "",
+  articleSchema,
+  breadcrumbs,
+  amp,
+  slug,
+  isHome = false,
+pageCSS = []
+} = Astro.props;
 
-const posts = await getCollection('blog');
-const modules = Object.entries(
-  import.meta.glob("./tools/**/*.astro", {
-    eager: true,
-  })
-);
-
-const tools = modules
-  .filter(([file]) => !file.endsWith("/index.astro"))
-  .map(([file, mod]) => {
-    if (!mod.meta?.title) return null;
-
-    const url = file
-      .replace("./tools", "/tools")
-      .replace(/\.astro$/, "");
-
-    return {
-      slug: url.replace("/tools/", ""),
-      url,
-      title: mod.meta.title,
-      description: mod.meta.description ?? "",
-      popular: mod.meta.featured ?? false,
-      order: mod.meta.order ?? 9999,
-    };
-  })
-  .filter(Boolean)
-  .sort((a, b) =>
-    a.order === b.order
-      ? a.title.localeCompare(b.title)
-      : a.order - b.order
-  );
+const faqSchema = generateFaqSchema(html);
 
 
-const products = await getCollection('product');
 
-/* LATEST ARTICLES */
-
-const latestPosts = [...posts]
-  .sort(
-    (a, b) =>
-      new Date(b.data.date) -
-      new Date(a.data.date)
-  )
-  .slice(0, 3);
-
-/* POPULAR ARTICLES */
-
-const popularPosts =
-  posts.filter(post => post.data.popular).length > 0
-    ? posts
-        .filter(post => post.data.popular)
-        .slice(0, 3)
-    : posts.slice(0, 3);
-
-/* POPULAR TOOLS */
-
-const popularTools =
-  tools.some(tool => tool.popular)
-    ? tools
-        .filter(tool => tool.popular)
-        .slice(0, 3)
-    : tools.slice(0, 3);
-
-/* POPULAR PRODUCTS */
-
-const popularProducts =
-  products.filter(product => product.data.popular).length > 0
-    ? products
-        .filter(product => product.data.popular)
-        .slice(0, 3)
-    : products.slice(0, 3);
-
-const pageTitle =
-  'AI Mr Ferdy | Website Resmi Platform AI Indonesia';
-
-const pageDescription =
-  'Website resmi AI Mr Ferdy. Akses platform AI Indonesia untuk produktivitas digital, pembuatan konten, dan solusi otomatisasi modern.';
 ---
 
-<MainLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonical={SITE.url()}
-  isHome={true}
->
-
-<section class="hero">
-  <div class="hero-container">
-
-    <div class="hero-content">
-
-      <span class="hero-badge">
-        WEBSITE RESMI
-      </span>
-
-      <h1>
-        AI Mr Ferdy
-      </h1>
-
-      <h2 class="hero-subtitle">
-        Platform AI Indonesia untuk Produktivitas Digital, Konten, SEO, dan Automasi
-      </h2>
-
-      <p>
-        <strong>AI Mr Ferdy</strong> adalah platform kecerdasan buatan (AI) yang
-        membantu individu, kreator, dan bisnis meningkatkan produktivitas melalui
-        AI Tools, SEO, automasi, pembuatan konten, serta berbagai solusi digital
-        modern dalam satu ekosistem.
-      </p>
-
-      <div class="hero-buttons">
-
-        <a href="https://ai.termsofuse.workers.dev/" class="btn-primary">
-          Gunakan AI Mr Ferdy
-        </a>
-
-        <a href="/about" class="btn-outline">
-          Tentang AI Mr Ferdy
-        </a>
-
-      </div>
-
-      <div class="hero-features">
-
-        <div class="feature">
-          <p class="feature-title">AI Tools</p>
-          <p>Berbagai alat AI untuk kebutuhan produktivitas digital.</p>
-        </div>
-
-        <div class="feature">
-          <p class="feature-title">SEO & Automation</p>
-          <p>Membantu optimasi website dan workflow secara otomatis.</p>
-        </div>
-
-        <div class="feature">
-          <p class="feature-title">Website Resmi</p>
-          <p>Sumber resmi informasi, tools, dan produk AI Mr Ferdy.</p>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="hero-image">
-
-      <div class="glass-card">
-        <img
-          src="https://aimrferdy.com/aimrferdy.png"
-          fetchpriority="high"
-          alt="AI Mr Ferdy - Website Resmi Platform AI Indonesia">
-      </div>
-
-      <div class="floating-card top">
-        <p class="floating-title">AI Platform</p>
-        <p>Modern • Cepat • Andal</p>
-      </div>
-
-      <div class="floating-card bottom">
-        <p class="floating-title">Website Resmi</p>
-        <p>AI Mr Ferdy Indonesia</p>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="hero-wave"></div>
-
-</section>
-
-
-
-<!-- ABOUT -->
-<section class="section">
-  <div class="container">
-
-    <h2 class="section-title">
-      Apa Itu AI Mr Ferdy?
-    </h2>
-
-    <p class="section-desc">
-      AI Mr Ferdy adalah platform AI Indonesia yang menyediakan berbagai
-      AI Tools, solusi SEO, automasi digital, pembuatan konten, dan
-      teknologi modern untuk membantu individu, kreator, serta bisnis
-      meningkatkan produktivitas secara lebih efisien.
-
-      Melalui website resmi AI Mr Ferdy, pengguna dapat mengakses AI
-      Tools, artikel edukasi, produk digital, dan berbagai sumber daya
-      yang terus diperbarui untuk mendukung kebutuhan digital masa kini.
-    </p>
-
-  </div>
-</section>
-
-
-  <!-- MAIN ECOSYSTEM -->
-  <section class="section">
-    <div class="container">
-
-      <h2 class="section-title">
-        AI Tools & Digital Ecosystem
-      </h2>
-
-      <p class="section-desc">
-        Platform, tools dan website utama dalam ecosystem AI Mr Ferdy.
-      </p>
-
-      <div class="pricing">
-
-        <div class="price-card">
-
-          <h3>
-            Official Website
-          </h3>
-
-          <p>
-            Website utama AI Mr Ferdy untuk platform digital modern.
-          </p>
-
-          <a
-            href="https://aimrferdy.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-primary"
-          >
-            Visit Website
-          </a>
-
-        </div>
-
-        <div class="price-card">
-
-          <h3>
-            News & Articles
-          </h3>
-
-          <p>
-            Artikel AI, SEO, automation dan teknologi modern terbaru.
-          </p>
-
-          <a
-            href="https://aimrferdy.com/blog"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-primary"
-          >
-            Open News
-          </a>
-
-        </div>
-
-        <div class="price-card">
-
-          <h3>
-            AI Tools
-          </h3>
-
-          <p>
-            Tools digital modern, utility online dan automation systems.
-          </p>
-
-          <a
-            href="https://aimrferdy.com/tools"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-primary"
-          >
-            Open Tools
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="section">
-    <div class="container">
-
-      <h2 class="section-title">
-        AI & Digital Services
-      </h2>
-
-      <p class="section-desc">
-        AI Mr Ferdy adalah platform berbasis kecerdasan buatan (AI) Fokus pada AI systems yang dirancang untuk memenuhi berbagai kebutuhan digital, mulai dari pembuatan situs web, program kreatif, hingga peningkatan digital platform modern secara praktis.
-      </p>
-
-      <div class="features">
-
-        <div class="feature-card">
-
-          <h3>
-            AI Projects
-          </h3>
-
-          <p>
-            AI applications, smart systems dan automation workflow modern.
-          </p>
-
-        </div>
-
-        <div class="feature-card">
-
-          <h3>
-            SEO Systems
-          </h3>
-
-          <p>
-            Website optimized, scalable dan search engine friendly.
-          </p>
-
-        </div>
-
-        <div class="feature-card">
-
-          <h3>
-            Modern UI
-          </h3>
-
-          <p>
-            Clean interface, ultra fast performance dan mobile first design.
-          </p>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-<!-- POPULAR TOOLS -->
-<section class="section">
-  <div class="container">
-
-    <h2 class="section-title">Popular AI Tools</h2>
-
-    <p class="section-desc">
-      Tools AI pilihan dalam ecosystem AI Mr Ferdy.
-    </p>
-
-    <div class="blog-grid">
-      {popularTools.map((tool) => (
-        <article class="blog-card">
-          <a href={tool.url} class="blog-card-link">
-            <div class="blog-card-content">
-              <h2>{tool.title}</h2>
-
-              {tool.description && (
-                <p>{tool.description}</p>
-              )}
-
-              <span class="readmore">
-                Open Tool →
-              </span>
-            </div>
-          </a>
-        </article>
-      ))}
-    </div>
-
-  </div>
-</section>
-
-  <!-- LATEST ARTICLES -->
-
-<section class="section">
-
-  <div class="container">
-
-    <h2 class="section-title">
-      Latest AI Articles
-    </h2>
-
-    <p class="section-desc">
-      Artikel terbaru tentang AI, SEO dan teknologi modern.
-    </p>
-
-    <div class="blog-grid">
-
-      {
-        latestPosts.map((post) => (
-
-          <article class="blog-card">
-
-            <a
-              href={`/blog/${post.slug}/`}
-              class="blog-card-link"
-            >
-
-              <div class="blog-card-image">
-
-                <img
-                  src={SITE.url(`/api/og/${post.slug}.svg`)}
-                  alt={post.data.title}
-                  loading="lazy"
-                  width="1200"
-                  height="630"
-                />
-
-              </div>
-
-              <div class="blog-card-content">
-
-                <div class="blog-card-meta">
-                  {post.data.date}
-                </div>
-
-                <h3>
-                  {post.data.title}
-                </h3>
-
-                {post.data.description && (
-                  <p>
-                    {post.data.description}
-                  </p>
-                )}
-
-                <span class="readmore">
-                  Read Article →
-                </span>
-
-              </div>
-
-            </a>
-
-          </article>
-
-        ))
-      }
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-
-<!-- POPULAR PRODUCTS -->
-<section class="section">
-
-  <div class="container">
-
-    <h2 class="section-title">
-      Popular AI Products
-    </h2>
-
-    <p class="section-desc">
-      Produk digital populer dari AI Mr Ferdy.
-    </p>
-
-    <div class="blog-grid">
-
-      {
-        popularProducts.map((product) => (
-
-          <article class="blog-card">
-
-            <a
-              href={`/product/${product.slug}/`}
-              class="blog-card-link"
-            >
-
-              <div class="blog-card-image">
-
-                <img
-                  src={SITE.url(`/api/og/${product.slug}.svg`)}
-                  alt={product.data.title}
-                  loading="lazy"
-                  width="1200"
-                  height="630"
-                />
-
-              </div>
-
-              <div class="blog-card-content">
-
-                <h2>
-                  {product.data.title}
-                </h2>
-
-                {product.data.description && (
-                  <p>
-                    {product.data.description}
-                  </p>
-                )}
-
-                {product.data.price && (
-                  <div class="blog-card-meta">
-                    {product.data.price}
-                  </div>
-                )}
-
-                <span class="readmore">
-                  View Product →
-                </span>
-
-              </div>
-
-            </a>
-
-          </article>
-
-        ))
-      }
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-  <!-- FAQ -->
-<section class="section">
-  <div class="container">
-
-    <h2 class="section-title">
-      Pertanyaan Umum AI Mr Ferdy (FAQ)
-    </h2>
-
-    <p class="section-desc">
-      Temukan jawaban mengenai AI Mr Ferdy, mulai dari fitur, AI Tools,
-      cara penggunaan, keamanan, hingga layanan yang tersedia di website resmi.
-    </p>
-
-    <!-- FAQ 1 -->
-    <div class="faq-item">
-
-      <div class="faq-question">
-        <span>
-          Apa itu AI Mr Ferdy?
-        </span>
-
-        <div class="faq-icon"></div>
-      </div>
-
-      <div class="faq-answer">
-        <p>
-          AI Mr Ferdy adalah platform AI Indonesia yang menyediakan
-          berbagai AI Tools, solusi otomatisasi, teknologi,
-          pembuatan konten, dan layanan digital untuk membantu
-          meningkatkan produktivitas individu maupun bisnis.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- FAQ 2 -->
-    <div class="faq-item">
-
-      <div class="faq-question">
-        <span>
-          Apa saja layanan yang tersedia di AI Mr Ferdy?
-        </span>
-
-        <div class="faq-icon"></div>
-      </div>
-
-      <div class="faq-answer">
-        <p>
-          AI Mr Ferdy menyediakan AI Tools, prompt generator,
-          AI Humanizer, solusi SEO, automasi digital,
-          artikel edukasi, serta berbagai produk digital
-          yang terus dikembangkan.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- FAQ 3 -->
-    <div class="faq-item">
-
-      <div class="faq-question">
-        <span>
-          Apakah AI Mr Ferdy dapat digunakan secara gratis?
-        </span>
-
-        <div class="faq-icon"></div>
-      </div>
-
-      <div class="faq-answer">
-        <p>
-          AI Mr Ferdy menyediakan berbagai AI Tools yang dapat digunakan secara gratis. Beberapa layanan lanjutan tersedia dalam paket premium dengan fitur tambahan.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- FAQ 4 -->
-    <div class="faq-item">
-
-      <div class="faq-question">
-        <span>
-          Apakah AI Mr Ferdy aman digunakan?
-        </span>
-
-        <div class="faq-icon"></div>
-      </div>
-
-      <div class="faq-answer">
-        <p>
-          Ya. AI Mr Ferdy dikembangkan dengan memperhatikan
-          keamanan, performa, dan pengalaman pengguna sehingga
-          layanan dapat digunakan secara nyaman melalui website resmi.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- FAQ 5 -->
-    <div class="faq-item">
-
-      <div class="faq-question">
-        <span>
-          Apakah AI Mr Ferdy dapat digunakan di perangkat mobile?
-        </span>
-
-        <div class="faq-icon"></div>
-      </div>
-
-      <div class="faq-answer">
-        <p>
-          Ya. Seluruh website dan AI Tools AI Mr Ferdy
-          dirancang menggunakan pendekatan mobile-first
-          sehingga dapat diakses melalui smartphone,
-          tablet, maupun desktop.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- FAQ 6 -->
-    <div class="faq-item">
-
-      <div class="faq-question">
-        <span>
-          Di mana website resmi AI Mr Ferdy?
-        </span>
-
-        <div class="faq-icon"></div>
-      </div>
-
-      <div class="faq-answer">
-        <p>
-          Website resmi AI Mr Ferdy adalah
-          <strong>https://aimrferdy.com</strong>,
-          yang menyediakan informasi terbaru,
-          AI Tools, artikel, produk digital,
-          dan layanan resmi AI Mr Ferdy.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="container">
-
-      <h2>
-        Explore AI Tools & Modern SEO Systems
-      </h2>
-
-      <p>
-        AI, SEO, automation dan digital ecosystem modern
-        dalam satu platform.
-      </p>
-
-      <a
-        href="https://ai.termsofuse.workers.dev/"
-        class="btn btn-primary"
-      >
-        Explore Now
-      </a>
-
-    </div>
-  </section>
-
-
-<style is:global>
-/* ====================================
-   HERO AI MR FERDY
-==================================== */
-
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(59,130,246,.18),
-      transparent 40%
-    ),
-    var(--bg);
-}
-
-/* GRID BACKGROUND */
-
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg,var(--border) 1px, transparent 1px);
-
-  background-size:50px 50px;
-  opacity:.3;
-  pointer-events:none;
-}
-
-/* BLUE GLOW */
-
-.hero-glow{
-  position:absolute;
-  top:-250px;
-  right:-200px;
-
-  width:700px;
-  height:700px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(0,140,255,.25),
-      transparent 70%
-    );
-
-  filter:blur(80px);
-  pointer-events:none;
-}
-
-/* CONTAINER */
-
-.hero-container{
-  width:min(1300px,92%);
-  margin:auto;
-
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:60px;
-  align-items:center;
-
-  position:relative;
-  z-index:2;
-}
-
-/* TEXT */
-
-.hero-badge{
-  display:inline-block;
-  color:#38bdf8;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-}
-
-.hero-content h1{
-  margin:20px 0;
-
-  font-size:clamp(2.5rem,6vw,5rem);
-  line-height:1.05;
-
-  color:var(--text);
-}
-
-.hero-content h1 span{
-  background:
-    linear-gradient(
-      90deg,
-      #22d3ee,
-      #3b82f6
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.hero-content p{
-  max-width:620px;
-
-  color:var(--soft);
-
-  font-size:1.1rem;
-  line-height:1.8;
-}
-
-/* BUTTONS */
-
-.hero-buttons{
-  display:flex;
-  gap:16px;
-  margin-top:32px;
-}
-
-.btn-primary{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:15px 30px;
-
-  border-radius:14px;
-  text-decoration:none;
-
-  color:#fff;
-  font-weight:600;
-
-  background:
-    linear-gradient(
-      135deg,
-      #06b6d4,
-      #2563eb
-    );
-
-  box-shadow:
-    0 15px 40px rgba(37,99,235,.25);
-}
-
-.btn-primary:hover{
-  transform:translateY(-2px);
-}
-
-.btn-outline{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:15px 30px;
-
-  border-radius:14px;
-  text-decoration:none;
-
-  border:1px solid var(--border);
-
-  background:var(--card);
-
-  color:var(--text);
-
-  backdrop-filter:blur(12px);
-}
-
-/* IMAGE */
-
-.hero-image{
-  position:relative;
-}
-
-.glass-card{
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:30px;
-
-  padding:40px;
-
-  backdrop-filter:blur(20px);
-
-  box-shadow:
-    0 20px 80px rgba(0,0,0,.15);
-}
-
-.glass-card img{
-  width:100%;
-  display:block;
-}
-
-/* FLOATING INFO */
-
-.floating-card{
-  position:absolute;
-
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:16px;
-
-  padding:16px 20px;
-
-  color:var(--text);
-
-  backdrop-filter:blur(20px);
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,.15);
-}
-
-.floating-card h4{
-  margin:0 0 5px;
-}
-
-.floating-card p{
-  margin:0;
-  color:var(--soft);
-  font-size:.9rem;
-}
-
-.floating-card.top{
-  top:10%;
-  left:-50px;
-}
-
-.floating-card.bottom{
-  bottom:10%;
-  right:-30px;
-}
-
-/* FEATURES */
-
-.hero-features{
-  display:flex;
-  gap:20px;
-  margin-top:50px;
-}
-
-.feature{
-  flex:1;
-
-  padding:20px;
-
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:18px;
-}
-
-.feature h3{
-  margin-bottom:10px;
-  color:var(--text);font-size:1.00rem;
-}
-
-.feature p{
-  margin:0;
-  color:var(--soft);
-  font-size:.75rem;
-}
-
-/* PARTICLE WAVE */
-
-.hero-wave{
-  position:absolute;
-
-  left:0;
-  right:0;
-  bottom:-80px;
-
-  height:300px;
-
-  pointer-events:none;
-  z-index:1;
-}
-
-.hero-wave::before{
-  content:"";
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(34,211,238,.9) 1px,
-      transparent 2px
-    );
-
-  background-size:18px 18px;
-
-  transform:
-    perspective(800px)
-    rotateX(75deg);
-
-  opacity:.35;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-  .hero{
-    padding:80px 0;
+<!doctype html>
+<html lang="id">
+<head>
+  <SeoHead
+  title={title}
+  description={description}
+  canonical={canonical}
+  articleSchema={articleSchema}
+  breadcrumbs={breadcrumbs}
+  faqSchema={faqSchema}
+  amp={amp}
+  slug={slug}
+  isHome={isHome}
+/>
+
+{pageCSS.map(css => (
+  <link rel="stylesheet" href={`/styles/${css}.css`}>
+))}
+
+{isHome && (
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(homeSchema)}
+  />
+)}
+
+
+
+<script is:inline>
+  if (localStorage.getItem("theme") === "light") {
+    document.documentElement.classList.add("light-mode");
   }
+</script>
+</head>
 
-  .hero-container{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
+<body>
 
-  .hero-content p{
-    margin:auto;
-  }
+  <Header />
 
-  .hero-buttons{
-    justify-content:center;
-    flex-wrap:wrap;
-  }
+  <main>
+    <slot />
+  </main>
 
-  .hero-features{
-    flex-direction:column;
-  }
+  <Footer />
 
-  .floating-card{
-    display:none;
-  }
+<script is:inline>
 
-  .glass-card{
-    padding:20px;
-  }
+const html = document.documentElement;
 
-  .hero-content h1{
-    font-size:clamp(2rem,10vw,3rem);
-  }
+const themeBtn =
+  document.getElementById("themeToggle");
+
+/* LOAD */
+
+if(localStorage.getItem("theme")==="light"){
+  html.classList.add("light-mode");
+}
+
+/* TOGGLE */
+
+themeBtn?.addEventListener("click",()=>{
+
+  html.classList.toggle("light-mode");
+
+  localStorage.setItem(
+    "theme",
+    html.classList.contains("light-mode")
+      ? "light"
+      : "dark"
+  );
+
+});
+
+</script>
+
+<script is:inline>
+
+function openMenu(){
+  document
+    .getElementById("mobileMenu")
+    .classList.add("active");
+}
+
+function closeMenu(){
+  document
+    .getElementById("mobileMenu")
+    .classList.remove("active");
 }
 
 
-.price-image{
-  display:block;
+/* FAQ */
 
-  overflow:hidden;
+const faqItems =
+  document.querySelectorAll(".faq-item");
 
-  margin-bottom:18px;
+faqItems.forEach(item=>{
 
-  border-radius:22px;
+  item
+    .querySelector(".faq-question")
+    .addEventListener("click",()=>{
 
-  border:1px solid var(--border);
+      item.classList.toggle("active");
 
-  background:var(--card);
-}
+    });
 
-.price-image img{
-  width:100%;
-  height:auto;
+});
 
-  display:block;
+</script>
 
-  transition:transform .35s ease;
-}
-
-.price-card:hover .price-image img{
-  transform:scale(1.03);
-}
-
-.feature-title {
-    margin: 0 0 6px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.3;
-    color: #fff;
-    letter-spacing: -.02em;
-}
-
-.hero-subtitle{
-    margin:18px 0;
-    font-size:1.45rem;
-    font-weight:600;
-    line-height:1.45;
-    color:var(--text);
-}
-
-.hero-content h1{
-    font-size:clamp(3rem,7vw,5.5rem);
-    font-weight:800;
-    line-height:1.05;
-    margin:18px 0;
-}
-</style>
-
-
-</MainLayout>
+</body>
+</html>
