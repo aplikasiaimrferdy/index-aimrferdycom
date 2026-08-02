@@ -367,3 +367,59 @@ textarea {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: .75rem;
+}
+
+.page-header p {
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tool-card h2 {
+  margin: 0 0 .75rem;
+  font-size: 1.25rem;
+}
+
+.tool-card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tool-card h2 a:hover {
+  color: var(--accent, #2563eb);
+}
+
+.tool-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.tool-button {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+}
