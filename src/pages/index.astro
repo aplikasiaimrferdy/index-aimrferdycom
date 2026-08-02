@@ -352,54 +352,28 @@ const pageDescription =
     </p>
 
   <div class="blog-grid">
-
   {
     popularTools.map((tool) => (
-
       <article class="blog-card">
-
         <a
           href={tool.url}
           class="blog-card-link"
         >
-
-          <div class="blog-card-image">
-
-            <img
-              src={SITE.url(`/api/og/${tool.slug}.svg`)}
-              alt={tool.title}
-              loading="lazy"
-              width="1200"
-              height="630"
-            />
-
-          </div>
-
           <div class="blog-card-content">
-
-            <h2>
-              {tool.title}
-            </h2>
+            <h2>{tool.title}</h2>
 
             {tool.description && (
-              <p>
-                {tool.description}
-              </p>
+              <p>{tool.description}</p>
             )}
 
             <span class="readmore">
               Open Tool →
             </span>
-
           </div>
-
         </a>
-
       </article>
-
     ))
   }
-
 </div>
 
   </div>
