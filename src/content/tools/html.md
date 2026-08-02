@@ -1,6 +1,6 @@
 ---
-title: "AI Image Generator"
-description: "Generate image from text"
+title: "UnJS Online Full HTML Cleaner – Remove Unused JavaScript"
+description: "Clean unused JavaScript from HTML safely in your browser. Detect and remove potentially unused functions without affecting HTML or CSS. No upload required."
 popular: true
 ---
 
