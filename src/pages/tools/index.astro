@@ -124,33 +124,44 @@ const jsonLd={
           🔥 Popular Tools
         </h2>
 
-        <div class="tools-grid">
+     <div class="blog-grid">
 
-          {featured.map(tool => (
+  {popularTools.map((tool) => (
 
-            <a
-              href={tool.url}
-              class="tool-card popular"
-              data-search={`${tool.title} ${tool.description} ${tool.category}`.toLowerCase()}
-            >
+    <article class="blog-card">
 
-              <div class="tool-icon">
-                {tool.icon}
-              </div>
+      <a
+        href={tool.url}
+        class="blog-card-link"
+      >
 
-              <div class="badge">
-                HOT
-              </div>
+        <div class="blog-card-content">
 
-              <h3>{tool.title}</h3>
+          {tool.popular && (
+            <div class="blog-card-meta">
+              🔥 Popular
+            </div>
+          )}
 
-              <p>{tool.description}</p>
+          <h2>{tool.title}</h2>
 
-            </a>
+          {tool.description && (
+            <p>{tool.description}</p>
+          )}
 
-          ))}
+          <span class="readmore">
+            Open Tool →
+          </span>
 
         </div>
+
+      </a>
+
+    </article>
+
+  ))}
+
+</div>
 
       </section>
 
