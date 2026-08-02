@@ -488,7 +488,7 @@ textarea::-webkit-scrollbar-thumb{
 
 }</style>
 <main class="app"><header class="header"><h1>
-UnJS Offline Full HTML Cleaner
+UnJS Online Full HTML Cleaner
 </h1><p>
 Membersihkan JavaScript yang kemungkinan tidak digunakan
 tanpa merusak HTML dan CSS.
