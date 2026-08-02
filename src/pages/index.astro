@@ -6,7 +6,38 @@ import "../styles/blog.css";
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
-const tools = await getCollection('tools');
+const modules = Object.entries(
+  import.meta.glob("./tools/**/*.astro", {
+    eager: true,
+  })
+);
+
+const tools = modules
+  .filter(([file]) => !file.endsWith("/index.astro"))
+  .map(([file, mod]) => {
+    if (!mod.meta?.title) return null;
+
+    const url = file
+      .replace("./tools", "/tools")
+      .replace(/\.astro$/, "");
+
+    return {
+      slug: url.replace("/tools/", ""),
+      url,
+      title: mod.meta.title,
+      description: mod.meta.description ?? "",
+      popular: mod.meta.featured ?? false,
+      order: mod.meta.order ?? 9999,
+    };
+  })
+  .filter(Boolean)
+  .sort((a, b) =>
+    a.order === b.order
+      ? a.title.localeCompare(b.title)
+      : a.order - b.order
+  );
+
+
 const products = await getCollection('product');
 
 /* LATEST ARTICLES */
@@ -320,56 +351,56 @@ const pageDescription =
       Tools AI pilihan dalam ecosystem AI Mr Ferdy.
     </p>
 
-    <div class="blog-grid">
+  <div class="blog-grid">
 
-      {
-        popularTools.map((tool) => (
+  {
+    popularTools.map((tool) => (
 
-          <article class="blog-card">
+      <article class="blog-card">
 
-            <a
-              href={`/tools/${tool.slug}/`}
-              class="blog-card-link"
-            >
+        <a
+          href={tool.url}
+          class="blog-card-link"
+        >
 
-              <div class="blog-card-image">
+          <div class="blog-card-image">
 
-                <img
-                  src={SITE.url(`/api/og/${tool.slug}.svg`)}
-                  alt={tool.data.title}
-                  loading="lazy"
-                  width="1200"
-                  height="630"
-                />
+            <img
+              src={SITE.url(`/api/og/${tool.slug}.svg`)}
+              alt={tool.title}
+              loading="lazy"
+              width="1200"
+              height="630"
+            />
 
-              </div>
+          </div>
 
-              <div class="blog-card-content">
+          <div class="blog-card-content">
 
-                <h2>
-                  {tool.data.title}
-                </h2>
+            <h2>
+              {tool.title}
+            </h2>
 
-                {tool.data.description && (
-                  <p>
-                    {tool.data.description}
-                  </p>
-                )}
+            {tool.description && (
+              <p>
+                {tool.description}
+              </p>
+            )}
 
-                <span class="readmore">
-                  Open Tool →
-                </span>
+            <span class="readmore">
+              Open Tool →
+            </span>
 
-              </div>
+          </div>
 
-            </a>
+        </a>
 
-          </article>
+      </article>
 
-        ))
-      }
+    ))
+  }
 
-    </div>
+</div>
 
   </div>
 
