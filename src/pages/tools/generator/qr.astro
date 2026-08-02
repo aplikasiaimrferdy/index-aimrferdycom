@@ -1,0 +1,616 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "QR Code Generator Online",
+  description: "Buat QR Code custom dengan warna, logo, WiFi & WhatsApp.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+
+
+<div>
+<div class="qr-app">
+
+<!-- LEFT -->
+<div class="qr-panel">
+
+<div class="qr-title">Buat QR Code</div>
+
+<div class="tabs">
+  <button onclick="switchTab('text', this)" class="active">Text</button>
+  <button onclick="switchTab('wa', this)">WhatsApp</button>
+  <button onclick="switchTab('wifi', this)">WiFi</button>
+</div>
+
+<div id="tab-text" class="tab active">
+  <input id="qrInput" class="qr-input" placeholder="Masukkan teks / URL">
+</div>
+
+<div id="tab-wa" class="tab">
+  <input id="waNumber" class="qr-input" placeholder="628xxxx">
+  <input id="waMessage" class="qr-input" placeholder="Pesan (opsional)">
+</div>
+
+<div id="tab-wifi" class="tab">
+  <input id="wifiSSID" class="qr-input" placeholder="Nama WiFi">
+  <input id="wifiPass" class="qr-input" placeholder="Password">
+</div>
+
+<button class="btn-primary" onclick="generateQR()">Generate QR</button>
+
+<div class="qr-advanced-toggle" onclick="toggleAdvanced()">
+⚙️ Pengaturan Lanjutan
+</div>
+
+<div id="advancedBox" class="qr-advanced">
+
+<label>Warna QR</label>
+<input type="color" id="qrColor" value="#000000">
+
+<label>Background</label>
+<input type="color" id="bgColor" value="#ffffff">
+
+<label>Ukuran</label>
+<select id="qrSize">
+  <option value="200">Small</option>
+  <option value="400">Medium</option>
+  <option value="800">HD</option>
+</select>
+
+<label>Logo</label>
+<input type="file" id="logoInput">
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="qr-panel">
+
+<div class="qr-title">Preview</div>
+
+<div class="qr-preview">
+  <canvas id="qrCanvas"></canvas>
+</div>
+
+<div id="downloadBox" class="qr-download">
+  <button onclick="downloadPNG()">PNG</button>
+  <button onclick="downloadSVG()">SVG</button>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<div>
+
+  <!-- HERO -->
+  <section class="tool-hero">
+    <h1>QR Code Generator Online Gratis</h1>
+    <p>
+      Buat QR Code untuk URL, WiFi, WhatsApp, dan teks dengan cepat tanpa install.
+      Gratis, cepat, dan langsung bisa digunakan di browser.
+    </p>
+  </section>
+
+  <!-- APP -->
+  <section class="tool-box">
+    <!-- TARUH UI QR KAMU DI SINI -->
+    <p><strong>⬇️ Gunakan tool di atas untuk generate QR Code</strong></p>
+  </section>
+
+  <!-- SEO CONTENT (VISIBLE) -->
+  <section class="tool-seo">
+    <h2>Apa Itu QR Code Generator?</h2>
+    <p>
+      QR Code Generator adalah alat online yang digunakan untuk membuat kode QR
+      yang bisa dipindai menggunakan kamera smartphone. QR Code dapat berisi
+      berbagai informasi seperti link website, nomor WhatsApp, atau koneksi WiFi.
+    </p>
+
+    <h2>Kenapa Menggunakan QR Code?</h2>
+    <ul>
+      <li>Praktis untuk berbagi link</li>
+      <li>Cocok untuk bisnis & promosi</li>
+      <li>Bisa digunakan offline</li>
+      <li>Mudah di-scan dengan smartphone</li>
+    </ul>
+  </section>
+
+  <!-- COLLAPSE CONTENT -->
+  <section class="tool-more">
+
+    <details>
+      <summary>Cara Membuat QR Code</summary>
+      <p>
+        Masukkan teks, URL, atau data yang ingin kamu ubah menjadi QR Code.
+        Pilih jenis QR seperti WhatsApp atau WiFi, lalu klik tombol generate.
+        Setelah itu, kamu bisa download hasilnya dalam format PNG atau SVG.
+      </p>
+    </details>
+
+    <details>
+      <summary>Fitur QR Code Generator Ini</summary>
+      <ul>
+        <li>Custom warna QR</li>
+        <li>Tambahkan logo di tengah</li>
+        <li>Support QR WhatsApp & WiFi</li>
+        <li>Download PNG & SVG</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Tips Agar QR Code Mudah Di-scan</summary>
+      <ul>
+        <li>Gunakan kontras warna tinggi</li>
+        <li>Jangan terlalu kecil</li>
+        <li>Hindari terlalu banyak logo</li>
+      </ul>
+    </details>
+
+  </section>
+
+
+</div>
+
+<!-- FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"FAQPage",
+ "mainEntity":[
+  {
+   "@type":"Question",
+   "name":"Apakah QR Code Generator ini gratis?",
+   "acceptedAnswer":{
+     "@type":"Answer",
+     "text":"Ya, semua fitur dapat digunakan secara gratis tanpa login."
+   }
+  },
+  {
+   "@type":"Question",
+   "name":"Apakah QR Code bisa kadaluarsa?",
+   "acceptedAnswer":{
+     "@type":"Answer",
+     "text":"Tidak, QR Code statis tidak memiliki masa kadaluarsa."
+   }
+  }
+ ]
+}
+</script>
+
+
+
+<!-- QR LIB (FIX ASTRO) -->
+<script client:load src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<script client:load>
+
+window.currentTab = "text";
+
+// TAB
+window.switchTab = function(tab, el){
+  window.currentTab = tab;
+
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("tab-" + tab).classList.add("active");
+
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+  el.classList.add("active");
+}
+
+// ADVANCED
+window.toggleAdvanced = function(){
+  document.getElementById("advancedBox").classList.toggle("active");
+}
+
+// GENERATE
+window.generateQR = function(){
+
+  if(typeof QRCode === "undefined"){
+    alert("QR masih loading...");
+    return;
+  }
+
+  let text = "";
+
+  if(window.currentTab === "text"){
+    text = document.getElementById("qrInput").value.trim();
+  }
+
+  if(window.currentTab === "wa"){
+    const n = document.getElementById("waNumber").value.trim();
+    const m = document.getElementById("waMessage").value.trim();
+
+    if(!n){
+      alert("Nomor WA wajib");
+      return;
+    }
+
+    text = m
+      ? `https://wa.me/${n}?text=${encodeURIComponent(m)}`
+      : `https://wa.me/${n}`;
+  }
+
+  if(window.currentTab === "wifi"){
+    const s = document.getElementById("wifiSSID").value.trim();
+    const p = document.getElementById("wifiPass").value.trim();
+
+    if(!s){
+      alert("Nama WiFi wajib");
+      return;
+    }
+
+    text = p
+      ? `WIFI:T:WPA;S:${s};P:${p};;`
+      : `WIFI:T:nopass;S:${s};;`;
+  }
+
+  if(!text){
+    alert("Input kosong");
+    return;
+  }
+
+  const canvas = document.getElementById("qrCanvas");
+
+  QRCode.toCanvas(canvas, text, {
+    width: parseInt(document.getElementById("qrSize").value) || 300,
+    margin: 2,
+    color: {
+      dark: document.getElementById("qrColor").value,
+      light: document.getElementById("bgColor").value
+    }
+  }, function(err){
+
+    if(err){
+      console.error(err);
+      alert("Gagal generate QR");
+      return;
+    }
+
+    addLogo();
+    document.getElementById("downloadBox").classList.add("active");
+  });
+}
+
+// LOGO
+function addLogo(){
+  const file = document.getElementById("logoInput").files[0];
+  if(!file) return;
+
+  const canvas = document.getElementById("qrCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const img = new Image();
+  img.onload = function(){
+    const size = canvas.width * 0.2;
+    ctx.drawImage(img, (canvas.width-size)/2, (canvas.height-size)/2, size, size);
+  }
+
+  img.src = URL.createObjectURL(file);
+}
+
+// DOWNLOAD
+window.downloadPNG = function(){
+  const canvas = document.getElementById("qrCanvas");
+  const a = document.createElement("a");
+  a.href = canvas.toDataURL();
+  a.download = "qr.png";
+  a.click();
+}
+
+window.downloadSVG = function(){
+  const text = document.getElementById("qrInput").value || "QR";
+
+  QRCode.toString(text, { type: 'svg' }, function (err, svg) {
+    const blob = new Blob([svg], {type: "image/svg+xml"});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "qr.svg";
+    a.click();
+  });
+}
+
+</script>
+
+<style is:global>
+
+/* LAYOUT */
+.qr-app {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+@media(max-width:768px){
+  .qr-app {grid-template-columns:1fr;}
+}
+
+/* PANEL */
+.qr-panel {
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:16px;
+}
+
+/* TITLE */
+.qr-title {
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+/* INPUT */
+.qr-input, .qr-select {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  margin-bottom:10px;
+}
+
+/* COLOR */
+.qr-color {
+  width:100%;
+  height:45px;
+  border:none;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* BUTTON */
+.btn-primary {
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  background:linear-gradient(135deg,#0ea5e9,#2563eb);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn-primary:hover {
+  opacity:.9;
+}
+
+.btn-secondary {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+}
+
+/* TABS */
+.tabs {
+  display:flex;
+  gap:5px;
+  margin-bottom:10px;
+}
+
+.tabs button {
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:var(--border);
+  color:var(--text);
+}
+
+.tabs button.active {
+  background:var(--accent);
+  color:#fff;
+}
+
+/* TAB */
+.tab {display:none;}
+.tab.active {display:block;}
+
+/* ADVANCED */
+.qr-advanced {
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed var(--border);
+  border-radius:12px;
+}
+
+.qr-advanced.active {
+  display:block;
+}
+
+.qr-advanced-toggle {
+  margin-top:15px;
+  font-size:14px;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+/* PREVIEW */
+.qr-preview {
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:250px;
+}
+
+#qrCanvas {
+  width:100%;
+  max-width:300px;
+}
+
+/* DOWNLOAD */
+.qr-download {
+  display:none;
+  margin-top:15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.qr-download.active {
+  display:grid;
+}
+
+/* HINT */
+.qr-hint {
+  font-size:13px;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+
+
+/* LAYOUT */
+.qr-app {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+@media(max-width:768px){
+  .qr-app {grid-template-columns:1fr;}
+}
+
+/* PANEL */
+.qr-panel {
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:20px;
+  border-radius:16px;
+}
+
+/* TITLE */
+.qr-title {
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+/* INPUT */
+.qr-input, .qr-select {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  margin-bottom:10px;
+}
+
+/* COLOR */
+.qr-color {
+  width:100%;
+  height:45px;
+  border:none;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* BUTTON */
+.btn-primary {
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  background:linear-gradient(135deg,#0ea5e9,#2563eb);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.btn-secondary {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+}
+
+/* ACTION GRID */
+.qr-actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
+
+/* ADVANCED */
+.qr-advanced {
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed var(--border);
+  border-radius:12px;
+}
+
+.qr-advanced.active {display:block;}
+
+.qr-advanced-toggle {
+  margin-top:15px;
+  font-size:14px;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+/* PREVIEW */
+.qr-preview {
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:250px;
+}
+
+#qrCanvas {max-width:100%;}
+
+/* DOWNLOAD */
+.qr-download {
+  display:none;
+  margin-top:15px;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.qr-download.active {
+  display:grid;
+}
+
+/* HINT */
+.qr-hint {
+  font-size:13px;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+
+
+.tool-more{margin-top:25px}.tool-more details{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:12px;transition:.25s;overflow:hidden}.tool-more details:hover{border-color:var(--accent);transform:translateY(-2px)}.tool-more summary{font-weight:600;font-size:15px;cursor:pointer;list-style:none;position:relative;padding-right:25px}.tool-more summary::-webkit-details-marker{display:none}.tool-more summary::after{content:"+";position:absolute;right:0;top:0;font-size:18px;transition:.2s}.tool-more details[open] summary::after{content:"−"}.tool-more p{margin-top:10px;font-size:14px;line-height:1.6;color:var(--text-soft)}.tool-more details[open]{animation:.25s fadeIn}@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
+
+</MainLayout>
