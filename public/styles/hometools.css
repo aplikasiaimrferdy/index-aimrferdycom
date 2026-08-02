@@ -1,4 +1,31 @@
 /* Layout */
+.page-tools{
+  width:100%;
+  max-width:1280px;
+  margin:auto;
+  padding:96px 24px 24px;
+  box-sizing:border-box;
+}
+
+@media(max-width:1024px){
+  .page-tools{
+    padding:96px 20px 20px;
+  }
+}
+
+@media(max-width:768px){
+  .page-tools{
+    padding:96px 16px 16px;
+  }
+}
+
+@media(max-width:480px){
+  .page-tools{
+    padding:90px 14px 14px;
+  }
+}
+
+
 .tools-page{
   max-width:1000px;
   margin:auto;
