@@ -121,77 +121,115 @@ copyBtn.textContent =
 
 </script>
 
-<style>
+<style is:global>
+/* =========================
+   HUMANIZER TOOL
+========================= */
 
 .humanizer-tool{
-margin:40px 0;
-padding:30px;
-background:#fff;
-border:1px solid #e5e7eb;
-border-radius:20px;
+  margin:40px 0;
+  padding:30px;
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(12px);
 }
 
 .form-group{
-margin-bottom:20px;
+  margin-bottom:20px;
 }
 
 .form-group label{
-display:block;
-font-weight:700;
-margin-bottom:8px;
+  display:block;
+  margin-bottom:8px;
+  font-weight:700;
+  color:var(--text);
 }
 
 .humanizer-tool textarea{
-width:100%;
-min-height:240px;
-padding:16px;
-font-size:16px;
-border:1px solid #d1d5db;
-border-radius:12px;
-resize:vertical;
-box-sizing:border-box;
+  width:100%;
+  min-height:240px;
+  padding:16px;
+  box-sizing:border-box;
+  resize:vertical;
+
+  background:transparent;
+  color:var(--text);
+
+  border:1px solid var(--border);
+  border-radius:12px;
+
+  font:inherit;
+  line-height:1.6;
+
+  transition:.2s ease;
 }
+
+.humanizer-tool textarea::placeholder{
+  color:var(--soft);
+}
+
+.humanizer-tool textarea:focus{
+  outline:none;
+  border-color:var(--accent,#3b82f6);
+  box-shadow:0 0 0 3px rgba(59,130,246,.15);
+}
+
+/* =========================
+   BUTTON
+========================= */
 
 #humanizeBtn,
 #copyBtn{
-width:100%;
-padding:15px;
-border:none;
-border-radius:12px;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-margin-top:10px;
+  width:100%;
+  margin-top:10px;
+  padding:15px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
 #humanizeBtn{
-background:#111827;
-color:#fff;
+  border:none;
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  color:#fff;
 }
 
 #copyBtn{
-background:#f3f4f6;
-color:#111827;
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--border);
 }
 
 #humanizeBtn:hover,
 #copyBtn:hover{
-opacity:.9;
+  transform:translateY(-2px);
 }
+
+#humanizeBtn:active,
+#copyBtn:active{
+  transform:scale(.98);
+}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:768px){
 
-.humanizer-tool{
-padding:20px;
-border-radius:16px;
-}
+  .humanizer-tool{
+    padding:20px;
+    border-radius:16px;
+  }
 
-.humanizer-tool textarea{
-min-height:200px;
-}
+  .humanizer-tool textarea{
+    min-height:200px;
+  }
 
 }
-
 </style>
 
 ## Apa Itu AI Humanizer?
