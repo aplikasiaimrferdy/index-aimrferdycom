@@ -1,62 +1,59 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import "../../styles/tools.css";
-const modules = Object.entries(import.meta.glob("/src/pages/tools/**/*.astro",{ eager:true }));
+
+const modules = Object.entries(import.meta.glob("./**/*.astro",{ eager:true }));
 
 const tools = modules
-.filter(([file]) => !file.endsWith("/index.astro"))
-.map(([file,mod]) => {
+  .filter(([file])=>!file.endsWith("/index.astro"))
+  .map(([file,mod])=>{
 
-  if(!mod.TOOL?.title) return null;
+    if(!mod.meta?.title) return null;
 
-  const slug = file
-    .replace("/src/pages/tools/","")
-    .replace(/\.astro$/,"");
+    const url=file
+      .replace("/src/pages","")
+      .replace(/\.astro$/,"");
 
-  return {
-    slug,
-    url:`/tools/${slug}`,
-    title:mod.TOOL.title,
-    description:mod.TOOL.description ?? "",
-    category:mod.TOOL.category ?? "Other",
-    featured:mod.TOOL.featured ?? false,
-    icon:mod.TOOL.icon ?? "🛠️",
-    order:mod.TOOL.order ?? 9999,
-  };
+    const slug=url.replace("/tools/","");
 
-})
-.filter(Boolean)
-.sort((a,b)=>
-  a.order===b.order
-    ? a.title.localeCompare(b.title)
-    : a.order-b.order
-);
+    return{
+      slug,
+      url,
+      title:mod.meta.title,
+      description:mod.meta.description??"",
+      category:mod.meta.category??"Other",
+      featured:mod.meta.featured??false,
+      icon:mod.meta.icon??"🛠️",
+      order:mod.meta.order??9999,
+    };
 
-const featured = tools.filter(t=>t.featured);
+  })
+  .filter(Boolean)
+  .sort((a,b)=>a.order===b.order?a.title.localeCompare(b.title):a.order-b.order);
 
-const categories = [...new Set(tools.map(t=>t.category))].sort();
+const featured=tools.filter(t=>t.featured);
 
-const grouped = Object.fromEntries(
+const categories=[...new Set(tools.map(t=>t.category))].sort();
+
+const grouped=Object.fromEntries(
   categories.map(cat=>[
     cat,
     tools.filter(t=>t.category===cat)
   ])
 );
 
-const total = tools.length;
+const total=tools.length;
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Free Online Tools",
-  itemListElement: tools.map((tool, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    name: tool.title,
-    url: new URL(tool.url, site).href
+const jsonLd={
+  "@context":"https://schema.org",
+  "@type":"ItemList",
+  name:"Free Online Tools",
+  itemListElement:tools.map((tool,i)=>({
+    "@type":"ListItem",
+    position:i+1,
+    name:tool.title,
+    url:new URL(tool.url,Astro.site).href
   }))
 };
-
 ---
 
 <MainLayout
