@@ -100,10 +100,19 @@ const imageUrl = slug
   </>
 )}
 
-{breadcrumbs && (
+{breadcrumbs?.length > 0 && (
   <script
     type="application/ld+json"
-    set:html={JSON.stringify(breadcrumbs)}
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbs.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        item: new URL(item.url, SITE.baseUrl).toString(),
+      })),
+    })}
   />
 )}
 
