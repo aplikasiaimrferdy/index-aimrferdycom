@@ -1,4 +1,8 @@
 /* TOOLS LAYOUT */
+
+.tools-page{
+  margin-top:80px; /* sesuaikan dengan tinggi header */
+}
 .tools-page,
 .tool-container,
 .category-page {
