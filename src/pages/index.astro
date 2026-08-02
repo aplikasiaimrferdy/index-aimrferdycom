@@ -62,9 +62,9 @@ const popularPosts =
 /* POPULAR TOOLS */
 
 const popularTools =
-  tools.filter(tool => tool.data.popular).length > 0
+  tools.some(tool => tool.popular)
     ? tools
-        .filter(tool => tool.data.popular)
+        .filter(tool => tool.popular)
         .slice(0, 3)
     : tools.slice(0, 3);
 
