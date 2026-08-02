@@ -1,9 +1,15 @@
 ---
-title: "UnJS Online Full HTML Cleaner – Remove Unused JavaScript"
-description: "Clean unused JavaScript from HTML safely in your browser. Detect and remove potentially unused functions without affecting HTML or CSS. No upload required."
-popular: true
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "QR Code Generator Online",
+  description: "Buat QR Code custom dengan warna, logo, WiFi & WhatsApp.",
+  category: "Generator",
+  featured: true
+};
 ---
 
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tool"]}>
 
 <style is:global>/* ==========================================================
    THEME
@@ -585,3 +591,4 @@ Belum ada analisis.
 `;statusBox.textContent="Reset selesai.";updateCount();}updateCount();</script>
 <script>function toggleMenu(button){const menu=document.getElementById("mainMenu");const isOpen=menu.classList.toggle("show");button.classList.toggle("active",isOpen);button.setAttribute("aria-expanded",isOpen);}document .querySelectorAll("#mainMenu a").forEach(function(link){link.addEventListener("click",function(){const menu=document.getElementById("mainMenu");const button=document.querySelector(".menu-toggle");menu.classList.remove("show");button.classList.remove("active");button.setAttribute("aria-expanded","false");});});</script>
 </body></html>
+</MainLayout>
