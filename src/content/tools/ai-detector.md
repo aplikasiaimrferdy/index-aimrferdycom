@@ -52,7 +52,7 @@ style="display:none;"
 ### Text Statistics
 
 | Metric | Value |
-|--------|------:|
+|--|:|
 | Words | <span id="wordCount">0</span> |
 | Characters | <span id="charCount">0</span> |
 | Sentences | <span id="sentenceCount">0</span> |
@@ -99,19 +99,19 @@ transition:.4s;
 
 <p id="resultText"></p>
 
----
+
 
 ### Analysis
 
 | Indicator | Result |
-|-----------|--------|
+|--|--|
 | Vocabulary Diversity | <span id="vocabScore"></span> |
 | Sentence Variety | <span id="sentenceVariety"></span> |
 | Repeated Words | <span id="repeatScore"></span> |
 | Readability | <span id="readability"></span> |
 | Average Sentence Length | <span id="avgSentence"></span> |
 
----
+
 
 ### Suggestions
 
@@ -134,7 +134,7 @@ Copy Report
 
 </div>
 
----
+
 
 ## What Is AI Detector?
 
@@ -151,7 +151,7 @@ Tool ini menggunakan beberapa indikator seperti:
 
 Semua proses dilakukan langsung di browser sehingga data tidak dikirim ke server.
 
----
+
 
 ## Features
 
@@ -169,7 +169,7 @@ Semua proses dilakukan langsung di browser sehingga data tidak dikirim ke server
 - Writing Suggestions
 - Copy Analysis Report
 
----
+
 
 ## How To Use
 
@@ -179,7 +179,7 @@ Semua proses dilakukan langsung di browser sehingga data tidak dikirim ke server
 4. Review the AI Probability and Human Score.
 5. Read the recommendations to improve your writing.
 
----
+
 
 ## Understanding The Result
 
@@ -207,7 +207,7 @@ Menghitung tingkat pengulangan kata yang berlebihan.
 
 Mengukur kemudahan teks untuk dibaca.
 
----
+
 
 ## Tips To Make Writing More Human
 
@@ -218,7 +218,7 @@ Mengukur kemudahan teks untuk dibaca.
 - Sisipkan opini atau pengalaman pribadi jika relevan.
 - Hindari struktur kalimat yang terlalu seragam.
 
----
+
 
 ## FAQ
 
