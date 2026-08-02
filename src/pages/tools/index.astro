@@ -1,44 +1,253 @@
 ---
-import { getCollection } from "astro:content";
 import MainLayout from "../../layouts/MainLayout.astro";
 import "../../styles/tools.css";
-import { SITE } from "../../lib/site";
+const modules = Object.entries(import.meta.glob("/src/pages/tools/**/*.astro",{ eager:true }));
 
-const tools = await getCollection("tools");
+const tools = modules
+.filter(([file]) => !file.endsWith("/index.astro"))
+.map(([file,mod]) => {
+
+  if(!mod.TOOL?.title) return null;
+
+  const slug = file
+    .replace("/src/pages/tools/","")
+    .replace(/\.astro$/,"");
+
+  return {
+    slug,
+    url:`/tools/${slug}`,
+    title:mod.TOOL.title,
+    description:mod.TOOL.description ?? "",
+    category:mod.TOOL.category ?? "Other",
+    featured:mod.TOOL.featured ?? false,
+    icon:mod.TOOL.icon ?? "🛠️",
+    order:mod.TOOL.order ?? 9999,
+  };
+
+})
+.filter(Boolean)
+.sort((a,b)=>
+  a.order===b.order
+    ? a.title.localeCompare(b.title)
+    : a.order-b.order
+);
+
+const featured = tools.filter(t=>t.featured);
+
+const categories = [...new Set(tools.map(t=>t.category))].sort();
+
+const grouped = Object.fromEntries(
+  categories.map(cat=>[
+    cat,
+    tools.filter(t=>t.category===cat)
+  ])
+);
+
+const total = tools.length;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Free Online Tools",
+  itemListElement: tools.map((tool, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: tool.title,
+    url: new URL(tool.url, site).href
+  }))
+};
+
 ---
 
 <MainLayout
-  title={`Tools | ${SITE.title}`}
-  description="Kumpulan tools yang tersedia."
+  title="AI Mr Ferdy - Free Online Tools"
+  description="Kumpulan AI Tools, Developer Tools, Generator, Converter, SEO Tools, dan Utility gratis tanpa instalasi."
+  url={new URL("/tools", Astro.site).href}
+  pageCSS={["tools"]}
 >
-  <section class="tools-page">
-    <div class="container">
-      <div class="page-header">
-        <h1>Tools</h1>
-        <p>Kumpulan AI tools dan utility yang tersedia.</p>
+
+<div class="tools-page">
+
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="tools-hero">
+
+      <div class="hero-badge">
+        🚀 {total}+ Free Online Tools
       </div>
 
-      <div class="tools-grid">
-        {tools.map((tool) => (
-          <article class="tool-card">
-            <h2>
-              <a href={`/tools/${tool.slug}/`}>
-                {tool.data.title}
-              </a>
-            </h2>
+      <h1>AI Mr Ferdy Tools</h1>
 
-            <p>{tool.data.description}</p>
+      <p>
+        Gunakan berbagai AI Tools, Generator, Converter,
+        Developer Tools, SEO Tools, dan Utility gratis
+        langsung dari browser.
+      </p>
+
+    </section>
+
+    <!-- STATS -->
+    <section class="tools-stats">
+
+      <div>
+        <strong>{total}</strong>
+        <span>Tools</span>
+      </div>
+
+      <div>
+        <strong>{categories.length}</strong>
+        <span>Kategori</span>
+      </div>
+
+      <div>
+        <strong>100%</strong>
+        <span>Gratis</span>
+      </div>
+
+    </section>
+
+    <!-- SEARCH -->
+    <section class="tools-search">
+
+      <input
+        id="searchTools"
+        type="search"
+        placeholder="Cari tools..."
+      />
+
+    </section>
+
+    <!-- FEATURED -->
+    {featured.length > 0 && (
+
+      <section>
+
+        <h2 class="section-title">
+          🔥 Popular Tools
+        </h2>
+
+        <div class="tools-grid">
+
+          {featured.map(tool => (
 
             <a
-              href={`/tools/${tool.slug}/`}
-              class="tool-button"
+              href={tool.url}
+              class="tool-card popular"
+              data-search={`${tool.title} ${tool.description} ${tool.category}`.toLowerCase()}
             >
-              Buka Tool →
-            </a>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-</MainLayout>
 
+              <div class="tool-icon">
+                {tool.icon}
+              </div>
+
+              <div class="badge">
+                HOT
+              </div>
+
+              <h3>{tool.title}</h3>
+
+              <p>{tool.description}</p>
+
+            </a>
+
+          ))}
+
+        </div>
+
+      </section>
+
+    )}
+
+    <!-- CATEGORY -->
+    {categories.map(cat => (
+
+      <section class="category">
+
+        <div
+          class="category-header"
+          onclick="toggleCat(this)"
+        >
+
+          {cat}
+
+          <span>+</span>
+
+        </div>
+
+        <div class="category-content">
+
+          <div class="tools-grid">
+
+            {grouped[cat].map(tool => (
+
+              <a
+                href={tool.url}
+                class="tool-card"
+                data-search={`${tool.title} ${tool.description} ${tool.category}`.toLowerCase()}
+              >
+
+                <div class="tool-icon">
+                  {tool.icon}
+                </div>
+
+                <h3>{tool.title}</h3>
+
+                <p>{tool.description}</p>
+
+              </a>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      </section>
+
+    ))}
+
+    <div
+      id="emptyState"
+      class="tools-empty"
+      style="display:none"
+    >
+
+      Tidak ada tools ditemukan.
+
+    </div>
+
+  </div>
+
+</div>
+
+<script is:inline>
+const search=document.getElementById("searchTools");
+const cards=document.querySelectorAll(".tool-card");
+
+search?.addEventListener("input",(e)=>{
+const q=e.target.value.toLowerCase();
+let visible=0;
+
+cards.forEach(card=>{
+const ok=card.dataset.search.includes(q);
+card.style.display=ok?"":"none";
+if(ok) visible++;
+});
+
+document.getElementById("emptyState").style.display=visible?"none":"block";
+});
+
+window.toggleCat=function(el){
+const content=el.nextElementSibling;
+content.classList.toggle("active");
+el.querySelector("span").textContent=content.classList.contains("active")?"−":"+";
+};
+</script>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(jsonLd)}
+></script>
+
+</MainLayout>
