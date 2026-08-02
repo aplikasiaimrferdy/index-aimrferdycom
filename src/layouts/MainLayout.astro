@@ -101,7 +101,7 @@ const faqSchema = generateFaqSchema(html);
 <body>
 
   <Header />
-  <main>
+
 {autoBreadcrumbs.length > 1 && (
   <nav class="breadcrumb" aria-label="Breadcrumb">
     {autoBreadcrumbs.map((item, index) => (
@@ -117,7 +117,7 @@ const faqSchema = generateFaqSchema(html);
   </nav>
 )}
 
-
+  <main>
     <slot />
   </main>
 
@@ -186,27 +186,6 @@ faqItems.forEach(item=>{
 });
 
 </script>
-<style is:global>
-.breadcrumb {
-  max-width: 1200px;
-  margin: 16px auto;
-  padding: 0 16px;
-  font-size: 14px;
-}
 
-.breadcrumb a {
-  text-decoration: none;
-  color: #2563eb;
-}
-
-.breadcrumb .separator {
-  margin: 0 8px;
-  color: #999;
-}
-
-.breadcrumb span:last-child {
-  color: #666;
-}
-</style>
 </body>
 </html>
