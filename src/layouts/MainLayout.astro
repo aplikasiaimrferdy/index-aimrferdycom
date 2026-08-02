@@ -60,7 +60,8 @@ const autoBreadcrumbs = breadcrumbs ?? (() => {
 const faqSchema = generateFaqSchema(html);
 
 
-
+console.log(Astro.url.pathname);
+console.log(autoBreadcrumbs);
 ---
 
 <!doctype html>
