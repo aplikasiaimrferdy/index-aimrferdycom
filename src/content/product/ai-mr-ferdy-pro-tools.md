@@ -84,4 +84,4 @@ Karena produk ini disediakan secara gratis dalam bentuk layanan digital, tidak t
 
 ## Dukungan
 
-Apabila mengalami kendala saat menggunakan layanan, silakan hubungi kami melalui halaman **Kontak** di website.
+Apabila mengalami kendala saat menggunakan layanan, silakan hubungi kami melalui halaman <a href="https://aimrferdy.com/contact">**Kontak**</a> di website. Baca juga <a href="[https://aimrferdy.com/contact](https://aimrferdy.com/return-policy">**Return Policy**</a> 
