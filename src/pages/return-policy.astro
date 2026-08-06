@@ -1,1 +1,18 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { SITE } from '../lib/site';
 
+const pageTitle =
+  'Kebijakan Pengembalian';
+
+const pageDescription =
+  'Kebijakan Pengembalian Produk Ai Mr Ferdy';
+---
+
+<MainLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={`${SITE.url()}/about`}
+>
+Kebijakan Pengembalian Produk Ai Mr Ferdy
+</MainLayout>
