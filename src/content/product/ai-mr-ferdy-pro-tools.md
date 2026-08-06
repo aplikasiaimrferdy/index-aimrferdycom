@@ -3,7 +3,7 @@ title: "AI Mr Ferdy Premium AI Tools"
 
 description: "Kumpulan AI Tools gratis untuk menulis, SEO, coding, produktivitas, dan pembuatan konten."
 
-price: "IDR 0"
+price: "IDR 50.000"
 
 currency: "IDR"
 
