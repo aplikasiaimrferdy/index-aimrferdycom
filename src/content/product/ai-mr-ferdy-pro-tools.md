@@ -13,12 +13,12 @@ condition: "https://schema.org/NewCondition"
 
 brand: "AI Mr Ferdy"
 
-image: "/images/products/ai-mr-ferdy-tools.webp"
+image: "/images/products/aimrferdy.png"
 
 gallery:
-  - "/images/products/ai-mr-ferdy-tools.webp"
-  - "/images/products/dashboard.webp"
-  - "/images/products/features.webp"
+  - "/images/products/aimrferdy1.png"
+  - "/images/products/aimrferdy2.png"
+  - "/images/products/aimrferdy3.png"
 
 category: "Software"
 
