@@ -1,182 +1,46 @@
 ---
 import MainLayout from "../../../layouts/MainLayout.astro";
 
-const TOOL = {
-  title: "HTML Editor",
-  description: "Editor HTML online sederhana untuk membuat dan melihat hasil HTML.",
-  category: "Web Tools",
-  icon: "🌐",
-};
+const title = "Tes Tool";
+const description = "Halaman testing tool AI Mr Ferdy.";
 ---
 
 <MainLayout
-  title={`${TOOL.title} | AI Mr Ferdy`}
-  description={TOOL.description}
+  title={`${title} | AI Mr Ferdy`}
+  description={description}
 >
   <main class="page-tools">
-    <section class="tool-header">
-      <div class="tool-icon">{TOOL.icon}</div>
+    <h1>{title}</h1>
+    <p>{description}</p>
 
-      <div>
-        <span class="tool-category">{TOOL.category}</span>
-        <h1>{TOOL.title}</h1>
-        <p>{TOOL.description}</p>
-      </div>
-    </section>
-
-    <section class="tool-card">
-      <h2>HTML Editor</h2>
-
-      <textarea
-        id="htmlInput"
-        placeholder="Tulis kode HTML di sini..."
-      ><h1>Hello World!</h1>
-<p>Ini adalah contoh HTML.</p></textarea>
-
-      <button id="previewBtn" type="button">
-        Preview HTML
-      </button>
-
-      <div class="preview-wrapper">
-        <h3>Preview</h3>
-        <iframe id="preview" title="HTML Preview"></iframe>
-      </div>
-    </section>
+    <div class="test-box">
+      <h2>Test berhasil</h2>
+      <p>Halaman /tools/web/tes/ berhasil dibuat.</p>
+    </div>
   </main>
 </MainLayout>
 
 <style>
   .page-tools {
     max-width: 1280px;
-    margin: 0 auto;
+    margin: auto;
     padding: 110px 24px 40px;
   }
 
-  .tool-header {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 30px;
-  }
-
-  .tool-icon {
-    width: 64px;
-    height: 64px;
-    display: grid;
-    place-items: center;
-    font-size: 32px;
-    border-radius: 16px;
-    background: rgba(59, 130, 246, 0.12);
-  }
-
-  .tool-category {
-    font-size: 13px;
-    color: #3b82f6;
-    font-weight: 600;
-  }
-
-  .tool-header h1 {
-    margin: 4px 0;
-    font-size: 32px;
+  h1,
+  h2 {
     color: var(--text, #f8fafc);
   }
 
-  .tool-header p {
-    margin: 0;
+  p {
     color: var(--soft, #94a3b8);
   }
 
-  .tool-card {
+  .test-box {
+    margin-top: 24px;
     padding: 24px;
     border: 1px solid var(--border, rgba(255,255,255,.08));
-    border-radius: 20px;
+    border-radius: 16px;
     background: var(--card, rgba(15,23,42,.72));
   }
-
-  .tool-card h2 {
-    margin-top: 0;
-    color: var(--text, #f8fafc);
-  }
-
-  textarea {
-    width: 100%;
-    min-height: 280px;
-    box-sizing: border-box;
-    padding: 16px;
-    resize: vertical;
-    border: 1px solid var(--border, rgba(255,255,255,.08));
-    border-radius: 12px;
-    background: rgba(0,0,0,.25);
-    color: var(--text, #f8fafc);
-    font: 14px/1.6 monospace;
-    outline: none;
-  }
-
-  button {
-    margin-top: 16px;
-    padding: 12px 20px;
-    border: 0;
-    border-radius: 10px;
-    background: var(--primary, #3b82f6);
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  button:hover {
-    background: var(--primary-hover, #2563eb);
-  }
-
-  .preview-wrapper {
-    margin-top: 28px;
-  }
-
-  .preview-wrapper h3 {
-    color: var(--text, #f8fafc);
-  }
-
-  iframe {
-    width: 100%;
-    min-height: 300px;
-    border: 1px solid var(--border, rgba(255,255,255,.08));
-    border-radius: 12px;
-    background: white;
-  }
-
-  @media (max-width: 640px) {
-    .page-tools {
-      padding: 96px 16px 30px;
-    }
-
-    .tool-header {
-      align-items: flex-start;
-    }
-
-    .tool-header h1 {
-      font-size: 26px;
-    }
-
-    .tool-icon {
-      width: 52px;
-      height: 52px;
-      font-size: 26px;
-    }
-  }
 </style>
-
-<script>
-  const input = document.querySelector("#htmlInput");
-  const button = document.querySelector("#previewBtn");
-  const preview = document.querySelector("#preview");
-
-  function updatePreview() {
-    if (!input || !preview) return;
-
-    preview.srcdoc = input.value;
-  }
-
-  button?.addEventListener("click", updatePreview);
-
-  updatePreview();
-</script>
-```
