@@ -4,7 +4,10 @@ import MainLayout from "../../../layouts/MainLayout.astro";
 const title = "Tes Tool";
 const description = "Halaman testing tool AI Mr Ferdy.";
 ---
-
+<MainLayout
+  title={`${title} | AI Mr Ferdy`}
+  description={description}
+>
 <style>
 .BeautyCSS,
 .MinifiedCSS {
@@ -578,3 +581,4 @@ function resetCSS() {
 }
 
 </script>
+</MainLayout>
