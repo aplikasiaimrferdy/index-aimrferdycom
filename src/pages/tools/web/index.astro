@@ -5,28 +5,27 @@ const modules = import.meta.glob("./*.astro", {
   eager: true,
 });
 
-const tools = Object.keys(modules)
-  .filter((path) => !path.endsWith("/index.astro"))
-  .map((path) => {
-    const slug = path
-      .split("/")
-      .pop()
-      ?.replace(".astro", "") || "";
+const tools = Object.entries(modules)
+  .filter(([path]) => !path.endsWith("/index.astro"))
+  .map(([path, mod]) => {
+    const slug =
+      path.split("/").pop()?.replace(".astro", "") || "";
 
-    const title = slug
+    const fallbackTitle = slug
       .replace(/[-_]/g, " ")
       .replace(/\b\w/g, (char) => char.toUpperCase());
 
     return {
       slug,
-      title,
       url: `/tools/web/${slug}/`,
-      description: `Tool ${title} online gratis.`,
-      icon: "🛠️",
+      title: mod.title || fallbackTitle,
+      description:
+        mod.description || `Tool ${fallbackTitle} online gratis.`,
+      icon: mod.icon || "🛠️",
     };
-  });
+  })
+  .sort((a, b) => a.title.localeCompare(b.title));
 ---
-
 <MainLayout
   title="Web Tools Online | AI Mr Ferdy"
   description="Kumpulan web tools online gratis."
