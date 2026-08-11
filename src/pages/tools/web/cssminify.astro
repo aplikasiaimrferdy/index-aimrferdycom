@@ -1,13 +1,15 @@
 ---
 import MainLayout from "../../../layouts/MainLayout.astro";
 
-const title = "Tes Tool";
-const description = "Halaman testing tool AI Mr Ferdy.";
+export const meta = {
+  title: "🗜️ Image Compressor PRO",
+  description: "Compress gambar JPG, PNG, WEBP online gratis dengan kualitas terbaik. Tanpa upload server.",
+  category: "Image",
+  featured: true
+};
 ---
-<MainLayout
-  title={`${title} | AI Mr Ferdy`}
-  description={description}
->
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
 <style>
 .BeautyCSS,
 .MinifiedCSS {
