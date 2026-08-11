@@ -1,0 +1,166 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "✨ Fancy Text Generator",
+  description: "Ubah teks biasa jadi font keren untuk Instagram, TikTok, dan bio. Gratis dan mudah digunakan.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>✨ Fancy Text Generator Online Gratis</h1>
+  <p>
+    Ubah teks biasa menjadi font keren untuk Instagram, TikTok, dan bio.
+    Gratis, unik, dan langsung bisa digunakan.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Masukkan Teks</label>
+    <textarea id="input" class="tool-textarea" placeholder="Contoh: halo dunia"></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateFancy()">🚀 Generate</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Fancy Text</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyText()">📋 Copy Text</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk membuat teks keren</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Fancy Text Generator?</h2>
+  <p>
+    Fancy Text Generator adalah alat online untuk mengubah teks biasa menjadi
+    berbagai gaya font unik dan keren menggunakan karakter Unicode.
+    Cocok untuk bio Instagram, TikTok, caption, dan nickname game.
+  </p>
+
+  <h2>Kenapa Menggunakan Fancy Text?</h2>
+  <ul>
+    <li>Membuat bio lebih menarik</li>
+    <li>Meningkatkan estetika konten</li>
+    <li>Membantu branding personal</li>
+    <li>Menarik perhatian audiens</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Fancy Text Generator</summary>
+    <p>
+      Masukkan teks yang ingin diubah, lalu klik generate.
+      Pilih hasil yang kamu suka dan copy untuk digunakan di sosial media.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Fancy Text Generator</summary>
+    <ul>
+      <li>Banyak variasi font keren</li>
+      <li>Support semua platform</li>
+      <li>Gratis tanpa login</li>
+      <li>Copy sekali klik</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Menggunakan Fancy Text</summary>
+    <ul>
+      <li>Gunakan untuk bio & username</li>
+      <li>Jangan terlalu berlebihan</li>
+      <li>Pilih font yang tetap mudah dibaca</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+function toFancy(text, map){
+  return text.split("").map(c => map[c] || c).join("");
+}
+
+window.generateFancy = function(){
+  const text = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!text){
+    alert("Masukkan teks dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  const maps = [
+    // bold
+    {
+      a:"𝗮",b:"𝗯",c:"𝗰",d:"𝗱",e:"𝗲",f:"𝗳",g:"𝗴",h:"𝗵",i:"𝗶",j:"𝗷",
+      k:"𝗸",l:"𝗹",m:"𝗺",n:"𝗻",o:"𝗼",p:"𝗽",q:"𝗾",r:"𝗿",s:"𝘀",t:"𝘁",
+      u:"𝘂",v:"𝘃",w:"𝘄",x:"𝘅",y:"𝘆",z:"𝘇"
+    },
+    // bubble
+    {
+      a:"ⓐ",b:"ⓑ",c:"ⓒ",d:"ⓓ",e:"ⓔ",f:"ⓕ",g:"ⓖ",h:"ⓗ",i:"ⓘ",j:"ⓙ",
+      k:"ⓚ",l:"ⓛ",m:"ⓜ",n:"ⓝ",o:"ⓞ",p:"ⓟ",q:"ⓠ",r:"ⓡ",s:"ⓢ",t:"ⓣ",
+      u:"ⓤ",v:"ⓥ",w:"ⓦ",x:"ⓧ",y:"ⓨ",z:"ⓩ"
+    },
+    // small caps
+    {
+      a:"ᴀ",b:"ʙ",c:"ᴄ",d:"ᴅ",e:"ᴇ",f:"ғ",g:"ɢ",h:"ʜ",i:"ɪ",j:"ᴊ",
+      k:"ᴋ",l:"ʟ",m:"ᴍ",n:"ɴ",o:"ᴏ",p:"ᴘ",q:"ǫ",r:"ʀ",s:"s",t:"ᴛ",
+      u:"ᴜ",v:"ᴠ",w:"ᴡ",x:"x",y:"ʏ",z:"ᴢ"
+    }
+  ];
+
+  const lower = text.toLowerCase();
+
+  const outputs = maps.map(map => toFancy(lower, map));
+
+  result.value = outputs.join("\n\n");
+
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyText = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy Text";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

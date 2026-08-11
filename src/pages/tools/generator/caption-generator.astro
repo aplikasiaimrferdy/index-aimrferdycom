@@ -1,0 +1,136 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📝 AI Caption Generator",
+  description: "Buat caption TikTok & Instagram yang menarik dan viral secara otomatis.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>📝 AI Caption Generator</h1>
+  <p class="desc">Bikin caption TikTok & Instagram yang menarik dan viral 🚀</p>
+
+  <div class="form-group">
+    <label>Topik</label>
+    <input id="topic" class="tool-input" placeholder="Contoh: jualan online, skincare, affiliate..." />
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Caption</label>
+    <select id="style" class="tool-input">
+      <option value="story">📖 Story</option>
+      <option value="promosi">💰 Promosi</option>
+      <option value="motivasi">🔥 Motivasi</option>
+      <option value="edukasi">📚 Edukasi</option>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateCaption()">🚀 Generate</button>
+    <button class="btn btn-secondary" onclick="copyCaption()">📋 Copy</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Caption</label>
+    <textarea id="result" class="tool-textarea" placeholder="Caption akan muncul di sini..."></textarea>
+  </div>
+
+</div>
+
+<!-- SEO COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>📌 Cara Menggunakan Caption Generator</summary>
+    <p>
+      Masukkan topik konten kamu, pilih gaya caption, lalu klik generate.
+      Gunakan caption untuk meningkatkan engagement TikTok atau Instagram.
+    </p>
+  </details>
+
+  <details>
+    <summary>🔥 Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate caption otomatis</li>
+      <li>Berbagai gaya caption</li>
+      <li>Cocok untuk semua niche</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🚀 Tips Caption Viral</summary>
+    <ul>
+      <li>Gunakan storytelling</li>
+      <li>Tambahkan call to action</li>
+      <li>Gunakan emosi & curiosity</li>
+      <li>Gabungkan dengan hashtag</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateCaption = function(){
+  const topic = document.getElementById("topic").value.trim();
+  const style = document.getElementById("style").value;
+  const result = document.getElementById("result");
+
+  if(!topic){
+    alert("Isi topik dulu!");
+    return;
+  }
+
+  let captions = [];
+
+  if(style === "story"){
+    captions = [
+      `Dulu aku nggak ngerti tentang ${topic}...\n\nSampai akhirnya aku coba sendiri dan hasilnya di luar dugaan 🚀\n\nSekarang aku baru sadar, ternyata ini rahasianya...`,
+      `Awalnya aku kira ${topic} itu susah.\n\nTapi setelah belajar sedikit demi sedikit, ternyata bisa banget 💡\n\nKamu juga pasti bisa!`
+    ];
+  }
+
+  if(style === "promosi"){
+    captions = [
+      `Mau sukses di ${topic}? 🔥\n\nIni solusi yang bisa bantu kamu mulai sekarang juga!\n\nJangan sampai ketinggalan 🚀`,
+      `${topic} lagi booming banget sekarang!\n\nKalau kamu belum mulai, kamu bakal nyesel 💰\n\nMulai sekarang sebelum terlambat!`
+    ];
+  }
+
+  if(style === "motivasi"){
+    captions = [
+      `Kalau kamu serius di ${topic}, jangan pernah menyerah 🔥\n\nSemua butuh proses, tapi hasilnya pasti sepadan.`,
+      `Tidak ada yang instan dalam ${topic}.\n\nTapi kalau kamu konsisten, hasilnya akan luar biasa 🚀`
+    ];
+  }
+
+  if(style === "edukasi"){
+    captions = [
+      `Tau nggak sih?\n\nDalam ${topic}, ada hal penting yang sering diabaikan orang.\n\nPadahal ini yang bikin beda hasilnya 📚`,
+      `Tips penting dalam ${topic}:\n\nJangan asal jalan, tapi pahami strategi yang benar 💡`
+    ];
+  }
+
+  const random = captions[Math.floor(Math.random() * captions.length)];
+  result.value = random;
+}
+
+window.copyCaption = function(){
+  const text = document.getElementById("result").value;
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+}
+</script>
+
+</MainLayout>

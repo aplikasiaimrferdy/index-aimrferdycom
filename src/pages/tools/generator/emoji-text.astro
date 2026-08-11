@@ -1,0 +1,120 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "✨ Emoji Text Generator",
+  description: "Ubah teks biasa jadi teks dengan emoji keren untuk TikTok & Instagram.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>✨ Emoji Text Generator</h1>
+  <p class="desc">Ubah teks biasa jadi teks penuh emoji biar lebih menarik 🚀</p>
+
+  <div class="form-group">
+    <label>Masukkan Teks</label>
+    <textarea id="input" class="tool-textarea" placeholder="Contoh: jualan online menghasilkan uang"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Emoji</label>
+    <select id="style" class="tool-input">
+      <option value="random">🎲 Random</option>
+      <option value="happy">😄 Happy</option>
+      <option value="money">💰 Money</option>
+      <option value="fire">🔥 Viral</option>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateEmoji()">✨ Generate</button>
+    <button class="btn btn-secondary" onclick="copyText()">📋 Copy</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil akan muncul di sini..."></textarea>
+  </div>
+
+</div>
+
+<!-- SEO COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>📌 Cara Menggunakan Emoji Text Generator</summary>
+    <p>
+      Masukkan teks yang ingin kamu ubah, pilih gaya emoji, lalu klik generate.
+      Gunakan hasilnya untuk caption TikTok, Instagram, atau bio.
+    </p>
+  </details>
+
+  <details>
+    <summary>🔥 Fitur Tools Ini</summary>
+    <ul>
+      <li>Tambahkan emoji otomatis ke teks</li>
+      <li>Berbagai gaya (happy, money, viral)</li>
+      <li>Cocok untuk social media</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🚀 Tips Menggunakan Emoji</summary>
+    <ul>
+      <li>Jangan terlalu banyak emoji</li>
+      <li>Sesuaikan dengan konten</li>
+      <li>Gunakan emoji untuk highlight kata penting</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateEmoji = function(){
+  const text = document.getElementById("input").value.trim();
+  const style = document.getElementById("style").value;
+  const result = document.getElementById("result");
+
+  if(!text){
+    alert("Masukkan teks dulu!");
+    return;
+  }
+
+  const emojiMap = {
+    happy: ["😄","😊","😁","🥳"],
+    money: ["💰","💸","🤑","💵"],
+    fire: ["🔥","🚀","💥","⚡"],
+    random: ["😄","🔥","💰","🚀","✨","💥","⚡"]
+  };
+
+  const emojis = emojiMap[style] || emojiMap["random"];
+
+  const words = text.split(" ");
+
+  const output = words.map(word => {
+    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+    return word + " " + emoji;
+  });
+
+  result.value = output.join(" ");
+}
+
+window.copyText = function(){
+  const text = document.getElementById("result").value;
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+}
+</script>
+
+</MainLayout>

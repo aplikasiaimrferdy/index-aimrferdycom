@@ -1,0 +1,156 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "👤 Bio Generator",
+  description: "Buat bio Instagram, TikTok, dan bisnis yang menarik & profesional secara otomatis.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>👤 Bio Generator</h1>
+  <p class="desc">Bikin bio Instagram & TikTok yang menarik dan profesional 🚀</p>
+
+  <div class="form-group">
+    <label>Nama / Brand</label>
+    <input id="name" class="tool-input" placeholder="Contoh: Ferdy Digital" />
+  </div>
+
+  <div class="form-group">
+    <label>Bidang / Niche</label>
+    <input id="niche" class="tool-input" placeholder="Contoh: affiliate, skincare, bisnis online..." />
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Bio</label>
+    <select id="style" class="tool-input">
+      <option value="simple">✨ Simple</option>
+      <option value="professional">💼 Professional</option>
+      <option value="funny">😂 Funny</option>
+      <option value="sales">💰 Sales</option>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateBio()">🚀 Generate</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Bio</label>
+    <textarea id="result" class="tool-textarea" placeholder="Bio akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY (hidden dulu) -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyBio()">📋 Copy Bio</button>
+  </div>
+
+</div>
+
+<!-- SEO COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>📌 Cara Menggunakan Bio Generator</summary>
+    <p>
+      Masukkan nama atau brand kamu, isi niche/bidang, pilih gaya bio, lalu klik generate.
+      Gunakan bio untuk profil Instagram, TikTok, atau bisnis online kamu.
+    </p>
+  </details>
+
+  <details>
+    <summary>🔥 Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate bio otomatis</li>
+      <li>Berbagai gaya (simple, professional, funny, sales)</li>
+      <li>Cocok untuk semua niche</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🚀 Tips Bio Menarik</summary>
+    <ul>
+      <li>Gunakan kalimat singkat & jelas</li>
+      <li>Tambahkan value (apa yang kamu tawarkan)</li>
+      <li>Gunakan emoji secukupnya</li>
+      <li>Tambahkan call to action</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateBio = function(){
+  const name = document.getElementById("name").value.trim();
+  const niche = document.getElementById("niche").value.trim();
+  const style = document.getElementById("style").value;
+  const result = document.getElementById("result");
+
+  if(!name || !niche){
+    alert("Isi nama dan niche dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  let bios = [];
+
+  if(style === "simple"){
+    bios = [
+      `${name}\n${niche} enthusiast 🚀\nBelajar & berkembang setiap hari`,
+      `${name}\nSharing tentang ${niche}\nStay consistent 💡`
+    ];
+  }
+
+  if(style === "professional"){
+    bios = [
+      `${name}\nExpert di bidang ${niche}\nMembantu kamu berkembang 🚀`,
+      `${name}\nProfessional ${niche}\nSolusi & strategi terbaik 💼`
+    ];
+  }
+
+  if(style === "funny"){
+    bios = [
+      `${name}\nNgurus ${niche} biar nggak pusing 😂\nFollow kalau mau ikut seru`,
+      `${name}\nKerja di ${niche}, tapi tetap santai 😎\nKadang serius, sering bercanda`
+    ];
+  }
+
+  if(style === "sales"){
+    bios = [
+      `${name}\nBantu kamu sukses di ${niche} 💰\nKlik link & mulai sekarang!`,
+      `${name}\n${niche} solusi terbaik 🚀\nJangan sampai ketinggalan!`
+    ];
+  }
+
+  const random = bios[Math.floor(Math.random() * bios.length)];
+  result.value = random;
+
+  // tampilkan tombol copy
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyBio = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy Bio";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

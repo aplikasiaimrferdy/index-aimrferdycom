@@ -1,0 +1,191 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🎬 Script TikTok Generator",
+  description: "Buat script video TikTok yang menarik dan viral secara otomatis.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>🎬 Script TikTok Generator</h1>
+  <p class="desc">Bikin script video TikTok siap pakai 🚀</p>
+
+  <div class="form-group">
+    <label>Topik</label>
+    <input id="topic" class="tool-input" placeholder="Contoh: jualan online, affiliate, skincare..." />
+  </div>
+
+  <div class="form-group">
+    <label>Durasi Video</label>
+    <select id="duration" class="tool-input">
+      <option value="15">⏱️ 15 detik</option>
+      <option value="30">⏱️ 30 detik</option>
+      <option value="60">⏱️ 60 detik</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Script</label>
+    <select id="style" class="tool-input">
+      <option value="story">📖 Story</option>
+      <option value="edukasi">📚 Edukasi</option>
+      <option value="promosi">💰 Promosi</option>
+      <option value="viral">🔥 Viral</option>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateScript()">🚀 Generate</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Script</label>
+    <textarea id="result" class="tool-textarea" placeholder="Script akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY (hidden dulu) -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyScript()">📋 Copy Script</button>
+  </div>
+
+</div>
+
+<!-- SEO COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>📌 Cara Menggunakan Script Generator</summary>
+    <p>
+      Masukkan topik, pilih durasi dan gaya script, lalu klik generate.
+      Gunakan script ini untuk membuat video TikTok yang lebih terstruktur dan menarik.
+    </p>
+  </details>
+
+  <details>
+    <summary>🔥 Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate script video otomatis</li>
+      <li>Pilihan durasi (15s, 30s, 60s)</li>
+      <li>Berbagai gaya (story, edukasi, promosi, viral)</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🚀 Tips Script TikTok Viral</summary>
+    <ul>
+      <li>Mulai dengan hook kuat</li>
+      <li>Langsung ke inti (jangan bertele-tele)</li>
+      <li>Gunakan call to action</li>
+      <li>Sesuaikan durasi dengan konten</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateScript = function(){
+  const topic = document.getElementById("topic").value.trim();
+  const duration = document.getElementById("duration").value;
+  const style = document.getElementById("style").value;
+  const result = document.getElementById("result");
+
+  if(!topic){
+    alert("Isi topik dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  let script = "";
+
+  if(style === "story"){
+    script = `🎬 HOOK:
+"Kamu nggak bakal nyangka tentang ${topic}..."
+
+📖 STORY:
+Dulu aku nggak ngerti tentang ${topic}, sampai akhirnya aku coba sendiri.
+
+⚡ POINT:
+Ternyata yang bikin beda itu konsistensi dan cara yang benar.
+
+🚀 CTA:
+Kalau kamu mau hasil sama, mulai sekarang juga!`;
+  }
+
+  if(style === "edukasi"){
+    script = `🎬 HOOK:
+"Ini kesalahan terbesar dalam ${topic}!"
+
+📚 ISI:
+Banyak orang salah langkah saat mulai ${topic}.
+Padahal ada cara yang lebih efektif.
+
+💡 SOLUSI:
+Gunakan strategi yang tepat dan fokus ke hal penting.
+
+🚀 CTA:
+Follow untuk tips ${topic} lainnya!`;
+  }
+
+  if(style === "promosi"){
+    script = `🎬 HOOK:
+"Mau sukses di ${topic}?"
+
+💰 PENAWARAN:
+Aku punya solusi yang bisa bantu kamu mulai dengan mudah.
+
+🔥 KEUNGGULAN:
+Sudah banyak yang berhasil pakai cara ini.
+
+🚀 CTA:
+Klik sekarang sebelum ketinggalan!`;
+  }
+
+  if(style === "viral"){
+    script = `🎬 HOOK:
+"STOP! Jangan lakukan ini di ${topic}!"
+
+🔥 ISI:
+Kalau kamu masih begini, hasil kamu nggak akan berubah.
+
+⚡ TWIST:
+Padahal ada cara simpel yang lebih efektif.
+
+🚀 CTA:
+Coba sekarang dan lihat hasilnya!`;
+  }
+
+  // tambah durasi (opsional variasi)
+  script += `\n\n⏱️ Durasi: ${duration} detik`;
+
+  result.value = script;
+
+  // tampilkan tombol copy
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyScript = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy Script";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

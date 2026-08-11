@@ -1,0 +1,179 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🛒 AI Product Description Generator",
+  description: "Buat deskripsi produk yang menarik dan menjual untuk Shopee, Tokopedia, dan website.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🛒 AI Product Description Generator Gratis</h1>
+  <p>
+    Buat deskripsi produk yang menarik, menjual, dan SEO friendly untuk marketplace & website.
+    Cocok untuk Shopee, Tokopedia, dan bisnis online.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Nama Produk</label>
+    <input id="name" class="tool-input" placeholder="Contoh: Serum Wajah Glow" />
+  </div>
+
+  <div class="form-group">
+    <label>Target Market</label>
+    <input id="market" class="tool-input" placeholder="Contoh: wanita 20-30 tahun" />
+  </div>
+
+  <div class="form-group">
+    <label>Keunggulan Produk</label>
+    <textarea id="benefit" class="tool-textarea" placeholder="Contoh: mencerahkan, menghilangkan jerawat, cepat meresap"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Deskripsi</label>
+    <select id="style" class="tool-input">
+      <option value="soft">✨ Soft Selling</option>
+      <option value="hard">💰 Hard Selling</option>
+      <option value="professional">💼 Professional</option>
+      <option value="story">📖 Story</option>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateDesc()">🚀 Generate</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Deskripsi</label>
+    <textarea id="result" class="tool-textarea" placeholder="Deskripsi akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyDesc()">📋 Copy Deskripsi</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk generate deskripsi produk</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Product Description Generator?</h2>
+  <p>
+    Product Description Generator adalah alat untuk membuat deskripsi produk secara otomatis
+    yang menarik dan meningkatkan peluang penjualan. Tools ini membantu seller membuat
+    copywriting yang lebih profesional dan persuasif.
+  </p>
+
+  <h2>Kenapa Deskripsi Produk Penting?</h2>
+  <ul>
+    <li>Meningkatkan konversi penjualan</li>
+    <li>Membantu pembeli memahami produk</li>
+    <li>Meningkatkan SEO marketplace</li>
+    <li>Membuat brand terlihat lebih profesional</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Membuat Deskripsi Produk</summary>
+    <p>
+      Masukkan nama produk, target market, dan keunggulan produk.
+      Pilih gaya deskripsi, lalu klik generate untuk mendapatkan hasil yang siap digunakan.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate deskripsi otomatis</li>
+      <li>Berbagai gaya copywriting</li>
+      <li>Cocok untuk semua produk</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Deskripsi Produk Laris</summary>
+    <ul>
+      <li>Gunakan bahasa yang jelas & persuasif</li>
+      <li>Fokus pada manfaat, bukan hanya fitur</li>
+      <li>Tambahkan call to action</li>
+      <li>Gunakan kata-kata yang emosional</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateDesc = function(){
+  const name = document.getElementById("name").value.trim();
+  const market = document.getElementById("market").value.trim();
+  const benefit = document.getElementById("benefit").value.trim();
+  const style = document.getElementById("style").value;
+  const result = document.getElementById("result");
+
+  if(!name || !market || !benefit){
+    alert("Isi semua field dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  let desc = "";
+
+  if(style === "soft"){
+    desc = `✨ ${name}\n\nDirancang khusus untuk ${market}, produk ini hadir dengan berbagai manfaat seperti ${benefit}.\n\nGunakan secara rutin untuk hasil maksimal dan rasakan perubahan positif setiap harinya 💖`;
+  }
+
+  if(style === "hard"){
+    desc = `🔥 ${name}\n\nSolusi terbaik untuk ${market}!\n\nManfaat utama:\n- ${benefit}\n\nJangan tunggu lagi! Dapatkan sekarang sebelum kehabisan 💰`;
+  }
+
+  if(style === "professional"){
+    desc = `${name}\n\nProduk berkualitas tinggi yang diformulasikan khusus untuk ${market}.\n\nKeunggulan:\n${benefit}\n\nMemberikan hasil optimal dengan penggunaan rutin.`;
+  }
+
+  if(style === "story"){
+    desc = `Dulu banyak ${market} mengalami masalah...\n\nSekarang dengan ${name}, kamu bisa mendapatkan manfaat seperti ${benefit}.\n\nSaatnya beralih ke solusi yang lebih baik 🚀`;
+  }
+
+  result.value = desc;
+
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyDesc = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy Deskripsi";
+  }, 1500);
+};
+</script>
+
+</MainLayout>
