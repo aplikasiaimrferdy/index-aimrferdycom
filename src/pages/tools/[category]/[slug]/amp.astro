@@ -1,1 +1,432 @@
+---
+import MainLayout from "../../../../../layouts/MainLayout.astro";
+import { SITE } from "../../../../../lib/site";
 
+const { category, slug } = Astro.params;
+
+const tool = await import(`../${slug}.astro`);
+
+const meta = tool.meta;
+
+const canonicalUrl = SITE.url(`/tools/${category}/${slug}/`);
+const ampUrl = SITE.url(`/tools/${category}/${slug}/amp/`);
+---
+
+<!doctype html>
+<html amp lang="id">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,minimum-scale=1,initial-scale=1"
+  >
+
+  <title>{meta.title} | {SITE.title}</title>
+
+  <meta
+    name="description"
+    content={meta.description}
+  >
+
+  <link
+    rel="canonical"
+    href={canonicalUrl}
+  >
+
+  <link
+    rel="amphtml"
+    href={ampUrl}
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgCqfcwPP6IfdweZeUxoU20EXaj_0GnIqT36H5kLA_45n1Rsoqxc6YV3W8_jwY994wb4DEnMF0dTVXCODVdZVY-DXnsYz_-Ozc2yCfcPUXEg14Jw26OE99bZ487hqm0gHluX03L2lVBkdrzcZf52NJXrLJ7xP_o1-WgzV1ljL14V8c3NTRmJ77t3BSZlM8L/s1600/fav.png"
+  >
+
+  <script
+    async
+    src="https://cdn.ampproject.org/v0.js">
+  </script>
+
+  <style amp-boilerplate>
+    body {
+      -webkit-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+      -moz-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+      -ms-animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+      animation: -amp-start 8s steps(1,end) 0s 1 normal both;
+    }
+
+    @-webkit-keyframes -amp-start {
+      from {
+        visibility: hidden;
+      }
+
+      to {
+        visibility: visible;
+      }
+    }
+
+    @-moz-keyframes -amp-start {
+      from {
+        visibility: hidden;
+      }
+
+      to {
+        visibility: visible;
+      }
+    }
+
+    @-ms-keyframes -amp-start {
+      from {
+        visibility: hidden;
+      }
+
+      to {
+        visibility: visible;
+      }
+    }
+
+    @-o-keyframes -amp-start {
+      from {
+        visibility: hidden;
+      }
+
+      to {
+        visibility: visible;
+      }
+    }
+
+    @keyframes -amp-start {
+      from {
+        visibility: hidden;
+      }
+
+      to {
+        visibility: visible;
+      }
+    }
+  </style>
+
+  <noscript>
+    <style amp-boilerplate>
+      body {
+        -webkit-animation: none;
+        -moz-animation: none;
+        -ms-animation: none;
+        animation: none;
+      }
+    </style>
+  </noscript>
+
+  <style amp-custom>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: monospace;
+      line-height: 1.7;
+      color: #fff;
+      background: #000;
+      background-image:
+        radial-gradient(#272727 5%, transparent 50%);
+      background-size: 5px 5px;
+      background-attachment: fixed;
+    }
+
+    .layout {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    .logo {
+      display: inline-block;
+    }
+
+    .welcome {
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .welcome h1 {
+      position: relative;
+      margin: 0;
+      padding: 14px;
+
+      color: #00ff9f;
+      background: #050505;
+
+      border: 1px solid rgba(0,255,159,.2);
+      border-radius: 10px;
+
+      font-size: 12px;
+      line-height: 1.8;
+      letter-spacing: .12em;
+      font-family: monospace;
+      text-transform: uppercase;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 0 10px rgba(0,255,159,.15),
+        inset 0 0 20px rgba(0,255,159,.05);
+
+      animation:
+        glitchGlow 2s infinite alternate,
+        bootUp .7s ease;
+    }
+
+    .welcome h1::before {
+      content: "";
+      position: absolute;
+
+      top: 0;
+      left: -100%;
+
+      width: 100%;
+      height: 2px;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #00ff9f,
+        transparent
+      );
+
+      animation: scan 3s linear infinite;
+    }
+
+    .welcome h1::after {
+      content: "▋";
+      color: #00ff9f;
+      margin-left: 4px;
+
+      animation: blink 1s infinite;
+    }
+
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: block;
+
+      padding: 12px;
+
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+
+      text-decoration: none;
+      text-align: center;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #3dd210 0%,
+          #144609 80%
+        );
+
+      border-radius: 10px;
+
+      box-shadow:
+        0 0 10px rgba(61,210,16,.2);
+    }
+
+    .content {
+      margin-top: 30px;
+      padding: 20px;
+
+      background: #111;
+
+      border: 1px solid #272727;
+      border-radius: 12px;
+
+      color: #eaeaea;
+      line-height: 1.8;
+
+      word-wrap: break-word;
+
+      box-shadow:
+        0 0 20px rgba(0,0,0,.4);
+    }
+
+    .content-title {
+      margin: -20px -20px 20px;
+      padding: 14px;
+
+      background: #050505;
+
+      border-bottom: 1px solid #272727;
+
+      color: #00ff9f;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .content p {
+      margin: 0;
+    }
+
+    .copyright {
+      text-align: center;
+      color: #ffffff96;
+      font-size: 14px;
+      margin: 15px 0 0;
+    }
+
+    @media (max-width: 768px) {
+      .button-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes scan {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes glitchGlow {
+      from {
+        text-shadow:
+          0 0 5px rgba(0,255,159,.4),
+          0 0 10px rgba(0,255,159,.2);
+      }
+
+      to {
+        text-shadow:
+          0 0 10px rgba(0,255,159,.9),
+          0 0 20px rgba(0,255,159,.4),
+          0 0 30px rgba(0,255,159,.2);
+      }
+    }
+
+    @keyframes bootUp {
+      from {
+        opacity: 0;
+        transform:
+          perspective(400px)
+          rotateX(-30deg)
+          scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          perspective(400px)
+          rotateX(0)
+          scale(1);
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <header>
+
+      <a
+        class="logo"
+        href="/"
+        aria-label={SITE.title}
+      >
+
+        <amp-img
+          alt={SITE.title}
+          height="100"
+          width="300"
+          layout="intrinsic"
+          src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjTnc-aod6rEOutLuZ2u1HdKaI-UOdCUMqfWwm4c6RCNrzH9qskb2zeu5br6I7tzbUtsVJZT_VPoI9bhmNzbTekU5tFUcL_To-xtIE5rV1D2ZpV8CCPuw20l010yc9KdOxoFwbxSejMBqQnMwbUP2RiQfesEXLiHrHNaNANgvs_efhpijL7QS9xlWN86C7Q/s1600/logo.png"
+        >
+        </amp-img>
+
+      </a>
+
+    </header>
+
+
+    <div class="welcome">
+
+      <h1>
+        {meta.title}
+      </h1>
+
+    </div>
+
+
+    <div class="button-group">
+
+      <a
+        class="btn"
+        href="https://apk.aimrferdy.workers.dev"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        AKTIVASI
+      </a>
+
+      <a
+        class="btn"
+        href={canonicalUrl}
+      >
+        Gunakan Tool
+      </a>
+
+    </div>
+
+
+    <section class="content">
+
+      <div class="content-title">
+        Deskripsi
+      </div>
+
+      <p>
+        {meta.description}
+      </p>
+
+    </section>
+
+
+    <p class="copyright">
+      © 2026 {SITE.title} • All Rights Reserved.
+    </p>
+
+  </div>
+
+</body>
+
+</html>
