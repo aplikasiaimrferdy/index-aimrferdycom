@@ -1,0 +1,813 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import RelatedPosts from "../../../components/RelatedPosts.astro";
+
+/* =========================================================
+   ROUTING
+   ========================================================= */
+
+export async function getStaticPaths() {
+  const modules = import.meta.glob(
+    "../**/*.astro",
+    { eager: true }
+  );
+
+  const paths = [];
+
+  for (const [file, mod] of Object.entries(modules)) {
+    const match = file.match(
+      /^\.\.\/([^/]+)\/(.+)\.astro$/
+    );
+
+    if (!match) continue;
+
+    const category = match[1];
+    const slug = match[2];
+
+    /* Jangan ambil index kategori */
+    if (slug === "index") continue;
+
+    /* Jangan ambil dynamic route ini sendiri */
+    if (
+      category === "[category]" ||
+      slug === "[slug]"
+    ) {
+      continue;
+    }
+
+    if (!mod.meta) continue;
+
+    paths.push({
+      params: {
+        category,
+        slug
+      },
+      props: {
+        tool: mod.meta
+      }
+    });
+  }
+
+  return paths;
+}
+
+
+/* =========================================================
+   PARAMS
+   ========================================================= */
+
+const category =
+  Astro.params.category || "";
+
+const slug =
+  Astro.params.slug || "";
+
+const tool =
+  Astro.props.tool;
+
+
+/* =========================================================
+   CATEGORY NAME
+   ========================================================= */
+
+const categoryName = category
+  .replace(/[-_]/g, " ")
+  .replace(/\b\w/g, (char) =>
+    char.toUpperCase()
+  );
+
+
+/* =========================================================
+   TOOL DATA
+   ========================================================= */
+
+const title =
+  tool?.title ||
+  slug
+    .replace(/[-_]/g, " ")
+    .replace(/\b\w/g, (char) =>
+      char.toUpperCase()
+    );
+
+const description =
+  tool?.description ||
+  `Gunakan ${title} online gratis.`;
+
+const icon =
+  tool?.icon || "";
+
+const pageUrl =
+  `/tools/${category}/${slug}/`;
+
+
+/* =========================================================
+   ALL TOOLS
+   ========================================================= */
+
+const modules = Object.entries(
+  import.meta.glob(
+    "../**/*.astro",
+    { eager: true }
+  )
+);
+
+const tools = modules
+  .map(([file, mod]) => {
+
+    const match = file.match(
+      /^\.\.\/([^/]+)\/(.+)\.astro$/
+    );
+
+    if (!match) return null;
+
+    const fileCategory =
+      match[1];
+
+    const toolSlug =
+      match[2];
+
+    /* Hanya kategori yang sama */
+    if (
+      fileCategory.toLowerCase() !==
+      category.toLowerCase()
+    ) {
+      return null;
+    }
+
+    /* Jangan masukkan index */
+    if (
+      toolSlug === "index"
+    ) {
+      return null;
+    }
+
+    /* Jangan masukkan dynamic route */
+    if (
+      toolSlug === "[slug]"
+    ) {
+      return null;
+    }
+
+    if (!mod.meta) return null;
+
+    return {
+      ...mod.meta,
+
+      slug: toolSlug,
+
+      category: fileCategory,
+
+      url:
+        `/tools/${fileCategory}/${toolSlug}/`
+    };
+  })
+  .filter(Boolean);
+
+
+/* =========================================================
+   RELATED TOOLS
+   ========================================================= */
+
+const relatedTools = tools
+  .filter(
+    (item) =>
+      item.slug !== slug
+  )
+  .slice(0, 6);
+
+
+/* =========================================================
+   BREADCRUMB
+   ========================================================= */
+
+const siteUrl =
+  "https://aimrferdy.com";
+
+const breadcrumbs = {
+  "@context": "https://schema.org",
+
+  "@type": "BreadcrumbList",
+
+  itemListElement: [
+
+    {
+      "@type": "ListItem",
+
+      position: 1,
+
+      name: "Home",
+
+      item:
+        `${siteUrl}/`
+    },
+
+    {
+      "@type": "ListItem",
+
+      position: 2,
+
+      name: "Tools",
+
+      item:
+        `${siteUrl}/tools/`
+    },
+
+    {
+      "@type": "ListItem",
+
+      position: 3,
+
+      name: categoryName,
+
+      item:
+        `${siteUrl}/tools/${category}/`
+    },
+
+    {
+      "@type": "ListItem",
+
+      position: 4,
+
+      name: title,
+
+      item:
+        `${siteUrl}${pageUrl}`
+    }
+
+  ]
+};
+
+
+/* =========================================================
+   SOFTWARE SCHEMA
+   ========================================================= */
+
+const softwareSchema = {
+
+  "@context":
+    "https://schema.org",
+
+  "@type":
+    "SoftwareApplication",
+
+  name:
+    title,
+
+  description:
+    description,
+
+  url:
+    `${siteUrl}${pageUrl}`,
+
+  applicationCategory:
+    "WebApplication",
+
+  operatingSystem:
+    "Any",
+
+  isAccessibleForFree:
+    true
+
+};
+
+
+/* =========================================================
+   WEBPAGE SCHEMA
+   ========================================================= */
+
+const webPageSchema = {
+
+  "@context":
+    "https://schema.org",
+
+  "@type":
+    "WebPage",
+
+  name:
+    `${title} | AI Mr Ferdy`,
+
+  description:
+    description,
+
+  url:
+    `${siteUrl}${pageUrl}`,
+
+  isPartOf: {
+
+    "@type":
+      "WebSite",
+
+    name:
+      "AI Mr Ferdy",
+
+    url:
+      `${siteUrl}/`
+
+  }
+
+};
+
+
+/* =========================================================
+   JSON-LD
+   ========================================================= */
+
+const jsonLd = [
+  softwareSchema,
+  webPageSchema,
+  breadcrumbs
+];
+
+---
+
+<MainLayout
+  title={`${title} | ${SITE?.title || "AI Mr Ferdy"}`}
+  description={description}
+  pageCSS={["tools"]}
+  breadcrumbs={breadcrumbs}
+>
+
+  <main class="tool-page">
+
+    <!-- ================================================
+         BREADCRUMB
+         ================================================ -->
+
+    <nav
+      class="breadcrumb"
+      aria-label="Breadcrumb"
+    >
+
+      <a href="/">
+        Home
+      </a>
+
+      <span aria-hidden="true">
+        /
+      </span>
+
+      <a href="/tools/">
+        Tools
+      </a>
+
+      <span aria-hidden="true">
+        /
+      </span>
+
+      <a href={`/tools/${category}/`}>
+        {categoryName}
+      </a>
+
+      <span aria-hidden="true">
+        /
+      </span>
+
+      <span>
+        {title}
+      </span>
+
+    </nav>
+
+
+    <!-- ================================================
+         TOOL HEADER
+         ================================================ -->
+
+    <header class="tool-header">
+
+      {icon && (
+        <div
+          class="tool-icon"
+          aria-hidden="true"
+        >
+          {icon}
+        </div>
+      )}
+
+      <span class="tool-label">
+        {categoryName} TOOL
+      </span>
+
+      <h1>
+        {title}
+      </h1>
+
+      <p class="tool-description">
+        {description}
+      </p>
+
+    </header>
+
+
+    <!-- ================================================
+         TOOL APPLICATION
+         ================================================ -->
+
+    <section
+      class="tool-box"
+      aria-label={title}
+    >
+
+      <div class="tool-box-header">
+
+        <div>
+
+          <strong>
+            {title}
+          </strong>
+
+          <span>
+            Online • Gratis • Tanpa Login
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="tool-box-content">
+
+        <!--
+          TOOL CONTENT
+          Konten tool asli ditampilkan di sini.
+        -->
+
+        <slot />
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================
+         RELATED TOOLS
+         ================================================ -->
+
+    {relatedTools.length > 0 && (
+
+      <section class="related-section">
+
+        <RelatedPosts
+          posts={relatedTools}
+          title={`Tools ${categoryName} Terkait`}
+          baseUrl={`/tools/${category}`}
+        />
+
+      </section>
+
+    )}
+
+
+  </main>
+
+
+  <!-- ================================================
+       JSON-LD
+       ================================================ -->
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+
+</MainLayout>
+
+
+<style>
+
+  /* =====================================================
+     PAGE
+     ===================================================== */
+
+  .tool-page {
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding:
+      110px
+      24px
+      60px;
+
+  }
+
+
+  /* =====================================================
+     BREADCRUMB
+     ===================================================== */
+
+  .breadcrumb {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: .5rem;
+
+    margin-bottom: 32px;
+
+    font-size: .9rem;
+
+    color:
+      var(
+        --soft,
+        #94a3b8
+      );
+
+  }
+
+  .breadcrumb a {
+
+    color:
+      var(
+        --primary,
+        #3b82f6
+      );
+
+    text-decoration: none;
+
+  }
+
+  .breadcrumb a:hover {
+
+    text-decoration: underline;
+
+  }
+
+
+  /* =====================================================
+     HEADER
+     ===================================================== */
+
+  .tool-header {
+
+    max-width: 850px;
+
+    margin:
+      0 auto 36px;
+
+    text-align: center;
+
+  }
+
+
+  .tool-icon {
+
+    width: 64px;
+
+    height: 64px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin:
+      0 auto 16px;
+
+    border-radius: 18px;
+
+    background:
+      rgba(
+        59,
+        130,
+        246,
+        .12
+      );
+
+    font-size: 30px;
+
+  }
+
+
+  .tool-label {
+
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color:
+      var(
+        --primary,
+        #3b82f6
+      );
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .08em;
+
+  }
+
+
+  .tool-header h1 {
+
+    margin:
+      0 0 14px;
+
+    color:
+      var(
+        --text,
+        #f8fafc
+      );
+
+    font-size:
+      clamp(
+        30px,
+        5vw,
+        46px
+      );
+
+    line-height: 1.1;
+
+  }
+
+
+  .tool-description {
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    color:
+      var(
+        --soft,
+        #94a3b8
+      );
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+  }
+
+
+  /* =====================================================
+     TOOL BOX
+     ===================================================== */
+
+  .tool-box {
+
+    max-width: 1000px;
+
+    margin:
+      0 auto 55px;
+
+    overflow: hidden;
+
+    border:
+      1px solid
+      var(
+        --border,
+        rgba(
+          255,
+          255,
+          255,
+          .08
+        )
+      );
+
+    border-radius: 20px;
+
+    background:
+      var(
+        --card,
+        rgba(
+          15,
+          23,
+          42,
+          .72
+        )
+      );
+
+  }
+
+
+  .tool-box-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+      16px
+      20px;
+
+    border-bottom:
+      1px solid
+      var(
+        --border,
+        rgba(
+          255,
+          255,
+          255,
+          .08
+        )
+      );
+
+  }
+
+
+  .tool-box-header strong {
+
+    display: block;
+
+    color:
+      var(
+        --text,
+        #f8fafc
+      );
+
+    font-size: 15px;
+
+  }
+
+
+  .tool-box-header span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+      var(
+        --soft,
+        #94a3b8
+      );
+
+    font-size: 12px;
+
+  }
+
+
+  .tool-box-content {
+
+    padding: 24px;
+
+  }
+
+
+  /* =====================================================
+     RELATED
+     ===================================================== */
+
+  .related-section {
+
+    max-width: 1100px;
+
+    margin:
+      0 auto;
+
+  }
+
+
+  /* =====================================================
+     RESPONSIVE
+     ===================================================== */
+
+  @media (max-width: 600px) {
+
+    .tool-page {
+
+      padding:
+        95px
+        16px
+        40px;
+
+    }
+
+    .breadcrumb {
+
+      margin-bottom: 24px;
+
+      font-size: .82rem;
+
+    }
+
+    .tool-header h1 {
+
+      font-size: 30px;
+
+    }
+
+    .tool-box {
+
+      border-radius: 16px;
+
+    }
+
+    .tool-box-content {
+
+      padding: 16px;
+
+    }
+
+  }
+
+</style>
+
