@@ -10,7 +10,7 @@ export const meta = {
 ---
 
 <MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
-
+<main class="container">
 <div class="tool-box">
 
   <h1>✨ Emoji Text Generator</h1>
@@ -74,7 +74,7 @@ export const meta = {
   </details>
 
 </section>
-
+</main>
 <script is:inline>
 window.generateEmoji = function(){
   const text = document.getElementById("input").value.trim();
