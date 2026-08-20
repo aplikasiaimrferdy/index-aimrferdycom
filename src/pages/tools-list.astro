@@ -13,9 +13,7 @@ const tools = modules
       /^\.\/tools\/([^/]+)\/(.+)\.astro$/
     );
 
-    if (!match) {
-      return null;
-    }
+    if (!match) return null;
 
     const category = match[1];
     const slug = match[2];
@@ -42,15 +40,37 @@ const tools = modules
     a.title.localeCompare(b.title, "id")
   );
 
-/*
- * GROUP BY CATEGORY
- */
+/* GROUP BY CATEGORY */
 
-const categories = Object.entries(
-  Object.groupBy(tools, (tool) => tool.category)
-).sort(([a], [b]) =>
-  a.localeCompare(b, "id")
+const grouped = tools.reduce((groups, tool) => {
+  if (!groups[tool.category]) {
+    groups[tool.category] = [];
+  }
+
+  groups[tool.category].push(tool);
+
+  return groups;
+}, {});
+
+const categories = Object.entries(grouped).sort(
+  ([a], [b]) => a.localeCompare(b, "id")
 );
+
+/* BUILD COPY TEXT */
+
+const copyText = categories
+  .map(([category, categoryTools]) => {
+    const categoryTitle = category
+      .replace(/[-_]/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+
+    const titles = categoryTools
+      .map((tool) => tool.title)
+      .join("\n");
+
+    return `${categoryTitle}\n\n${titles}`;
+  })
+  .join("\n\n\n");
 
 const totalTools = tools.length;
 ---
@@ -64,35 +84,17 @@ const totalTools = tools.length;
 
     <h1>Daftar Semua Tools</h1>
 
-    <p class="count">
-      {totalTools} tools
+    <p>
+      {totalTools} tools — klik kotak di bawah lalu
+      <strong>Ctrl+A → Ctrl+C</strong>
     </p>
 
-    {categories.map(([category, categoryTools]) => (
-
-      <section class="category">
-
-        <h2>
-          {category
-            .replace(/[-_]/g, " ")
-            .replace(/\b\w/g, (char) =>
-              char.toUpperCase()
-            )}
-        </h2>
-
-        <div class="titles">
-
-          {categoryTools.map((tool) => (
-            <div class="tool-title">
-              {tool.title}
-            </div>
-          ))}
-
-        </div>
-
-      </section>
-
-    ))}
+    <textarea
+      readonly
+      spellcheck="false"
+      value={copyText}
+      aria-label="Daftar semua judul tools"
+    ></textarea>
 
   </main>
 
@@ -100,38 +102,49 @@ const totalTools = tools.length;
 
 <style>
   .tools-list {
-    width: min(800px, calc(100% - 32px));
+    width: min(900px, calc(100% - 32px));
     margin: 0 auto;
     padding: 80px 0;
   }
 
   h1 {
-    margin: 0 0 8px;
+    margin-bottom: 8px;
   }
 
-  .count {
-    margin: 0 0 40px;
+  p {
+    margin-bottom: 20px;
     color: var(--soft, #94a3b8);
   }
 
-  .category {
-    margin-bottom: 40px;
-  }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 800px;
+    box-sizing: border-box;
 
-  .category h2 {
-    margin: 0 0 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid
+    padding: 20px;
+
+    border: 1px solid
       var(--border, rgba(255,255,255,.08));
 
-    color: var(--primary, #3b82f6);
-    font-size: 18px;
-  }
+    border-radius: 12px;
 
-  .tool-title {
-    padding: 5px 0;
-    color: var(--text, #f8fafc);
-    font-size: 16px;
-    line-height: 1.6;
+    background:
+      var(--card, rgba(15,23,42,.72));
+
+    color:
+      var(--text, #f8fafc);
+
+    font-family:
+      monospace;
+
+    font-size:
+      15px;
+
+    line-height:
+      1.7;
+
+    resize:
+      vertical;
   }
 </style>
