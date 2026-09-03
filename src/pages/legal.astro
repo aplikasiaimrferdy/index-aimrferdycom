@@ -1,1 +1,1250 @@
 
+---
+import "../styles/global.css";
+import SeoHead from "../components/SeoHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const SITE_URL = "https://www.aimrferdy.com";
+const PAGE_URL = `${SITE_URL}/legal/`;
+
+const title = "AI Mr Ferdy — Legal & Official Brand Information";
+const description =
+  "Informasi resmi mengenai brand AI Mr Ferdy, website aimrferdy.com, identitas brand, penggunaan nama dan logo, hak cipta, serta perlindungan konten.";
+
+const breadcrumbs = [
+  {
+    name: "Home",
+    url: `${SITE_URL}/`,
+  },
+  {
+    name: "Legal",
+    url: PAGE_URL,
+  },
+];
+
+const legalSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${PAGE_URL}#webpage`,
+      url: PAGE_URL,
+      name: title,
+      description,
+      isPartOf: {
+        "@id": `${SITE_URL}/#website`,
+      },
+      about: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+      breadcrumb: {
+        "@id": `${PAGE_URL}#breadcrumb`,
+      },
+      inLanguage: "id-ID",
+    },
+
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "AI Mr Ferdy",
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/img/logo-text.png`,
+      },
+    },
+
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "AI Mr Ferdy",
+      publisher: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+      inLanguage: "id-ID",
+    },
+
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${PAGE_URL}#breadcrumb`,
+      itemListElement: breadcrumbs.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    },
+  ],
+};
+---
+
+<SeoHead
+  title={title}
+  description={description}
+  canonical={PAGE_URL}
+/>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(legalSchema)}
+></script>
+
+<Header />
+
+<main class="legal-page">
+
+  <!-- HERO -->
+  <section class="legal-hero">
+    <div class="legal-container">
+
+      <div class="legal-badge">
+        <span class="legal-badge-dot"></span>
+        Official Legal & Brand Information
+      </div>
+
+      <h1>
+        AI Mr Ferdy
+        <span>Legal & Official Brand Information</span>
+      </h1>
+
+      <p class="legal-lead">
+        Halaman resmi mengenai identitas brand, website, penggunaan nama,
+        logo, konten, hak cipta, dan informasi legal AI Mr Ferdy.
+      </p>
+
+      <div class="official-domain">
+        <span>Official Website</span>
+        <a href={`${SITE_URL}/`}>
+          aimrferdy.com
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- OFFICIAL IDENTITY -->
+  <section class="legal-section">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">01</span>
+
+        <div>
+          <p class="eyebrow">Official Identity</p>
+          <h2>Identitas Resmi AI Mr Ferdy</h2>
+        </div>
+      </div>
+
+      <div class="identity-grid">
+
+        <article class="identity-card identity-card-main">
+          <div class="identity-icon">AI</div>
+
+          <div>
+            <span class="card-label">Official Brand Name</span>
+            <h3>AI Mr Ferdy</h3>
+
+            <p>
+              AI Mr Ferdy adalah nama brand yang digunakan pada website
+              <strong>aimrferdy.com</strong> untuk menyediakan informasi,
+              tools, dan berbagai konten yang berkaitan dengan teknologi
+              AI dan digital.
+            </p>
+          </div>
+        </article>
+
+        <article class="identity-card">
+          <span class="card-label">Official Website</span>
+
+          <h3>aimrferdy.com</h3>
+
+          <p>
+            Website utama yang digunakan untuk publikasi dan penyediaan
+            layanan serta informasi resmi AI Mr Ferdy.
+          </p>
+
+          <a class="text-link" href={`${SITE_URL}/`}>
+            Kunjungi website resmi
+            <span>→</span>
+          </a>
+        </article>
+
+        <article class="identity-card">
+          <span class="card-label">Official Domain</span>
+
+          <h3>aimrferdy.com</h3>
+
+          <p>
+            Domain utama yang digunakan sebagai referensi resmi
+            untuk informasi mengenai AI Mr Ferdy.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- HOW TO RECOGNIZE -->
+  <section class="legal-section legal-section-alt">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">02</span>
+
+        <div>
+          <p class="eyebrow">Official Reference</p>
+          <h2>Cara Mengenali Website Resmi</h2>
+        </div>
+      </div>
+
+      <div class="reference-box">
+
+        <div class="reference-icon">
+          ✓
+        </div>
+
+        <div>
+          <h3>AI Mr Ferdy di aimrferdy.com</h3>
+
+          <p>
+            Website resmi AI Mr Ferdy menggunakan domain
+            <strong>aimrferdy.com</strong>.
+          </p>
+
+          <p>
+            Informasi mengenai AI Mr Ferdy yang ditemukan pada domain
+            lain tidak secara otomatis merupakan bagian dari website
+            resmi AI Mr Ferdy.
+          </p>
+
+          <a class="official-link" href={`${SITE_URL}/`}>
+            <span>Website Resmi</span>
+            <strong>aimrferdy.com</strong>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- BRAND USAGE -->
+  <section class="legal-section">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">03</span>
+
+        <div>
+          <p class="eyebrow">Brand Usage</p>
+          <h2>Penggunaan Nama & Identitas Brand</h2>
+        </div>
+      </div>
+
+      <div class="content-grid">
+
+        <div class="content-card">
+          <h3>Nama AI Mr Ferdy</h3>
+
+          <p>
+            Nama <strong>AI Mr Ferdy</strong> digunakan untuk
+            mengidentifikasi brand dan website yang terkait dengan
+            aimrferdy.com.
+          </p>
+
+          <p>
+            Penggunaan nama, identitas, atau materi brand yang dapat
+            menimbulkan kesan bahwa suatu website atau layanan merupakan
+            website resmi AI Mr Ferdy harus dilakukan secara hati-hati
+            dan tidak boleh memberikan informasi yang menyesatkan.
+          </p>
+        </div>
+
+        <div class="content-card">
+          <h3>Logo & Brand Assets</h3>
+
+          <p>
+            Logo dan aset visual yang dipublikasikan sebagai aset resmi
+            AI Mr Ferdy merupakan bagian dari identitas visual brand.
+          </p>
+
+          <p>
+            Jangan menggunakan logo atau elemen visual tersebut dengan
+            cara yang dapat membuat pengguna mengira bahwa suatu pihak,
+            layanan, atau website merupakan bagian resmi dari
+            aimrferdy.com apabila memang tidak demikian.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- COPYRIGHT -->
+  <section class="legal-section legal-section-alt">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">04</span>
+
+        <div>
+          <p class="eyebrow">Copyright</p>
+          <h2>Hak Cipta & Perlindungan Konten</h2>
+        </div>
+      </div>
+
+      <div class="copyright-card">
+
+        <div class="copyright-symbol">
+          ©
+        </div>
+
+        <div class="copyright-content">
+
+          <h3>Konten AI Mr Ferdy</h3>
+
+          <p>
+            Konten orisinal yang dipublikasikan di aimrferdy.com dapat
+            dilindungi oleh hak cipta dan hak kekayaan intelektual
+            yang berlaku, sesuai dengan kepemilikan atau hak penggunaan
+            masing-masing materi.
+          </p>
+
+          <p>
+            Konten tersebut dapat mencakup teks, artikel, desain,
+            ilustrasi, gambar, kode, tampilan antarmuka, dan materi
+            digital lainnya yang dibuat atau digunakan secara sah
+            oleh website.
+          </p>
+
+          <div class="notice">
+            <strong>Penting:</strong>
+            Tidak semua materi yang ditampilkan di website merupakan
+            milik eksklusif AI Mr Ferdy. Materi pihak ketiga tetap
+            tunduk pada hak dan lisensi pemilik masing-masing.
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- DMCA -->
+  <section class="legal-section">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">05</span>
+
+        <div>
+          <p class="eyebrow">Content Protection</p>
+          <h2>DMCA Protection</h2>
+        </div>
+      </div>
+
+      <div class="dmca-card">
+
+        <div class="dmca-status">
+
+          <div class="status-icon">
+            ✓
+          </div>
+
+          <div>
+            <span class="status-label">Protection Status</span>
+            <strong>Active</strong>
+          </div>
+
+        </div>
+
+        <div class="dmca-body">
+
+          <h3>AI Mr Ferdy memiliki perlindungan DMCA aktif</h3>
+
+          <p>
+            Website aimrferdy.com menggunakan layanan perlindungan
+            DMCA untuk membantu melindungi konten website dari
+            penggunaan atau penyalinan yang tidak sah.
+          </p>
+
+          <p>
+            Status perlindungan dan informasi sertifikat dapat
+            diperiksa melalui halaman resmi DMCA.
+          </p>
+
+          <a
+            class="dmca-button"
+            href="https://www.dmca.com/Protection/Status.aspx?ID=ad07e0ec-05fb-415a-80cc-0c9cf66f816e&refurl=https://www.aimrferdy.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>View DMCA Protection Status</span>
+            <span>↗</span>
+          </a>
+
+          <p class="dmca-note">
+            Protection status dapat berubah sesuai dengan status
+            layanan pada DMCA.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- UNAUTHORIZED COPYING -->
+  <section class="legal-section legal-section-alt">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">06</span>
+
+        <div>
+          <p class="eyebrow">Unauthorized Use</p>
+          <h2>Penyalinan & Penggunaan Tanpa Izin</h2>
+        </div>
+      </div>
+
+      <div class="content-card large-card">
+
+        <p>
+          Jika kamu menemukan konten dari aimrferdy.com yang
+          dipublikasikan kembali oleh pihak lain tanpa izin atau
+          tanpa dasar penggunaan yang sah, dokumentasikan URL sumber
+          dan URL tempat konten tersebut ditemukan.
+        </p>
+
+        <p>
+          Untuk persoalan hak cipta, laporan sebaiknya berisi informasi
+          yang akurat mengenai karya yang diduga dilanggar, URL yang
+          relevan, serta informasi yang diperlukan untuk memverifikasi
+          klaim tersebut.
+        </p>
+
+        <div class="warning-box">
+          <span>!</span>
+
+          <p>
+            Permintaan penghapusan hanya sebaiknya diajukan apabila
+            terdapat dasar hukum yang sesuai. Tidak semua penggunaan
+            nama, fakta, ide, atau informasi merupakan pelanggaran hak
+            cipta.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- OFFICIAL RESOURCES -->
+  <section class="legal-section">
+    <div class="legal-container">
+
+      <div class="section-heading">
+        <span class="section-number">07</span>
+
+        <div>
+          <p class="eyebrow">Official Resources</p>
+          <h2>Sumber Resmi AI Mr Ferdy</h2>
+        </div>
+      </div>
+
+      <div class="resources-grid">
+
+        <a class="resource-card" href={`${SITE_URL}/`}>
+          <span class="resource-icon">⌂</span>
+
+          <div>
+            <span class="resource-label">Official Website</span>
+            <strong>aimrferdy.com</strong>
+          </div>
+
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a class="resource-card" href={`${SITE_URL}/about/`}>
+          <span class="resource-icon">i</span>
+
+          <div>
+            <span class="resource-label">Information</span>
+            <strong>About AI Mr Ferdy</strong>
+          </div>
+
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a class="resource-card" href={`${SITE_URL}/tools/`}>
+          <span class="resource-icon">✦</span>
+
+          <div>
+            <span class="resource-label">Official Tools</span>
+            <strong>AI Mr Ferdy Tools</strong>
+          </div>
+
+          <span class="resource-arrow">→</span>
+        </a>
+
+        <a class="resource-card" href={`${SITE_URL}/contact/`}>
+          <span class="resource-icon">✉</span>
+
+          <div>
+            <span class="resource-label">Contact</span>
+            <strong>Contact AI Mr Ferdy</strong>
+          </div>
+
+          <span class="resource-arrow">→</span>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- LEGAL LINKS -->
+  <section class="legal-section legal-final">
+    <div class="legal-container">
+
+      <div class="final-card">
+
+        <div>
+          <p class="eyebrow">Legal Information</p>
+
+          <h2>
+            Informasi Legal AI Mr Ferdy
+          </h2>
+
+          <p>
+            Gunakan halaman berikut untuk membaca kebijakan dan
+            informasi legal lainnya.
+          </p>
+        </div>
+
+        <div class="legal-links">
+
+          <a href={`${SITE_URL}/privacy/`}>
+            <span>Privacy Policy</span>
+            <span>→</span>
+          </a>
+
+          <a href={`${SITE_URL}/terms/`}>
+            <span>Terms of Service</span>
+            <span>→</span>
+          </a>
+
+          <a href={`${SITE_URL}/disclaimer/`}>
+            <span>Disclaimer</span>
+            <span>→</span>
+          </a>
+
+          <a href={`${SITE_URL}/contact/`}>
+            <span>Contact</span>
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- LAST NOTE -->
+  <section class="legal-bottom">
+    <div class="legal-container">
+
+      <p>
+        <strong>AI Mr Ferdy</strong>
+        · Official website:
+        <a href={`${SITE_URL}/`}>aimrferdy.com</a>
+      </p>
+
+      <p>
+        Halaman ini merupakan referensi resmi mengenai identitas
+        dan informasi legal yang berkaitan dengan website.
+      </p>
+
+    </div>
+  </section>
+
+</main>
+
+<Footer />
+
+
+<style>
+  .legal-page {
+    min-height: 100vh;
+    background:
+      radial-gradient(
+        ellipse 65% 45% at 0% 5%,
+        rgba(37, 99, 235, 0.16),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 55% 40% at 100% 15%,
+        rgba(6, 182, 212, 0.11),
+        transparent 70%
+      ),
+      var(--bg);
+    color: var(--text);
+  }
+
+  .legal-container {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  /* HERO */
+
+  .legal-hero {
+    padding: 150px 0 90px;
+    text-align: center;
+  }
+
+  .legal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--soft);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(12px);
+  }
+
+  .legal-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+  }
+
+  .legal-hero h1 {
+    max-width: 900px;
+    margin: 25px auto 0;
+    font-size: clamp(42px, 7vw, 82px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 850;
+  }
+
+  .legal-hero h1 span {
+    display: block;
+    margin-top: 15px;
+    font-size: clamp(22px, 3vw, 38px);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--soft);
+    font-weight: 700;
+  }
+
+  .legal-lead {
+    max-width: 720px;
+    margin: 28px auto 0;
+    color: var(--soft);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .official-domain {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 30px;
+    padding: 12px 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+  }
+
+  .official-domain span {
+    color: var(--soft);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .official-domain a {
+    color: var(--text);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .official-domain a:hover {
+    color: var(--primary);
+  }
+
+  /* SECTIONS */
+
+  .legal-section {
+    padding: 95px 0;
+  }
+
+  .legal-section-alt {
+    background: rgba(255, 255, 255, 0.018);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-heading {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    margin-bottom: 38px;
+  }
+
+  .section-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  /* IDENTITY */
+
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  .identity-card,
+  .content-card,
+  .reference-box,
+  .copyright-card,
+  .dmca-card,
+  .final-card {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 24px;
+    backdrop-filter: blur(14px);
+  }
+
+  .identity-card {
+    min-height: 250px;
+    padding: 30px;
+  }
+
+  .identity-card-main {
+    display: flex;
+    gap: 22px;
+  }
+
+  .identity-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: var(--primary);
+    color: white;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .card-label,
+  .status-label,
+  .resource-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--soft);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .identity-card h3,
+  .content-card h3,
+  .reference-box h3,
+  .copyright-card h3,
+  .dmca-body h3 {
+    margin: 0 0 14px;
+    font-size: 23px;
+    line-height: 1.2;
+  }
+
+  .identity-card p,
+  .content-card p,
+  .reference-box p,
+  .copyright-card p,
+  .dmca-body p,
+  .final-card p {
+    color: var(--soft);
+    line-height: 1.75;
+  }
+
+  .text-link {
+    display: inline-flex;
+    gap: 8px;
+    margin-top: 12px;
+    color: var(--primary);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  /* REFERENCE */
+
+  .reference-box {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    padding: 32px;
+  }
+
+  .reference-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .official-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    margin-top: 22px;
+    padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    color: var(--text);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .official-link span:first-child {
+    color: var(--soft);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .official-link strong {
+    font-size: 14px;
+  }
+
+  .official-link .arrow {
+    color: var(--primary);
+  }
+
+  /* CONTENT */
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .content-card {
+    padding: 32px;
+  }
+
+  .large-card {
+    max-width: 900px;
+  }
+
+  .notice,
+  .warning-box {
+    display: flex;
+    gap: 13px;
+    margin-top: 25px;
+    padding: 17px 18px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.025);
+    color: var(--soft);
+    line-height: 1.65;
+    font-size: 14px;
+  }
+
+  .notice strong {
+    color: var(--text);
+  }
+
+  .warning-box span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 25px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: rgba(245, 158, 11, 0.13);
+    color: #f59e0b;
+    font-weight: 900;
+  }
+
+  .warning-box p {
+    margin: 0;
+  }
+
+  /* COPYRIGHT */
+
+  .copyright-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 25px;
+    padding: 35px;
+  }
+
+  .copyright-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--primary);
+    font-size: 25px;
+    font-weight: 800;
+  }
+
+  /* DMCA */
+
+  .dmca-card {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    overflow: hidden;
+  }
+
+  .dmca-status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 35px;
+    border-right: 1px solid var(--border);
+    background: rgba(34, 197, 94, 0.045);
+  }
+
+  .status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    background: rgba(34, 197, 94, 0.13);
+    color: #22c55e;
+    font-size: 25px;
+    font-weight: 900;
+  }
+
+  .dmca-status strong {
+    display: block;
+    color: #22c55e;
+    font-size: 24px;
+  }
+
+  .dmca-body {
+    padding: 35px;
+  }
+
+  .dmca-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 14px 18px;
+    border-radius: 13px;
+    background: var(--primary);
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .dmca-button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+
+  .dmca-note {
+    margin-bottom: 0;
+    font-size: 12px;
+  }
+
+  /* RESOURCES */
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .resource-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+
+  .resource-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary);
+    font-weight: 900;
+  }
+
+  .resource-card strong {
+    font-size: 15px;
+  }
+
+  .resource-arrow {
+    margin-left: auto;
+    color: var(--soft);
+    font-size: 18px;
+  }
+
+  /* FINAL */
+
+  .legal-final {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .final-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    padding: 38px;
+  }
+
+  .final-card h2 {
+    margin: 0 0 14px;
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -0.035em;
+  }
+
+  .legal-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .legal-links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 15px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .legal-links a span:last-child {
+    color: var(--primary);
+  }
+
+  .legal-links a:hover {
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+
+  .legal-bottom {
+    padding: 0 0 70px;
+  }
+
+  .legal-bottom p {
+    margin: 6px 0;
+    color: var(--soft);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .legal-bottom a {
+    color: var(--text);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* RESPONSIVE */
+
+  @media (max-width: 900px) {
+    .identity-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .identity-card-main {
+      grid-column: 1 / -1;
+    }
+
+    .dmca-card {
+      grid-template-columns: 1fr;
+    }
+
+    .dmca-status {
+      flex-direction: row;
+      align-items: center;
+      border-right: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .final-card {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .legal-container {
+      width: min(100% - 32px, 1180px);
+    }
+
+    .legal-hero {
+      padding: 125px 0 65px;
+    }
+
+    .legal-hero h1 {
+      font-size: clamp(38px, 12vw, 58px);
+    }
+
+    .legal-hero h1 span {
+      font-size: 23px;
+    }
+
+    .legal-lead {
+      font-size: 16px;
+    }
+
+    .official-domain {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .legal-section {
+      padding: 65px 0;
+    }
+
+    .section-heading {
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .section-number {
+      flex-basis: 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+    }
+
+    .identity-grid,
+    .content-grid,
+    .resources-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .identity-card-main {
+      grid-column: auto;
+    }
+
+    .identity-card {
+      min-height: auto;
+      padding: 25px;
+    }
+
+    .identity-card-main {
+      flex-direction: column;
+    }
+
+    .reference-box,
+    .copyright-card {
+      grid-template-columns: 1fr;
+      padding: 25px;
+    }
+
+    .dmca-status,
+    .dmca-body {
+      padding: 25px;
+    }
+
+    .final-card {
+      padding: 25px;
+      gap: 28px;
+    }
+
+    .legal-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
