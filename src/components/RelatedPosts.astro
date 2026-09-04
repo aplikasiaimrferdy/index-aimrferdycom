@@ -1,12 +1,12 @@
 ---
 const {
   posts = [],
+  currentSlug = "",
   title = "Konten Terkait",
   baseUrl = ""
 } = Astro.props;
 
 const isTools = baseUrl === "/tools";
-
 ---
 
 {
@@ -18,35 +18,37 @@ const isTools = baseUrl === "/tools";
       <div class="related-grid">
 
         {posts
-  .filter((post) => post.slug !== currentSlug)
-  .slice(0, 6)
-  .map((post) => (
+          .filter((post) => !currentSlug || post.slug !== currentSlug)
+          .slice(0, 6)
+          .map((post) => (
 
-          <article class="related-card">
+            <article class="related-card">
 
-            <a href={`${baseUrl}/${post.slug}/`}>
-{!isTools && (
-              <img
-                src={
-                  post.data.image
-                    ? post.data.image
-                    : `/api/og/${post.slug}.svg`
-                }
-                alt={post.data.title}
-                loading="lazy"
-              />
-)}
-              <h3>{post.data.title}</h3>
+              <a href={`${baseUrl}/${post.slug}/`}>
 
-              {post.data.description && (
-                <p>{post.data.description}</p>
-              )}
+                {!isTools && (
+                  <img
+                    src={
+                      post.data.image
+                        ? post.data.image
+                        : `/api/og/${post.slug}.svg`
+                    }
+                    alt={post.data.title}
+                    loading="lazy"
+                  />
+                )}
 
-            </a>
+                <h3>{post.data.title}</h3>
 
-          </article>
+                {post.data.description && (
+                  <p>{post.data.description}</p>
+                )}
 
-        ))}
+              </a>
+
+            </article>
+
+          ))}
 
       </div>
 
