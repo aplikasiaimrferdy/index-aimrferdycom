@@ -1,0 +1,107 @@
+---
+/* 🔥 AMBIL SEMUA TOOLS (PAKAI ABSOLUTE PATH) */
+const modules = Object.entries(
+  import.meta.glob('/src/pages/tools/**/*.astro', { eager: true })
+);
+
+/* 🔥 FORMAT DATA */
+const tools = modules
+  .map(([file, mod]) => {
+    if (!mod.meta) return null;
+
+    // ✅ ambil path setelah /pages
+    let url = file.split('/pages')[1]?.replace('.astro', '') || '';
+
+    // ✅ pastikan selalu diawali /
+    if (!url.startsWith('/')) url = '/' + url;
+
+    return { url, ...mod.meta };
+  })
+  .filter(Boolean);
+
+/* 🔥 URL SAAT INI */
+const currentUrl = Astro.url.pathname.replace(/\/$/, ''); // hapus trailing slash
+
+/* 🔥 CARI TOOL SEKARANG */
+const currentTool = tools.find(t => t.url === currentUrl);
+
+/* 🔥 RELATED BY CATEGORY */
+let relatedTools = [];
+
+if (currentTool) {
+  relatedTools = tools
+    .filter(t =>
+      t.category === currentTool.category &&
+      t.url !== currentUrl
+    )
+    .slice(0, 5);
+}
+
+/* 🔥 FALLBACK (kalau kurang dari 3) */
+if (relatedTools.length < 3) {
+  relatedTools = tools
+    .filter(t => t.url !== currentUrl)
+    .slice(0, 5);
+}
+---
+
+{relatedTools.length > 0 && (
+  <section class="related-tools">
+    <h2>Tools Terkait</h2>
+
+    <div class="tools-grid">
+      {relatedTools.map(tool => (
+        <a href={tool.url} class="tool-card">
+          <h3>{tool.title}</h3>
+          <p>{tool.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+.related-tools {
+  margin-top: 40px;
+}
+
+.related-tools h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+/* GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 15px;
+}
+
+/* CARD */
+.tool-card {
+  display: block;
+  padding: 15px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition: 0.2s;
+}
+
+.tool-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* TEXT */
+.tool-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.tool-card p {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+</style>
