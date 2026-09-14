@@ -15,10 +15,14 @@ export const SITE = {
 
   baseUrl: import.meta.env.SITE,
 
-  url(path = "") {
-    return `${this.baseUrl}/${path}`
-      .replace(/([^:]\/)\/+/g, "$1");
-  },
+url(path = "") {
+  const base = this.baseUrl.replace(/\/+$/, "");
+  const cleanPath = path.replace(/^\/+/, "");
+
+  return cleanPath
+    ? `${base}/${cleanPath}`
+    : `${base}/`;
+},
 
   product(slug = "") {
   return this.url(`product/${slug}`);
