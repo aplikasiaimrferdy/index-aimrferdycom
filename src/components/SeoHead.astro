@@ -1,32 +1,73 @@
 ---
+
 import { SITE } from "../lib/site";
 import {
-  organizationSchema,
-  websiteSchema
+organizationSchema,
+websiteSchema
 } from "../lib/schema";
 
 const {
-  title = SITE.title,
-  description = SITE.description,
-  canonical = new URL(
-    Astro.url.pathname,
-    SITE.baseUrl
-  ).toString(),
-  image = null,
-  slug = "",
-  type = "website",
-  faqSchema = null,
-  articleSchema = null,
-  softwareSchema = null,
-  breadcrumbs = null,
-  amp = null,
-  isHome = false
+title = SITE.title,
+description = SITE.description,
+canonical = new URL(
+Astro.url.pathname,
+SITE.baseUrl
+).toString(),
+image = null,
+slug = "",
+type = "website",
+faqSchema = null,
+articleSchema = null,
+softwareSchema = null,
+breadcrumbs = null,
+amp = null,
+isHome = false,
+robots = "index,follow,max-image-preview:large",
+lang = "id",
+hreflang = null
 } = Astro.props;
 
-// AUTO OG IMAGE
-const imageUrl = slug
-  ? SITE.url(`/api/og/${slug}.svg`)
-  : SITE.imageUrl(SITE.image);
+/*
+
+* OG IMAGE
+* Priority:
+* 1. Explicit image
+* 2. Dynamic OG image berdasarkan slug
+* 3. Default site image
+     */
+     const imageUrl = image
+     ? SITE.imageUrl(image)
+     : slug
+     ? SITE.url(`/api/og/${slug}.svg`)
+     : SITE.imageUrl(SITE.image);
+
+/*
+
+* Normalize breadcrumbs.
+* SeoHead expects an array:
+* [
+* { name: "Home", url: "/" },
+* { name: "Blog", url: "/blog/" }
+* ]
+  */
+  const normalizedBreadcrumbs = Array.isArray(breadcrumbs)
+  ? breadcrumbs
+  : [];
+
+/*
+
+* Hreflang hanya dibuat jika memang diberikan.
+* Jangan memaksakan id-ID pada semua halaman.
+  */
+  const alternateLang = hreflang || (
+  lang === "id"
+  ? {
+  code: "id-ID",
+  url: canonical
+  }
+  : null
+  );
+
 ---
 
 <meta charset="utf-8" />
@@ -37,81 +78,105 @@ const imageUrl = slug
 <meta name="description" content={description} />
 <meta name="author" content={SITE.author} />
 <meta name="theme-color" content={SITE.themeColor} />
-
-<meta
-  name="robots"
-  content="index,follow,max-image-preview:large"
-/>
+<meta name="robots" content={robots} />
 
 <link rel="canonical" href={canonical} />
-<link rel="alternate" hreflang="id-ID" href={canonical} />
 
-<link rel="icon" href="/images/fav.webp" type="image/webp">
-<link rel="apple-touch-icon" href="/images/fav.webp">
+{alternateLang && (
 
+  <link
+    rel="alternate"
+    hreflang={alternateLang.code}
+    href={alternateLang.url}
+  />
+)}
 
+<link rel="icon" href="/images/fav.webp" type="image/webp" />
+<link rel="apple-touch-icon" href="/images/fav.webp" />
 
 {amp && (
+
   <link rel="amphtml" href={amp} />
 )}
 
 <!-- Open Graph -->
+
 <meta property="og:type" content={type} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={title} />
 <meta property="og:url" content={canonical} />
 <meta property="og:site_name" content={SITE.title} />
+<meta property="og:locale" content={lang === "id" ? "id_ID" : "en_US"} />
 
 <!-- Twitter -->
-<meta
-  name="twitter:card"
-  content="summary_large_image"
-/>
 
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
+
+{SITE.social?.twitter && ( <meta
+ name="twitter:creator"
+ content={SITE.social.twitter}
+/>
+)}
+
+<!-- RSS -->
+
 <link
   rel="alternate"
   type="application/rss+xml"
   title={SITE.title}
   href={SITE.url("/rss.xml")}
 />
-<!-- preload -->
-<link
-  rel="preload"
-  href={imageUrl}
-  as="image"
-/>
 
-<!-- schema -->
-{!isHome && (
-  <>
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(organizationSchema)}
-    />
+<!-- Preload OG image only when available -->
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(websiteSchema)}
-    />
-  </>
+{imageUrl && (
+
+  <link
+    rel="preload"
+    href={imageUrl}
+    as="image"
+  />
 )}
 
-{breadcrumbs?.length > 0 && (
+<!-- Schema -->
+
+{!isHome && (
+<> <script
+   type="application/ld+json"
+   set:html={JSON.stringify(organizationSchema)}
+ />
+
+```
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(websiteSchema)}
+/>
+```
+
+</>
+)}
+
+{normalizedBreadcrumbs.length > 0 && (
+
   <script
     type="application/ld+json"
     set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      itemListElement: breadcrumbs.map((item, index) => ({
+      itemListElement: normalizedBreadcrumbs.map((item, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: item.name,
-        item: new URL(item.url, SITE.baseUrl).toString(),
-      })),
+        item: new URL(
+          item.url,
+          SITE.baseUrl
+        ).toString()
+      }))
     })}
   />
 )}
