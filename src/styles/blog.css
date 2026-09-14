@@ -17,29 +17,17 @@
    PAGE HERO
 ======================================== */
 
+
 .page-hero{
   position:relative;
-
-  /* Sebelumnya 160px, dibuat lebih dekat */
-  padding:105px 0px 60px;
-
+  padding:105px 0 60px;
   overflow:hidden;
 
   border:1px solid var(--border);
   border-radius:32px;
 
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255,255,255,.08),
-      transparent 55%
-    ),
-    var(--card);
-
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  background:var(--card);
 }
-
 
 /* HERO VERSI KECIL */
 
@@ -50,32 +38,6 @@
 
 
 
-/* ========================================
-   EFFECT BACKGROUND
-======================================== */
-
-.page-hero::before{
-  content:"";
-
-  position:absolute;
-
-  width:420px;
-  height:420px;
-
-  top:-260px;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  border-radius:50%;
-
-  background:
-    rgba(255,255,255,.06);
-
-  filter:blur(70px);
-
-  pointer-events:none;
-}
 
 
 /* ========================================
