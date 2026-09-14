@@ -17,7 +17,9 @@ const {
   amp,
   slug,
   isHome = false,
-  pageCSS = []
+  pageCSS = [],
+  robots = "index,follow,max-image-preview:large",
+  lang = "id"
 } = Astro.props;
 
 const autoPageCSS = [...pageCSS];
@@ -37,7 +39,8 @@ if (
 
 /* =========================================
    DETEKSI DETAIL TOOL
-   /tools/{kategori}/{slug}/
+   FORMAT BARU:
+   /tools/{slug}/
 ========================================= */
 
 const segments = pathname
@@ -46,7 +49,7 @@ const segments = pathname
 
 const isToolPage =
   segments[0] === "tools" &&
-  segments.length >= 3;
+  segments.length === 2;
 
 /* =========================================
    AUTO BREADCRUMBS TOOLS
@@ -77,7 +80,7 @@ const autoBreadcrumbs =
               name: part
                 .replace(/-/g, " ")
                 .replace(/\b\w/g, c => c.toUpperCase()),
-              url: path
+              url: `${path}/`
             });
           }
 
@@ -94,7 +97,7 @@ const faqSchema = generateFaqSchema(html);
 ---
 
 <!doctype html>
-<html lang="id">
+<html lang={lang}>
 
 <head>
 
@@ -108,6 +111,8 @@ const faqSchema = generateFaqSchema(html);
     amp={amp}
     slug={slug}
     isHome={isHome}
+    robots={robots}
+    lang={lang}
   />
 
   {
@@ -166,7 +171,7 @@ const faqSchema = generateFaqSchema(html);
 
                 {
                   index === autoBreadcrumbs.length - 1 ? (
-                    <span>
+                    <span aria-current="page">
                       {item.name}
                     </span>
                   ) : (
@@ -191,8 +196,8 @@ const faqSchema = generateFaqSchema(html);
 
     <!-- =====================================
          RELATED TOOLS
-         HANYA:
-         /tools/{kategori}/{slug}/
+         HANYA HALAMAN DETAIL TOOL
+         /tools/{slug}/
     ====================================== -->
 
     {
@@ -217,15 +222,11 @@ const faqSchema = generateFaqSchema(html);
     const themeBtn =
       document.getElementById("themeToggle");
 
-    /* LOAD */
-
     if (
       localStorage.getItem("theme") === "light"
     ) {
       html.classList.add("light-mode");
     }
-
-    /* TOGGLE */
 
     themeBtn?.addEventListener(
       "click",
@@ -301,3 +302,4 @@ const faqSchema = generateFaqSchema(html);
 </body>
 
 </html>
+
