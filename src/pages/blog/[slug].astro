@@ -1,9 +1,9 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import { SITE } from '../../lib/site';
-import "../../styles/blog.css";
-import TOC from "../../components/TOC.astro";
-import RelatedPosts from "../../components/RelatedPosts.astro";
+import '../../styles/blog.css';
+
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 import { getCollection, render } from 'astro:content';
 
@@ -24,180 +24,200 @@ const { post } = Astro.props;
 
 const { Content, headings } = await render(post);
 
-const posts = await getCollection("blog");
+const posts = await getCollection('blog');
 
 const displayImage =
-  post.data.image?.trim()
-  || `/api/og/${post.slug}.svg`;
+  post.data.image?.trim() ||
+  `/api/og/${post.slug}.svg`;
 
+const absoluteImage = SITE.imageUrl(displayImage);
+
+const canonical = SITE.url(`/blog/${post.slug}/`);
+
+const breadcrumbs = [
+  {
+    name: 'Home',
+    url: '/'
+  },
+  {
+    name: 'Blog',
+    url: '/blog/'
+  },
+  {
+    name: post.data.title,
+    url: `/blog/${post.slug}/`
+  }
+];
 
 const articleSchema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-
+  '@context': 'https://schema.org',
+  '@type': 'Article',
   headline: post.data.title,
-
   description: post.data.description,
-
-  image: displayImage,
-
-  url: SITE.url(`/blog/${post.slug}/`),
-
-  author: {
-    "@type": "Organization",
-    name: SITE.name
+  image: [
+    absoluteImage
+  ],
+  url: canonical,
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonical
   },
-
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.pubDate.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url('/')
+  },
   publisher: {
-    "@type": "Organization",
-    name: SITE.name
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url('/'),
+    logo: {
+      '@type': 'ImageObject',
+      url: SITE.url('/img/logo.png')
+    }
   }
 };
-
 ---
 
 <MainLayout
   title={`${post.data.title} | ${SITE.title}`}
   description={post.data.description}
   articleSchema={articleSchema}
-  amp={SITE.url(`/blog/${post.slug}/amp/`)}
+  breadcrumbs={breadcrumbs}
   slug={post.slug}
+  lang="id"
 >
+  <main class="article">
+    <div class="container">
+      <div class="article-wrap">
 
-<main class="article">
-
-  <div class="container">
-
-    <div class="article-wrap">
-
-      <!-- Breadcrumb -->
-      <nav class="breadcrumb">
-
-        <a href="/">Home</a>
-
-        <span>/</span>
-
-        <a href="/blog/">Blog</a>
-
-        <span>/</span>
-
-        <span>{post.data.title}</span>
-
-      </nav>
-
-      <!-- Header -->
-      <header class="article-header">
-
-        <h1>
-          {post.data.title}
-        </h1>
-
-        {post.data.description && (
-          <p class="article-excerpt">
-            {post.data.description}
-          </p>
-        )}
-
-      </header>
-
-      <!-- Sticky CTA -->
-      <div class="sticky-cta">
-
-        <div class="sticky-content">
-
-          <div class="sticky-text">
-
-            <strong>
-              {post.data.title}
-            </strong>
-
-            {post.data.description && (
-              <p>
-                {post.data.description}
-              </p>
-            )}
-
-          </div>
-
-          <a
-            href="/tools/"
-            class="cta-btn"
-          >
-            Coba Sekarang
+        <!-- Breadcrumb -->
+        <nav
+          class="breadcrumb"
+          aria-label="Breadcrumb"
+        >
+          <a href="/">
+            Home
           </a>
 
+          <span aria-hidden="true">
+            /
+          </span>
+
+          <a href="/blog/">
+            Blog
+          </a>
+
+          <span aria-hidden="true">
+            /
+          </span>
+
+          <span aria-current="page">
+            {post.data.title}
+          </span>
+        </nav>
+
+        <!-- Header -->
+        <header class="article-header">
+          <h1>
+            {post.data.title}
+          </h1>
+
+          {post.data.description && (
+            <p class="article-excerpt">
+              {post.data.description}
+            </p>
+          )}
+        </header>
+
+        <!-- Sticky CTA -->
+        <div class="sticky-cta">
+          <div class="sticky-content">
+
+            <div class="sticky-text">
+              <strong>
+                {post.data.title}
+              </strong>
+
+              {post.data.description && (
+                <p>
+                  {post.data.description}
+                </p>
+              )}
+            </div>
+
+            <a
+              href="/tools/"
+              class="cta-btn"
+            >
+              Coba Sekarang
+            </a>
+
+          </div>
         </div>
 
+        <!-- Featured Image -->
+        <div class="article-cover">
+          <img
+            src={displayImage}
+            alt={post.data.title}
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            width="1200"
+            height="630"
+          />
+        </div>
+
+        <!-- TOC -->
+        {headings.length > 0 && (
+          <details class="toc">
+            <summary class="toc-title">
+
+              <span>
+                📑 Daftar Isi
+              </span>
+
+              <span
+                class="toc-toggle"
+                aria-hidden="true"
+              >
+              </span>
+
+            </summary>
+
+            <ul>
+              {headings.map((heading) => (
+                <li
+                  class={`depth-${heading.depth}`}
+                >
+                  <a href={`#${heading.slug}`}>
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+          </details>
+        )}
+
+        <!-- Content -->
+        <article class="article-content">
+          <Content />
+        </article>
+
+        <!-- Related Posts -->
+        <RelatedPosts
+          posts={posts}
+          currentSlug={post.slug}
+          title="Artikel Terkait"
+          baseUrl="/blog"
+        />
+
       </div>
-
-      <!-- Featured -->
-      <div class="article-cover">
-
-<img
-  src={displayImage}
-  alt={post.data.title}
-  loading="eager"
-  decoding="async"
-  fetchpriority="high"
-  width="1200"
-  height="630"
-/>
-
-      </div>
-
-      <!-- TOC -->
-      {headings.length > 0 && (
-
-        <details class="toc">
-
-          <summary class="toc-title">
-    <span>
-      📑 Daftar Isi
-    </span>
-
-    <span class="toc-toggle">
-    </span>
-          </summary>
-
-          <ul>
-
-            {headings.map((heading) => (
-
-              <li class={`depth-${heading.depth}`}>
-
-                <a href={`#${heading.slug}`}>
-                  {heading.text}
-                </a>
-
-              </li>
-
-            ))}
-
-          </ul>
-
-        </details>
-
-      )}
-
-      <!-- Content -->
-      <article class="article-content">
-        <Content />
-      </article>
-
-
- <!-- Related -->
-<RelatedPosts
-  posts={posts}
-  currentSlug={post.slug}
-  title="Artikel Terkait"
-  baseUrl="/blog"
-/>
-
     </div>
-
-  </div>
-
-</main>
-
-
+  </main>
 </MainLayout>
+
