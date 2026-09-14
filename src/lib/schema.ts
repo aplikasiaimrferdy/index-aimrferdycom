@@ -1,4 +1,3 @@
-
 import { SITE } from "./site";
 
 export const organizationSchema = {
@@ -7,7 +6,10 @@ export const organizationSchema = {
   "@id": `${SITE.url()}#organization`,
   name: SITE.name,
   url: SITE.url(),
-  logo: SITE.imageUrl(SITE.image),
+  logo: {
+    "@type": "ImageObject",
+    url: SITE.url("/img/logo.png")
+  },
   image: SITE.imageUrl(SITE.image)
 };
 
@@ -28,20 +30,35 @@ export const websiteSchema = {
 };
 
 export function articleSchema(post) {
+  const url = SITE.blog(post.slug);
+  const image = SITE.imageUrl(
+    post.image || SITE.image
+  );
+
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    image: SITE.imageUrl(post.image || SITE.image),
+    image: [image],
+    url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url
+    },
     author: {
       "@type": "Person",
       name: SITE.author
     },
     publisher: {
       "@type": "Organization",
-      name: SITE.name
-    },
-    mainEntityOfPage: SITE.blog(post.slug)
+      name: SITE.name,
+      url: SITE.url(),
+      logo: {
+        "@type": "ImageObject",
+        url: SITE.url("/img/logo.png")
+      }
+    }
   };
 }
+
