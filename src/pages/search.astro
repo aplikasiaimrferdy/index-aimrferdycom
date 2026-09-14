@@ -3,133 +3,112 @@ import MainLayout from "../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
-const tools = await getCollection("tools");
 const products = await getCollection("product");
 ---
 
-<MainLayout title="Search - AI Mr Ferdy">
-
-<div class="search-page">
-
-<h1>Search AI Mr Ferdy</h1>
-
-<form id="searchForm">
-
-<input
-  id="searchInput"
-  placeholder="Cari artikel, tools, atau produk..."
-/>
-
-<select id="typeFilter">
-
-  <option value="all">
-    Semua
-  </option>
-
-  <option value="blog">
-    Blog
-  </option>
-
-  <option value="tool">
-    Tools
-  </option>
-
-  <option value="product">
-    Product
-  </option>
-
-</select>
-
-<button
-  type="submit"
-  class="search-btn"
+<MainLayout
+  title="Search - AI Mr Ferdy"
+  description="Cari artikel, tools, dan produk di AI Mr Ferdy."
+  robots="noindex,follow"
 >
-  Search
-</button>
 
-</form>
+  <div class="search-page">
 
-<p id="emptyState">
-  Ketik kata kunci lalu klik Search.
-</p>
+    <h1>Search AI Mr Ferdy</h1>
 
-<div id="results">
+    <form id="searchForm">
 
-  {posts.map((post) => (
+      <input
+        id="searchInput"
+        placeholder="Cari artikel, tools, atau produk..."
+      />
 
-    <a
-      class="item"
-      data-type="blog"
-      href={`/blog/${post.slug}/`}
-    >
+      <select id="typeFilter">
 
-      <span class="badge">
-        Blog
-      </span>
+        <option value="all">
+          Semua
+        </option>
 
-      <h3>
-        {post.data.title}
-      </h3>
+        <option value="blog">
+          Blog
+        </option>
 
-      <p>
-        {post.data.description}
-      </p>
+        <option value="tool">
+          Tools
+        </option>
 
-    </a>
+        <option value="product">
+          Product
+        </option>
 
-  ))}
+      </select>
 
-  {tools.map((tool) => (
+      <button
+        type="submit"
+        class="search-btn"
+      >
+        Search
+      </button>
 
-    <a
-      class="item"
-      data-type="tool"
-      href={`/tools/${tool.slug}/`}
-    >
+    </form>
 
-      <span class="badge">
-        Tool
-      </span>
+    <p id="emptyState">
+      Ketik kata kunci lalu klik Search.
+    </p>
 
-      <h3>
-        {tool.data.title}
-      </h3>
+    <div id="results">
 
-      <p>
-        {tool.data.description}
-      </p>
+      {posts.map((post) => (
 
-    </a>
+        <a
+          class="item"
+          data-type="blog"
+          href={`/blog/${post.slug}/`}
+        >
 
-  ))}
+          <span class="badge">
+            Blog
+          </span>
 
-  {products.map((product) => (
+          <h3>
+            {post.data.title}
+          </h3>
 
-    <a
-      class="item"
-      data-type="product"
-      href={`/product/${product.slug}/`}
-    >
+          <p>
+            {post.data.description}
+          </p>
 
-      <span class="badge">
-        Product
-      </span>
+        </a>
 
-      <h3>
-        {product.data.title}
-      </h3>
+      ))}
 
-      <p>
-        {product.data.description}
-      </p>
+      {products.map((product) => (
 
-    </a>
+        <a
+          class="item"
+          data-type="product"
+          href={`/product/${product.slug}/`}
+        >
 
-  ))}
+          <span class="badge">
+            Product
+          </span>
 
-</div>
+          <h3>
+            {product.data.title}
+          </h3>
 
-</div>
+          <p>
+            {product.data.description}
+          </p>
+
+        </a>
+
+      ))}
+
+    </div>
+
+  </div>
 
 </MainLayout>
 
@@ -150,13 +129,9 @@ const items =
 const emptyState =
   document.getElementById("emptyState");
 
-/* hide all initially */
-
 items.forEach(item => {
   item.style.display = "none";
 });
-
-/* load query from URL */
 
 const params =
   new URLSearchParams(
@@ -225,7 +200,6 @@ function runSearch() {
     });
 
     return;
-
   }
 
   emptyState.style.display =
@@ -269,10 +243,15 @@ form.addEventListener(
       );
     }
 
+    const query =
+      params.toString();
+
     history.replaceState(
       {},
       "",
-      `${window.location.pathname}?${params.toString()}`
+      query
+        ? `${window.location.pathname}?${query}`
+        : window.location.pathname
     );
 
     runSearch();
@@ -284,87 +263,88 @@ form.addEventListener(
 
 <style>
 
-.search-page{
-max-width:800px;
-margin:80px auto;
-padding:0 20px;
+.search-page {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 0 20px;
 }
 
-.search-page h1{
-font-size:36px;
-margin-bottom:20px;
+.search-page h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
-#searchForm{
-display:flex;
-flex-direction:column;
-gap:16px;
-margin-bottom:20px;
+#searchForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 #searchInput,
-#typeFilter{
-width:100%;
-padding:14px;
-border:1px solid var(--border,#ddd);
-border-radius:12px;
-font-size:16px;
-outline:none;
+#typeFilter {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
 }
 
-.search-btn{
-padding:14px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-size:16px;
-font-weight:700;
+.search-btn {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
 }
 
-#emptyState{
-opacity:.6;
-margin-bottom:20px;
+#emptyState {
+  opacity: .6;
+  margin-bottom: 20px;
 }
 
-#results{
-display:flex;
-flex-direction:column;
-gap:14px;
+#results {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.item{
-display:block;
-padding:16px;
-border:1px solid var(--border,#eee);
-border-radius:14px;
-text-decoration:none;
-color:inherit;
-transition:.2s;
+.item {
+  display: block;
+  padding: 16px;
+  border: 1px solid var(--border, #eee);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: .2s;
 }
 
-.item:hover{
-transform:translateY(-2px);
+.item:hover {
+  transform: translateY(-2px);
 }
 
-.item h3{
-margin:0 0 8px;
-font-size:18px;
+.item h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
 }
 
-.item p{
-margin:0;
-opacity:.7;
-font-size:14px;
+.item p {
+  margin: 0;
+  opacity: .7;
+  font-size: 14px;
 }
 
-.badge{
-display:inline-block;
-margin-bottom:10px;
-padding:4px 10px;
-border-radius:999px;
-font-size:12px;
-font-weight:600;
-background:#f3f4f6;
+.badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f3f4f6;
 }
 
 </style>
+
