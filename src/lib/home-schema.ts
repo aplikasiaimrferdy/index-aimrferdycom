@@ -28,7 +28,7 @@ export const homeSchema = {
     "https://www.youtube.com/@aimrferdy",
     "https://medium.com/@aimrferdy",
     "https://github.com/aimrferdy",
-    "https://web.facebook.com/groups/aimrferdyofficial",
+    "https://facebook.com/ai.mr.ferdy",
     "https://heylink.me/mrferdy"
       ]
     },
