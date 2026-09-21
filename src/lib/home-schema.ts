@@ -25,9 +25,9 @@ export const homeSchema = {
   "Web Development"
 ],
       "sameAs": [
-    "https://www.youtube.com/@ai-mr-ferdy",
+    "https://www.youtube.com/@aimrferdy",
     "https://medium.com/@aimrferdy",
-    "https://github.com/aimrfredy",
+    "https://github.com/aimrferdy",
     "https://web.facebook.com/groups/aimrferdyofficial",
     "https://heylink.me/mrferdy"
       ]
