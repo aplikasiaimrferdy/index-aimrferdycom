@@ -1,0 +1,602 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🤖 Robots.txt Generator",
+  description:
+    "Buat file robots.txt untuk mengatur akses crawler mesin pencari ke halaman website dengan Robots.txt Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+
+      <h1>{meta.title}</h1>
+
+      <p>
+        Buat konfigurasi robots.txt untuk mengatur akses crawler
+        mesin pencari ke website dengan cepat.
+      </p>
+    </header>
+
+    <section
+      class="tool-box"
+      aria-labelledby="robots-tool-title"
+    >
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="siteUrl">
+            URL Website
+          </label>
+
+          <input
+            id="siteUrl"
+            class="tool-input"
+            type="url"
+            placeholder="https://aimrferdy.com/"
+            value="https://aimrferdy.com/"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="userAgent">
+            User-agent
+          </label>
+
+          <select
+            id="userAgent"
+            class="tool-input"
+          >
+            <option value="*">
+              Semua crawler (*)
+            </option>
+
+            <option value="Googlebot">
+              Googlebot
+            </option>
+
+            <option value="Bingbot">
+              Bingbot
+            </option>
+
+            <option value="GPTBot">
+              GPTBot
+            </option>
+          </select>
+        </div>
+
+        <div class="tool-field">
+          <label for="sitemap">
+            Sitemap URL
+          </label>
+
+          <input
+            id="sitemap"
+            class="tool-input"
+            type="url"
+            placeholder="https://aimrferdy.com/sitemap.xml"
+            value="https://aimrferdy.com/sitemap.xml"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="crawlDelay">
+            Crawl-delay
+          </label>
+
+          <select
+            id="crawlDelay"
+            class="tool-input"
+          >
+            <option value="">
+              Tidak digunakan
+            </option>
+
+            <option value="1">1 detik</option>
+            <option value="2">2 detik</option>
+            <option value="5">5 detik</option>
+            <option value="10">10 detik</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="tool-field">
+        <label>
+          Aturan Disallow
+        </label>
+
+        <div class="tool-options">
+
+          <label>
+            <input
+              type="checkbox"
+              value="/admin/"
+              class="disallow-path"
+            />
+            /admin/
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              value="/login/"
+              class="disallow-path"
+            />
+            /login/
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              value="/private/"
+              class="disallow-path"
+            />
+            /private/
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              value="/search"
+              class="disallow-path"
+            />
+            /search
+          </label>
+
+        </div>
+      </div>
+
+      <div class="tool-field">
+        <label for="customDisallow">
+          Disallow Custom
+        </label>
+
+        <textarea
+          id="customDisallow"
+          class="tool-input"
+          rows="5"
+          placeholder={`Contoh:
+/draft/
+/temp/
+/internal/`}
+        ></textarea>
+
+        <small>
+          Masukkan satu path per baris.
+        </small>
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="generateRobots"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Generate robots.txt
+        </button>
+
+        <button
+          id="clearRobots"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Bersihkan
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label for="robotsOutput">
+          robots.txt
+        </label>
+
+        <textarea
+          id="robotsOutput"
+          class="tool-output"
+          rows="16"
+          readonly
+          spellcheck="false"
+          placeholder="Hasil robots.txt akan muncul di sini..."
+        ></textarea>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="copyRobots"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Salin robots.txt
+        </button>
+
+        <button
+          id="downloadRobots"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Download robots.txt
+        </button>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>Robots.txt Generator untuk SEO</h2>
+
+      <p>
+        Robots.txt Generator adalah tool untuk membuat file
+        <strong>robots.txt</strong> yang dapat digunakan untuk memberikan
+        instruksi kepada crawler mesin pencari mengenai URL atau direktori
+        yang boleh atau tidak boleh diakses.
+      </p>
+
+      <h2>Apa Itu robots.txt?</h2>
+
+      <p>
+        robots.txt adalah file teks yang biasanya ditempatkan di root
+        sebuah website, misalnya
+        <strong>https://aimrferdy.com/robots.txt</strong>.
+        File ini menggunakan aturan seperti User-agent, Allow,
+        Disallow, dan Sitemap.
+      </p>
+
+      <h2>Fungsi robots.txt</h2>
+
+      <p>
+        Robots.txt dapat digunakan untuk memberikan petunjuk kepada
+        crawler mengenai area tertentu dari website. Contohnya adalah
+        direktori internal, halaman sementara, atau lokasi yang tidak
+        ingin diminta oleh crawler tertentu.
+      </p>
+
+      <h2>User-agent</h2>
+
+      <p>
+        User-agent menentukan crawler yang menjadi target sebuah aturan.
+        Karakter <strong>*</strong> digunakan untuk mencocokkan semua
+        crawler yang mengikuti aturan tersebut.
+      </p>
+
+      <h2>Disallow</h2>
+
+      <p>
+        Disallow digunakan untuk menyatakan path yang tidak ingin
+        di-crawl oleh crawler yang cocok dengan User-agent tersebut.
+        Path harus ditulis dengan benar agar aturan sesuai dengan struktur
+        website.
+      </p>
+
+      <h2>Allow</h2>
+
+      <p>
+        Allow dapat digunakan untuk memberikan pengecualian pada path
+        tertentu dalam konfigurasi robots.txt. Dukungan terhadap aturan
+        tertentu dapat berbeda antara crawler.
+      </p>
+
+      <h2>Sitemap dalam robots.txt</h2>
+
+      <p>
+        URL sitemap dapat dicantumkan menggunakan directive
+        <strong>Sitemap</strong>. Contohnya:
+      </p>
+
+      <pre><code>Sitemap: https://aimrferdy.com/sitemap.xml</code></pre>
+
+      <h2>Contoh robots.txt Sederhana</h2>
+
+      <pre><code>User-agent: *
+Disallow:
+
+Sitemap: https://aimrferdy.com/sitemap.xml</code></pre>
+
+      <h2>Contoh robots.txt dengan Disallow</h2>
+
+      <pre><code>User-agent: *
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://aimrferdy.com/sitemap.xml</code></pre>
+
+      <h2>Robots.txt dan SEO</h2>
+
+      <p>
+        Robots.txt bukan alat untuk menghapus URL dari hasil pencarian
+        secara langsung. File ini terutama memberikan instruksi crawling.
+        Jika sebuah URL perlu dicegah muncul di hasil pencarian, metode
+        seperti noindex dapat memiliki fungsi yang berbeda dan perlu
+        diterapkan sesuai kebutuhan.
+      </p>
+
+      <h2>Kesalahan yang Perlu Dihindari</h2>
+
+      <ul>
+        <li>
+          Jangan memblokir seluruh website secara tidak sengaja.
+        </li>
+
+        <li>
+          Periksa kembali path setelah membuat aturan Disallow.
+        </li>
+
+        <li>
+          Jangan menganggap robots.txt sebagai mekanisme keamanan.
+        </li>
+
+        <li>
+          Pastikan URL sitemap menggunakan alamat yang benar.
+        </li>
+
+        <li>
+          Jangan memasukkan informasi rahasia ke dalam robots.txt.
+        </li>
+      </ul>
+
+      <h2>Cara Menggunakan Robots.txt Generator</h2>
+
+      <ol>
+        <li>Masukkan URL website.</li>
+        <li>Pilih User-agent.</li>
+        <li>Masukkan URL sitemap.</li>
+        <li>Pilih path yang ingin diberi aturan Disallow.</li>
+        <li>Tambahkan path custom jika diperlukan.</li>
+        <li>Klik Generate robots.txt.</li>
+        <li>Periksa hasil sebelum dipasang di website.</li>
+      </ol>
+
+      <h2>Robots.txt Generator AI Mr Ferdy</h2>
+
+      <p>
+        Robots.txt Generator dari AI Mr Ferdy membantu membuat konfigurasi
+        robots.txt secara cepat dari browser. Hasil generator tetap perlu
+        diperiksa sesuai struktur dan kebutuhan website sebelum digunakan.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const siteUrl =
+      document.querySelector("#siteUrl");
+
+    const userAgent =
+      document.querySelector("#userAgent");
+
+    const sitemap =
+      document.querySelector("#sitemap");
+
+    const crawlDelay =
+      document.querySelector("#crawlDelay");
+
+    const customDisallow =
+      document.querySelector("#customDisallow");
+
+    const robotsOutput =
+      document.querySelector("#robotsOutput");
+
+    const disallowPaths =
+      document.querySelectorAll(".disallow-path");
+
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+
+    function normalizeUrl(value) {
+      const url = clean(value);
+
+      if (!url) return "";
+
+      return url.replace(/\/+$/, "");
+    }
+
+
+    function generateRobots() {
+      const agent =
+        clean(userAgent?.value) || "*";
+
+      const sitemapValue =
+        normalizeUrl(sitemap?.value);
+
+      const selectedPaths =
+        Array.from(disallowPaths)
+          .filter(input => input.checked)
+          .map(input => input.value);
+
+      const customPaths =
+        clean(customDisallow?.value)
+          .split("\n")
+          .map(path => path.trim())
+          .filter(Boolean);
+
+      const allPaths = [
+        ...selectedPaths,
+        ...customPaths
+      ];
+
+      const uniquePaths = [
+        ...new Set(allPaths)
+      ];
+
+      const lines = [
+        `User-agent: ${agent}`
+      ];
+
+      if (uniquePaths.length) {
+        uniquePaths.forEach(path => {
+          lines.push(`Disallow: ${path}`);
+        });
+      } else {
+        lines.push("Disallow:");
+      }
+
+      const delay =
+        clean(crawlDelay?.value);
+
+      if (delay) {
+        lines.push(
+          `Crawl-delay: ${delay}`
+        );
+      }
+
+      if (sitemapValue) {
+        lines.push("");
+        lines.push(
+          `Sitemap: ${sitemapValue}/sitemap.xml`
+        );
+      }
+
+      if (robotsOutput) {
+        robotsOutput.value =
+          lines.join("\n");
+      }
+    }
+
+
+    async function copyRobots() {
+      const value =
+        robotsOutput?.value || "";
+
+      if (!value) return;
+
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        robotsOutput?.select();
+        document.execCommand("copy");
+      }
+
+      const button =
+        document.querySelector("#copyRobots");
+
+      if (button) {
+        const original =
+          button.textContent;
+
+        button.textContent =
+          "Berhasil Disalin ✓";
+
+        setTimeout(() => {
+          button.textContent = original;
+        }, 1500);
+      }
+    }
+
+
+    function downloadRobots() {
+      const value =
+        robotsOutput?.value || "";
+
+      if (!value) return;
+
+      const blob =
+        new Blob(
+          [value],
+          {
+            type: "text/plain;charset=utf-8"
+          }
+        );
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const link =
+        document.createElement("a");
+
+      link.href = url;
+      link.download = "robots.txt";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    }
+
+
+    function clearRobots() {
+      if (siteUrl) {
+        siteUrl.value =
+          "https://aimrferdy.com/";
+      }
+
+      if (sitemap) {
+        sitemap.value =
+          "https://aimrferdy.com/sitemap.xml";
+      }
+
+      if (crawlDelay) {
+        crawlDelay.value = "";
+      }
+
+      if (customDisallow) {
+        customDisallow.value = "";
+      }
+
+      disallowPaths.forEach(input => {
+        input.checked = false;
+      });
+
+      if (userAgent) {
+        userAgent.value = "*";
+      }
+
+      if (robotsOutput) {
+        robotsOutput.value = "";
+      }
+    }
+
+
+    document
+      .querySelector("#generateRobots")
+      ?.addEventListener(
+        "click",
+        generateRobots
+      );
+
+
+    document
+      .querySelector("#copyRobots")
+      ?.addEventListener(
+        "click",
+        copyRobots
+      );
+
+
+    document
+      .querySelector("#downloadRobots")
+      ?.addEventListener(
+        "click",
+        downloadRobots
+      );
+
+
+    document
+      .querySelector("#clearRobots")
+      ?.addEventListener(
+        "click",
+        clearRobots
+      );
+  </script>
+
+</MainLayout>
