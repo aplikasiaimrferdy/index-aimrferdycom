@@ -1,0 +1,437 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📝 AI Summarizer",
+  description:
+    "Ringkas artikel, teks panjang, dan dokumen dengan cepat menggunakan AI Summarizer dari AI Mr Ferdy.",
+  category: "AI",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">AI Writing</span>
+
+      <h1>AI Summarizer</h1>
+
+      <p>
+        Ringkas artikel, teks panjang, dan dokumen menjadi lebih singkat,
+        jelas, dan mudah dipahami.
+      </p>
+    </header>
+
+    <section class="tool-box">
+
+      <div class="tool-grid">
+
+        <div class="tool-input">
+
+          <label for="inputText">
+            Artikel atau Dokumen
+          </label>
+
+          <textarea
+            id="inputText"
+            rows="14"
+            placeholder="Tempel artikel, dokumen, berita, materi belajar, atau teks panjang di sini..."
+          ></textarea>
+
+          <div class="tool-options">
+
+            <div class="tool-field">
+
+              <label for="length">
+                Panjang Ringkasan
+              </label>
+
+              <select id="length">
+                <option value="short">Sangat Singkat</option>
+                <option value="medium" selected>Ringkas</option>
+                <option value="long">Lebih Lengkap</option>
+              </select>
+
+            </div>
+
+            <div class="tool-field">
+
+              <label for="style">
+                Gaya Ringkasan
+              </label>
+
+              <select id="style">
+                <option value="paragraph">Paragraf</option>
+                <option value="bullet">Poin-Poin</option>
+                <option value="keypoints">Inti Informasi</option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="tool-btn"
+            id="summarizeBtn"
+          >
+            ✨ Ringkas Sekarang
+          </button>
+
+        </div>
+
+        <div class="tool-output">
+
+          <label for="outputText">
+            Hasil Ringkasan
+          </label>
+
+          <textarea
+            id="outputText"
+            rows="14"
+            readonly
+            placeholder="Hasil ringkasan akan muncul di sini..."
+          ></textarea>
+
+          <div class="tool-actions">
+
+            <button type="button" id="copyBtn">
+              📋 Salin
+            </button>
+
+            <button type="button" id="clearBtn">
+              🗑️ Bersihkan
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>AI Summarizer untuk Meringkas Artikel dan Dokumen</h2>
+
+      <p>
+        AI Summarizer adalah tool yang membantu mengubah teks panjang menjadi
+        ringkasan yang lebih singkat dengan tetap mempertahankan informasi
+        utama dari sebuah artikel atau dokumen.
+      </p>
+
+      <p>
+        AI Mr Ferdy menyediakan AI Summarizer untuk membantu membaca dan
+        memahami berbagai jenis konten digital secara lebih efisien, mulai
+        dari artikel, berita, materi belajar, catatan, hingga dokumen teks.
+      </p>
+
+      <h2>Apa Itu AI Summarizer?</h2>
+
+      <p>
+        AI Summarizer adalah alat bantu untuk membuat ringkasan dari teks
+        yang panjang. Tujuannya adalah mengambil informasi utama dan
+        mengurangi bagian yang kurang penting tanpa menghilangkan konteks
+        utama tulisan.
+      </p>
+
+      <p>
+        Dengan ringkasan yang lebih pendek, pembaca dapat memahami isi utama
+        sebuah teks tanpa harus membaca seluruh bagian dari awal sampai akhir.
+      </p>
+
+      <h2>AI Summarizer untuk Artikel</h2>
+
+      <p>
+        Artikel di internet sering memiliki banyak paragraf dan informasi
+        pendukung. AI Summarizer dapat membantu mengambil inti pembahasan
+        sehingga artikel lebih cepat dipahami.
+      </p>
+
+      <p>
+        Ringkasan dapat digunakan sebagai catatan pribadi, bahan riset awal,
+        atau gambaran sebelum membaca artikel secara lengkap.
+      </p>
+
+      <h2>AI Summarizer untuk Dokumen</h2>
+
+      <p>
+        Dokumen panjang dapat membutuhkan waktu cukup lama untuk dibaca.
+        Dengan meringkas teks terlebih dahulu, pembaca dapat memperoleh
+        gambaran umum mengenai isi dokumen.
+      </p>
+
+      <p>
+        Untuk dokumen penting, hasil ringkasan sebaiknya tetap dibandingkan
+        dengan dokumen asli agar tidak ada informasi penting yang terlewat.
+      </p>
+
+      <h2>Manfaat AI Summarizer</h2>
+
+      <ul>
+        <li>Menghemat waktu membaca teks panjang.</li>
+        <li>Membantu menemukan inti pembahasan.</li>
+        <li>Membuat catatan dari artikel atau materi.</li>
+        <li>Membantu memahami informasi dengan lebih cepat.</li>
+        <li>Mengubah teks panjang menjadi poin-poin penting.</li>
+        <li>Membantu proses riset dan pengumpulan informasi.</li>
+      </ul>
+
+      <h2>AI Summarizer untuk Belajar</h2>
+
+      <p>
+        Materi pembelajaran yang panjang dapat diubah menjadi catatan yang
+        lebih ringkas. Misalnya, sebuah materi dapat dirangkum menjadi
+        beberapa poin utama agar lebih mudah dipelajari kembali.
+      </p>
+
+      <p>
+        Namun, ringkasan tidak sebaiknya menggantikan sumber pembelajaran
+        utama. Gunakan ringkasan sebagai alat bantu untuk memahami dan
+        mengingat materi.
+      </p>
+
+      <h2>AI Summarizer untuk Riset</h2>
+
+      <p>
+        Dalam proses riset, seseorang dapat membaca banyak artikel dan
+        sumber informasi. Ringkasan dapat membantu mendapatkan gambaran
+        awal mengenai topik sebelum membaca sumber secara lebih mendalam.
+      </p>
+
+      <h2>Jenis Ringkasan</h2>
+
+      <h3>Ringkasan Singkat</h3>
+
+      <p>
+        Digunakan ketika hanya membutuhkan inti informasi dalam beberapa
+        kalimat.
+      </p>
+
+      <h3>Ringkasan Sedang</h3>
+
+      <p>
+        Cocok untuk mempertahankan lebih banyak konteks tetapi tetap jauh
+        lebih pendek daripada teks asli.
+      </p>
+
+      <h3>Ringkasan Lengkap</h3>
+
+      <p>
+        Digunakan ketika beberapa informasi pendukung masih diperlukan agar
+        konteks artikel tetap mudah dipahami.
+      </p>
+
+      <h3>Ringkasan Poin-Poin</h3>
+
+      <p>
+        Informasi utama disusun dalam bentuk bullet point sehingga lebih mudah
+        dipindai dan dibaca dengan cepat.
+      </p>
+
+      <h2>Cara Menggunakan AI Summarizer</h2>
+
+      <ol>
+        <li>Salin artikel atau teks yang ingin diringkas.</li>
+        <li>Tempelkan teks ke kolom input.</li>
+        <li>Pilih panjang ringkasan.</li>
+        <li>Pilih format ringkasan.</li>
+        <li>Klik tombol <strong>Ringkas Sekarang</strong>.</li>
+        <li>Periksa hasil ringkasan sebelum digunakan.</li>
+      </ol>
+
+      <h2>Tips Mendapatkan Ringkasan yang Baik</h2>
+
+      <p>
+        Masukkan teks yang lengkap agar konteks informasi dapat dipahami
+        dengan lebih baik. Hindari memotong artikel pada bagian tengah jika
+        bagian tersebut masih berkaitan dengan informasi utama.
+      </p>
+
+      <p>
+        Setelah mendapatkan ringkasan, periksa kembali nama, angka, tanggal,
+        istilah, dan fakta penting dengan sumber aslinya.
+      </p>
+
+      <h2>Apakah Ringkasan AI Selalu Akurat?</h2>
+
+      <p>
+        Hasil ringkasan dapat bergantung pada kualitas dan struktur teks yang
+        diberikan. Karena itu, ringkasan AI sebaiknya dianggap sebagai alat
+        bantu, bukan pengganti pemeriksaan terhadap sumber asli.
+      </p>
+
+      <p>
+        Untuk informasi penting, akademik, bisnis, hukum, atau keputusan
+        tertentu, selalu periksa kembali informasi dengan dokumen sumber.
+      </p>
+
+      <h2>AI Summarizer AI Mr Ferdy</h2>
+
+      <p>
+        AI Summarizer AI Mr Ferdy dirancang untuk membantu meringkas berbagai
+        jenis teks secara praktis. Gunakan untuk membuat catatan, memahami
+        artikel, merangkum materi, atau mendapatkan gambaran awal dari
+        dokumen yang panjang.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const inputText = document.getElementById("inputText");
+    const outputText = document.getElementById("outputText");
+    const lengthSelect = document.getElementById("length");
+    const styleSelect = document.getElementById("style");
+
+    const summarizeBtn = document.getElementById("summarizeBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function cleanText(text) {
+      return text
+        .replace(/\s+/g, " ")
+        .replace(/\n+/g, " ")
+        .trim();
+    }
+
+    function splitSentences(text) {
+      return text
+        .match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+        ?.map(sentence => sentence.trim())
+        .filter(Boolean) || [];
+    }
+
+    function scoreSentence(sentence, index, total) {
+      let score = 0;
+
+      const keywords = [
+        "adalah",
+        "merupakan",
+        "penting",
+        "utama",
+        "tujuan",
+        "manfaat",
+        "hasil",
+        "karena",
+        "sehingga",
+        "dapat",
+        "menjadi",
+        "memiliki",
+        "menurut",
+        "kesimpulan"
+      ];
+
+      const lower = sentence.toLowerCase();
+
+      keywords.forEach(keyword => {
+        if (lower.includes(keyword)) score += 2;
+      });
+
+      if (index === 0) score += 5;
+
+      if (index === total - 1) score += 3;
+
+      if (sentence.length >= 60 && sentence.length <= 280) {
+        score += 2;
+      }
+
+      return score;
+    }
+
+    function summarize(text) {
+      const cleaned = cleanText(text);
+      const sentences = splitSentences(cleaned);
+
+      if (!sentences.length) {
+        return "Teks belum cukup untuk dibuat ringkasan.";
+      }
+
+      let amount = 3;
+
+      if (lengthSelect.value === "short") {
+        amount = Math.max(1, Math.ceil(sentences.length * 0.2));
+      }
+
+      if (lengthSelect.value === "medium") {
+        amount = Math.max(2, Math.ceil(sentences.length * 0.35));
+      }
+
+      if (lengthSelect.value === "long") {
+        amount = Math.max(3, Math.ceil(sentences.length * 0.55));
+      }
+
+      amount = Math.min(amount, sentences.length);
+
+      const ranked = sentences
+        .map((sentence, index) => ({
+          sentence,
+          index,
+          score: scoreSentence(sentence, index, sentences.length)
+        }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, amount)
+        .sort((a, b) => a.index - b.index)
+        .map(item => item.sentence);
+
+      if (styleSelect.value === "bullet") {
+        return ranked.map(sentence => `• ${sentence}`).join("\n");
+      }
+
+      if (styleSelect.value === "keypoints") {
+        return [
+          "Inti informasi:",
+          "",
+          ...ranked.map((sentence, index) =>
+            `${index + 1}. ${sentence}`
+          )
+        ].join("\n");
+      }
+
+      return ranked.join(" ");
+    }
+
+    summarizeBtn.addEventListener("click", () => {
+      const text = inputText.value.trim();
+
+      if (!text) {
+        outputText.value = "Masukkan artikel atau dokumen terlebih dahulu.";
+        return;
+      }
+
+      outputText.value = summarize(text);
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      const result = outputText.value.trim();
+
+      if (!result) return;
+
+      try {
+        await navigator.clipboard.writeText(result);
+
+        copyBtn.textContent = "✓ Tersalin";
+
+        setTimeout(() => {
+          copyBtn.textContent = "📋 Salin";
+        }, 1500);
+      } catch {
+        outputText.select();
+        document.execCommand("copy");
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      inputText.value = "";
+      outputText.value = "";
+    });
+  </script>
+</MainLayout>
