@@ -1,0 +1,426 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📝 AI Article Writer",
+  description:
+    "AI Article Writer untuk membuat artikel SEO panjang, terstruktur, informatif, dan mudah dikembangkan.",
+  category: "AI",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="tool-badge">AI Writer</span>
+      <h1>AI Article Writer</h1>
+      <p>
+        Buat draft artikel SEO panjang dengan struktur yang rapi,
+        mulai dari judul, heading, pembahasan hingga FAQ.
+      </p>
+    </header>
+
+    <section class="tool-card">
+
+      <div class="form-group">
+        <label for="topic">Topik Artikel</label>
+        <input
+          id="topic"
+          type="text"
+          placeholder="Contoh: Manfaat AI untuk produktivitas bisnis"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="keyword">Keyword Utama</label>
+        <input
+          id="keyword"
+          type="text"
+          placeholder="Contoh: AI untuk bisnis"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="secondary">Keyword Tambahan</label>
+        <input
+          id="secondary"
+          type="text"
+          placeholder="Contoh: otomatisasi bisnis, AI tools, produktivitas"
+        />
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="intent">Search Intent</label>
+          <select id="intent">
+            <option value="informational">Informational</option>
+            <option value="commercial">Commercial</option>
+            <option value="transactional">Transactional</option>
+            <option value="navigational">Navigational</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="length">Panjang Artikel</label>
+          <select id="length">
+            <option value="1000">1.000 kata</option>
+            <option value="1500">1.500 kata</option>
+            <option value="2000" selected>2.000 kata</option>
+            <option value="3000">3.000 kata</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="tone">Gaya Penulisan</label>
+          <select id="tone">
+            <option value="professional">Profesional</option>
+            <option value="informative">Informatif</option>
+            <option value="casual">Santai</option>
+            <option value="friendly">Ramah</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="language">Bahasa</label>
+          <select id="language">
+            <option value="id">Bahasa Indonesia</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="audience">Target Audiens</label>
+        <input
+          id="audience"
+          type="text"
+          placeholder="Contoh: pemilik bisnis dan digital marketer"
+        />
+      </div>
+
+      <button type="button" id="generateBtn">
+        ✨ Generate Article
+      </button>
+
+    </section>
+
+    <section class="result-card" id="resultCard" hidden>
+
+      <div class="result-header">
+        <h2>Hasil Artikel</h2>
+
+        <button type="button" id="copyBtn">
+          Copy
+        </button>
+      </div>
+
+      <textarea
+        id="result"
+        readonly
+        placeholder="Artikel akan muncul di sini..."
+      ></textarea>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>AI Article Writer untuk Membuat Artikel SEO Panjang</h2>
+
+      <p>
+        <strong>AI Article Writer</strong> adalah tool berbasis kecerdasan
+        buatan yang membantu membuat draft artikel panjang dengan struktur
+        yang lebih terorganisir. Tool ini dapat digunakan untuk membuat
+        konten blog, website, digital marketing, dan berbagai kebutuhan
+        publikasi online.
+      </p>
+
+      <p>
+        AI Mr Ferdy menyediakan AI Article Writer sebagai salah satu alat
+        bantu untuk mempercepat proses penulisan. Pengguna dapat menentukan
+        topik, keyword utama, keyword tambahan, target audiens, gaya bahasa,
+        dan panjang artikel sebelum membuat draft.
+      </p>
+
+      <h2>Apa Itu AI Article Writer?</h2>
+
+      <p>
+        AI Article Writer merupakan alat yang menggunakan teknologi
+        kecerdasan buatan untuk membantu menghasilkan teks berdasarkan
+        instruksi yang diberikan pengguna. Berbeda dengan generator teks
+        sederhana, article writer dapat diarahkan untuk membuat tulisan
+        dengan struktur yang lebih panjang dan sistematis.
+      </p>
+
+      <p>
+        Tool seperti ini dapat membantu ketika pengguna membutuhkan draft
+        artikel tetapi ingin menghemat waktu pada tahap awal penulisan.
+        Hasil yang dibuat AI tetap dapat diedit, diperiksa, dan dikembangkan
+        sebelum dipublikasikan.
+      </p>
+
+      <h2>AI Article Writer untuk Artikel SEO</h2>
+
+      <p>
+        Artikel SEO dibuat agar informasi pada sebuah halaman dapat
+        ditemukan dan dipahami dengan baik oleh mesin pencari sekaligus
+        memberikan manfaat kepada pembaca. Karena itu, artikel SEO tidak
+        hanya berkaitan dengan penggunaan keyword.
+      </p>
+
+      <p>
+        Struktur heading, relevansi topik, kualitas informasi, internal
+        linking, keterbacaan, dan search intent juga menjadi bagian penting
+        dalam proses pembuatan konten.
+      </p>
+
+      <h3>Keyword Utama</h3>
+
+      <p>
+        Keyword utama membantu menentukan fokus sebuah artikel. Keyword
+        sebaiknya digunakan secara natural pada bagian yang relevan seperti
+        judul, heading, paragraf pembuka, dan bagian pembahasan tanpa
+        melakukan pengulangan secara berlebihan.
+      </p>
+
+      <h3>Search Intent</h3>
+
+      <p>
+        Search intent menunjukkan tujuan pengguna ketika melakukan
+        pencarian. Memahami tujuan tersebut membantu penulis menentukan
+        format dan informasi yang sesuai dengan kebutuhan pembaca.
+      </p>
+
+      <h3>Struktur Heading</h3>
+
+      <p>
+        Artikel panjang sebaiknya memiliki struktur yang jelas. Heading
+        seperti H2 dan H3 dapat digunakan untuk membagi pembahasan menjadi
+        beberapa bagian sehingga artikel lebih mudah dibaca dan dipahami.
+      </p>
+
+      <h2>Manfaat AI Article Writer</h2>
+
+      <p>
+        Penggunaan AI Article Writer dapat membantu mempercepat beberapa
+        tahap dalam proses pembuatan artikel.
+      </p>
+
+      <ul>
+        <li>Membantu menemukan struktur artikel.</li>
+        <li>Membantu membuat draft awal dengan lebih cepat.</li>
+        <li>Mengembangkan pembahasan berdasarkan sebuah topik.</li>
+        <li>Membantu melakukan brainstorming ide artikel.</li>
+        <li>Membantu membuat variasi judul dan subjudul.</li>
+        <li>Mendukung proses pembuatan konten secara lebih terstruktur.</li>
+      </ul>
+
+      <h2>Cara Membuat Artikel SEO dengan AI</h2>
+
+      <p>
+        Membuat artikel menggunakan AI dapat dimulai dengan menentukan
+        topik dan tujuan artikel. Setelah itu, tentukan keyword utama,
+        target pembaca, search intent, dan struktur pembahasan.
+      </p>
+
+      <ol>
+        <li>Tentukan topik utama artikel.</li>
+        <li>Tentukan keyword utama.</li>
+        <li>Tambahkan keyword pendukung yang relevan.</li>
+        <li>Tentukan target audiens.</li>
+        <li>Pilih search intent.</li>
+        <li>Tentukan gaya dan panjang artikel.</li>
+        <li>Buat draft menggunakan AI.</li>
+        <li>Periksa fakta dan informasi.</li>
+        <li>Edit artikel agar sesuai dengan kebutuhan pembaca.</li>
+        <li>Tambahkan internal link dan elemen pendukung sebelum publikasi.</li>
+      </ol>
+
+      <h2>Apakah Artikel dari AI Bisa Digunakan untuk SEO?</h2>
+
+      <p>
+        Artikel yang dibuat dengan bantuan AI tetap perlu memenuhi tujuan
+        utama sebuah halaman, yaitu memberikan informasi yang berguna dan
+        relevan kepada pembaca. Penggunaan AI sendiri bukan pengganti
+        proses editorial.
+      </p>
+
+      <p>
+        Sebelum dipublikasikan, periksa kembali fakta, angka, nama,
+        referensi, tautan, serta klaim yang terdapat di dalam artikel.
+        Tambahkan informasi atau pengalaman yang relevan agar konten
+        memiliki nilai yang lebih kuat.
+      </p>
+
+      <h2>AI Article Writer untuk Blogger dan Website</h2>
+
+      <p>
+        Blogger dan pemilik website dapat menggunakan AI Article Writer
+        sebagai alat bantu ketika mengembangkan kalender konten. Sebuah
+        topik utama dapat dikembangkan menjadi beberapa artikel yang
+        membahas subtopik berbeda.
+      </p>
+
+      <p>
+        Workflow tersebut dapat membantu proses brainstorming, pembuatan
+        outline, penulisan draft, dan editing menjadi lebih terstruktur.
+        Pengelola website tetap dapat menentukan informasi dan sudut
+        pandang yang sesuai dengan audiensnya.
+      </p>
+
+      <h2>AI Article Writer untuk Content Marketing</h2>
+
+      <p>
+        Dalam content marketing, artikel dapat digunakan untuk memberikan
+        informasi kepada calon pelanggan dan membangun kehadiran digital.
+        AI Article Writer dapat membantu membuat draft berbagai jenis
+        konten seperti panduan, tutorial, artikel edukasi, dan konten
+        informasional.
+      </p>
+
+      <p>
+        Setelah draft selesai, konten dapat disesuaikan dengan identitas
+        brand, gaya komunikasi, dan kebutuhan audiens sebelum diterbitkan.
+      </p>
+
+      <h2>Gunakan AI sebagai Alat Bantu Menulis</h2>
+
+      <p>
+        AI Article Writer paling efektif ketika digunakan sebagai bagian
+        dari workflow penulisan. AI dapat membantu menghasilkan draft,
+        sedangkan pengguna tetap berperan dalam menentukan topik,
+        memeriksa informasi, melakukan editing, dan memastikan konten
+        sesuai dengan tujuan halaman.
+      </p>
+
+      <p>
+        Dengan pendekatan tersebut, AI dapat membantu mempercepat proses
+        dari ide hingga draft artikel tanpa menghilangkan proses
+        penyuntingan yang diperlukan sebelum publikasi.
+      </p>
+
+      <h2>AI Article Writer AI Mr Ferdy</h2>
+
+      <p>
+        <strong>AI Mr Ferdy</strong> menyediakan berbagai tools untuk
+        membantu produktivitas digital, pembuatan konten, SEO, dan
+        kebutuhan digital lainnya. AI Article Writer ditujukan untuk
+        membantu pengguna membuat draft artikel panjang secara lebih
+        praktis dan terstruktur.
+      </p>
+
+      <p>
+        Masukkan topik dan keyword yang ingin dibahas, tentukan target
+        audiens serta gaya penulisan, kemudian gunakan hasilnya sebagai
+        dasar untuk membuat artikel yang lebih lengkap dan relevan.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const generateBtn =
+      document.querySelector("#generateBtn");
+
+    const copyBtn =
+      document.querySelector("#copyBtn");
+
+    const resultCard =
+      document.querySelector("#resultCard");
+
+    const result =
+      document.querySelector("#result");
+
+    generateBtn?.addEventListener("click", () => {
+
+      const topic =
+        document.querySelector("#topic")?.value.trim();
+
+      const keyword =
+        document.querySelector("#keyword")?.value.trim();
+
+      const secondary =
+        document.querySelector("#secondary")?.value.trim();
+
+      const audience =
+        document.querySelector("#audience")?.value.trim();
+
+      const length =
+        document.querySelector("#length")?.value || "2000";
+
+      if (!topic) {
+        alert("Silakan masukkan topik artikel.");
+        return;
+      }
+
+      const article = `# ${topic}
+
+## Pendahuluan
+
+${topic} merupakan topik yang semakin relevan untuk dibahas, terutama bagi ${audience || "pengguna digital"}.
+
+Artikel ini membahas ${topic} secara informatif dengan fokus pada informasi yang dapat membantu pembaca memahami topik tersebut.
+
+## Apa Itu ${topic}?
+
+${topic} dapat dipahami sebagai topik yang memiliki berbagai aspek untuk dipelajari. Pemahaman terhadap topik ini dapat membantu pengguna mengambil langkah yang lebih tepat sesuai kebutuhannya.
+
+## Manfaat ${topic}
+
+Salah satu manfaat utama dari memahami ${topic} adalah membantu pengguna mendapatkan informasi dan menentukan pendekatan yang sesuai.
+
+${secondary ? `Keyword pendukung: ${secondary}` : ""}
+
+## Cara Menggunakan ${topic}
+
+Langkah pertama adalah memahami tujuan yang ingin dicapai. Setelah itu, tentukan kebutuhan utama dan pilih metode yang paling sesuai.
+
+## Tips Mengoptimalkan ${topic}
+
+Gunakan informasi yang relevan, periksa sumber yang digunakan, dan sesuaikan penerapan dengan kebutuhan pengguna.
+
+## Kesimpulan
+
+${topic} dapat menjadi bagian penting dari strategi digital ketika digunakan secara tepat. Dengan memahami konsep, manfaat, dan cara penerapannya, pengguna dapat memanfaatkan informasi tersebut secara lebih efektif.
+
+Keyword utama: ${keyword || topic}
+Panjang target: ${length} kata`;
+
+      result.value = article;
+      resultCard.hidden = false;
+
+      resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+
+      if (!result.value) return;
+
+      await navigator.clipboard.writeText(result.value);
+
+      copyBtn.textContent = "✓ Copied";
+
+      setTimeout(() => {
+        copyBtn.textContent = "Copy";
+      }, 1500);
+
+    });
+  </script>
+</MainLayout>
+
