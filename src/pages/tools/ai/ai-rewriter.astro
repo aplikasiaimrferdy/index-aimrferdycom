@@ -1,0 +1,375 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "✍️ AI Rewriter",
+  description:
+    "Rewrite dan parafrase konten dengan gaya bahasa yang lebih natural, jelas, dan mudah dibaca menggunakan AI Rewriter dari AI Mr Ferdy.",
+  category: "AI",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">AI Writing</span>
+      <h1>AI Rewriter</h1>
+      <p>
+        Rewrite dan parafrase konten agar lebih natural, jelas, dan sesuai
+        dengan gaya bahasa yang kamu inginkan.
+      </p>
+    </header>
+
+    <section class="tool-box">
+      <div class="tool-grid">
+
+        <div class="tool-input">
+          <label for="inputText">Konten yang ingin di-rewrite</label>
+
+          <textarea
+            id="inputText"
+            rows="12"
+            placeholder="Masukkan artikel, paragraf, caption, atau teks yang ingin di-rewrite..."
+          ></textarea>
+
+          <div class="tool-options">
+
+            <div class="tool-field">
+              <label for="style">Gaya Bahasa</label>
+
+              <select id="style">
+                <option value="natural">Natural</option>
+                <option value="professional">Profesional</option>
+                <option value="formal">Formal</option>
+                <option value="casual">Santai</option>
+                <option value="seo">SEO Friendly</option>
+              </select>
+            </div>
+
+            <div class="tool-field">
+              <label for="level">Tingkat Rewrite</label>
+
+              <select id="level">
+                <option value="light">Ringan</option>
+                <option value="medium" selected>Sedang</option>
+                <option value="strong">Maksimal</option>
+              </select>
+            </div>
+
+          </div>
+
+          <button type="button" class="tool-btn" id="rewriteBtn">
+            ✨ Rewrite Konten
+          </button>
+
+        </div>
+
+        <div class="tool-output">
+          <label for="outputText">Hasil Rewrite</label>
+
+          <textarea
+            id="outputText"
+            rows="12"
+            readonly
+            placeholder="Hasil rewrite akan muncul di sini..."
+          ></textarea>
+
+          <div class="tool-actions">
+            <button type="button" id="copyBtn">📋 Salin</button>
+            <button type="button" id="clearBtn">🗑️ Bersihkan</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <article class="tool-content">
+
+      <h2>AI Rewriter untuk Rewrite dan Parafrase Konten</h2>
+
+      <p>
+        AI Rewriter adalah tool yang dapat membantu menulis ulang atau
+        memparafrase teks dengan struktur dan gaya bahasa yang berbeda tanpa
+        harus mengetik ulang seluruh konten dari awal.
+      </p>
+
+      <p>
+        AI Mr Ferdy menyediakan AI Rewriter untuk membantu proses editing
+        artikel, blog, deskripsi produk, caption media sosial, maupun berbagai
+        jenis konten digital lainnya.
+      </p>
+
+      <h2>Apa Itu AI Rewriter?</h2>
+
+      <p>
+        AI Rewriter adalah alat bantu penulisan yang digunakan untuk mengubah
+        cara penyampaian sebuah teks menjadi lebih natural, jelas, ringkas,
+        formal, santai, atau sesuai kebutuhan tertentu.
+      </p>
+
+      <p>
+        Proses rewrite berbeda dengan sekadar mengganti beberapa kata.
+        Struktur kalimat, pilihan kata, susunan paragraf, dan cara penyampaian
+        dapat disesuaikan agar teks terasa lebih baik dan mudah dipahami.
+      </p>
+
+      <h2>AI Rewriter untuk Parafrase</h2>
+
+      <p>
+        Parafrase digunakan ketika sebuah informasi ingin disampaikan kembali
+        menggunakan susunan kalimat yang berbeda dengan tetap mempertahankan
+        makna utamanya.
+      </p>
+
+      <p>
+        AI Rewriter dapat membantu menghasilkan beberapa alternatif
+        penyampaian sehingga penulis tidak perlu selalu menggunakan struktur
+        kalimat yang sama.
+      </p>
+
+      <h2>Mengapa Perlu Rewrite Konten?</h2>
+
+      <p>
+        Konten yang sudah dibuat terkadang perlu diperbaiki karena terlalu
+        panjang, kurang jelas, terlalu formal, atau tidak sesuai dengan
+        karakter audiens.
+      </p>
+
+      <p>
+        Rewrite dapat digunakan untuk memperbaiki readability, mengubah tone
+        tulisan, menyederhanakan kalimat, dan membuat penyampaian informasi
+        menjadi lebih efektif.
+      </p>
+
+      <h2>AI Rewriter untuk Artikel</h2>
+
+      <p>
+        Artikel blog dapat memiliki gaya penulisan yang berbeda tergantung
+        target pembaca. AI Rewriter dapat membantu mengubah paragraf yang
+        terlalu rumit menjadi lebih sederhana dan mudah dibaca.
+      </p>
+
+      <p>
+        Untuk artikel SEO, proses rewrite juga dapat membantu memperbaiki
+        struktur kalimat dan penggunaan keyword secara lebih natural. Namun,
+        hasil akhir tetap sebaiknya diperiksa dan diedit oleh penulis.
+      </p>
+
+      <h2>AI Rewriter untuk Konten SEO</h2>
+
+      <p>
+        Dalam pembuatan konten SEO, rewrite dapat digunakan sebagai bagian dari
+        proses editing. Fokusnya bukan sekadar mengganti kata, tetapi membuat
+        konten lebih relevan, informatif, dan nyaman dibaca.
+      </p>
+
+      <p>
+        Keyword sebaiknya tetap digunakan secara alami dan tidak dipaksakan
+        hanya untuk mengejar jumlah kemunculan kata tertentu.
+      </p>
+
+      <h2>AI Rewriter untuk Caption</h2>
+
+      <p>
+        Caption media sosial sering membutuhkan gaya bahasa yang lebih singkat
+        dan menarik. Teks yang terlalu panjang dapat diubah menjadi versi yang
+        lebih ringan dan sesuai dengan karakter platform.
+      </p>
+
+      <h2>Pilihan Gaya Bahasa</h2>
+
+      <h3>Natural</h3>
+
+      <p>
+        Cocok untuk membuat tulisan terasa lebih mengalir dan tidak terlalu
+        kaku.
+      </p>
+
+      <h3>Profesional</h3>
+
+      <p>
+        Cocok untuk website bisnis, komunikasi profesional, dan konten
+        perusahaan.
+      </p>
+
+      <h3>Formal</h3>
+
+      <p>
+        Cocok untuk dokumen, laporan, informasi resmi, dan kebutuhan komunikasi
+        yang membutuhkan bahasa baku.
+      </p>
+
+      <h3>Santai</h3>
+
+      <p>
+        Cocok untuk blog personal, caption, komunitas, dan komunikasi dengan
+        audiens yang lebih casual.
+      </p>
+
+      <h3>SEO Friendly</h3>
+
+      <p>
+        Cocok untuk membantu membuat penyampaian konten lebih jelas sambil
+        mempertahankan keyword yang relevan secara natural.
+      </p>
+
+      <h2>Cara Menggunakan AI Rewriter</h2>
+
+      <ol>
+        <li>Masukkan teks yang ingin di-rewrite.</li>
+        <li>Pilih gaya bahasa yang diinginkan.</li>
+        <li>Pilih tingkat rewrite.</li>
+        <li>Klik tombol <strong>Rewrite Konten</strong>.</li>
+        <li>Periksa hasil dan lakukan editing jika diperlukan.</li>
+      </ol>
+
+      <h2>Tips Menggunakan AI Rewriter</h2>
+
+      <p>
+        Untuk mendapatkan hasil yang lebih baik, masukkan teks yang memiliki
+        konteks jelas. Jika diperlukan, tambahkan informasi mengenai target
+        pembaca dan tujuan konten.
+      </p>
+
+      <p>
+        Jangan langsung menerbitkan hasil rewrite tanpa pemeriksaan. Pastikan
+        fakta, nama, angka, istilah teknis, dan maksud asli konten tetap benar.
+      </p>
+
+      <h2>Apakah AI Rewriter Menggantikan Penulis?</h2>
+
+      <p>
+        AI Rewriter sebaiknya digunakan sebagai alat bantu, bukan pengganti
+        proses editorial. Penulis tetap memiliki peran penting dalam
+        menentukan ide, fakta, sudut pandang, struktur, dan kualitas akhir
+        sebuah konten.
+      </p>
+
+      <h2>AI Rewriter AI Mr Ferdy</h2>
+
+      <p>
+        AI Rewriter AI Mr Ferdy dirancang sebagai tool sederhana untuk
+        membantu proses rewrite dan parafrase berbagai jenis konten digital.
+        Gunakan hasilnya sebagai draft atau bahan editing sebelum dipublikasikan.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const inputText = document.getElementById("inputText");
+    const outputText = document.getElementById("outputText");
+    const style = document.getElementById("style");
+    const level = document.getElementById("level");
+    const rewriteBtn = document.getElementById("rewriteBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    const replacements = {
+      natural: [
+        ["sangat penting", "penting"],
+        ["dapat dilakukan", "bisa dilakukan"],
+        ["oleh karena itu", "karena itu"],
+        ["pada saat ini", "saat ini"],
+        ["memiliki kemampuan untuk", "bisa"],
+        ["dalam rangka", "untuk"]
+      ],
+      professional: [
+        ["sangat penting", "memiliki peran penting"],
+        ["bisa", "dapat"],
+        ["untuk", "guna"],
+        ["cara", "metode"],
+        ["masalah", "kendala"]
+      ],
+      formal: [
+        ["bisa", "dapat"],
+        ["nggak", "tidak"],
+        ["gak", "tidak"],
+        ["kamu", "Anda"],
+        ["kita", "kami"],
+        ["cara", "metode"]
+      ],
+      casual: [
+        ["dapat", "bisa"],
+        ["tidak", "nggak"],
+        ["Anda", "kamu"],
+        ["memerlukan", "butuh"],
+        ["menggunakan", "pakai"],
+        ["tersebut", "ini"]
+      ],
+      seo: [
+        ["sangat penting", "penting"],
+        ["dapat dilakukan", "bisa dilakukan"],
+        ["oleh karena itu", "karena itu"],
+        ["pada saat ini", "saat ini"],
+        ["memiliki kemampuan", "mampu"]
+      ]
+    };
+
+    function rewriteSentence(text, selectedStyle, selectedLevel) {
+      let result = text;
+
+      const list = replacements[selectedStyle] || replacements.natural;
+
+      list.forEach(([from, to]) => {
+        const regex = new RegExp(
+          from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+          "gi"
+        );
+
+        result = result.replace(regex, to);
+      });
+
+      if (selectedLevel === "strong") {
+        result = result
+          .replace(/\s+/g, " ")
+          .replace(/\.\s+/g, ".\n\n")
+          .trim();
+      }
+
+      if (selectedLevel === "light") {
+        return result;
+      }
+
+      return result;
+    }
+
+    rewriteBtn.addEventListener("click", () => {
+      const text = inputText.value.trim();
+
+      if (!text) {
+        outputText.value = "Masukkan konten terlebih dahulu.";
+        return;
+      }
+
+      outputText.value = rewriteSentence(
+        text,
+        style.value,
+        level.value
+      );
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      if (!outputText.value.trim()) return;
+
+      await navigator.clipboard.writeText(outputText.value);
+      copyBtn.textContent = "✓ Tersalin";
+
+      setTimeout(() => {
+        copyBtn.textContent = "📋 Salin";
+      }, 1500);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      inputText.value = "";
+      outputText.value = "";
+    });
+  </script>
+</MainLayout>
