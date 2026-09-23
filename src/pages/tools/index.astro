@@ -4,7 +4,7 @@ import { SITE } from "../../lib/site";
 
 /* =========================================================
    LOAD ALL TOOLS
-   ========================================================= */
+========================================================= */
 
 const modules = Object.entries(
   import.meta.glob("./**/*.astro", {
@@ -15,19 +15,10 @@ const modules = Object.entries(
 
 /* =========================================================
    BUILD TOOL LIST
-   ========================================================= */
+========================================================= */
 
 const tools = modules
   .map(([file, mod]) => {
-
-    /*
-     * Contoh:
-     *
-     * ./generator/emoji-text.astro
-     *
-     * category = generator
-     * slug     = emoji-text
-     */
 
     const match = file.match(
       /^\.\/([^/]+)\/(.+)\.astro$/
@@ -40,11 +31,6 @@ const tools = modules
     const category = match[1];
     const slug = match[2];
 
-    /*
-     * Jangan mengambil halaman category dinamis
-     * atau file index.
-     */
-
     if (
       category === "[category]" ||
       slug === "index"
@@ -52,30 +38,15 @@ const tools = modules
       return null;
     }
 
-    /*
-     * Metadata wajib berasal dari file tool:
-     *
-     * export const meta = {
-     *   title: "...",
-     *   description: "...",
-     *   icon: "...",
-     *   featured: true
-     * };
-     */
-
     if (!mod.meta) {
       return null;
     }
 
     return {
       ...mod.meta,
-
       category,
-
       slug,
-
-      url:
-        `/tools/${category}/${slug}/`
+      url: `/tools/${category}/${slug}/`
     };
   })
   .filter(Boolean)
@@ -89,7 +60,7 @@ const tools = modules
 
 /* =========================================================
    STATS
-   ========================================================= */
+========================================================= */
 
 const totalTools = tools.length;
 
@@ -101,7 +72,7 @@ const totalCategories =
 
 /* =========================================================
    SEO
-   ========================================================= */
+========================================================= */
 
 const pageUrl =
   SITE.url("/tools/");
@@ -154,21 +125,18 @@ const jsonLd = {
 };
 ---
 
-
 <MainLayout
   title={`Tools | ${SITE.title}`}
   description="Kumpulan AI tools dan utility online yang dapat digunakan langsung dari browser."
 >
 
-
   <section class="tools-page">
-
 
     <!-- HEADER -->
 
-    <header class="page-header">
+    <header class="tool-header">
 
-      <span class="tools-label">
+      <span class="page-badge">
         AI TOOLS
       </span>
 
@@ -191,8 +159,7 @@ const jsonLd = {
       aria-label="Statistik tools"
     >
 
-      <div class="stat-item">
-
+      <div>
         <strong>
           {totalTools}
         </strong>
@@ -200,12 +167,10 @@ const jsonLd = {
         <span>
           Tools
         </span>
-
       </div>
 
 
-      <div class="stat-item">
-
+      <div>
         <strong>
           {totalCategories}
         </strong>
@@ -213,12 +178,10 @@ const jsonLd = {
         <span>
           Kategori
         </span>
-
       </div>
 
 
-      <div class="stat-item">
-
+      <div>
         <strong>
           100%
         </strong>
@@ -226,7 +189,6 @@ const jsonLd = {
         <span>
           Gratis
         </span>
-
       </div>
 
     </section>
@@ -238,7 +200,7 @@ const jsonLd = {
 
       <label
         for="toolSearch"
-        class="search-label"
+        class="tool-field-label"
       >
         Cari tools
       </label>
@@ -294,7 +256,7 @@ const jsonLd = {
 
               {tool.featured && (
 
-                <span class="tool-badge">
+                <span class="badge">
                   HOT
                 </span>
 
@@ -344,13 +306,15 @@ const jsonLd = {
 
               <a
                 href={tool.url}
-                class="tool-button"
+                class="btn btn-primary"
                 aria-label={`Buka ${tool.title}`}
               >
                 Buka Tool
+
                 <span aria-hidden="true">
                   →
                 </span>
+
               </a>
 
             </article>
@@ -396,7 +360,6 @@ const jsonLd = {
 
     )}
 
-
   </section>
 
 
@@ -424,8 +387,7 @@ const jsonLd = {
             .trim();
 
 
-        let visible =
-          0;
+        let visible = 0;
 
 
         cards.forEach((card) => {
@@ -473,8 +435,4 @@ const jsonLd = {
     set:html={JSON.stringify(jsonLd)}
   />
 
-
 </MainLayout>
-
-
-
