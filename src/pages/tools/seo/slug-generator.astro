@@ -1,0 +1,571 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔗 Slug Generator",
+  description:
+    "Buat URL slug yang bersih, singkat, dan SEO-friendly dari judul atau teks menggunakan Slug Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+
+      <h1>{meta.title}</h1>
+
+      <p>
+        Ubah judul atau teks menjadi URL slug yang bersih,
+        singkat, mudah dibaca, dan SEO-friendly.
+      </p>
+    </header>
+
+    <section
+      class="tool-box"
+      aria-labelledby="slug-tool-title"
+    >
+
+      <div class="tool-field">
+        <label for="slugInput">
+          Judul atau Teks
+        </label>
+
+        <textarea
+          id="slugInput"
+          class="tool-input"
+          rows="6"
+          placeholder="Contoh: Cara Membuat Website dengan AI untuk Pemula"
+        ></textarea>
+      </div>
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="separator">
+            Pemisah
+          </label>
+
+          <select
+            id="separator"
+            class="tool-input"
+          >
+            <option value="-">Hyphen (-)</option>
+            <option value="_">Underscore (_)</option>
+          </select>
+        </div>
+
+        <div class="tool-field">
+          <label for="maxLength">
+            Panjang Maksimal
+          </label>
+
+          <select
+            id="maxLength"
+            class="tool-input"
+          >
+            <option value="0">Tanpa batas</option>
+            <option value="50">50 karakter</option>
+            <option value="60" selected>60 karakter</option>
+            <option value="75">75 karakter</option>
+            <option value="100">100 karakter</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label>
+          Opsi Slug
+        </label>
+
+        <div class="tool-options">
+
+          <label>
+            <input
+              id="removeStopWords"
+              type="checkbox"
+              checked
+            />
+            Hapus kata umum
+          </label>
+
+          <label>
+            <input
+              id="lowercase"
+              type="checkbox"
+              checked
+            />
+            Gunakan huruf kecil
+          </label>
+
+          <label>
+            <input
+              id="removeNumbers"
+              type="checkbox"
+            />
+            Hapus angka
+          </label>
+
+        </div>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="generateSlug"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Generate Slug
+        </button>
+
+        <button
+          id="clearSlug"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Bersihkan
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label for="slugOutput">
+          URL Slug
+        </label>
+
+        <input
+          id="slugOutput"
+          class="tool-output"
+          type="text"
+          readonly
+          spellcheck="false"
+          placeholder="slug-akan-muncul-di-sini"
+        />
+
+      </div>
+
+      <div class="tool-field">
+
+        <label for="previewUrl">
+          Preview URL
+        </label>
+
+        <input
+          id="previewUrl"
+          class="tool-output"
+          type="text"
+          readonly
+          value="https://aimrferdy.com/"
+        />
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="copySlug"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Salin Slug
+        </button>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>Slug Generator untuk URL SEO-Friendly</h2>
+
+      <p>
+        Slug Generator adalah tool untuk mengubah judul atau teks menjadi
+        bagian URL yang lebih sederhana, mudah dibaca, dan konsisten.
+        Slug biasanya ditempatkan setelah domain atau path website.
+      </p>
+
+      <h2>Apa Itu URL Slug?</h2>
+
+      <p>
+        URL slug adalah bagian URL yang biasanya menggambarkan isi sebuah
+        halaman. Contohnya, pada URL
+        <strong>https://aimrferdy.com/blog/seo-guide/</strong>,
+        bagian <strong>seo-guide</strong> merupakan slug.
+      </p>
+
+      <h2>Mengapa Slug Penting?</h2>
+
+      <p>
+        Slug yang deskriptif dapat membantu pengguna memahami tujuan
+        sebuah URL sebelum membukanya. Struktur URL yang sederhana juga
+        membuat alamat halaman lebih mudah dibaca dan dibagikan.
+      </p>
+
+      <h2>Ciri Slug yang Baik</h2>
+
+      <ul>
+        <li>Menggambarkan isi halaman.</li>
+        <li>Ringkas dan mudah dibaca.</li>
+        <li>Menggunakan kata yang relevan.</li>
+        <li>Menghindari karakter yang tidak diperlukan.</li>
+        <li>Menggunakan pemisah yang konsisten.</li>
+        <li>Tidak memasukkan informasi yang tidak relevan.</li>
+      </ul>
+
+      <h2>Contoh Slug</h2>
+
+      <p>
+        Judul:
+        <strong>Cara Membuat Website dengan AI untuk Pemula</strong>
+      </p>
+
+      <p>
+        Slug:
+        <strong>cara-membuat-website-ai-pemula</strong>
+      </p>
+
+      <h2>Slug dan Keyword</h2>
+
+      <p>
+        Keyword yang relevan dapat digunakan dalam slug apabila memang
+        menggambarkan isi halaman. Namun, slug tidak perlu dibuat panjang
+        hanya untuk memasukkan banyak keyword.
+      </p>
+
+      <h2>Slug untuk Artikel</h2>
+
+      <p>
+        Artikel blog biasanya menggunakan slug yang menggambarkan topik
+        utama. Hindari memasukkan terlalu banyak kata yang tidak
+        memberikan informasi tambahan mengenai halaman.
+      </p>
+
+      <h2>Slug untuk Tools</h2>
+
+      <p>
+        Halaman tools dapat menggunakan slug berdasarkan nama tool.
+        Contohnya adalah
+        <strong>/tools/seo/slug-generator/</strong>.
+        Struktur seperti ini membuat alamat halaman lebih mudah dipahami.
+      </p>
+
+      <h2>Slug dan Perubahan URL</h2>
+
+      <p>
+        Setelah sebuah halaman sudah dipublikasikan, perubahan slug dapat
+        mengubah URL halaman. Jika URL lama sudah digunakan atau
+        terindeks, perubahan tersebut perlu ditangani dengan redirect
+        yang sesuai agar pengguna dan crawler tidak kehilangan alamat
+        halaman lama.
+      </p>
+
+      <h2>Cara Menggunakan Slug Generator</h2>
+
+      <ol>
+        <li>Masukkan judul atau teks.</li>
+        <li>Pilih karakter pemisah.</li>
+        <li>Tentukan panjang slug jika diperlukan.</li>
+        <li>Pilih opsi slug yang diinginkan.</li>
+        <li>Klik Generate Slug.</li>
+        <li>Periksa preview URL.</li>
+        <li>Salin slug yang dihasilkan.</li>
+      </ol>
+
+      <h2>Slug Generator AI Mr Ferdy</h2>
+
+      <p>
+        Slug Generator dari AI Mr Ferdy membantu membuat slug URL secara
+        cepat langsung dari browser. Tool ini cocok digunakan saat
+        membuat artikel, halaman website, landing page, atau halaman
+        tools.
+      </p>
+
+      <p>
+        Hasil generator sebaiknya tetap diperiksa secara manual agar
+        sesuai dengan topik dan struktur URL website.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const slugInput =
+      document.querySelector("#slugInput");
+
+    const separator =
+      document.querySelector("#separator");
+
+    const maxLength =
+      document.querySelector("#maxLength");
+
+    const removeStopWords =
+      document.querySelector("#removeStopWords");
+
+    const lowercase =
+      document.querySelector("#lowercase");
+
+    const removeNumbers =
+      document.querySelector("#removeNumbers");
+
+    const slugOutput =
+      document.querySelector("#slugOutput");
+
+    const previewUrl =
+      document.querySelector("#previewUrl");
+
+
+    const stopWords = new Set([
+      "yang",
+      "dan",
+      "di",
+      "ke",
+      "dari",
+      "untuk",
+      "dengan",
+      "atau",
+      "pada",
+      "dalam",
+      "adalah",
+      "ini",
+      "itu",
+      "sebuah",
+      "cara",
+      "the",
+      "and",
+      "of",
+      "to",
+      "for",
+      "with",
+      "in",
+      "on",
+      "a",
+      "an"
+    ]);
+
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+
+    function removeAccents(value) {
+      return value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+
+    function generateSlugValue(text) {
+      let value =
+        removeAccents(clean(text));
+
+      if (lowercase?.checked) {
+        value = value.toLowerCase();
+      }
+
+      value = value
+        .replace(/['’]/g, "")
+        .replace(/&/g, " and ")
+        .replace(/[^a-zA-Z0-9\u00C0-\u024F\s_-]/g, " ")
+        .replace(/[_\s-]+/g, " ")
+        .trim();
+
+      let words =
+        value.split(/\s+/).filter(Boolean);
+
+      if (removeStopWords?.checked) {
+        words =
+          words.filter(
+            word =>
+              !stopWords.has(
+                word.toLowerCase()
+              )
+          );
+      }
+
+      if (removeNumbers?.checked) {
+        words =
+          words.filter(
+            word =>
+              !/^\d+$/.test(word)
+          );
+      }
+
+      const sep =
+        separator?.value || "-";
+
+      value =
+        words.join(sep);
+
+      value =
+        value.replace(
+          new RegExp(`\\${sep}+`, "g"),
+          sep
+        );
+
+      value =
+        value.replace(
+          new RegExp(`^\\${sep}|\\${sep}$`, "g"),
+          ""
+        );
+
+      const limit =
+        Number(maxLength?.value || 0);
+
+      if (limit > 0 && value.length > limit) {
+        value =
+          value.slice(0, limit);
+
+        const lastSeparator =
+          value.lastIndexOf(sep);
+
+        if (lastSeparator > 0) {
+          value =
+            value.slice(0, lastSeparator);
+        }
+      }
+
+      return value;
+    }
+
+
+    function generateSlug() {
+      const text =
+        clean(slugInput?.value);
+
+      if (!text) {
+        alert("Masukkan judul atau teks terlebih dahulu.");
+        return;
+      }
+
+      const slug =
+        generateSlugValue(text);
+
+      if (slugOutput) {
+        slugOutput.value = slug;
+      }
+
+      if (previewUrl) {
+        previewUrl.value =
+          `https://aimrferdy.com/${slug}/`;
+      }
+    }
+
+
+    async function copySlug() {
+      const value =
+        slugOutput?.value || "";
+
+      if (!value) return;
+
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        slugOutput?.select();
+        document.execCommand("copy");
+      }
+
+      const button =
+        document.querySelector("#copySlug");
+
+      if (button) {
+        const original =
+          button.textContent;
+
+        button.textContent =
+          "Berhasil Disalin ✓";
+
+        setTimeout(() => {
+          button.textContent = original;
+        }, 1500);
+      }
+    }
+
+
+    function clearSlug() {
+      if (slugInput) {
+        slugInput.value = "";
+      }
+
+      if (separator) {
+        separator.value = "-";
+      }
+
+      if (maxLength) {
+        maxLength.value = "60";
+      }
+
+      if (removeStopWords) {
+        removeStopWords.checked = true;
+      }
+
+      if (lowercase) {
+        lowercase.checked = true;
+      }
+
+      if (removeNumbers) {
+        removeNumbers.checked = false;
+      }
+
+      if (slugOutput) {
+        slugOutput.value = "";
+      }
+
+      if (previewUrl) {
+        previewUrl.value =
+          "https://aimrferdy.com/";
+      }
+    }
+
+
+    document
+      .querySelector("#generateSlug")
+      ?.addEventListener(
+        "click",
+        generateSlug
+      );
+
+
+    document
+      .querySelector("#copySlug")
+      ?.addEventListener(
+        "click",
+        copySlug
+      );
+
+
+    document
+      .querySelector("#clearSlug")
+      ?.addEventListener(
+        "click",
+        clearSlug
+      );
+
+
+    slugInput?.addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.ctrlKey &&
+          event.key === "Enter"
+        ) {
+          generateSlug();
+        }
+      }
+    );
+  </script>
+
+</MainLayout>
