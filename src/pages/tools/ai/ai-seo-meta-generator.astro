@@ -1,0 +1,581 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔍 AI SEO Meta Generator",
+  description:
+    "Buat SEO title dan meta description yang relevan untuk halaman website dengan AI SEO Meta Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO Tools</span>
+
+      <h1>AI SEO Meta Generator</h1>
+
+      <p>
+        Buat SEO title dan meta description yang relevan, jelas, dan menarik
+        berdasarkan topik serta keyword halaman website.
+      </p>
+    </header>
+
+    <section class="tool-box">
+
+      <div class="tool-grid">
+
+        <div class="tool-input">
+
+          <label for="topic">
+            Topik Halaman
+          </label>
+
+          <input
+            type="text"
+            id="topic"
+            placeholder="Contoh: AI tools gratis untuk produktivitas"
+          />
+
+          <label for="keyword">
+            Keyword Utama
+          </label>
+
+          <input
+            type="text"
+            id="keyword"
+            placeholder="Contoh: AI tools gratis"
+          />
+
+          <label for="audience">
+            Target Audiens
+          </label>
+
+          <input
+            type="text"
+            id="audience"
+            placeholder="Contoh: pengguna internet dan content creator"
+          />
+
+          <div class="tool-options">
+
+            <div class="tool-field">
+
+              <label for="style">
+                Gaya Title
+              </label>
+
+              <select id="style">
+                <option value="seo">SEO</option>
+                <option value="click">Menarik</option>
+                <option value="professional">Profesional</option>
+                <option value="informative">Informatif</option>
+                <option value="simple">Sederhana</option>
+              </select>
+
+            </div>
+
+            <div class="tool-field">
+
+              <label for="count">
+                Jumlah Hasil
+              </label>
+
+              <select id="count">
+                <option value="3">3</option>
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="tool-btn"
+            id="generateBtn"
+          >
+            ✨ Generate SEO Meta
+          </button>
+
+        </div>
+
+        <div class="tool-output">
+
+          <label for="outputText">
+            Hasil SEO Meta
+          </label>
+
+          <textarea
+            id="outputText"
+            rows="16"
+            readonly
+            placeholder="SEO title dan meta description akan muncul di sini..."
+          ></textarea>
+
+          <div class="tool-actions">
+
+            <button type="button" id="copyBtn">
+              📋 Salin
+            </button>
+
+            <button type="button" id="clearBtn">
+              🗑️ Bersihkan
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="tool-preview">
+
+      <h2>Google Search Preview</h2>
+
+      <div class="search-preview">
+
+        <div
+          class="search-title"
+          id="previewTitle"
+        >
+          SEO Title halaman kamu
+        </div>
+
+        <div
+          class="search-url"
+          id="previewUrl"
+        >
+          https://example.com/
+        </div>
+
+        <div
+          class="search-description"
+          id="previewDescription"
+        >
+          Meta description akan tampil di bagian ini.
+        </div>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>AI SEO Meta Generator untuk Title dan Meta Description</h2>
+
+      <p>
+        AI SEO Meta Generator adalah tool untuk membantu membuat SEO title dan
+        meta description berdasarkan topik serta keyword utama sebuah halaman
+        website.
+      </p>
+
+      <p>
+        Metadata yang baik dapat membantu mesin pencari memahami topik halaman
+        sekaligus memberikan gambaran kepada pengguna mengenai isi halaman
+        sebelum mereka membukanya.
+      </p>
+
+      <h2>Apa Itu SEO Title?</h2>
+
+      <p>
+        SEO title adalah judul halaman yang digunakan untuk menjelaskan isi
+        utama sebuah halaman kepada mesin pencari dan pengguna.
+      </p>
+
+      <p>
+        Title sebaiknya relevan dengan isi halaman, menggunakan bahasa yang
+        jelas, dan memasukkan keyword utama jika memang sesuai dengan konteks.
+      </p>
+
+      <h2>Apa Itu Meta Description?</h2>
+
+      <p>
+        Meta description adalah deskripsi singkat mengenai isi halaman.
+        Deskripsi ini dapat digunakan mesin pencari sebagai salah satu sumber
+        untuk menampilkan cuplikan halaman pada hasil pencarian.
+      </p>
+
+      <p>
+        Meta description yang jelas dapat membantu pengguna memahami konteks
+        halaman sebelum memutuskan untuk mengunjunginya.
+      </p>
+
+      <h2>Mengapa SEO Title Penting?</h2>
+
+      <p>
+        Title membantu memberikan konteks mengenai sebuah halaman. Judul yang
+        spesifik dan relevan membuat pengguna lebih mudah memahami apa yang
+        akan mereka temukan setelah membuka halaman tersebut.
+      </p>
+
+      <h2>Mengapa Meta Description Penting?</h2>
+
+      <p>
+        Meta description memberikan informasi tambahan mengenai isi halaman.
+        Deskripsi sebaiknya ditulis secara natural dan menjelaskan manfaat
+        atau informasi utama yang tersedia di halaman.
+      </p>
+
+      <h2>Cara Membuat SEO Title</h2>
+
+      <ol>
+        <li>Tentukan topik utama halaman.</li>
+        <li>Tentukan keyword yang relevan.</li>
+        <li>Buat judul yang spesifik.</li>
+        <li>Gunakan bahasa yang mudah dipahami.</li>
+        <li>Hindari keyword stuffing.</li>
+        <li>Pastikan title sesuai dengan isi halaman.</li>
+      </ol>
+
+      <h2>Cara Membuat Meta Description</h2>
+
+      <ol>
+        <li>Jelaskan isi utama halaman.</li>
+        <li>Gunakan keyword secara natural jika relevan.</li>
+        <li>Berikan alasan yang jelas bagi pengguna untuk membaca halaman.</li>
+        <li>Hindari deskripsi yang terlalu umum.</li>
+        <li>Jangan membuat klaim yang tidak didukung isi halaman.</li>
+      </ol>
+
+      <h2>SEO Title dan Keyword</h2>
+
+      <p>
+        Keyword dapat digunakan dalam title apabila memang relevan dengan
+        halaman. Tidak perlu mengulang keyword berkali-kali karena tujuan
+        utama title adalah menjelaskan isi halaman dengan jelas.
+      </p>
+
+      <h2>Meta Description dan Search Intent</h2>
+
+      <p>
+        Meta description sebaiknya disesuaikan dengan search intent. Halaman
+        tutorial, halaman produk, artikel informasi, dan landing page dapat
+        membutuhkan cara penyampaian yang berbeda.
+      </p>
+
+      <h2>Contoh SEO Meta</h2>
+
+      <p>
+        Misalnya sebuah halaman membahas AI tools untuk produktivitas.
+        Title dapat menjelaskan topik utama secara langsung, sedangkan meta
+        description dapat menjelaskan manfaat dan jenis informasi yang akan
+        ditemukan pengguna.
+      </p>
+
+      <p>
+        Yang paling penting adalah memastikan metadata tersebut benar-benar
+        mewakili isi halaman.
+      </p>
+
+      <h2>Apakah SEO Title Menjamin Ranking?</h2>
+
+      <p>
+        Tidak. SEO title dan meta description merupakan bagian dari optimasi
+        halaman, bukan jaminan posisi tertentu di hasil pencarian.
+      </p>
+
+      <p>
+        Performa sebuah halaman juga dipengaruhi oleh kualitas dan relevansi
+        konten, struktur website, pengalaman pengguna, reputasi situs, dan
+        berbagai faktor lainnya.
+      </p>
+
+      <h2>AI SEO Meta Generator untuk Website</h2>
+
+      <p>
+        Website dengan banyak halaman dapat membutuhkan metadata yang berbeda
+        untuk setiap halaman. Tool generator dapat membantu membuat draft
+        metadata dengan lebih cepat.
+      </p>
+
+      <p>
+        Setelah dibuat, setiap title dan description tetap sebaiknya diperiksa
+        secara manual agar sesuai dengan halaman yang bersangkutan.
+      </p>
+
+      <h2>Tips Optimasi SEO Meta</h2>
+
+      <ul>
+        <li>Gunakan title yang spesifik dan relevan.</li>
+        <li>Jelaskan isi halaman dengan bahasa natural.</li>
+        <li>Gunakan keyword jika memang relevan.</li>
+        <li>Hindari pengulangan keyword berlebihan.</li>
+        <li>Jangan menggunakan metadata yang tidak sesuai isi halaman.</li>
+        <li>Buat setiap halaman memiliki metadata yang relevan.</li>
+      </ul>
+
+      <h2>AI SEO Meta Generator AI Mr Ferdy</h2>
+
+      <p>
+        AI SEO Meta Generator AI Mr Ferdy membantu membuat draft SEO title
+        dan meta description berdasarkan topik, keyword, serta target audiens.
+        Gunakan hasil generator sebagai dasar optimasi dan sesuaikan kembali
+        dengan isi halaman sebelum dipublikasikan.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const topicInput = document.getElementById("topic");
+    const keywordInput = document.getElementById("keyword");
+    const audienceInput = document.getElementById("audience");
+
+    const styleSelect = document.getElementById("style");
+    const countSelect = document.getElementById("count");
+
+    const outputText = document.getElementById("outputText");
+
+    const previewTitle = document.getElementById("previewTitle");
+    const previewUrl = document.getElementById("previewUrl");
+    const previewDescription =
+      document.getElementById("previewDescription");
+
+    const generateBtn =
+      document.getElementById("generateBtn");
+
+    const copyBtn =
+      document.getElementById("copyBtn");
+
+    const clearBtn =
+      document.getElementById("clearBtn");
+
+    function capitalize(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    function createTitles(topic, keyword, audience, style) {
+      const main = keyword || topic;
+
+      const templates = {
+        seo: [
+          `${capitalize(main)}: Panduan Lengkap untuk Pemula`,
+          `${capitalize(main)} untuk Produktivitas dan Kebutuhan Digital`,
+          `Cara Menggunakan ${main} dengan Mudah`,
+          `${capitalize(main)} Terbaik untuk Kebutuhan Digital`,
+          `Panduan ${capitalize(main)} yang Praktis dan Lengkap`,
+          `${capitalize(main)}: Tips, Cara, dan Informasi Penting`,
+          `Mengenal ${capitalize(main)} dan Cara Menggunakannya`,
+          `${capitalize(main)} untuk ${audience || "Pengguna Digital"}`,
+          `Tips Memilih dan Menggunakan ${capitalize(main)}`,
+          `${capitalize(main)} untuk Membantu Aktivitas Digital`
+        ],
+
+        click: [
+          `${capitalize(main)} yang Wajib Kamu Ketahui`,
+          `Ingin Menggunakan ${main}? Ini Panduannya`,
+          `${capitalize(main)}: Ini yang Perlu Kamu Pahami`,
+          `Begini Cara Menggunakan ${main} dengan Mudah`,
+          `Kenapa ${main} Banyak Digunakan?`,
+          `${capitalize(main)} untuk Mempermudah Aktivitas Digital`,
+          `Panduan Praktis ${capitalize(main)} yang Mudah Dipahami`,
+          `Sebelum Menggunakan ${main}, Baca Ini`,
+          `${capitalize(main)}: Tips yang Perlu Diketahui`,
+          `Cara Memanfaatkan ${capitalize(main)}`
+        ],
+
+        professional: [
+          `${capitalize(main)} untuk Kebutuhan Profesional`,
+          `Panduan ${capitalize(main)} untuk Pengguna Profesional`,
+          `${capitalize(main)} dalam Produktivitas Digital`,
+          `Strategi Menggunakan ${capitalize(main)}`,
+          `${capitalize(main)} untuk Efisiensi Kerja`,
+          `Pemanfaatan ${capitalize(main)} secara Efektif`,
+          `${capitalize(main)}: Panduan dan Informasi`,
+          `Optimasi ${capitalize(main)} untuk Kebutuhan Bisnis`,
+          `${capitalize(main)} untuk Aktivitas Digital`,
+          `Panduan Profesional Menggunakan ${capitalize(main)}`
+        ],
+
+        informative: [
+          `Apa Itu ${capitalize(main)}? Panduan Lengkap`,
+          `${capitalize(main)}: Pengertian, Manfaat, dan Cara`,
+          `Mengenal ${capitalize(main)} Secara Lengkap`,
+          `${capitalize(main)} dan Cara Menggunakannya`,
+          `${capitalize(main)}: Fungsi dan Manfaat`,
+          `Panduan Lengkap Tentang ${capitalize(main)}`,
+          `${capitalize(main)} untuk Pemula`,
+          `Informasi Lengkap Mengenai ${capitalize(main)}`,
+          `${capitalize(main)}: Panduan Praktis`,
+          `Memahami ${capitalize(main)} dengan Mudah`
+        ],
+
+        simple: [
+          `${capitalize(main)} untuk Pemula`,
+          `Panduan ${capitalize(main)}`,
+          `Cara Menggunakan ${capitalize(main)}`,
+          `Mengenal ${capitalize(main)}`,
+          `Tips Menggunakan ${capitalize(main)}`,
+          `${capitalize(main)} dengan Mudah`,
+          `${capitalize(main)} untuk Kebutuhan Digital`,
+          `Informasi ${capitalize(main)}`,
+          `${capitalize(main)}: Panduan Praktis`,
+          `${capitalize(main)} dan Manfaatnya`
+        ]
+      };
+
+      return templates[style] || templates.seo;
+    }
+
+    function createDescription(
+      topic,
+      keyword,
+      audience,
+      style
+    ) {
+      const main = keyword || topic;
+
+      const descriptions = {
+        seo:
+          `Temukan informasi lengkap tentang ${main}. Pelajari cara menggunakan, manfaat, tips, dan hal penting yang perlu diketahui untuk ${audience || "kebutuhan digital"}.`,
+
+        click:
+          `Cari tahu lebih lanjut tentang ${main}, mulai dari cara penggunaan, manfaat, tips, hingga informasi penting yang perlu kamu ketahui sebelum menggunakannya.`,
+
+        professional:
+          `Pelajari ${main} untuk mendukung produktivitas dan kebutuhan profesional. Temukan panduan, manfaat, strategi penggunaan, dan informasi penting lainnya.`,
+
+        informative:
+          `Pelajari apa itu ${main}, manfaat, fungsi, cara penggunaan, dan informasi penting lainnya dalam panduan yang mudah dipahami.`,
+
+        simple:
+          `Pelajari ${main} dengan mudah. Temukan panduan, manfaat, cara menggunakan, dan informasi penting mengenai topik ini.`
+      };
+
+      return descriptions[style] || descriptions.seo;
+    }
+
+    function limitTitle(title) {
+      return title.length > 60
+        ? title.substring(0, 57).trim() + "..."
+        : title;
+    }
+
+    function limitDescription(description) {
+      return description.length > 160
+        ? description.substring(0, 157).trim() + "..."
+        : description;
+    }
+
+    function generateMeta() {
+      const topic = topicInput.value.trim();
+      const keyword = keywordInput.value.trim();
+      const audience = audienceInput.value.trim();
+
+      if (!topic && !keyword) {
+        outputText.value =
+          "Masukkan topik atau keyword terlebih dahulu.";
+        return;
+      }
+
+      const titles = createTitles(
+        topic || keyword,
+        keyword,
+        audience,
+        styleSelect.value
+      );
+
+      const description = limitDescription(
+        createDescription(
+          topic || keyword,
+          keyword,
+          audience,
+          styleSelect.value
+        )
+      );
+
+      const count = Number(countSelect.value);
+
+      const selectedTitles = titles
+        .slice(0, count)
+        .map((title, index) => {
+          return `${index + 1}. ${limitTitle(title)}`;
+        });
+
+      outputText.value = [
+        "SEO TITLE",
+        "",
+        ...selectedTitles,
+        "",
+        "META DESCRIPTION",
+        "",
+        description
+      ].join("\n");
+
+      previewTitle.textContent =
+        limitTitle(titles[0]);
+
+      previewDescription.textContent =
+        description;
+
+      const slug = (keyword || topic)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+      previewUrl.textContent =
+        `https://example.com/${slug}`;
+    }
+
+    generateBtn.addEventListener(
+      "click",
+      generateMeta
+    );
+
+    copyBtn.addEventListener(
+      "click",
+      async () => {
+        const result =
+          outputText.value.trim();
+
+        if (!result) return;
+
+        try {
+          await navigator.clipboard.writeText(result);
+
+          copyBtn.textContent = "✓ Tersalin";
+
+          setTimeout(() => {
+            copyBtn.textContent = "📋 Salin";
+          }, 1500);
+
+        } catch {
+          outputText.select();
+          document.execCommand("copy");
+        }
+      }
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        topicInput.value = "";
+        keywordInput.value = "";
+        audienceInput.value = "";
+
+        outputText.value = "";
+
+        previewTitle.textContent =
+          "SEO Title halaman kamu";
+
+        previewUrl.textContent =
+          "https://example.com/";
+
+        previewDescription.textContent =
+          "Meta description akan tampil di bagian ini.";
+      }
+    );
+  </script>
+</MainLayout>
