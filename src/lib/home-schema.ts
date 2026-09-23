@@ -29,6 +29,7 @@ export const homeSchema = {
     "https://medium.com/@aimrferdy",
     "https://github.com/aimrferdy",
     "https://facebook.com/ai.mr.ferdy",
+	"https://www.linkedin.com/in/aimrferdy",
     "https://heylink.me/mrferdy"
       ]
     },
