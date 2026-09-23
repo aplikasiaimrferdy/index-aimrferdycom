@@ -1,0 +1,507 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "❓ FAQ Generator",
+  description:
+    "Buat pertanyaan dan jawaban FAQ dari topik atau artikel dengan FAQ Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+      <h1>❓ FAQ Generator</h1>
+      <p>
+        Buat pertanyaan dan jawaban FAQ dari topik atau artikel dengan cepat
+        untuk membantu menyusun konten website yang lebih informatif.
+      </p>
+    </header>
+
+    <section class="tool-box">
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="topic">Topik atau Artikel</label>
+          <textarea
+            id="topic"
+            class="tool-input"
+            rows="8"
+            placeholder="Masukkan topik atau tempelkan isi artikel di sini..."
+          ></textarea>
+        </div>
+
+        <div class="tool-options">
+
+          <div class="tool-field">
+            <label for="keyword">Keyword Utama</label>
+            <input
+              id="keyword"
+              class="tool-input"
+              type="text"
+              placeholder="Contoh: SEO website"
+            />
+          </div>
+
+          <div class="tool-field">
+            <label for="audience">Target Audiens</label>
+            <input
+              id="audience"
+              class="tool-input"
+              type="text"
+              placeholder="Contoh: pemula, blogger, pemilik bisnis"
+            />
+          </div>
+
+          <div class="tool-field">
+            <label for="count">Jumlah FAQ</label>
+            <select id="count" class="tool-input">
+              <option value="5">5 FAQ</option>
+              <option value="7">7 FAQ</option>
+              <option value="10" selected>10 FAQ</option>
+              <option value="15">15 FAQ</option>
+              <option value="20">20 FAQ</option>
+            </select>
+          </div>
+
+          <div class="tool-field">
+            <label for="style">Gaya Jawaban</label>
+            <select id="style" class="tool-input">
+              <option value="natural" selected>Natural</option>
+              <option value="professional">Profesional</option>
+              <option value="simple">Sederhana</option>
+              <option value="seo">SEO Friendly</option>
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="tool-actions">
+        <button id="generateBtn" class="tool-btn">
+          Buat FAQ
+        </button>
+
+        <button id="clearBtn" class="tool-btn" type="button">
+          Bersihkan
+        </button>
+      </div>
+
+      <div class="tool-field">
+        <label for="output">Hasil FAQ</label>
+        <textarea
+          id="output"
+          class="tool-output"
+          rows="18"
+          placeholder="Hasil pertanyaan dan jawaban FAQ akan muncul di sini..."
+          readonly
+        ></textarea>
+      </div>
+
+      <div class="tool-actions">
+        <button id="copyBtn" class="tool-btn" type="button">
+          Salin FAQ
+        </button>
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>FAQ Generator untuk Membuat Pertanyaan dan Jawaban</h2>
+
+      <p>
+        FAQ Generator adalah alat yang membantu membuat daftar pertanyaan
+        yang sering ditanyakan beserta jawaban berdasarkan sebuah topik
+        atau artikel. FAQ dapat digunakan pada halaman website, artikel
+        blog, landing page, halaman produk, maupun dokumentasi.
+      </p>
+
+      <h2>Apa Itu FAQ Generator?</h2>
+
+      <p>
+        FAQ Generator merupakan tool untuk membantu menyusun Frequently Asked
+        Questions atau FAQ. Pengguna dapat memasukkan topik, keyword, atau
+        isi artikel kemudian membuat beberapa pertanyaan dan jawaban yang
+        relevan.
+      </p>
+
+      <p>
+        Dengan adanya FAQ Generator, proses membuat bagian pertanyaan umum
+        tidak harus dilakukan dari awal secara manual.
+      </p>
+
+      <h2>Mengapa FAQ Penting untuk Website?</h2>
+
+      <p>
+        FAQ dapat membantu menjawab pertanyaan pembaca sebelum mereka mencari
+        informasi tambahan. Struktur pertanyaan dan jawaban juga membuat
+        informasi tertentu lebih mudah dipindai.
+      </p>
+
+      <p>
+        FAQ dapat digunakan sebagai bagian tambahan dari artikel, halaman
+        layanan, halaman produk, atau halaman informasi.
+      </p>
+
+      <h2>FAQ dari Topik Artikel</h2>
+
+      <p>
+        Salah satu cara menggunakan FAQ Generator adalah memasukkan topik
+        artikel. Tool kemudian dapat digunakan untuk menyusun pertanyaan
+        dasar seperti pengertian, manfaat, cara penggunaan, fitur, tips,
+        dan hal-hal yang perlu diperhatikan.
+      </p>
+
+      <h2>FAQ dari Isi Artikel</h2>
+
+      <p>
+        Selain topik singkat, pengguna juga dapat memasukkan isi artikel.
+        Informasi tersebut dapat menjadi dasar untuk menyusun pertanyaan
+        yang berkaitan dengan pembahasan artikel.
+      </p>
+
+      <p>
+        Untuk hasil yang lebih relevan, gunakan artikel atau informasi yang
+        sudah memiliki struktur dan pembahasan yang jelas.
+      </p>
+
+      <h2>FAQ Berdasarkan Keyword</h2>
+
+      <p>
+        Keyword utama dapat membantu mengarahkan topik pertanyaan yang
+        dibuat. Misalnya keyword utama adalah "SEO website", maka FAQ dapat
+        membahas pengertian SEO, manfaat SEO, cara optimasi, keyword, dan
+        aspek lain yang masih berkaitan.
+      </p>
+
+      <h2>FAQ Berdasarkan Search Intent</h2>
+
+      <p>
+        Pertanyaan FAQ sebaiknya mengikuti kebutuhan pembaca. Pertanyaan
+        informasional dapat menjelaskan pengertian dan konsep, sedangkan
+        pertanyaan praktis dapat membahas cara menggunakan atau menerapkan
+        sesuatu.
+      </p>
+
+      <h2>Jenis Pertanyaan FAQ</h2>
+
+      <h3>Pertanyaan Pengertian</h3>
+
+      <p>
+        Pertanyaan jenis ini digunakan untuk menjelaskan apa yang dimaksud
+        dengan sebuah istilah, produk, layanan, atau konsep.
+      </p>
+
+      <h3>Pertanyaan Cara</h3>
+
+      <p>
+        Pertanyaan cara membahas langkah atau proses untuk menggunakan,
+        membuat, atau menerapkan sesuatu.
+      </p>
+
+      <h3>Pertanyaan Manfaat</h3>
+
+      <p>
+        Pertanyaan manfaat menjelaskan kegunaan atau alasan seseorang
+        menggunakan sebuah produk, layanan, metode, atau teknologi.
+      </p>
+
+      <h3>Pertanyaan Tips</h3>
+
+      <p>
+        Pertanyaan tips dapat digunakan untuk memberikan saran praktis
+        yang masih relevan dengan topik utama.
+      </p>
+
+      <h2>FAQ untuk Artikel SEO</h2>
+
+      <p>
+        FAQ dapat menjadi bagian dari struktur artikel SEO. Pertanyaan yang
+        relevan dapat membantu memperluas pembahasan dan menjawab kebutuhan
+        pembaca secara lebih langsung.
+      </p>
+
+      <p>
+        Namun, FAQ sebaiknya dibuat berdasarkan informasi yang benar-benar
+        relevan dengan halaman. Menambahkan pertanyaan yang tidak berkaitan
+        hanya untuk memasukkan keyword dapat membuat konten menjadi kurang
+        natural.
+      </p>
+
+      <h2>FAQ untuk Landing Page</h2>
+
+      <p>
+        Pada landing page, FAQ dapat digunakan untuk menjawab pertanyaan
+        mengenai layanan, fitur, harga, proses penggunaan, persyaratan,
+        atau informasi lain yang mungkin dibutuhkan calon pengguna.
+      </p>
+
+      <h2>FAQ untuk Produk</h2>
+
+      <p>
+        Halaman produk dapat menggunakan FAQ untuk menjelaskan cara kerja,
+        fitur, kompatibilitas, penggunaan, pengiriman, atau pertanyaan lain
+        yang berkaitan dengan produk tersebut.
+      </p>
+
+      <h2>Cara Menggunakan FAQ Generator</h2>
+
+      <ol>
+        <li>Masukkan topik atau isi artikel.</li>
+        <li>Masukkan keyword utama jika diperlukan.</li>
+        <li>Tentukan target audiens.</li>
+        <li>Pilih jumlah FAQ.</li>
+        <li>Pilih gaya jawaban.</li>
+        <li>Klik tombol <strong>Buat FAQ</strong>.</li>
+        <li>Periksa dan edit hasil sebelum dipublikasikan.</li>
+      </ol>
+
+      <h2>Tips Membuat FAQ yang Baik</h2>
+
+      <ul>
+        <li>Gunakan pertanyaan yang benar-benar relevan.</li>
+        <li>Buat pertanyaan dengan bahasa yang mudah dipahami.</li>
+        <li>Jawab pertanyaan secara langsung.</li>
+        <li>Hindari jawaban yang terlalu panjang jika tidak diperlukan.</li>
+        <li>Gunakan informasi yang sesuai dengan isi halaman.</li>
+        <li>Periksa kembali fakta sebelum dipublikasikan.</li>
+        <li>Hindari pengulangan keyword secara berlebihan.</li>
+      </ul>
+
+      <h2>FAQ dan Structured Data</h2>
+
+      <p>
+        FAQ dapat ditampilkan sebagai konten biasa pada halaman website.
+        Dalam konteks teknis SEO, FAQ juga dapat menggunakan structured data
+        apabila memenuhi persyaratan dan pedoman mesin pencari yang berlaku.
+      </p>
+
+      <p>
+        Structured data bukan jaminan bahwa FAQ akan mendapatkan tampilan
+        khusus di hasil pencarian. Karena itu, konten FAQ tetap sebaiknya
+        dibuat terutama untuk membantu pengguna.
+      </p>
+
+      <h2>Apakah FAQ Generator Menggunakan AI?</h2>
+
+      <p>
+        Versi tool ini menggunakan logika frontend lokal untuk membuat
+        struktur pertanyaan dan jawaban berdasarkan input pengguna. Tool
+        ini bukan model AI generatif yang terhubung ke API AI eksternal.
+      </p>
+
+      <p>
+        Jika nantinya dihubungkan dengan model AI atau API, generator dapat
+        dikembangkan untuk memahami artikel yang lebih panjang dan membuat
+        pertanyaan yang lebih kontekstual.
+      </p>
+
+      <h2>FAQ Generator AI Mr Ferdy</h2>
+
+      <p>
+        FAQ Generator dari AI Mr Ferdy dibuat untuk membantu blogger,
+        pemilik website, content creator, SEO specialist, dan pemilik
+        bisnis menyusun pertanyaan umum berdasarkan topik atau artikel.
+      </p>
+
+      <p>
+        Gunakan hasil generator sebagai draft, kemudian sesuaikan pertanyaan
+        dan jawaban dengan informasi sebenarnya pada halaman website.
+      </p>
+
+    </article>
+
+  </div>
+</MainLayout>
+
+<script>
+  const topicInput = document.getElementById("topic");
+  const keywordInput = document.getElementById("keyword");
+  const audienceInput = document.getElementById("audience");
+  const countInput = document.getElementById("count");
+  const styleInput = document.getElementById("style");
+  const output = document.getElementById("output");
+
+  const generateBtn = document.getElementById("generateBtn");
+  const copyBtn = document.getElementById("copyBtn");
+  const clearBtn = document.getElementById("clearBtn");
+
+  function cleanText(text) {
+    return text
+      .replace(/\s+/g, " ")
+      .replace(/[<>]/g, "")
+      .trim();
+  }
+
+  function getTopic() {
+    const topic = cleanText(topicInput.value);
+    const keyword = cleanText(keywordInput.value);
+
+    if (topic) {
+      const firstLine = topic.split(/[.!?\n]/)[0].trim();
+
+      if (firstLine.length > 5) {
+        return firstLine.length > 100
+          ? firstLine.substring(0, 100).trim()
+          : firstLine;
+      }
+    }
+
+    return keyword || "topik ini";
+  }
+
+  function getKeyword() {
+    return cleanText(keywordInput.value) || getTopic();
+  }
+
+  function answerFor(question, topic, audience, style) {
+    const target = audience
+      ? ` untuk ${audience}`
+      : "";
+
+    if (style === "simple") {
+      return `Secara sederhana, ${topic}${target} adalah informasi yang membantu pengguna memahami topik tersebut. Detailnya perlu disesuaikan dengan konteks dan kebutuhan pengguna.`;
+    }
+
+    if (style === "professional") {
+      return `${topic}${target} dapat dijelaskan berdasarkan tujuan, manfaat, proses, dan konteks penggunaannya. Informasi yang diberikan sebaiknya disesuaikan dengan kondisi dan kebutuhan aktual.`;
+    }
+
+    if (style === "seo") {
+      return `${topic}${target} merupakan topik yang dapat dibahas melalui pengertian, manfaat, cara penggunaan, tips, serta informasi terkait lainnya. Pastikan jawaban tetap relevan, informatif, dan sesuai dengan isi halaman.`;
+    }
+
+    return `${topic}${target} dapat dipahami melalui penjelasan mengenai pengertian, manfaat, cara penggunaan, serta informasi penting lainnya. Sesuaikan jawabannya dengan konteks artikel dan kebutuhan pembaca.`;
+  }
+
+  function generateQuestions(topic, keyword, audience) {
+    return [
+      {
+        q: `Apa itu ${keyword}?`,
+        a: answerFor(`Apa itu ${keyword}?`, topic, audience, styleInput.value)
+      },
+      {
+        q: `Apa manfaat ${keyword}?`,
+        a: `Manfaat ${keyword} bergantung pada tujuan penggunaannya. Secara umum, topik ini dapat membantu pengguna memperoleh informasi, memahami proses, dan menentukan langkah yang sesuai dengan kebutuhannya.`
+      },
+      {
+        q: `Bagaimana cara menggunakan ${keyword}?`,
+        a: `Cara menggunakan ${keyword} bergantung pada konteksnya. Mulailah dengan memahami tujuan, siapkan informasi yang diperlukan, kemudian ikuti langkah yang sesuai dengan kebutuhan.`
+      },
+      {
+        q: `Siapa yang membutuhkan ${keyword}?`,
+        a: `${keyword} dapat digunakan oleh orang atau organisasi yang membutuhkan informasi atau solusi yang berkaitan dengan topik tersebut. Penggunaannya sebaiknya disesuaikan dengan kebutuhan masing-masing.`
+      },
+      {
+        q: `Apakah ${keyword} cocok untuk pemula?`,
+        a: `Pada umumnya, ${keyword} dapat dipelajari oleh pemula selama tersedia informasi dan panduan yang jelas. Mulailah dari konsep dasar sebelum menggunakan fitur atau metode yang lebih kompleks.`
+      },
+      {
+        q: `Apa yang perlu diperhatikan saat menggunakan ${keyword}?`,
+        a: `Perhatikan tujuan penggunaan, kualitas informasi, kebutuhan pengguna, serta hasil yang diperoleh. Jangan hanya mengandalkan satu sumber apabila informasi tersebut membutuhkan verifikasi.`
+      },
+      {
+        q: `Apa kelebihan ${keyword}?`,
+        a: `Kelebihan ${keyword} bergantung pada cara penggunaannya. Beberapa manfaat yang mungkin diperoleh adalah proses yang lebih terstruktur, akses informasi yang lebih mudah, dan penghematan waktu untuk tugas tertentu.`
+      },
+      {
+        q: `Apakah ${keyword} gratis?`,
+        a: `Ketersediaan gratis atau berbayar bergantung pada produk, layanan, platform, atau metode yang digunakan. Periksa informasi resmi penyedia untuk mengetahui ketentuan terbaru.`
+      },
+      {
+        q: `Bagaimana memilih ${keyword} yang tepat?`,
+        a: `Pilih berdasarkan tujuan, fitur, kebutuhan, kemudahan penggunaan, kualitas, dan sumber informasi yang tersedia. Bandingkan beberapa pilihan sebelum menentukan solusi yang sesuai.`
+      },
+      {
+        q: `Apa kesalahan yang perlu dihindari saat menggunakan ${keyword}?`,
+        a: `Hindari penggunaan tanpa memahami tujuan, memasukkan informasi yang tidak relevan, serta menerima hasil secara langsung tanpa pemeriksaan. Selalu sesuaikan hasil dengan kebutuhan dan konteks pengguna.`
+      },
+      {
+        q: `Apakah ${keyword} penting untuk website?`,
+        a: `${keyword} dapat menjadi bagian penting dari website apabila topiknya relevan dengan kebutuhan pengunjung. Nilainya bergantung pada kualitas informasi dan seberapa baik halaman tersebut menjawab kebutuhan pengguna.`
+      },
+      {
+        q: `Bagaimana ${keyword} dapat membantu bisnis?`,
+        a: `${keyword} dapat membantu bisnis apabila digunakan untuk mendukung kebutuhan seperti informasi, edukasi pelanggan, proses kerja, pemasaran, atau pengambilan keputusan. Manfaat aktual bergantung pada penerapannya.`
+      },
+      {
+        q: `Apakah ${keyword} bisa digunakan untuk SEO?`,
+        a: `${keyword} dapat berkaitan dengan SEO apabila digunakan dalam konten yang relevan dan bermanfaat bagi pengguna. Penggunaan keyword saja tidak menjamin peringkat tertentu di mesin pencari.`
+      },
+      {
+        q: `Bagaimana cara mendapatkan hasil terbaik dari ${keyword}?`,
+        a: `Tentukan tujuan terlebih dahulu, gunakan informasi yang relevan, periksa hasilnya, dan lakukan penyesuaian berdasarkan kebutuhan. Kualitas hasil sangat bergantung pada konteks dan cara penggunaannya.`
+      },
+      {
+        q: `Apa alternatif dari ${keyword}?`,
+        a: `Alternatif ${keyword} bergantung pada tujuan yang ingin dicapai. Bandingkan fitur, metode, biaya, kemudahan penggunaan, serta kebutuhan pengguna sebelum memilih alternatif.`
+      }
+    ];
+  }
+
+  generateBtn.addEventListener("click", () => {
+    const topic = getTopic();
+    const keyword = getKeyword();
+    const audience = cleanText(audienceInput.value);
+    const count = Number(countInput.value);
+
+    if (!topicInput.value.trim() && !keywordInput.value.trim()) {
+      output.value = "Masukkan topik, artikel, atau keyword terlebih dahulu.";
+      return;
+    }
+
+    const questions = generateQuestions(topic, keyword, audience);
+    const selected = questions.slice(0, count);
+
+    const result = [
+      `FAQ: ${keyword}`,
+      "",
+      ...selected.flatMap((item, index) => [
+        `${index + 1}. ${item.q}`,
+        item.a,
+        ""
+      ])
+    ];
+
+    output.value = result.join("\n").trim();
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    if (!output.value.trim()) return;
+
+    try {
+      await navigator.clipboard.writeText(output.value);
+      copyBtn.textContent = "Tersalin!";
+      setTimeout(() => {
+        copyBtn.textContent = "Salin FAQ";
+      }, 1500);
+    } catch {
+      output.select();
+      document.execCommand("copy");
+      copyBtn.textContent = "Tersalin!";
+      setTimeout(() => {
+        copyBtn.textContent = "Salin FAQ";
+      }, 1500);
+    }
+  });
+
+  clearBtn.addEventListener("click", () => {
+    topicInput.value = "";
+    keywordInput.value = "";
+    audienceInput.value = "";
+    countInput.value = "10";
+    styleInput.value = "natural";
+    output.value = "";
+  });
+</script>
