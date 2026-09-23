@@ -1,0 +1,666 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔑 SEO Keyword Generator",
+  description:
+    "Temukan ide keyword SEO dari sebuah topik, termasuk keyword utama, long-tail, pertanyaan, dan variasi keyword untuk konten website.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO Tools</span>
+
+      <h1>SEO Keyword Generator</h1>
+
+      <p>
+        Temukan ide keyword dari sebuah topik untuk membantu riset,
+        perencanaan artikel, dan pengembangan konten website.
+      </p>
+    </header>
+
+    <section class="tool-box">
+
+      <div class="tool-grid">
+
+        <div class="tool-input">
+
+          <label for="topic">
+            Topik Utama
+          </label>
+
+          <input
+            type="text"
+            id="topic"
+            placeholder="Contoh: AI untuk bisnis"
+          />
+
+          <label for="audience">
+            Target Audiens
+          </label>
+
+          <input
+            type="text"
+            id="audience"
+            placeholder="Contoh: pemilik bisnis"
+          />
+
+          <div class="tool-options">
+
+            <div class="tool-field">
+
+              <label for="intent">
+                Search Intent
+              </label>
+
+              <select id="intent">
+                <option value="all">Semua Intent</option>
+                <option value="informational">Informational</option>
+                <option value="commercial">Commercial</option>
+                <option value="transactional">Transactional</option>
+                <option value="navigational">Navigational</option>
+              </select>
+
+            </div>
+
+            <div class="tool-field">
+
+              <label for="count">
+                Jumlah Keyword
+              </label>
+
+              <select id="count">
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="tool-btn"
+            id="generateBtn"
+          >
+            ✨ Generate Keyword
+          </button>
+
+        </div>
+
+        <div class="tool-output">
+
+          <label for="outputText">
+            Ide Keyword
+          </label>
+
+          <textarea
+            id="outputText"
+            rows="18"
+            readonly
+            placeholder="Ide keyword akan muncul di sini..."
+          ></textarea>
+
+          <div class="tool-actions">
+
+            <button type="button" id="copyBtn">
+              📋 Salin
+            </button>
+
+            <button type="button" id="clearBtn">
+              🗑️ Bersihkan
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>SEO Keyword Generator untuk Menemukan Ide Keyword</h2>
+
+      <p>
+        SEO Keyword Generator adalah tool yang membantu menemukan berbagai
+        ide keyword berdasarkan sebuah topik. Keyword dapat digunakan sebagai
+        dasar untuk membuat artikel, halaman website, landing page, maupun
+        strategi konten.
+      </p>
+
+      <p>
+        AI Mr Ferdy menyediakan SEO Keyword Generator untuk membantu
+        menghasilkan variasi keyword seperti keyword utama, long-tail
+        keyword, pertanyaan, dan keyword berdasarkan search intent.
+      </p>
+
+      <h2>Apa Itu Keyword SEO?</h2>
+
+      <p>
+        Keyword SEO adalah kata atau frasa yang digunakan untuk menggambarkan
+        topik yang dicari pengguna melalui mesin pencari.
+      </p>
+
+      <p>
+        Contohnya, seseorang yang ingin mengetahui tentang AI untuk bisnis
+        dapat menggunakan pencarian seperti "AI untuk bisnis", "manfaat AI
+        untuk bisnis", atau "cara menggunakan AI untuk bisnis".
+      </p>
+
+      <h2>Apa Itu Keyword Research?</h2>
+
+      <p>
+        Keyword research adalah proses menemukan dan memahami kata atau
+        frasa yang berkaitan dengan kebutuhan pencarian pengguna.
+      </p>
+
+      <p>
+        Hasil riset keyword dapat membantu menentukan topik konten,
+        struktur artikel, halaman yang perlu dibuat, serta informasi yang
+        ingin dijawab.
+      </p>
+
+      <h2>Keyword Utama</h2>
+
+      <p>
+        Keyword utama adalah istilah yang paling mewakili topik sebuah
+        halaman. Keyword ini biasanya menjadi fokus utama dalam pembuatan
+        konten.
+      </p>
+
+      <p>
+        Keyword utama tidak harus dipaksakan ke setiap bagian halaman.
+        Penggunaannya sebaiknya tetap natural dan sesuai dengan konteks.
+      </p>
+
+      <h2>Long-Tail Keyword</h2>
+
+      <p>
+        Long-tail keyword merupakan frasa pencarian yang biasanya lebih
+        spesifik dibandingkan keyword yang sangat umum.
+      </p>
+
+      <p>
+        Contohnya, dari topik "AI writing", dapat muncul variasi seperti
+        "AI writing tool untuk membuat artikel" atau "cara menggunakan AI
+        untuk menulis artikel".
+      </p>
+
+      <p>
+        Keyword yang lebih spesifik dapat membantu menemukan topik yang
+        lebih dekat dengan kebutuhan tertentu dari pengguna.
+      </p>
+
+      <h2>Keyword Berdasarkan Search Intent</h2>
+
+      <h3>Informational</h3>
+
+      <p>
+        Pengguna ingin mencari informasi atau mempelajari sesuatu. Contohnya
+        adalah "apa itu AI" atau "cara menggunakan AI".
+      </p>
+
+      <h3>Commercial</h3>
+
+      <p>
+        Pengguna sedang mencari informasi sebelum menentukan pilihan,
+        misalnya "AI writing tool terbaik" atau "perbandingan AI tools".
+      </p>
+
+      <h3>Transactional</h3>
+
+      <p>
+        Pengguna memiliki tujuan untuk melakukan tindakan tertentu, seperti
+        membeli, mendaftar, mengunduh, atau menggunakan sebuah layanan.
+      </p>
+
+      <h3>Navigational</h3>
+
+      <p>
+        Pengguna mencari website, brand, produk, atau halaman tertentu.
+      </p>
+
+      <h2>Keyword Berbentuk Pertanyaan</h2>
+
+      <p>
+        Pertanyaan merupakan salah satu sumber ide konten yang berguna karena
+        menunjukkan informasi yang ingin diketahui pengguna.
+      </p>
+
+      <p>
+        Contohnya adalah "apa itu...", "bagaimana cara...", "mengapa...",
+        "berapa...", dan "apa manfaat...".
+      </p>
+
+      <h2>Mengapa Keyword Penting untuk SEO?</h2>
+
+      <p>
+        Keyword membantu memberikan konteks mengenai topik yang dibahas pada
+        sebuah halaman. Penggunaan istilah yang relevan juga membantu penulis
+        memahami bahasa yang digunakan oleh target pembaca.
+      </p>
+
+      <p>
+        Namun, SEO bukan sekadar memasukkan keyword sebanyak mungkin.
+        Relevansi, kualitas informasi, struktur halaman, dan pengalaman
+        pengguna juga perlu diperhatikan.
+      </p>
+
+      <h2>Cara Menggunakan SEO Keyword Generator</h2>
+
+      <ol>
+        <li>Masukkan topik utama.</li>
+        <li>Masukkan target audiens jika diperlukan.</li>
+        <li>Pilih search intent.</li>
+        <li>Tentukan jumlah keyword.</li>
+        <li>Klik <strong>Generate Keyword</strong>.</li>
+        <li>Pilih keyword yang paling relevan dengan kebutuhan konten.</li>
+      </ol>
+
+      <h2>Cara Memilih Keyword</h2>
+
+      <p>
+        Jangan memilih keyword hanya berdasarkan panjang atau jumlah kata.
+        Pertimbangkan hubungan keyword dengan topik, kebutuhan pengguna,
+        tujuan halaman, dan jenis konten yang dapat dibuat.
+      </p>
+
+      <p>
+        Setelah mendapatkan ide keyword, lakukan validasi menggunakan data
+        pencarian atau keyword research tool jika membutuhkan informasi
+        seperti volume pencarian, tren, atau tingkat persaingan.
+      </p>
+
+      <h2>Keyword Generator untuk Content Planning</h2>
+
+      <p>
+        Kumpulan keyword dapat dikembangkan menjadi content cluster. Satu
+        keyword utama dapat menjadi topik utama, sedangkan keyword yang lebih
+        spesifik dapat dikembangkan menjadi artikel pendukung.
+      </p>
+
+      <p>
+        Pendekatan ini dapat membantu website membangun struktur konten yang
+        lebih terorganisasi dan mencakup berbagai kebutuhan pencarian yang
+        masih berhubungan.
+      </p>
+
+      <h2>Hindari Keyword Stuffing</h2>
+
+      <p>
+        Keyword stuffing adalah penggunaan keyword secara berlebihan atau
+        tidak natural. Praktik tersebut dapat membuat tulisan sulit dibaca
+        dan menurunkan kualitas pengalaman pengguna.
+      </p>
+
+      <p>
+        Gunakan keyword ketika memang relevan dan biarkan variasi bahasa
+        muncul secara alami dalam konten.
+      </p>
+
+      <h2>SEO Keyword Generator AI Mr Ferdy</h2>
+
+      <p>
+        SEO Keyword Generator AI Mr Ferdy membantu menghasilkan ide keyword
+        dari sebuah topik secara praktis. Gunakan hasilnya sebagai bahan awal
+        untuk riset keyword, content planning, dan pengembangan artikel SEO.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const topicInput = document.getElementById("topic");
+    const audienceInput = document.getElementById("audience");
+    const intentSelect = document.getElementById("intent");
+    const countSelect = document.getElementById("count");
+
+    const outputText = document.getElementById("outputText");
+
+    const generateBtn =
+      document.getElementById("generateBtn");
+
+    const copyBtn =
+      document.getElementById("copyBtn");
+
+    const clearBtn =
+      document.getElementById("clearBtn");
+
+    function cleanTopic(text) {
+      return text
+        .trim()
+        .replace(/\s+/g, " ");
+    }
+
+    function createKeywords(topic, audience) {
+      const t = cleanTopic(topic);
+      const a = cleanTopic(audience);
+
+      return [
+        {
+          keyword: t,
+          intent: "informational",
+          type: "Keyword Utama"
+        },
+
+        {
+          keyword: `apa itu ${t}`,
+          intent: "informational",
+          type: "Pertanyaan"
+        },
+
+        {
+          keyword: `pengertian ${t}`,
+          intent: "informational",
+          type: "Informational"
+        },
+
+        {
+          keyword: `manfaat ${t}`,
+          intent: "informational",
+          type: "Informational"
+        },
+
+        {
+          keyword: `cara menggunakan ${t}`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `cara ${t}`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `panduan ${t}`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `${t} untuk pemula`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `${t} terbaik`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `${t} gratis`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `rekomendasi ${t}`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `perbandingan ${t}`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `${t} vs alternatif`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `harga ${t}`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `download ${t}`,
+          intent: "transactional",
+          type: "Transactional"
+        },
+
+        {
+          keyword: `beli ${t}`,
+          intent: "transactional",
+          type: "Transactional"
+        },
+
+        {
+          keyword: `daftar ${t}`,
+          intent: "transactional",
+          type: "Transactional"
+        },
+
+        {
+          keyword: `gunakan ${t} online`,
+          intent: "transactional",
+          type: "Transactional"
+        },
+
+        {
+          keyword: `${t} untuk bisnis`,
+          intent: "commercial",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `${t} untuk website`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `${t} untuk konten`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `${t} untuk SEO`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `tips menggunakan ${t}`,
+          intent: "informational",
+          type: "Long-tail"
+        },
+
+        {
+          keyword: `kelebihan ${t}`,
+          intent: "informational",
+          type: "Informational"
+        },
+
+        {
+          keyword: `kekurangan ${t}`,
+          intent: "informational",
+          type: "Informational"
+        },
+
+        {
+          keyword: `alternatif ${t}`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `tools ${t}`,
+          intent: "commercial",
+          type: "Commercial"
+        },
+
+        {
+          keyword: `apakah ${t} efektif`,
+          intent: "informational",
+          type: "Pertanyaan"
+        },
+
+        {
+          keyword: `bagaimana cara menggunakan ${t}`,
+          intent: "informational",
+          type: "Pertanyaan"
+        },
+
+        ...(a
+          ? [
+              {
+                keyword: `${t} untuk ${a}`,
+                intent: "informational",
+                type: "Long-tail"
+              },
+
+              {
+                keyword: `manfaat ${t} untuk ${a}`,
+                intent: "informational",
+                type: "Long-tail"
+              },
+
+              {
+                keyword: `cara menggunakan ${t} untuk ${a}`,
+                intent: "informational",
+                type: "Long-tail"
+              },
+
+              {
+                keyword: `${t} terbaik untuk ${a}`,
+                intent: "commercial",
+                type: "Commercial"
+              },
+
+              {
+                keyword: `${t} gratis untuk ${a}`,
+                intent: "commercial",
+                type: "Commercial"
+              }
+            ]
+          : [])
+      ];
+    }
+
+    function generateKeywords() {
+      const topic = topicInput.value.trim();
+      const audience = audienceInput.value.trim();
+
+      if (!topic) {
+        outputText.value =
+          "Masukkan topik terlebih dahulu.";
+        return;
+      }
+
+      let keywords =
+        createKeywords(topic, audience);
+
+      const selectedIntent =
+        intentSelect.value;
+
+      if (selectedIntent !== "all") {
+        keywords = keywords.filter(
+          item => item.intent === selectedIntent
+        );
+      }
+
+      const count =
+        Number(countSelect.value);
+
+      keywords = keywords.slice(0, count);
+
+      if (!keywords.length) {
+        outputText.value =
+          "Tidak ada keyword untuk intent yang dipilih.";
+        return;
+      }
+
+      const grouped = {};
+
+      keywords.forEach(item => {
+        if (!grouped[item.type]) {
+          grouped[item.type] = [];
+        }
+
+        grouped[item.type].push(item.keyword);
+      });
+
+      const sections = [];
+
+      Object.entries(grouped).forEach(
+        ([type, items]) => {
+          sections.push(type.toUpperCase());
+          sections.push("");
+
+          items.forEach((keyword, index) => {
+            sections.push(
+              `${index + 1}. ${keyword}`
+            );
+          });
+
+          sections.push("");
+        }
+      );
+
+      outputText.value =
+        sections.join("\n").trim();
+    }
+
+    generateBtn.addEventListener(
+      "click",
+      generateKeywords
+    );
+
+    copyBtn.addEventListener(
+      "click",
+      async () => {
+        const result =
+          outputText.value.trim();
+
+        if (!result) return;
+
+        try {
+          await navigator.clipboard.writeText(result);
+
+          copyBtn.textContent = "✓ Tersalin";
+
+          setTimeout(() => {
+            copyBtn.textContent = "📋 Salin";
+          }, 1500);
+
+        } catch {
+          outputText.select();
+          document.execCommand("copy");
+        }
+      }
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        topicInput.value = "";
+        audienceInput.value = "";
+        outputText.value = "";
+      }
+    );
+  </script>
+</MainLayout>
