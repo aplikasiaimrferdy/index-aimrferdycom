@@ -13,8 +13,27 @@ const products = await getCollection('product');
 const toolFiles = import.meta.glob('./tools/**/*.astro');
 
 const tools = Object.keys(toolFiles)
-  .filter(file => !file.endsWith('/index.astro'))
+  .filter(file => {
+    const path = file.replace('./tools/', '');
+
+    // EXCLUDE AMP ROUTES
+    if (
+      path.includes('/amp/') ||
+      path.endsWith('/amp.astro') ||
+      path.endsWith('/amp/index.astro')
+    ) {
+      return false;
+    }
+
+    // EXCLUDE INDEX
+    if (path.endsWith('/index.astro')) {
+      return false;
+    }
+
+    return true;
+  })
   .map(file => {
+
     const slug = file
       .replace('./tools/', '')
       .replace('.astro', '');
