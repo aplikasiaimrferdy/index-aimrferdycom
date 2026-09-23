@@ -16,7 +16,6 @@ main {
 
 /* =========================================================
    BREADCRUMB
-   Dipakai oleh MainLayout.astro
 ========================================================= */
 
 .breadcrumb {
@@ -84,18 +83,11 @@ main {
 
   margin: 40px auto 0;
   padding: 64px 20px;
-}
-
-.tool-container {
-  width: 100%;
-  max-width: 1000px;
-
-  margin: 0 auto;
-  padding: 20px;
 
   box-sizing: border-box;
 }
 
+.tool-container,
 .category-page {
   width: 100%;
   max-width: 1000px;
@@ -104,6 +96,64 @@ main {
   padding: 20px;
 
   box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TOOL HEADER
+========================================================= */
+
+.tool-header {
+  max-width: 900px;
+
+  margin: 0 auto 32px;
+
+  text-align: center;
+}
+
+.tool-header h1 {
+  margin: 10px 0 12px;
+
+  color: var(--text);
+
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.2;
+}
+
+.tool-header p {
+  max-width: 720px;
+
+  margin: 0 auto;
+
+  color: var(--soft);
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   PAGE BADGE
+========================================================= */
+
+.page-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  background: var(--card);
+  color: var(--soft);
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 
@@ -200,7 +250,52 @@ main {
 
 
 /* =========================================================
-   FORM
+   TOOL FORM GRID
+========================================================= */
+
+.tool-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    minmax(280px, 0.8fr);
+
+  gap: 20px;
+
+  width: 100%;
+}
+
+.tool-options {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 2px;
+
+  align-content: start;
+}
+
+.tool-field {
+  width: 100%;
+
+  margin-bottom: 12px;
+}
+
+.tool-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   FORM GROUP — LEGACY
 ========================================================= */
 
 .form-group {
@@ -233,7 +328,7 @@ select {
 
   padding: 12px;
 
-  margin-bottom: 12px;
+  margin-bottom: 0;
 
   box-sizing: border-box;
 
@@ -290,7 +385,112 @@ select {
 
 
 /* =========================================================
-   BUTTON GROUP
+   TOOL OUTPUT
+========================================================= */
+
+.tool-output {
+  width: 100%;
+
+  min-height: 280px;
+
+  padding: 14px;
+
+  box-sizing: border-box;
+
+  background: var(--bg);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  font: inherit;
+  line-height: 1.6;
+
+  resize: vertical;
+
+  outline: none;
+}
+
+.tool-output:focus {
+  border-color: var(--soft);
+
+  box-shadow:
+    0 0 0 2px var(--border);
+}
+
+
+/* =========================================================
+   TOOL ACTIONS
+========================================================= */
+
+.tool-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: 16px;
+  margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   TOOL BUTTON
+========================================================= */
+
+.tool-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 11px 18px;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.tool-btn:hover {
+  transform: translateY(-2px);
+
+  border-color: var(--soft);
+}
+
+.tool-btn:active {
+  transform: translateY(0);
+}
+
+.tool-btn:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   BUTTON GROUP — LEGACY
 ========================================================= */
 
 .btn-group {
@@ -307,7 +507,7 @@ select {
 
 
 /* =========================================================
-   BUTTON BASE
+   BUTTON BASE — LEGACY
 ========================================================= */
 
 .btn {
@@ -351,7 +551,7 @@ select {
 
 
 /* =========================================================
-   PRIMARY BUTTON
+   PRIMARY BUTTON — LEGACY
 ========================================================= */
 
 .btn-primary {
@@ -368,7 +568,7 @@ select {
 
 
 /* =========================================================
-   SECONDARY BUTTON
+   SECONDARY BUTTON — LEGACY
 ========================================================= */
 
 .btn-secondary {
@@ -409,7 +609,64 @@ select {
 
 
 /* =========================================================
-   TOOL GRID
+   TOOL CONTENT / SEO ARTICLE
+========================================================= */
+
+.tool-content {
+  width: min(1000px, 100%);
+
+  margin: 32px auto 0;
+
+  color: var(--text);
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.tool-content h2 {
+  margin: 38px 0 12px;
+
+  color: var(--text);
+
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.tool-content h3 {
+  margin: 26px 0 10px;
+
+  color: var(--text);
+
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.tool-content p {
+  margin: 0 0 16px;
+
+  color: var(--soft);
+}
+
+.tool-content ul,
+.tool-content ol {
+  margin: 0 0 20px;
+
+  padding-left: 24px;
+
+  color: var(--soft);
+}
+
+.tool-content li {
+  margin-bottom: 7px;
+}
+
+.tool-content strong {
+  color: var(--text);
+}
+
+
+/* =========================================================
+   TOOLS GRID
 ========================================================= */
 
 .tools-grid {
@@ -639,7 +896,7 @@ select {
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE — TABLET
 ========================================================= */
 
 @media (max-width: 1024px) {
@@ -653,11 +910,15 @@ select {
       repeat(2, minmax(0, 1fr));
   }
 
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 
 /* =========================================================
-   TABLET / MOBILE
+   RESPONSIVE — MOBILE
 ========================================================= */
 
 @media (max-width: 768px) {
@@ -699,15 +960,43 @@ select {
     padding: 18px;
   }
 
+  .tool-header {
+    margin-bottom: 26px;
+  }
+
+  .tool-header h1 {
+    font-size: 30px;
+  }
+
+  .tool-content {
+    font-size: 14px;
+  }
+
+  .tool-content h2 {
+    font-size: 21px;
+  }
+
+  .tool-content h3 {
+    font-size: 18px;
+  }
+
   .tools-search {
     margin-bottom: 24px;
+  }
+
+  .tool-actions {
+    align-items: stretch;
+  }
+
+  .tool-btn {
+    flex: 1 1 auto;
   }
 
 }
 
 
 /* =========================================================
-   SMALL MOBILE
+   RESPONSIVE — SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 480px) {
@@ -749,6 +1038,32 @@ select {
 
   .tool-box h1 {
     font-size: 22px;
+  }
+
+  .tool-header h1 {
+    font-size: 26px;
+  }
+
+  .tool-header p {
+    font-size: 14px;
+  }
+
+  .tool-grid {
+    gap: 10px;
+  }
+
+  .tool-options {
+    gap: 0;
+  }
+
+  .tool-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .tool-btn {
+    width: 100%;
   }
 
   .btn-group {
