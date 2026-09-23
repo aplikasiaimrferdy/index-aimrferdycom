@@ -1,0 +1,217 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "✍️ AI Content Generator",
+  description:
+    "Buat artikel, caption, deskripsi, dan ide konten dengan AI Content Generator dari AI Mr Ferdy.",
+  category: "AI Content",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="tool-badge">AI Content</span>
+      <h1>AI Content Generator</h1>
+      <p>
+        Buat artikel, caption, deskripsi, dan ide konten dengan cepat
+        menggunakan AI Mr Ferdy.
+      </p>
+    </header>
+
+    <section class="tool-card">
+
+      <div class="form-group">
+        <label for="contentType">Jenis Konten</label>
+        <select id="contentType">
+          <option value="article">Artikel</option>
+          <option value="caption">Caption</option>
+          <option value="description">Deskripsi</option>
+          <option value="ideas">Ide Konten</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="topic">Topik</label>
+        <input
+          id="topic"
+          type="text"
+          placeholder="Contoh: AI untuk produktivitas"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="keyword">Keyword</label>
+        <input
+          id="keyword"
+          type="text"
+          placeholder="Contoh: AI tools, produktivitas, teknologi"
+        />
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="tone">Gaya Bahasa</label>
+          <select id="tone">
+            <option value="professional">Profesional</option>
+            <option value="casual">Santai</option>
+            <option value="friendly">Ramah</option>
+            <option value="informative">Informatif</option>
+            <option value="persuasive">Persuasif</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="length">Panjang</label>
+          <select id="length">
+            <option value="short">Pendek</option>
+            <option value="medium">Sedang</option>
+            <option value="long">Panjang</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="audience">Target Audiens</label>
+        <input
+          id="audience"
+          type="text"
+          placeholder="Contoh: kreator konten, pemilik bisnis, pelajar"
+        />
+      </div>
+
+      <button type="button" id="generateBtn">
+        ✨ Generate Content
+      </button>
+
+    </section>
+
+    <section class="result-card" id="resultCard" hidden>
+
+      <div class="result-header">
+        <h2>Hasil Konten</h2>
+
+        <button type="button" id="copyBtn">
+          Copy
+        </button>
+      </div>
+
+      <textarea
+        id="result"
+        readonly
+        placeholder="Hasil konten akan muncul di sini..."
+      ></textarea>
+
+    </section>
+
+  </div>
+
+  <script>
+    const generateBtn = document.querySelector("#generateBtn");
+    const copyBtn = document.querySelector("#copyBtn");
+    const resultCard = document.querySelector("#resultCard");
+    const result = document.querySelector("#result");
+
+    generateBtn?.addEventListener("click", () => {
+      const type =
+        document.querySelector("#contentType")?.value || "article";
+
+      const topic =
+        document.querySelector("#topic")?.value.trim();
+
+      const keyword =
+        document.querySelector("#keyword")?.value.trim();
+
+      const tone =
+        document.querySelector("#tone")?.value || "professional";
+
+      const length =
+        document.querySelector("#length")?.value || "medium";
+
+      const audience =
+        document.querySelector("#audience")?.value.trim();
+
+      if (!topic) {
+        alert("Silakan masukkan topik terlebih dahulu.");
+        return;
+      }
+
+      let output = "";
+
+      if (type === "article") {
+        output = `Judul: ${topic}
+
+Pendahuluan
+
+${topic} merupakan topik yang semakin penting untuk dipahami. Artikel ini membahas informasi utama mengenai ${topic} secara sederhana dan informatif.
+
+Pembahasan
+
+${topic} dapat memberikan berbagai manfaat bagi ${audience || "pengguna digital"}. Dengan memahami cara kerja dan penggunaannya, aktivitas digital dapat dilakukan dengan lebih efektif.
+
+${keyword ? `Keyword terkait: ${keyword}` : ""}
+
+Kesimpulan
+
+Dengan memahami ${topic}, pengguna dapat memanfaatkan teknologi dan informasi digital secara lebih optimal.`;
+      }
+
+      if (type === "caption") {
+        output = `${topic}
+
+Temukan cara yang lebih praktis untuk memanfaatkan ${topic} dalam aktivitas digital.
+
+${keyword ? `#${keyword.replace(/\s+/g, "")}` : "#AI #Digital #Produktivitas"}`;
+      }
+
+      if (type === "description") {
+        output = `${topic} adalah solusi yang dapat membantu ${audience || "pengguna"} dalam menjalankan aktivitas digital dengan lebih praktis dan efisien.
+
+Dengan pendekatan yang sederhana dan mudah digunakan, ${topic} dapat menjadi bagian dari workflow digital sehari-hari.`;
+      }
+
+      if (type === "ideas") {
+        output = `Ide Konten tentang ${topic}
+
+1. Apa itu ${topic} dan bagaimana cara menggunakannya?
+2. Manfaat ${topic} untuk produktivitas.
+3. Kesalahan umum saat menggunakan ${topic}.
+4. Tips memanfaatkan ${topic} secara efektif.
+5. Panduan pemula menggunakan ${topic}.
+6. ${topic} untuk ${audience || "pengguna digital"}.
+7. Tren terbaru seputar ${topic}.
+8. Perbandingan metode tradisional dengan ${topic}.
+9. Studi kasus penggunaan ${topic}.
+10. Tips mengoptimalkan ${topic}.`;
+      }
+
+      result.value = output;
+      resultCard.hidden = false;
+      result.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+      if (!result.value) return;
+
+      await navigator.clipboard.writeText(result.value);
+
+      copyBtn.textContent = "✓ Copied";
+
+      setTimeout(() => {
+        copyBtn.textContent = "Copy";
+      }, 1500);
+    });
+  </script>
+</MainLayout>
