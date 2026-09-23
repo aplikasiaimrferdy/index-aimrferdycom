@@ -1,0 +1,521 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🧩 JSON Formatter",
+  description:
+    "Format, rapikan, dan validasi JSON secara online dengan JSON Formatter dari AI Mr Ferdy.",
+  category: "Developer",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">
+        DEVELOPER
+      </span>
+
+      <h1>
+        JSON Formatter
+      </h1>
+
+      <p>
+        Format dan rapikan JSON agar lebih mudah dibaca,
+        sekaligus cek apakah struktur JSON valid.
+      </p>
+    </header>
+
+    <section class="tool-box" aria-label="JSON Formatter">
+
+      <div class="tool-field">
+        <label for="jsonInput">
+          JSON Input
+        </label>
+
+        <textarea
+          id="jsonInput"
+          class="tool-textarea"
+          rows="16"
+          placeholder='{"name":"AI Mr Ferdy","tools":["AI","SEO","Developer"]}'
+          spellcheck="false"
+        ></textarea>
+
+        <small>
+          Masukkan data JSON yang ingin diformat atau divalidasi.
+        </small>
+      </div>
+
+      <div class="tool-options">
+
+        <div class="tool-field">
+          <label for="indent">
+            Indentasi
+          </label>
+
+          <select id="indent" class="tool-select">
+            <option value="2">2 Spasi</option>
+            <option value="4">4 Spasi</option>
+            <option value="tab">Tab</option>
+          </select>
+        </div>
+
+        <div class="tool-field">
+          <label for="sortKeys">
+            Urutkan Key
+          </label>
+
+          <select id="sortKeys" class="tool-select">
+            <option value="no">Tidak</option>
+            <option value="yes">Ya</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="formatBtn"
+        >
+          Format JSON
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="minifyBtn"
+        >
+          Minify
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="clearBtn"
+        >
+          Clear
+        </button>
+      </div>
+
+      <div
+        id="status"
+        class="tool-result"
+        aria-live="polite"
+        hidden
+      ></div>
+
+      <div class="tool-field">
+        <label for="jsonOutput">
+          JSON Output
+        </label>
+
+        <textarea
+          id="jsonOutput"
+          class="tool-textarea"
+          rows="16"
+          readonly
+          spellcheck="false"
+          placeholder="Hasil JSON akan muncul di sini..."
+        ></textarea>
+      </div>
+
+      <div class="tool-actions">
+        <button
+          type="button"
+          class="tool-btn"
+          id="copyBtn"
+        >
+          Copy
+        </button>
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>
+        JSON Formatter Online
+      </h2>
+
+      <p>
+        JSON Formatter adalah tool online untuk merapikan,
+        memformat, dan memeriksa struktur JSON. JSON yang
+        ditulis dalam satu baris atau memiliki indentasi yang
+        berantakan dapat dibuat lebih mudah dibaca dengan
+        format yang terstruktur.
+      </p>
+
+      <h2>
+        Apa Itu JSON?
+      </h2>
+
+      <p>
+        JSON atau JavaScript Object Notation adalah format data
+        berbasis teks yang banyak digunakan untuk pertukaran
+        data antara aplikasi, website, API, dan berbagai sistem
+        perangkat lunak.
+      </p>
+
+      <p>
+        Struktur JSON terdiri dari object, array, key, value,
+        string, number, boolean, dan null. Karena menggunakan
+        struktur yang sederhana, JSON dapat dibaca oleh manusia
+        sekaligus diproses oleh komputer.
+      </p>
+
+      <h2>
+        Fungsi JSON Formatter
+      </h2>
+
+      <ul>
+        <li>Meratakan indentasi JSON.</li>
+        <li>Membuat struktur object dan array lebih mudah dibaca.</li>
+        <li>Memeriksa apakah JSON memiliki sintaks yang valid.</li>
+        <li>Mengubah JSON menjadi format compact atau minified.</li>
+        <li>Membantu debugging data JSON.</li>
+        <li>Merapikan response dari API.</li>
+      </ul>
+
+      <h2>
+        JSON Formatter dan JSON Validator
+      </h2>
+
+      <p>
+        Formatter berfokus pada tampilan dan struktur JSON,
+        sedangkan validator digunakan untuk memastikan bahwa
+        JSON dapat diproses sesuai sintaks JSON yang berlaku.
+        Tool ini melakukan keduanya dengan memproses JSON
+        menggunakan parser bawaan browser.
+      </p>
+
+      <h2>
+        Format JSON
+      </h2>
+
+      <p>
+        JSON yang belum diformat sering terlihat seperti satu
+        baris panjang. Dengan indentasi, setiap object dan array
+        dapat terlihat lebih jelas sehingga lebih mudah diperiksa
+        dan diedit.
+      </p>
+
+      <h2>
+        Minify JSON
+      </h2>
+
+      <p>
+        Minify menghapus whitespace dan line break yang tidak
+        diperlukan sehingga JSON menjadi lebih ringkas. Format
+        seperti ini sering digunakan ketika data perlu dikirim
+        atau disimpan dengan ukuran teks yang lebih kecil.
+      </p>
+
+      <h2>
+        Contoh JSON
+      </h2>
+
+      <p>
+        Contoh JSON sederhana:
+      </p>
+
+      <pre><code>{`{
+  "name": "AI Mr Ferdy",
+  "category": "AI",
+  "tools": [
+    "JSON Formatter",
+    "SEO Tools",
+    "AI Tools"
+  ]
+}`}</code></pre>
+
+      <h2>
+        Cara Menggunakan JSON Formatter
+      </h2>
+
+      <ol>
+        <li>
+          Masukkan JSON pada kolom JSON Input.
+        </li>
+        <li>
+          Pilih jumlah indentasi yang diinginkan.
+        </li>
+        <li>
+          Pilih apakah key ingin diurutkan.
+        </li>
+        <li>
+          Klik <strong>Format JSON</strong> untuk merapikan JSON.
+        </li>
+        <li>
+          Gunakan <strong>Minify</strong> jika membutuhkan JSON
+          dalam format compact.
+        </li>
+        <li>
+          Klik <strong>Copy</strong> untuk menyalin hasil.
+        </li>
+      </ol>
+
+      <h2>
+        JSON untuk API
+      </h2>
+
+      <p>
+        JSON banyak digunakan sebagai format request dan response
+        pada API. Ketika response API berukuran besar, formatter
+        dapat membantu developer melihat hubungan antar object,
+        array, dan property dengan lebih jelas.
+      </p>
+
+      <h2>
+        JSON untuk Web Development
+      </h2>
+
+      <p>
+        JSON juga digunakan dalam konfigurasi aplikasi, data
+        frontend, integrasi layanan, penyimpanan data, dan
+        komunikasi antara client dan server.
+      </p>
+
+      <h2>
+        Apakah JSON Formatter Ini Mengirim Data ke Server?
+      </h2>
+
+      <p>
+        Proses formatter pada halaman ini dilakukan langsung
+        menggunakan JavaScript di browser. Tidak diperlukan
+        pengiriman isi JSON ke server untuk melakukan proses
+        formatting.
+      </p>
+
+      <h2>
+        JSON Formatter AI Mr Ferdy
+      </h2>
+
+      <p>
+        JSON Formatter dari AI Mr Ferdy menyediakan cara praktis
+        untuk memformat, memvalidasi, dan membuat JSON menjadi
+        lebih mudah dibaca langsung dari browser.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const input =
+      document.querySelector("#jsonInput");
+
+    const output =
+      document.querySelector("#jsonOutput");
+
+    const indent =
+      document.querySelector("#indent");
+
+    const sortKeys =
+      document.querySelector("#sortKeys");
+
+    const formatBtn =
+      document.querySelector("#formatBtn");
+
+    const minifyBtn =
+      document.querySelector("#minifyBtn");
+
+    const clearBtn =
+      document.querySelector("#clearBtn");
+
+    const copyBtn =
+      document.querySelector("#copyBtn");
+
+    const status =
+      document.querySelector("#status");
+
+    function showStatus(message, type = "success") {
+      if (!status) return;
+
+      status.hidden = false;
+      status.textContent = message;
+      status.dataset.type = type;
+    }
+
+    function sortObject(value) {
+      if (Array.isArray(value)) {
+        return value.map(sortObject);
+      }
+
+      if (
+        value &&
+        typeof value === "object"
+      ) {
+        return Object.keys(value)
+          .sort((a, b) =>
+            a.localeCompare(b)
+          )
+          .reduce((result, key) => {
+            result[key] =
+              sortObject(value[key]);
+
+            return result;
+          }, {});
+      }
+
+      return value;
+    }
+
+    function parseJSON() {
+      const raw =
+        input?.value.trim();
+
+      if (!raw) {
+        throw new Error(
+          "Masukkan JSON terlebih dahulu."
+        );
+      }
+
+      let parsed;
+
+      try {
+        parsed = JSON.parse(raw);
+      } catch (error) {
+        throw new Error(
+          "JSON tidak valid. Periksa tanda kutip, koma, kurung, dan struktur JSON."
+        );
+      }
+
+      if (sortKeys?.value === "yes") {
+        parsed = sortObject(parsed);
+      }
+
+      return parsed;
+    }
+
+    function getIndent() {
+      if (indent?.value === "tab") {
+        return "\t";
+      }
+
+      return Number(
+        indent?.value || 2
+      );
+    }
+
+    formatBtn?.addEventListener(
+      "click",
+      () => {
+        try {
+          const parsed =
+            parseJSON();
+
+          output.value =
+            JSON.stringify(
+              parsed,
+              null,
+              getIndent()
+            );
+
+          showStatus(
+            "JSON valid dan berhasil diformat."
+          );
+        } catch (error) {
+          output.value = "";
+
+          showStatus(
+            error.message ||
+              "JSON tidak valid.",
+            "error"
+          );
+        }
+      }
+    );
+
+    minifyBtn?.addEventListener(
+      "click",
+      () => {
+        try {
+          const parsed =
+            parseJSON();
+
+          output.value =
+            JSON.stringify(
+              parsed
+            );
+
+          showStatus(
+            "JSON valid dan berhasil di-minify."
+          );
+        } catch (error) {
+          output.value = "";
+
+          showStatus(
+            error.message ||
+              "JSON tidak valid.",
+            "error"
+          );
+        }
+      }
+    );
+
+    clearBtn?.addEventListener(
+      "click",
+      () => {
+        if (input) {
+          input.value = "";
+        }
+
+        if (output) {
+          output.value = "";
+        }
+
+        if (status) {
+          status.hidden = true;
+          status.textContent = "";
+        }
+      }
+    );
+
+    copyBtn?.addEventListener(
+      "click",
+      async () => {
+        const value =
+          output?.value || "";
+
+        if (!value) {
+          showStatus(
+            "Belum ada hasil JSON untuk disalin.",
+            "error"
+          );
+
+          return;
+        }
+
+        try {
+          await navigator.clipboard.writeText(
+            value
+          );
+
+          showStatus(
+            "JSON berhasil disalin."
+          );
+        } catch {
+          output.focus();
+          output.select();
+
+          document.execCommand(
+            "copy"
+          );
+
+          showStatus(
+            "JSON berhasil disalin."
+          );
+        }
+      }
+    );
+  </script>
+
+</MainLayout>
