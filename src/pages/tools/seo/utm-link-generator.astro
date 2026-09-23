@@ -1,0 +1,571 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔗 UTM Link Generator",
+  description:
+    "Buat URL dengan parameter UTM untuk melacak sumber, medium, campaign, keyword, dan konten pemasaran dengan UTM Link Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+
+      <h1>{meta.title}</h1>
+
+      <p>
+        Buat URL dengan parameter UTM untuk membantu melacak
+        sumber dan performa campaign pemasaran.
+      </p>
+    </header>
+
+    <section
+      class="tool-box"
+      aria-labelledby="utm-tool-title"
+    >
+
+      <div class="tool-field">
+        <label for="baseUrl">
+          Website URL
+        </label>
+
+        <input
+          id="baseUrl"
+          class="tool-input"
+          type="url"
+          placeholder="https://aimrferdy.com/"
+        />
+      </div>
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="utmSource">
+            Campaign Source *
+          </label>
+
+          <input
+            id="utmSource"
+            class="tool-input"
+            type="text"
+            placeholder="google"
+          />
+
+          <small>
+            Contoh: google, instagram, newsletter
+          </small>
+        </div>
+
+        <div class="tool-field">
+          <label for="utmMedium">
+            Campaign Medium *
+          </label>
+
+          <input
+            id="utmMedium"
+            class="tool-input"
+            type="text"
+            placeholder="organic"
+          />
+
+          <small>
+            Contoh: cpc, social, email
+          </small>
+        </div>
+
+        <div class="tool-field">
+          <label for="utmCampaign">
+            Campaign Name *
+          </label>
+
+          <input
+            id="utmCampaign"
+            class="tool-input"
+            type="text"
+            placeholder="promo-september"
+          />
+
+          <small>
+            Nama campaign yang sedang dilacak.
+          </small>
+        </div>
+
+        <div class="tool-field">
+          <label for="utmTerm">
+            Campaign Term
+          </label>
+
+          <input
+            id="utmTerm"
+            class="tool-input"
+            type="text"
+            placeholder="seo-tools"
+          />
+
+          <small>
+            Biasanya digunakan untuk keyword.
+          </small>
+        </div>
+
+        <div class="tool-field">
+          <label for="utmContent">
+            Campaign Content
+          </label>
+
+          <input
+            id="utmContent"
+            class="tool-input"
+            type="text"
+            placeholder="header-button"
+          />
+
+          <small>
+            Membedakan variasi link atau konten.
+          </small>
+        </div>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="generateUtm"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Generate UTM Link
+        </button>
+
+        <button
+          id="clearUtm"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Bersihkan
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label for="utmOutput">
+          Generated URL
+        </label>
+
+        <textarea
+          id="utmOutput"
+          class="tool-output"
+          rows="5"
+          readonly
+          spellcheck="false"
+          placeholder="URL dengan parameter UTM akan muncul di sini..."
+        ></textarea>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="copyUtm"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Salin URL
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label>
+          Parameter UTM
+        </label>
+
+        <div class="tool-options">
+
+          <span>
+            <strong>utm_source</strong>
+            — sumber traffic
+          </span>
+
+          <span>
+            <strong>utm_medium</strong>
+            — jenis channel
+          </span>
+
+          <span>
+            <strong>utm_campaign</strong>
+            — nama campaign
+          </span>
+
+          <span>
+            <strong>utm_term</strong>
+            — keyword
+          </span>
+
+          <span>
+            <strong>utm_content</strong>
+            — variasi konten
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>UTM Link Generator untuk Tracking Campaign</h2>
+
+      <p>
+        UTM Link Generator adalah tool untuk membuat URL yang dilengkapi
+        parameter UTM. Parameter tersebut dapat digunakan untuk memberikan
+        informasi tambahan mengenai sumber dan konteks traffic ketika URL
+        digunakan dalam campaign pemasaran.
+      </p>
+
+      <h2>Apa Itu UTM?</h2>
+
+      <p>
+        UTM adalah parameter yang ditambahkan ke URL untuk membantu
+        mengidentifikasi informasi campaign. Parameter ini biasanya
+        ditempatkan setelah tanda <strong>?</strong> pada sebuah URL.
+      </p>
+
+      <h2>Contoh URL dengan UTM</h2>
+
+      <pre><code>https://aimrferdy.com/?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=promo-september</code></pre>
+
+      <h2>utm_source</h2>
+
+      <p>
+        <strong>utm_source</strong> digunakan untuk mengidentifikasi
+        sumber traffic atau platform tempat link dibagikan. Contohnya
+        dapat berupa Google, Instagram, newsletter, atau platform lain.
+      </p>
+
+      <h2>utm_medium</h2>
+
+      <p>
+        <strong>utm_medium</strong> digunakan untuk mengidentifikasi
+        medium atau channel pemasaran. Contohnya seperti social, email,
+        cpc, atau referral.
+      </p>
+
+      <h2>utm_campaign</h2>
+
+      <p>
+        <strong>utm_campaign</strong> digunakan untuk memberikan nama
+        pada campaign tertentu sehingga traffic dari campaign tersebut
+        dapat dibedakan dari campaign lainnya.
+      </p>
+
+      <h2>utm_term</h2>
+
+      <p>
+        <strong>utm_term</strong> dapat digunakan untuk mencatat istilah
+        atau keyword tertentu yang berkaitan dengan campaign.
+      </p>
+
+      <h2>utm_content</h2>
+
+      <p>
+        <strong>utm_content</strong> dapat digunakan untuk membedakan
+        beberapa link atau variasi konten dalam campaign yang sama.
+        Misalnya membedakan tombol header dan tombol footer.
+      </p>
+
+      <h2>Manfaat UTM Link</h2>
+
+      <ul>
+        <li>Membantu mengidentifikasi sumber traffic.</li>
+        <li>Membedakan channel pemasaran.</li>
+        <li>Mengelompokkan traffic berdasarkan campaign.</li>
+        <li>Membedakan variasi link dalam campaign.</li>
+        <li>Membantu analisis performa pemasaran.</li>
+      </ul>
+
+      <h2>UTM untuk Social Media</h2>
+
+      <p>
+        Link dengan parameter UTM dapat digunakan ketika sebuah URL
+        dibagikan melalui social media. Penamaan parameter sebaiknya
+        dibuat konsisten agar data campaign lebih mudah dianalisis.
+      </p>
+
+      <h2>UTM untuk Email Marketing</h2>
+
+      <p>
+        UTM juga dapat digunakan pada link dalam email campaign. Dengan
+        penamaan source, medium, dan campaign yang konsisten, traffic dari
+        email dapat dibedakan dari channel lainnya.
+      </p>
+
+      <h2>UTM untuk Campaign Website</h2>
+
+      <p>
+        URL UTM dapat digunakan pada banner, tombol, landing page, atau
+        berbagai aset digital lainnya. Gunakan struktur penamaan yang
+        konsisten untuk memudahkan pengelompokan data.
+      </p>
+
+      <h2>Tips Membuat Parameter UTM</h2>
+
+      <ul>
+        <li>Gunakan penamaan yang konsisten.</li>
+        <li>Gunakan istilah yang mudah dipahami tim.</li>
+        <li>Hindari variasi kapitalisasi yang tidak perlu.</li>
+        <li>Jangan memasukkan informasi sensitif ke dalam URL.</li>
+        <li>Pastikan URL tujuan sudah benar sebelum dibagikan.</li>
+      </ul>
+
+      <h2>UTM dan SEO</h2>
+
+      <p>
+        Parameter UTM terutama digunakan untuk tracking campaign dan
+        atribusi traffic. Jangan menggunakan parameter UTM sebagai
+        pengganti struktur URL utama atau slug halaman.
+      </p>
+
+      <h2>Cara Menggunakan UTM Link Generator</h2>
+
+      <ol>
+        <li>Masukkan URL halaman tujuan.</li>
+        <li>Isi Campaign Source.</li>
+        <li>Isi Campaign Medium.</li>
+        <li>Isi Campaign Name.</li>
+        <li>Tambahkan Campaign Term jika diperlukan.</li>
+        <li>Tambahkan Campaign Content jika diperlukan.</li>
+        <li>Klik Generate UTM Link.</li>
+        <li>Periksa dan salin URL yang dihasilkan.</li>
+      </ol>
+
+      <h2>UTM Link Generator AI Mr Ferdy</h2>
+
+      <p>
+        UTM Link Generator dari AI Mr Ferdy membantu membuat URL tracking
+        secara cepat langsung dari browser. Tool ini cocok untuk campaign
+        social media, email marketing, content marketing, dan berbagai
+        aktivitas pemasaran digital lainnya.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const baseUrl =
+      document.querySelector("#baseUrl");
+
+    const utmSource =
+      document.querySelector("#utmSource");
+
+    const utmMedium =
+      document.querySelector("#utmMedium");
+
+    const utmCampaign =
+      document.querySelector("#utmCampaign");
+
+    const utmTerm =
+      document.querySelector("#utmTerm");
+
+    const utmContent =
+      document.querySelector("#utmContent");
+
+    const utmOutput =
+      document.querySelector("#utmOutput");
+
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+
+    function generateUtm() {
+      const base =
+        clean(baseUrl?.value);
+
+      const source =
+        clean(utmSource?.value);
+
+      const medium =
+        clean(utmMedium?.value);
+
+      const campaign =
+        clean(utmCampaign?.value);
+
+      const term =
+        clean(utmTerm?.value);
+
+      const content =
+        clean(utmContent?.value);
+
+
+      if (!base) {
+        alert(
+          "Masukkan URL website terlebih dahulu."
+        );
+        return;
+      }
+
+
+      if (!source || !medium || !campaign) {
+        alert(
+          "utm_source, utm_medium, dan utm_campaign wajib diisi."
+        );
+        return;
+      }
+
+
+      let url;
+
+      try {
+        url = new URL(base);
+      } catch {
+        alert(
+          "URL website tidak valid."
+        );
+        return;
+      }
+
+
+      url.searchParams.set(
+        "utm_source",
+        source
+      );
+
+      url.searchParams.set(
+        "utm_medium",
+        medium
+      );
+
+      url.searchParams.set(
+        "utm_campaign",
+        campaign
+      );
+
+
+      if (term) {
+        url.searchParams.set(
+          "utm_term",
+          term
+        );
+      }
+
+      if (content) {
+        url.searchParams.set(
+          "utm_content",
+          content
+        );
+      }
+
+
+      if (utmOutput) {
+        utmOutput.value =
+          url.toString();
+      }
+    }
+
+
+    async function copyUtm() {
+      const value =
+        utmOutput?.value || "";
+
+      if (!value) return;
+
+
+      try {
+        await navigator.clipboard.writeText(
+          value
+        );
+      } catch {
+        utmOutput?.select();
+        document.execCommand("copy");
+      }
+
+
+      const button =
+        document.querySelector("#copyUtm");
+
+
+      if (button) {
+        const original =
+          button.textContent;
+
+        button.textContent =
+          "Berhasil Disalin ✓";
+
+        setTimeout(() => {
+          button.textContent =
+            original;
+        }, 1500);
+      }
+    }
+
+
+    function clearUtm() {
+      if (baseUrl) {
+        baseUrl.value = "";
+      }
+
+      if (utmSource) {
+        utmSource.value = "";
+      }
+
+      if (utmMedium) {
+        utmMedium.value = "";
+      }
+
+      if (utmCampaign) {
+        utmCampaign.value = "";
+      }
+
+      if (utmTerm) {
+        utmTerm.value = "";
+      }
+
+      if (utmContent) {
+        utmContent.value = "";
+      }
+
+      if (utmOutput) {
+        utmOutput.value = "";
+      }
+    }
+
+
+    document
+      .querySelector("#generateUtm")
+      ?.addEventListener(
+        "click",
+        generateUtm
+      );
+
+
+    document
+      .querySelector("#copyUtm")
+      ?.addEventListener(
+        "click",
+        copyUtm
+      );
+
+
+    document
+      .querySelector("#clearUtm")
+      ?.addEventListener(
+        "click",
+        clearUtm
+      );
+  </script>
+
+</MainLayout>
