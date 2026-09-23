@@ -1,0 +1,675 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ Open Graph Generator",
+  description:
+    "Buat Open Graph meta tags untuk mengatur judul, deskripsi, URL, gambar, dan tipe konten saat halaman website dibagikan di media sosial.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+
+      <h1>{meta.title}</h1>
+
+      <p>
+        Buat Open Graph meta tags untuk mengontrol tampilan
+        halaman website saat dibagikan di media sosial.
+      </p>
+    </header>
+
+    <section
+      class="tool-box"
+      aria-labelledby="og-tool-title"
+    >
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="ogTitle">
+            OG Title *
+          </label>
+
+          <input
+            id="ogTitle"
+            class="tool-input"
+            type="text"
+            placeholder="AI Mr Ferdy | Website Resmi Platform AI Indonesia"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="ogType">
+            OG Type
+          </label>
+
+          <select
+            id="ogType"
+            class="tool-input"
+          >
+            <option value="website">
+              website
+            </option>
+
+            <option value="article">
+              article
+            </option>
+
+            <option value="product">
+              product
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="tool-field">
+        <label for="ogDescription">
+          OG Description *
+        </label>
+
+        <textarea
+          id="ogDescription"
+          class="tool-input"
+          rows="5"
+          placeholder="Website resmi AI Mr Ferdy. Akses platform AI Indonesia untuk produktivitas digital, pembuatan konten, dan solusi otomatisasi modern."
+        ></textarea>
+      </div>
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="ogUrl">
+            OG URL *
+          </label>
+
+          <input
+            id="ogUrl"
+            class="tool-input"
+            type="url"
+            placeholder="https://aimrferdy.com/"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="ogImage">
+            OG Image URL *
+          </label>
+
+          <input
+            id="ogImage"
+            class="tool-input"
+            type="url"
+            placeholder="https://aimrferdy.com/images/og-cover.jpg"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="ogSiteName">
+            Site Name
+          </label>
+
+          <input
+            id="ogSiteName"
+            class="tool-input"
+            type="text"
+            placeholder="AI Mr Ferdy"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="ogLocale">
+            Locale
+          </label>
+
+          <input
+            id="ogLocale"
+            class="tool-input"
+            type="text"
+            value="id_ID"
+            placeholder="id_ID"
+          />
+        </div>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label>
+          Twitter / X Card
+        </label>
+
+        <div class="tool-options">
+
+          <label>
+            <input
+              id="twitterCard"
+              type="checkbox"
+              checked
+            />
+            Tambahkan Twitter Card
+          </label>
+
+        </div>
+
+      </div>
+
+      <div
+        id="twitterFields"
+        class="tool-grid"
+      >
+
+        <div class="tool-field">
+          <label for="twitterTitle">
+            Twitter Title
+          </label>
+
+          <input
+            id="twitterTitle"
+            class="tool-input"
+            type="text"
+            placeholder="Kosongkan untuk menggunakan OG Title"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="twitterDescription">
+            Twitter Description
+          </label>
+
+          <textarea
+            id="twitterDescription"
+            class="tool-input"
+            rows="4"
+            placeholder="Kosongkan untuk menggunakan OG Description"
+          ></textarea>
+        </div>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="generateOg"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Generate Open Graph
+        </button>
+
+        <button
+          id="clearOg"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Bersihkan
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label for="ogOutput">
+          Meta Tags
+        </label>
+
+        <textarea
+          id="ogOutput"
+          class="tool-output"
+          rows="24"
+          readonly
+          spellcheck="false"
+          placeholder="Hasil Open Graph meta tags akan muncul di sini..."
+        ></textarea>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="copyOg"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Salin Meta Tags
+        </button>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>Open Graph Generator untuk Website</h2>
+
+      <p>
+        Open Graph Generator adalah tool untuk membuat meta tags Open
+        Graph yang dapat digunakan untuk menentukan informasi dasar
+        halaman ketika URL dibagikan pada platform yang mendukung
+        Open Graph.
+      </p>
+
+      <h2>Apa Itu Open Graph?</h2>
+
+      <p>
+        Open Graph adalah protokol metadata yang memungkinkan sebuah
+        halaman menyediakan informasi seperti judul, deskripsi, URL,
+        gambar, dan tipe konten kepada platform lain ketika URL dibagikan.
+      </p>
+
+      <h2>og:title</h2>
+
+      <p>
+        <strong>og:title</strong> menentukan judul yang dapat digunakan
+        sebagai judul preview ketika halaman dibagikan.
+      </p>
+
+      <h2>og:description</h2>
+
+      <p>
+        <strong>og:description</strong> memberikan ringkasan mengenai
+        isi halaman yang dapat digunakan pada preview link.
+      </p>
+
+      <h2>og:url</h2>
+
+      <p>
+        <strong>og:url</strong> menunjukkan URL kanonis atau URL utama
+        yang ingin diasosiasikan dengan objek Open Graph tersebut.
+      </p>
+
+      <h2>og:image</h2>
+
+      <p>
+        <strong>og:image</strong> menentukan gambar yang dapat digunakan
+        dalam preview ketika URL dibagikan.
+      </p>
+
+      <h2>og:type</h2>
+
+      <p>
+        <strong>og:type</strong> menunjukkan jenis objek yang
+        direpresentasikan oleh halaman, misalnya <strong>website</strong>
+        atau <strong>article</strong>.
+      </p>
+
+      <h2>og:site_name</h2>
+
+      <p>
+        <strong>og:site_name</strong> dapat digunakan untuk memberikan
+        nama website atau situs yang terkait dengan halaman tersebut.
+      </p>
+
+      <h2>Open Graph untuk Social Media</h2>
+
+      <p>
+        Metadata Open Graph dapat digunakan oleh berbagai platform
+        yang membaca protokol tersebut untuk membantu membentuk preview
+        sebuah URL. Hasil tampilan akhir dapat berbeda tergantung pada
+        platform dan implementasinya.
+      </p>
+
+      <h2>Twitter Card</h2>
+
+      <p>
+        Twitter Card, yang digunakan pada X, menyediakan metadata
+        tambahan untuk mengontrol informasi tertentu pada preview URL.
+        Tool ini dapat menghasilkan tag dasar Twitter Card menggunakan
+        informasi Open Graph sebagai fallback.
+      </p>
+
+      <h2>Contoh Open Graph Meta Tags</h2>
+
+      <pre><code>&lt;meta property="og:title" content="AI Mr Ferdy" /&gt;
+&lt;meta property="og:description" content="Platform AI Indonesia." /&gt;
+&lt;meta property="og:url" content="https://aimrferdy.com/" /&gt;
+&lt;meta property="og:image" content="https://aimrferdy.com/images/og-cover.jpg" /&gt;
+&lt;meta property="og:type" content="website" /&gt;</code></pre>
+
+      <h2>Tips Membuat Open Graph</h2>
+
+      <ul>
+        <li>Gunakan judul yang sesuai dengan isi halaman.</li>
+        <li>Buat deskripsi yang menggambarkan konten secara jelas.</li>
+        <li>Gunakan URL halaman yang benar.</li>
+        <li>Gunakan gambar yang relevan dengan halaman.</li>
+        <li>Pastikan gambar dapat diakses secara publik.</li>
+        <li>Periksa hasil preview setelah metadata diterapkan.</li>
+      </ul>
+
+      <h2>Open Graph dan SEO</h2>
+
+      <p>
+        Open Graph terutama berkaitan dengan bagaimana URL direpresentasikan
+        ketika dibagikan di platform sosial dan layanan yang mendukungnya.
+        Open Graph bukan pengganti title tag, meta description, canonical,
+        atau structured data untuk kebutuhan SEO halaman.
+      </p>
+
+      <h2>Cara Menggunakan Open Graph Generator</h2>
+
+      <ol>
+        <li>Masukkan judul halaman.</li>
+        <li>Masukkan deskripsi halaman.</li>
+        <li>Masukkan URL halaman.</li>
+        <li>Masukkan URL gambar Open Graph.</li>
+        <li>Pilih tipe konten.</li>
+        <li>Masukkan nama website dan locale jika diperlukan.</li>
+        <li>Aktifkan Twitter Card jika diperlukan.</li>
+        <li>Klik Generate Open Graph.</li>
+        <li>Salin meta tags yang dihasilkan.</li>
+      </ol>
+
+      <h2>Open Graph Generator AI Mr Ferdy</h2>
+
+      <p>
+        Open Graph Generator dari AI Mr Ferdy membantu membuat metadata
+        Open Graph dan Twitter Card secara cepat langsung dari browser.
+        Hasil dapat disesuaikan kembali dengan kebutuhan halaman sebelum
+        dipasang pada website.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const ogTitle =
+      document.querySelector("#ogTitle");
+
+    const ogDescription =
+      document.querySelector("#ogDescription");
+
+    const ogUrl =
+      document.querySelector("#ogUrl");
+
+    const ogImage =
+      document.querySelector("#ogImage");
+
+    const ogType =
+      document.querySelector("#ogType");
+
+    const ogSiteName =
+      document.querySelector("#ogSiteName");
+
+    const ogLocale =
+      document.querySelector("#ogLocale");
+
+    const twitterCard =
+      document.querySelector("#twitterCard");
+
+    const twitterTitle =
+      document.querySelector("#twitterTitle");
+
+    const twitterDescription =
+      document.querySelector("#twitterDescription");
+
+    const twitterFields =
+      document.querySelector("#twitterFields");
+
+    const ogOutput =
+      document.querySelector("#ogOutput");
+
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+
+    function updateTwitterFields() {
+      if (!twitterFields) return;
+
+      twitterFields.hidden =
+        !twitterCard?.checked;
+    }
+
+
+    function generateOg() {
+      const title =
+        clean(ogTitle?.value);
+
+      const description =
+        clean(ogDescription?.value);
+
+      const url =
+        clean(ogUrl?.value);
+
+      const image =
+        clean(ogImage?.value);
+
+      const type =
+        clean(ogType?.value) ||
+        "website";
+
+      const siteName =
+        clean(ogSiteName?.value);
+
+      const locale =
+        clean(ogLocale?.value);
+
+      if (!title) {
+        alert(
+          "Masukkan OG Title terlebih dahulu."
+        );
+        return;
+      }
+
+      if (!description) {
+        alert(
+          "Masukkan OG Description terlebih dahulu."
+        );
+        return;
+      }
+
+      if (!url) {
+        alert(
+          "Masukkan OG URL terlebih dahulu."
+        );
+        return;
+      }
+
+      if (!image) {
+        alert(
+          "Masukkan OG Image URL terlebih dahulu."
+        );
+        return;
+      }
+
+
+      const lines = [
+        `<meta property="og:title" content="${escapeHtml(title)}" />`,
+        `<meta property="og:description" content="${escapeHtml(description)}" />`,
+        `<meta property="og:url" content="${escapeHtml(url)}" />`,
+        `<meta property="og:image" content="${escapeHtml(image)}" />`,
+        `<meta property="og:type" content="${escapeHtml(type)}" />`
+      ];
+
+
+      if (siteName) {
+        lines.push(
+          `<meta property="og:site_name" content="${escapeHtml(siteName)}" />`
+        );
+      }
+
+
+      if (locale) {
+        lines.push(
+          `<meta property="og:locale" content="${escapeHtml(locale)}" />`
+        );
+      }
+
+
+      if (twitterCard?.checked) {
+        const cardTitle =
+          clean(twitterTitle?.value) ||
+          title;
+
+        const cardDescription =
+          clean(twitterDescription?.value) ||
+          description;
+
+        lines.push("");
+
+        lines.push(
+          `<meta name="twitter:card" content="summary_large_image" />`
+        );
+
+        lines.push(
+          `<meta name="twitter:title" content="${escapeHtml(cardTitle)}" />`
+        );
+
+        lines.push(
+          `<meta name="twitter:description" content="${escapeHtml(cardDescription)}" />`
+        );
+
+        lines.push(
+          `<meta name="twitter:image" content="${escapeHtml(image)}" />`
+        );
+      }
+
+
+      if (ogOutput) {
+        ogOutput.value =
+          lines.join("\n");
+      }
+    }
+
+
+    async function copyOg() {
+      const value =
+        ogOutput?.value || "";
+
+      if (!value) return;
+
+
+      try {
+        await navigator.clipboard.writeText(
+          value
+        );
+      } catch {
+        ogOutput?.select();
+        document.execCommand("copy");
+      }
+
+
+      const button =
+        document.querySelector("#copyOg");
+
+
+      if (button) {
+        const original =
+          button.textContent;
+
+        button.textContent =
+          "Berhasil Disalin ✓";
+
+        setTimeout(() => {
+          button.textContent =
+            original;
+        }, 1500);
+      }
+    }
+
+
+    function clearOg() {
+      if (ogTitle) {
+        ogTitle.value = "";
+      }
+
+      if (ogDescription) {
+        ogDescription.value = "";
+      }
+
+      if (ogUrl) {
+        ogUrl.value = "";
+      }
+
+      if (ogImage) {
+        ogImage.value = "";
+      }
+
+      if (ogType) {
+        ogType.value = "website";
+      }
+
+      if (ogSiteName) {
+        ogSiteName.value = "";
+      }
+
+      if (ogLocale) {
+        ogLocale.value = "id_ID";
+      }
+
+      if (twitterCard) {
+        twitterCard.checked = true;
+      }
+
+      if (twitterTitle) {
+        twitterTitle.value = "";
+      }
+
+      if (twitterDescription) {
+        twitterDescription.value = "";
+      }
+
+      if (ogOutput) {
+        ogOutput.value = "";
+      }
+
+      updateTwitterFields();
+    }
+
+
+    twitterCard?.addEventListener(
+      "change",
+      updateTwitterFields
+    );
+
+
+    document
+      .querySelector("#generateOg")
+      ?.addEventListener(
+        "click",
+        generateOg
+      );
+
+
+    document
+      .querySelector("#copyOg")
+      ?.addEventListener(
+        "click",
+        copyOg
+      );
+
+
+    document
+      .querySelector("#clearOg")
+      ?.addEventListener(
+        "click",
+        clearOg
+      );
+
+
+    updateTwitterFields();
+  </script>
+
+</MainLayout>
