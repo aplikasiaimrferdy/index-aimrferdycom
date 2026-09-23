@@ -1,0 +1,568 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🗺️ Sitemap.xml Generator",
+  description:
+    "Buat sitemap.xml untuk website dengan cepat menggunakan Sitemap.xml Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+
+      <h1>{meta.title}</h1>
+
+      <p>
+        Buat file sitemap.xml dari daftar URL website
+        dengan cepat dan mudah.
+      </p>
+    </header>
+
+    <section
+      class="tool-box"
+      aria-labelledby="sitemap-tool-title"
+    >
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="siteUrl">
+            URL Website
+          </label>
+
+          <input
+            id="siteUrl"
+            class="tool-input"
+            type="url"
+            value="https://aimrferdy.com"
+            placeholder="https://example.com"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="changefreq">
+            Change Frequency
+          </label>
+
+          <select
+            id="changefreq"
+            class="tool-input"
+          >
+            <option value="weekly">Weekly</option>
+            <option value="daily">Daily</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+            <option value="always">Always</option>
+            <option value="hourly">Hourly</option>
+            <option value="never">Never</option>
+          </select>
+        </div>
+
+        <div class="tool-field">
+          <label for="priority">
+            Priority
+          </label>
+
+          <select
+            id="priority"
+            class="tool-input"
+          >
+            <option value="1.0">1.0</option>
+            <option value="0.9">0.9</option>
+            <option value="0.8">0.8</option>
+            <option value="0.7" selected>0.7</option>
+            <option value="0.6">0.6</option>
+            <option value="0.5">0.5</option>
+            <option value="0.4">0.4</option>
+            <option value="0.3">0.3</option>
+            <option value="0.2">0.2</option>
+            <option value="0.1">0.1</option>
+          </select>
+        </div>
+
+        <div class="tool-field">
+          <label for="lastmod">
+            Last Modified
+          </label>
+
+          <input
+            id="lastmod"
+            class="tool-input"
+            type="date"
+          />
+        </div>
+
+      </div>
+
+      <div class="tool-field">
+        <label for="urlList">
+          Daftar URL
+        </label>
+
+        <textarea
+          id="urlList"
+          class="tool-input"
+          rows="12"
+          placeholder={`Contoh:
+/
+ /about/
+ /contact/
+ /blog/
+ /tools/`}
+        ></textarea>
+
+        <small>
+          Masukkan satu URL atau path per baris.
+          Path seperti /about/ akan otomatis digabung dengan URL website.
+        </small>
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="generateSitemap"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Generate sitemap.xml
+        </button>
+
+        <button
+          id="clearSitemap"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Bersihkan
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+
+        <label for="sitemapOutput">
+          sitemap.xml
+        </label>
+
+        <textarea
+          id="sitemapOutput"
+          class="tool-output"
+          rows="20"
+          readonly
+          spellcheck="false"
+          placeholder="Hasil sitemap.xml akan muncul di sini..."
+        ></textarea>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="copySitemap"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Salin sitemap.xml
+        </button>
+
+        <button
+          id="downloadSitemap"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Download sitemap.xml
+        </button>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>Sitemap.xml Generator untuk SEO</h2>
+
+      <p>
+        Sitemap.xml Generator adalah tool untuk membuat file
+        <strong>sitemap.xml</strong> dari daftar URL website.
+        Sitemap membantu memberikan informasi kepada crawler mengenai
+        URL yang ingin ditemukan dan dipertimbangkan untuk di-crawl.
+      </p>
+
+      <h2>Apa Itu Sitemap.xml?</h2>
+
+      <p>
+        Sitemap XML adalah file XML yang berisi daftar URL yang terkait
+        dengan sebuah website. File tersebut biasanya ditempatkan di
+        lokasi seperti <strong>/sitemap.xml</strong>.
+      </p>
+
+      <h2>Fungsi Sitemap untuk Website</h2>
+
+      <p>
+        Sitemap dapat membantu mesin pencari menemukan URL pada website,
+        terutama pada website yang memiliki banyak halaman atau struktur
+        internal yang kompleks.
+      </p>
+
+      <h2>Struktur Sitemap.xml</h2>
+
+      <p>
+        Sitemap XML menggunakan struktur XML dengan elemen seperti
+        <strong>urlset</strong>, <strong>url</strong>,
+        <strong>loc</strong>, dan informasi metadata URL tertentu.
+      </p>
+
+      <pre><code>&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://example.com/&lt;/loc&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+
+      <h2>Change Frequency</h2>
+
+      <p>
+        Nilai change frequency dapat memberikan informasi mengenai
+        perkiraan frekuensi perubahan URL. Nilai ini bukan perintah
+        kepada mesin pencari untuk melakukan crawl pada interval tertentu.
+      </p>
+
+      <h2>Priority</h2>
+
+      <p>
+        Priority merupakan nilai relatif untuk URL dalam sitemap.
+        Nilainya dapat digunakan untuk menggambarkan tingkat kepentingan
+        relatif antar-URL dalam website, bukan sebagai jaminan peringkat
+        pencarian.
+      </p>
+
+      <h2>Last Modified</h2>
+
+      <p>
+        Informasi last modification dapat digunakan untuk menunjukkan
+        kapan sebuah URL terakhir diperbarui. Data tersebut sebaiknya
+        mencerminkan waktu perubahan konten yang sebenarnya.
+      </p>
+
+      <h2>Sitemap dan SEO</h2>
+
+      <p>
+        Sitemap merupakan bagian dari pengelolaan crawling website.
+        Sitemap tidak secara langsung menjamin sebuah halaman diindeks
+        atau mendapatkan posisi tertentu dalam hasil pencarian.
+      </p>
+
+      <h2>URL yang Sebaiknya Masuk Sitemap</h2>
+
+      <ul>
+        <li>Halaman utama website.</li>
+        <li>Halaman artikel yang ingin ditemukan mesin pencari.</li>
+        <li>Halaman kategori yang relevan.</li>
+        <li>Halaman tools yang dapat diakses publik.</li>
+        <li>Halaman penting lain yang memang ingin ditemukan crawler.</li>
+      </ul>
+
+      <h2>URL yang Perlu Diperhatikan</h2>
+
+      <p>
+        Hindari memasukkan URL yang tidak seharusnya tersedia untuk
+        crawling atau URL duplikat. Pastikan URL dalam sitemap merupakan
+        URL kanonis dan dapat diakses dengan benar.
+      </p>
+
+      <h2>Cara Menggunakan Sitemap.xml Generator</h2>
+
+      <ol>
+        <li>Masukkan URL utama website.</li>
+        <li>Pilih change frequency jika diperlukan.</li>
+        <li>Pilih nilai priority.</li>
+        <li>Pilih tanggal last modified jika relevan.</li>
+        <li>Masukkan daftar URL satu per baris.</li>
+        <li>Klik Generate sitemap.xml.</li>
+        <li>Periksa XML yang dihasilkan.</li>
+        <li>Download sitemap.xml.</li>
+      </ol>
+
+      <h2>Sitemap.xml Generator AI Mr Ferdy</h2>
+
+      <p>
+        Sitemap.xml Generator dari AI Mr Ferdy membantu membuat file
+        sitemap XML dari browser tanpa perlu menyusun struktur XML secara
+        manual.
+      </p>
+
+      <p>
+        Setelah file dibuat, periksa kembali seluruh URL dan pastikan
+        sitemap ditempatkan pada lokasi yang sesuai dengan konfigurasi
+        website.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const siteUrl =
+      document.querySelector("#siteUrl");
+
+    const changefreq =
+      document.querySelector("#changefreq");
+
+    const priority =
+      document.querySelector("#priority");
+
+    const lastmod =
+      document.querySelector("#lastmod");
+
+    const urlList =
+      document.querySelector("#urlList");
+
+    const sitemapOutput =
+      document.querySelector("#sitemapOutput");
+
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+
+    function normalizeBaseUrl(value) {
+      return clean(value).replace(/\/+$/, "");
+    }
+
+
+    function buildUrl(baseUrl, path) {
+      const value = clean(path);
+
+      if (!value) return "";
+
+      if (/^https?:\/\//i.test(value)) {
+        return value;
+      }
+
+      if (value === "/") {
+        return `${baseUrl}/`;
+      }
+
+      return `${baseUrl}/${value.replace(/^\/+/, "")}`;
+    }
+
+
+    function escapeXml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+    }
+
+
+    function generateSitemap() {
+      const baseUrl =
+        normalizeBaseUrl(siteUrl?.value);
+
+      if (!baseUrl) {
+        alert("Masukkan URL website terlebih dahulu.");
+        return;
+      }
+
+      const urls =
+        clean(urlList?.value)
+          .split("\n")
+          .map(path =>
+            buildUrl(baseUrl, path)
+          )
+          .filter(Boolean);
+
+      if (!urls.length) {
+        alert("Masukkan minimal satu URL.");
+        return;
+      }
+
+      const uniqueUrls = [
+        ...new Set(urls)
+      ];
+
+      const frequency =
+        clean(changefreq?.value) ||
+        "weekly";
+
+      const selectedPriority =
+        clean(priority?.value) ||
+        "0.7";
+
+      const date =
+        clean(lastmod?.value);
+
+      const entries =
+        uniqueUrls.map(url => {
+          const lines = [
+            "  <url>",
+            `    <loc>${escapeXml(url)}</loc>`
+          ];
+
+          if (date) {
+            lines.push(
+              `    <lastmod>${escapeXml(date)}</lastmod>`
+            );
+          }
+
+          lines.push(
+            `    <changefreq>${frequency}</changefreq>`
+          );
+
+          lines.push(
+            `    <priority>${selectedPriority}</priority>`
+          );
+
+          lines.push("  </url>");
+
+          return lines.join("\n");
+        });
+
+      const xml = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        entries.join("\n"),
+        "</urlset>"
+      ].join("\n");
+
+      if (sitemapOutput) {
+        sitemapOutput.value = xml;
+      }
+    }
+
+
+    async function copySitemap() {
+      const value =
+        sitemapOutput?.value || "";
+
+      if (!value) return;
+
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        sitemapOutput?.select();
+        document.execCommand("copy");
+      }
+
+      const button =
+        document.querySelector("#copySitemap");
+
+      if (button) {
+        const original =
+          button.textContent;
+
+        button.textContent =
+          "Berhasil Disalin ✓";
+
+        setTimeout(() => {
+          button.textContent = original;
+        }, 1500);
+      }
+    }
+
+
+    function downloadSitemap() {
+      const value =
+        sitemapOutput?.value || "";
+
+      if (!value) return;
+
+      const blob =
+        new Blob(
+          [value],
+          {
+            type: "application/xml;charset=utf-8"
+          }
+        );
+
+      const downloadUrl =
+        URL.createObjectURL(blob);
+
+      const link =
+        document.createElement("a");
+
+      link.href = downloadUrl;
+      link.download = "sitemap.xml";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(downloadUrl);
+    }
+
+
+    function clearSitemap() {
+      if (siteUrl) {
+        siteUrl.value =
+          "https://aimrferdy.com";
+      }
+
+      if (changefreq) {
+        changefreq.value =
+          "weekly";
+      }
+
+      if (priority) {
+        priority.value =
+          "0.7";
+      }
+
+      if (lastmod) {
+        lastmod.value = "";
+      }
+
+      if (urlList) {
+        urlList.value = "";
+      }
+
+      if (sitemapOutput) {
+        sitemapOutput.value = "";
+      }
+    }
+
+
+    document
+      .querySelector("#generateSitemap")
+      ?.addEventListener(
+        "click",
+        generateSitemap
+      );
+
+
+    document
+      .querySelector("#copySitemap")
+      ?.addEventListener(
+        "click",
+        copySitemap
+      );
+
+
+    document
+      .querySelector("#downloadSitemap")
+      ?.addEventListener(
+        "click",
+        downloadSitemap
+      );
+
+
+    document
+      .querySelector("#clearSitemap")
+      ?.addEventListener(
+        "click",
+        clearSitemap
+      );
+  </script>
+
+</MainLayout>
