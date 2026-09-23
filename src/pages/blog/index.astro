@@ -1,3 +1,4 @@
+astro
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import { SITE } from "../../lib/site";
@@ -9,29 +10,29 @@ const POSTS_PER_PAGE = 9;
 let posts = await getCollection("blog");
 
 posts = posts.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  (a, b) =>
+    new Date(b.data.date).getTime() -
+    new Date(a.data.date).getTime()
 );
 
-const currentPage = 1;
+const totalPosts = posts.length;
 
-const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
-
-const paginatedPosts = posts.slice(
-  0,
-  POSTS_PER_PAGE
+const totalPages = Math.ceil(
+  totalPosts / POSTS_PER_PAGE
 );
 ---
 
 <MainLayout
   title={`Blog | ${SITE.title}`}
   description={SITE.description}
-  canonical={SITE.url("/blog")}
+  canonical={SITE.url("/blog/")}
 >
 
 <section class="blog-page">
 
   <div class="container">
 
+    <!-- HERO -->
     <div class="page-wrap">
 
       <div class="page-hero center small">
@@ -50,113 +51,150 @@ const paginatedPosts = posts.slice(
 
     </div>
 
+
     <!-- POSTS -->
-    <div class="blog-grid">
+    <div
+      class="blog-grid"
+      id="blog-grid"
+    >
 
-      {paginatedPosts.map((post) => (
+      {
+        posts.map((post, index) => {
 
-        <article class="blog-card">
+          const page =
+            Math.floor(
+              index / POSTS_PER_PAGE
+            ) + 1;
 
-          <a
-            href={`/blog/${post.slug}/`}
-            class="blog-card-link"
-          >
+          return (
 
-            <div class="blog-card-image">
+            <article
+              class="blog-card"
+              data-page={page}
+            >
 
-              <img
-                src={SITE.url(`/api/og/${post.slug}.svg`)}
-                alt={post.data.title}
-                loading="lazy"
-                width="1200"
-                height="630"
-              />
+              <a
+                href={`/blog/${post.slug}/`}
+                class="blog-card-link"
+              >
 
-            </div>
+                <div class="blog-card-image">
 
-            <div class="blog-card-content">
+                  <img
+                    src={SITE.url(
+                      `/api/og/${post.slug}.svg`
+                    )}
+                    alt={post.data.title}
+                    loading="lazy"
+                    width="1200"
+                    height="630"
+                  />
 
-              <div class="blog-card-meta">
-                {post.data.date}
-              </div>
+                </div>
 
-              <h2>
-                {post.data.title}
-              </h2>
+                <div class="blog-card-content">
 
-              {post.data.description && (
-                <p>
-                  {post.data.description}
-                </p>
-              )}
+                  <div class="blog-card-meta">
+                    {post.data.date}
+                  </div>
 
-              <span class="readmore">
-                Read Article →
-              </span>
+                  <h2>
+                    {post.data.title}
+                  </h2>
 
-            </div>
+                  {
+                    post.data.description && (
+                      <p>
+                        {post.data.description}
+                      </p>
+                    )
+                  }
 
-          </a>
+                  <span class="readmore">
+                    Read Article →
+                  </span>
 
-        </article>
+                </div>
 
-      ))}
+              </a>
+
+            </article>
+
+          );
+
+        })
+      }
 
     </div>
 
+
     <!-- PAGINATION -->
-    {totalPages > 1 && (
+    {
+      totalPages > 1 && (
 
-      <div class="pagination">
+        <nav
+          class="pagination"
+          id="blog-pagination"
+          aria-label="Blog pagination"
+        >
 
-        <div class="pagination-pages">
-
-          {Array.from(
-            { length: totalPages },
-            (_, i) => i + 1
-          ).map((page) => (
-
-            <a
-              href={
-                page === 1
-                  ? "/blog/"
-                  : `/blog/page/${page}/`
-              }
-              class:list={[
-                "pagination-number",
-                page === currentPage && "active"
-              ]}
-              aria-current={
-                page === currentPage
-                  ? "page"
-                  : undefined
-              }
-            >
-              {page}
-            </a>
-
-          ))}
-
-        </div>
-
-        {currentPage < totalPages && (
-          <a
-            href={`/blog/page/${currentPage + 1}/`}
+          <button
+            type="button"
             class="pagination-btn"
+            id="prev-page"
+            aria-label="Previous page"
+          >
+            ← Previous
+          </button>
+
+
+          <div
+            class="pagination-pages"
+            id="pagination-pages"
+          >
+
+            {
+              Array.from(
+                { length: totalPages },
+                (_, index) => index + 1
+              ).map((page) => (
+
+                <button
+                  type="button"
+                  class="pagination-number"
+                  data-page={page}
+                  aria-label={`Go to page ${page}`}
+                >
+                  {page}
+                </button>
+
+              ))
+            }
+
+          </div>
+
+
+          <button
+            type="button"
+            class="pagination-btn"
+            id="next-page"
+            aria-label="Next page"
           >
             Next →
-          </a>
-        )}
+          </button>
 
-      </div>
+        </nav>
 
-    )}
+      )
+    }
 
   </div>
 
 </section>
 
+
 <style>
+
 .pagination{
   display:flex;
   align-items:center;
@@ -169,6 +207,7 @@ const paginatedPosts = posts.slice(
 .pagination-pages{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
   flex-wrap:wrap;
 }
@@ -178,43 +217,414 @@ const paginatedPosts = posts.slice(
   display:inline-flex;
   align-items:center;
   justify-content:center;
+
   min-width:44px;
   height:44px;
+
   padding:0 16px;
+
   border:1px solid var(--border);
   border-radius:14px;
+
   background:var(--card);
+
   color:var(--text-soft);
+
   text-decoration:none;
+
   backdrop-filter:var(--blur);
+
+  cursor:pointer;
+
   transition:var(--transition);
 }
 
-.pagination-btn:hover,
+.pagination-btn:hover:not(:disabled),
 .pagination-number:hover{
   transform:translateY(-2px);
+
   border-color:var(--border-strong);
+
   color:var(--text);
 }
 
 .pagination-number.active{
   background:var(--primary);
+
   color:#fff;
-  border:none;
+
+  border-color:var(--primary);
+}
+
+.pagination-btn:disabled{
+  opacity:.45;
+
+  cursor:not-allowed;
+
+  transform:none;
 }
 
 @media(max-width:640px){
 
   .pagination{
     gap:10px;
+    margin-top:40px;
+  }
+
+  .pagination-pages{
+    width:100%;
+    order:1;
   }
 
   .pagination-btn{
-    width:100%;
-    justify-content:center;
+    flex:1;
+    min-width:0;
   }
 
 }
+
 </style>
 
+
+<script>
+
+  const POSTS_PER_PAGE = 9;
+
+  const cards = Array.from(
+    document.querySelectorAll(
+      "#blog-grid .blog-card[data-page]"
+    )
+  );
+
+  const pageButtons = Array.from(
+    document.querySelectorAll(
+      "#pagination-pages .pagination-number"
+    )
+  );
+
+  const prevButton =
+    document.getElementById(
+      "prev-page"
+    );
+
+  const nextButton =
+    document.getElementById(
+      "next-page"
+    );
+
+
+  /*
+   * TOTAL PAGE
+   */
+
+  const totalPages =
+    Math.ceil(
+      cards.length / POSTS_PER_PAGE
+    );
+
+
+  /*
+   * GET PAGE FROM URL
+   */
+
+  function getPageFromUrl(){
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const value =
+      Number(
+        params.get("page")
+      );
+
+    if (
+      !Number.isFinite(value) ||
+      value < 1
+    ){
+      return 1;
+    }
+
+    return Math.min(
+      value,
+      totalPages
+    );
+
+  }
+
+
+  /*
+   * UPDATE URL
+   */
+
+  function updateUrl(page){
+
+    const url =
+      page === 1
+        ? "/blog/"
+        : `/blog/?page=${page}`;
+
+    window.history.pushState(
+      {
+        page
+      },
+      "",
+      url
+    );
+
+  }
+
+
+  /*
+   * SHOW PAGE
+   */
+
+  function showPage(
+    page,
+    updateHistory = true
+  ){
+
+    page =
+      Math.max(
+        1,
+        Math.min(
+          page,
+          totalPages
+        )
+      );
+
+
+    /*
+     * SHOW / HIDE POSTS
+     */
+
+    cards.forEach((card) => {
+
+      const cardPage =
+        Number(
+          card.dataset.page
+        );
+
+      card.hidden =
+        cardPage !== page;
+
+    });
+
+
+    /*
+     * ACTIVE NUMBER
+     */
+
+    pageButtons.forEach(
+      (button) => {
+
+        const buttonPage =
+          Number(
+            button.dataset.page
+          );
+
+        const active =
+          buttonPage === page;
+
+        button.classList.toggle(
+          "active",
+          active
+        );
+
+        if(active){
+
+          button.setAttribute(
+            "aria-current",
+            "page"
+          );
+
+        }else{
+
+          button.removeAttribute(
+            "aria-current"
+          );
+
+        }
+
+      }
+    );
+
+
+    /*
+     * PREVIOUS
+     */
+
+    if(prevButton){
+
+      prevButton.disabled =
+        page <= 1;
+
+    }
+
+
+    /*
+     * NEXT
+     */
+
+    if(nextButton){
+
+      nextButton.disabled =
+        page >= totalPages;
+
+    }
+
+
+    /*
+     * URL
+     */
+
+    if(updateHistory){
+
+      updateUrl(page);
+
+    }
+
+
+    /*
+     * SCROLL
+     */
+
+    const grid =
+      document.getElementById(
+        "blog-grid"
+      );
+
+    if(grid){
+
+      const top =
+        grid.getBoundingClientRect().top +
+        window.scrollY -
+        100;
+
+      window.scrollTo({
+
+        top,
+
+        behavior:"smooth"
+
+      });
+
+    }
+
+  }
+
+
+  /*
+   * PAGE NUMBER CLICK
+   */
+
+  pageButtons.forEach(
+    (button) => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const page =
+            Number(
+              button.dataset.page
+            );
+
+          showPage(page);
+
+        }
+      );
+
+    }
+  );
+
+
+  /*
+   * PREVIOUS CLICK
+   */
+
+  if(prevButton){
+
+    prevButton.addEventListener(
+      "click",
+      () => {
+
+        const currentPage =
+          getPageFromUrl();
+
+        if(
+          currentPage > 1
+        ){
+
+          showPage(
+            currentPage - 1
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * NEXT CLICK
+   */
+
+  if(nextButton){
+
+    nextButton.addEventListener(
+      "click",
+      () => {
+
+        const currentPage =
+          getPageFromUrl();
+
+        if(
+          currentPage < totalPages
+        ){
+
+          showPage(
+            currentPage + 1
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * BROWSER BACK / FORWARD
+   */
+
+  window.addEventListener(
+    "popstate",
+    () => {
+
+      showPage(
+        getPageFromUrl(),
+        false
+      );
+
+    }
+  );
+
+
+  /*
+   * INITIAL PAGE
+   */
+
+  showPage(
+    getPageFromUrl(),
+    false
+  );
+
+</script>
+
 </MainLayout>
+
