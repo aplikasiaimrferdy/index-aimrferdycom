@@ -1,0 +1,439 @@
+astro
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🎬 YouTube Title Generator",
+  description:
+    "Buat ide judul YouTube yang menarik, relevan, dan sesuai topik video dengan YouTube Title Generator dari AI Mr Ferdy.",
+  category: "Content",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="tool-badge">Content</span>
+      <h1>YouTube Title Generator</h1>
+      <p>
+        Buat berbagai ide judul YouTube berdasarkan topik, keyword,
+        dan gaya video yang ingin kamu buat.
+      </p>
+    </header>
+
+    <section class="tool-card">
+
+      <div class="form-group">
+        <label for="topic">Topik Video</label>
+        <input
+          id="topic"
+          type="text"
+          placeholder="Contoh: Tutorial ChatGPT untuk pemula"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="keyword">Keyword Utama</label>
+        <input
+          id="keyword"
+          type="text"
+          placeholder="Contoh: ChatGPT"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="audience">Target Audiens</label>
+        <input
+          id="audience"
+          type="text"
+          placeholder="Contoh: pemula, content creator, pelajar"
+        />
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="style">Gaya Judul</label>
+          <select id="style">
+            <option value="seo">SEO</option>
+            <option value="curiosity">Curiosity</option>
+            <option value="tutorial">Tutorial</option>
+            <option value="list">List / Daftar</option>
+            <option value="review">Review</option>
+            <option value="educational">Edukasi</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="count">Jumlah Judul</label>
+          <select id="count">
+            <option value="5">5 Judul</option>
+            <option value="10" selected>10 Judul</option>
+            <option value="20">20 Judul</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button type="button" id="generateBtn">
+        ✨ Generate Titles
+      </button>
+
+    </section>
+
+    <section class="result-card" id="resultCard" hidden>
+
+      <div class="result-header">
+        <h2>Hasil Judul YouTube</h2>
+
+        <button type="button" id="copyBtn">
+          Copy
+        </button>
+      </div>
+
+      <textarea
+        id="result"
+        readonly
+        placeholder="Judul YouTube akan muncul di sini..."
+      ></textarea>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>YouTube Title Generator untuk Membuat Judul Video</h2>
+
+      <p>
+        <strong>YouTube Title Generator</strong> adalah tool yang dapat
+        membantu content creator menemukan berbagai ide judul video
+        berdasarkan topik dan keyword yang diberikan. Judul merupakan
+        salah satu elemen penting yang membantu penonton memahami isi
+        video sebelum memutuskan untuk membukanya.
+      </p>
+
+      <p>
+        AI Mr Ferdy menyediakan YouTube Title Generator untuk membantu
+        proses brainstorming judul secara lebih cepat. Pengguna dapat
+        memasukkan topik video, keyword utama, target audiens, serta gaya
+        judul yang diinginkan.
+      </p>
+
+      <h2>Apa Itu YouTube Title Generator?</h2>
+
+      <p>
+        YouTube Title Generator adalah alat untuk menghasilkan berbagai
+        variasi judul berdasarkan informasi yang diberikan pengguna.
+        Tool ini dapat digunakan ketika seorang creator membutuhkan
+        beberapa alternatif judul sebelum menentukan judul akhir video.
+      </p>
+
+      <p>
+        Dengan menyediakan beberapa pilihan, creator dapat membandingkan
+        sudut pandang, struktur, dan penggunaan keyword dari masing-masing
+        judul.
+      </p>
+
+      <h2>Mengapa Judul YouTube Penting?</h2>
+
+      <p>
+        Judul membantu memberikan konteks mengenai isi sebuah video.
+        Judul yang jelas membuat calon penonton lebih mudah memahami
+        topik yang akan mereka lihat.
+      </p>
+
+      <p>
+        Selain itu, keyword yang relevan pada judul dapat membantu
+        menjelaskan topik video kepada sistem pencarian YouTube.
+        Namun, judul sebaiknya tetap dibuat untuk manusia dan tidak
+        dipenuhi keyword secara berlebihan.
+      </p>
+
+      <h2>Cara Membuat Judul YouTube yang Baik</h2>
+
+      <p>
+        Tidak ada satu formula yang cocok untuk semua jenis video.
+        Judul dapat disesuaikan dengan konten, target audiens, dan tujuan
+        video.
+      </p>
+
+      <h3>Gunakan Topik yang Jelas</h3>
+
+      <p>
+        Penonton sebaiknya dapat memahami topik utama video hanya dengan
+        membaca judul. Hindari judul yang terlalu umum jika informasi
+        yang lebih spesifik dapat diberikan.
+      </p>
+
+      <h3>Gunakan Keyword yang Relevan</h3>
+
+      <p>
+        Jika terdapat keyword utama yang memang menggambarkan isi video,
+        keyword tersebut dapat digunakan secara natural pada judul.
+      </p>
+
+      <h3>Sesuaikan dengan Audiens</h3>
+
+      <p>
+        Gunakan bahasa yang sesuai dengan target penonton. Judul untuk
+        video edukasi pemula dapat menggunakan pendekatan yang berbeda
+        dengan judul untuk audiens profesional.
+      </p>
+
+      <h3>Jangan Menyesatkan Penonton</h3>
+
+      <p>
+        Judul harus sesuai dengan isi video. Hindari membuat klaim atau
+        janji yang tidak benar hanya untuk mendapatkan perhatian.
+      </p>
+
+      <h2>Jenis Judul YouTube yang Bisa Dibuat</h2>
+
+      <ul>
+        <li>Judul tutorial.</li>
+        <li>Judul edukasi.</li>
+        <li>Judul review.</li>
+        <li>Judul berbentuk daftar.</li>
+        <li>Judul panduan.</li>
+        <li>Judul berdasarkan pertanyaan.</li>
+        <li>Judul berbasis keyword.</li>
+        <li>Judul untuk konten pemula.</li>
+      </ul>
+
+      <h2>YouTube Title Generator untuk SEO</h2>
+
+      <p>
+        SEO YouTube berkaitan dengan bagaimana video dapat ditemukan
+        melalui pencarian dan direkomendasikan kepada audiens yang
+        relevan. Judul merupakan salah satu elemen yang memberikan
+        konteks mengenai isi video.
+      </p>
+
+      <p>
+        Karena itu, keyword sebaiknya dipilih berdasarkan topik yang
+        benar-benar dibahas dalam video. Selain judul, creator juga perlu
+        memperhatikan thumbnail, deskripsi, isi video, serta relevansi
+        keseluruhan konten dengan kebutuhan penonton.
+      </p>
+
+      <h2>Manfaat Menggunakan YouTube Title Generator</h2>
+
+      <ul>
+        <li>Membantu menemukan ide judul dengan lebih cepat.</li>
+        <li>Menghasilkan beberapa variasi judul.</li>
+        <li>Membantu proses brainstorming konten.</li>
+        <li>Mendukung penggunaan keyword yang relevan.</li>
+        <li>Membantu creator membandingkan beberapa pendekatan judul.</li>
+      </ul>
+
+      <h2>Cara Menggunakan YouTube Title Generator</h2>
+
+      <ol>
+        <li>Masukkan topik utama video.</li>
+        <li>Masukkan keyword yang relevan.</li>
+        <li>Tentukan target audiens.</li>
+        <li>Pilih gaya judul.</li>
+        <li>Tentukan jumlah judul yang ingin dibuat.</li>
+        <li>Generate judul.</li>
+        <li>Pilih dan edit judul yang paling sesuai dengan isi video.</li>
+      </ol>
+
+      <h2>Tips Memilih Judul YouTube</h2>
+
+      <p>
+        Setelah mendapatkan beberapa hasil, jangan langsung memilih
+        berdasarkan judul yang paling sensasional. Periksa apakah judul
+        tersebut benar-benar menggambarkan isi video dan memberikan
+        ekspektasi yang sesuai kepada penonton.
+      </p>
+
+      <p>
+        Pertimbangkan juga panjang judul, posisi keyword, kejelasan
+        topik, serta kesesuaiannya dengan thumbnail. Kombinasi antara
+        judul dan thumbnail sebaiknya memberikan informasi yang saling
+        melengkapi.
+      </p>
+
+      <h2>Gunakan Judul sebagai Bagian dari Strategi Konten</h2>
+
+      <p>
+        Judul bukan satu-satunya faktor yang menentukan keberhasilan
+        sebuah video. Konten yang bermanfaat, penyampaian yang baik,
+        thumbnail yang relevan, dan pengalaman penonton tetap menjadi
+        bagian penting dari strategi channel YouTube.
+      </p>
+
+      <p>
+        YouTube Title Generator dapat digunakan sebagai alat bantu
+        brainstorming untuk mempercepat proses menemukan berbagai
+        alternatif judul sebelum video dipublikasikan.
+      </p>
+
+      <h2>YouTube Title Generator AI Mr Ferdy</h2>
+
+      <p>
+        <strong>AI Mr Ferdy</strong> menyediakan berbagai tools digital
+        untuk membantu produktivitas, pembuatan konten, SEO, dan
+        kebutuhan digital lainnya.
+      </p>
+
+      <p>
+        Dengan YouTube Title Generator, creator dapat membuat beberapa
+        alternatif judul berdasarkan topik, keyword, audiens, dan gaya
+        konten. Hasil generator dapat digunakan sebagai referensi dan
+        disesuaikan kembali dengan isi video.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const generateBtn = document.querySelector("#generateBtn");
+    const copyBtn = document.querySelector("#copyBtn");
+    const resultCard = document.querySelector("#resultCard");
+    const result = document.querySelector("#result");
+
+    generateBtn?.addEventListener("click", () => {
+
+      const topic =
+        document.querySelector("#topic")?.value.trim();
+
+      const keyword =
+        document.querySelector("#keyword")?.value.trim() || topic;
+
+      const audience =
+        document.querySelector("#audience")?.value.trim() ||
+        "penonton umum";
+
+      const style =
+        document.querySelector("#style")?.value || "seo";
+
+      const count =
+        Number(document.querySelector("#count")?.value || 10);
+
+      if (!topic) {
+        alert("Silakan masukkan topik video.");
+        return;
+      }
+
+      const titles = [];
+
+      const templates = {
+        seo: [
+          `${keyword}: Panduan Lengkap untuk ${audience}`,
+          `Cara ${topic} dengan Mudah untuk Pemula`,
+          `${topic}: Panduan Lengkap yang Perlu Kamu Tahu`,
+          `Cara Terbaik Memahami ${topic}`,
+          `${topic} untuk Pemula: Panduan Lengkap`,
+          `Panduan ${topic} dari Awal sampai Bisa`,
+          `Belajar ${topic}: Tips dan Panduan Praktis`,
+          `${topic}: Cara, Tips, dan Penjelasan Lengkap`,
+          `Tutorial ${topic} untuk Pemula`,
+          `Semua yang Perlu Kamu Tahu tentang ${topic}`
+        ],
+
+        curiosity: [
+          `Ternyata Ini Cara ${topic} yang Banyak Orang Lewatkan`,
+          `Kenapa ${topic} Penting? Ini Penjelasannya`,
+          `Sebelum Mencoba ${topic}, Wajib Tahu Ini`,
+          `Saya Coba ${topic}, Ini Hasilnya`,
+          `Hal yang Tidak Banyak Dibahas tentang ${topic}`,
+          `Apa yang Terjadi Jika Kamu Mencoba ${topic}?`,
+          `Kesalahan Umum Saat ${topic}`,
+          `Jangan Lakukan Ini Saat ${topic}`,
+          `Rahasia di Balik ${topic}`,
+          `Yang Perlu Kamu Tahu Sebelum ${topic}`
+        ],
+
+        tutorial: [
+          `Cara ${topic} untuk Pemula`,
+          `Tutorial ${topic} Langkah demi Langkah`,
+          `Cara Mudah ${topic}`,
+          `Panduan Lengkap ${topic}`,
+          `Belajar ${topic} dari Nol`,
+          `${topic}: Tutorial Lengkap untuk Pemula`,
+          `Tutorial Praktis ${topic}`,
+          `Cara Menggunakan ${topic}`,
+          `Panduan ${topic} untuk Pemula`,
+          `Langkah Mudah Memulai ${topic}`
+        ],
+
+        list: [
+          `10 Tips ${topic} yang Wajib Kamu Tahu`,
+          `7 Cara Terbaik untuk ${topic}`,
+          `10 Kesalahan Saat ${topic}`,
+          `5 Hal Penting tentang ${topic}`,
+          `10 Tips ${topic} untuk Pemula`,
+          `7 Fakta tentang ${topic}`,
+          `10 Ide ${topic} yang Bisa Kamu Coba`,
+          `5 Cara Mudah ${topic}`,
+          `10 Hal yang Perlu Diketahui tentang ${topic}`,
+          `7 Tips Mengoptimalkan ${topic}`
+        ],
+
+        review: [
+          `Review ${topic}: Apakah Layak Digunakan?`,
+          `${topic}: Kelebihan dan Kekurangannya`,
+          `Review Lengkap ${topic}`,
+          `Pengalaman Menggunakan ${topic}`,
+          `${topic} Setelah Dicoba: Ini Hasilnya`,
+          `Apakah ${topic} Bagus? Review Lengkap`,
+          `${topic}: Worth It atau Tidak?`,
+          `Review Jujur ${topic}`,
+          `Kelebihan dan Kekurangan ${topic}`,
+          `${topic}: Yang Perlu Kamu Ketahui Sebelum Menggunakannya`
+        ],
+
+        educational: [
+          `Apa Itu ${topic}? Penjelasan Lengkap`,
+          `Mengenal ${topic} untuk Pemula`,
+          `${topic}: Pengertian, Manfaat, dan Cara Kerja`,
+          `Belajar tentang ${topic}`,
+          `Memahami ${topic} dengan Mudah`,
+          `Panduan Dasar ${topic}`,
+          `${topic}: Penjelasan untuk Pemula`,
+          `Mengapa ${topic} Penting?`,
+          `Cara Kerja ${topic} dan Manfaatnya`,
+          `Dasar-Dasar ${topic} yang Perlu Kamu Tahu`
+        ]
+      };
+
+      const selected =
+        templates[style] || templates.seo;
+
+      for (let i = 0; i < count; i++) {
+        titles.push(`${i + 1}. ${selected[i % selected.length]}`);
+      }
+
+      result.value = titles.join("\n");
+
+      resultCard.hidden = false;
+
+      resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+
+      if (!result.value) return;
+
+      await navigator.clipboard.writeText(result.value);
+
+      copyBtn.textContent = "✓ Copied";
+
+      setTimeout(() => {
+        copyBtn.textContent = "Copy";
+      }, 1500);
+
+    });
+  </script>
+</MainLayout>
+
