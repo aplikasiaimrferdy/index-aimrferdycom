@@ -1,0 +1,445 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🧠 AI Text Humanizer",
+  description:
+    "Perbaiki gaya tulisan agar lebih natural, mengalir, dan mudah dibaca dengan AI Text Humanizer dari AI Mr Ferdy.",
+  category: "AI",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">AI Writing</span>
+
+      <h1>AI Text Humanizer</h1>
+
+      <p>
+        Perbaiki gaya tulisan agar terasa lebih natural, mengalir, jelas,
+        dan nyaman dibaca.
+      </p>
+    </header>
+
+    <section class="tool-box">
+
+      <div class="tool-grid">
+
+        <div class="tool-input">
+
+          <label for="inputText">
+            Teks yang Ingin Diperbaiki
+          </label>
+
+          <textarea
+            id="inputText"
+            rows="14"
+            placeholder="Tempel teks, artikel, paragraf, atau konten yang ingin dibuat lebih natural..."
+          ></textarea>
+
+          <div class="tool-options">
+
+            <div class="tool-field">
+              <label for="tone">
+                Gaya Tulisan
+              </label>
+
+              <select id="tone">
+                <option value="natural">Natural</option>
+                <option value="professional">Profesional</option>
+                <option value="casual">Santai</option>
+                <option value="formal">Formal</option>
+              </select>
+            </div>
+
+            <div class="tool-field">
+              <label for="intensity">
+                Tingkat Perubahan
+              </label>
+
+              <select id="intensity">
+                <option value="light">Ringan</option>
+                <option value="medium" selected>Sedang</option>
+                <option value="strong">Lebih Natural</option>
+              </select>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="tool-btn"
+            id="humanizeBtn"
+          >
+            ✨ Buat Lebih Natural
+          </button>
+
+        </div>
+
+        <div class="tool-output">
+
+          <label for="outputText">
+            Hasil Humanizer
+          </label>
+
+          <textarea
+            id="outputText"
+            rows="14"
+            readonly
+            placeholder="Hasil tulisan yang sudah diperbaiki akan muncul di sini..."
+          ></textarea>
+
+          <div class="tool-actions">
+
+            <button type="button" id="copyBtn">
+              📋 Salin
+            </button>
+
+            <button type="button" id="clearBtn">
+              🗑️ Bersihkan
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>AI Text Humanizer untuk Membuat Tulisan Lebih Natural</h2>
+
+      <p>
+        AI Text Humanizer adalah tool yang membantu memperbaiki gaya sebuah
+        tulisan agar lebih natural, mengalir, dan mudah dipahami. Tool ini
+        dapat digunakan untuk mengedit artikel, paragraf, deskripsi, caption,
+        maupun berbagai jenis konten digital.
+      </p>
+
+      <p>
+        AI Mr Ferdy menyediakan AI Text Humanizer sebagai alat bantu untuk
+        meningkatkan kualitas penyampaian tulisan tanpa mengubah tujuan utama
+        dari konten tersebut.
+      </p>
+
+      <h2>Apa Itu AI Text Humanizer?</h2>
+
+      <p>
+        AI Text Humanizer merupakan alat bantu editing yang berfokus pada
+        gaya bahasa. Teks dapat diperbaiki agar kalimat terasa lebih wajar,
+        tidak terlalu kaku, dan lebih nyaman dibaca.
+      </p>
+
+      <p>
+        Humanizing text bukan berarti mengubah fakta atau informasi utama.
+        Fokusnya adalah memperbaiki cara informasi tersebut disampaikan.
+      </p>
+
+      <h2>Mengapa Tulisan Perlu Dibuat Lebih Natural?</h2>
+
+      <p>
+        Tulisan yang terlalu kaku atau menggunakan pola kalimat yang berulang
+        dapat membuat pembaca kesulitan mengikuti informasi. Struktur kalimat
+        yang lebih bervariasi biasanya membuat konten terasa lebih nyaman.
+      </p>
+
+      <p>
+        Dengan editing yang tepat, sebuah teks dapat menjadi lebih jelas,
+        komunikatif, dan sesuai dengan karakter pembacanya.
+      </p>
+
+      <h2>AI Text Humanizer untuk Artikel</h2>
+
+      <p>
+        Artikel blog dapat menggunakan gaya bahasa yang berbeda tergantung
+        topik dan audiens. AI Text Humanizer dapat membantu memperbaiki
+        paragraf yang terlalu panjang, repetitif, atau terasa kurang natural.
+      </p>
+
+      <p>
+        Hasil akhir tetap perlu diperiksa oleh penulis agar informasi,
+        konteks, dan sudut pandang asli tidak berubah.
+      </p>
+
+      <h2>AI Text Humanizer untuk Konten SEO</h2>
+
+      <p>
+        Konten SEO sebaiknya tetap ditulis untuk manusia terlebih dahulu.
+        Keyword dapat digunakan secara alami tanpa membuat kalimat terasa
+        dipaksakan.
+      </p>
+
+      <p>
+        AI Text Humanizer dapat digunakan sebagai bagian dari proses editing
+        untuk membantu membuat konten lebih mudah dibaca sambil
+        mempertahankan informasi dan keyword yang relevan.
+      </p>
+
+      <h2>AI Text Humanizer untuk Blog</h2>
+
+      <p>
+        Blogger dapat menggunakan tool ini ketika sebuah tulisan terasa
+        terlalu formal, repetitif, atau kurang memiliki alur yang natural.
+        Hasil rewrite kemudian dapat diedit kembali sesuai karakter blog.
+      </p>
+
+      <h2>AI Text Humanizer untuk Caption</h2>
+
+      <p>
+        Caption media sosial biasanya membutuhkan gaya bahasa yang lebih
+        singkat dan komunikatif. Teks yang terlalu panjang atau formal dapat
+        disederhanakan agar lebih sesuai dengan audiens.
+      </p>
+
+      <h2>AI Text Humanizer untuk Deskripsi Produk</h2>
+
+      <p>
+        Deskripsi produk perlu memberikan informasi dengan jelas sekaligus
+        mudah dipahami. Gaya tulisan yang terlalu teknis dapat diperbaiki
+        menjadi lebih komunikatif tanpa menghilangkan informasi penting.
+      </p>
+
+      <h2>Karakteristik Tulisan yang Natural</h2>
+
+      <ul>
+        <li>Kalimat mudah dipahami.</li>
+        <li>Struktur kalimat tidak monoton.</li>
+        <li>Pilihan kata sesuai konteks.</li>
+        <li>Tidak menggunakan kata secara berlebihan.</li>
+        <li>Paragraf memiliki alur yang jelas.</li>
+        <li>Gaya bahasa sesuai dengan target pembaca.</li>
+      </ul>
+
+      <h2>Cara Menggunakan AI Text Humanizer</h2>
+
+      <ol>
+        <li>Masukkan teks yang ingin diperbaiki.</li>
+        <li>Pilih gaya tulisan.</li>
+        <li>Pilih tingkat perubahan.</li>
+        <li>Klik tombol <strong>Buat Lebih Natural</strong>.</li>
+        <li>Periksa hasil yang diberikan.</li>
+        <li>Edit kembali bagian yang membutuhkan penyesuaian.</li>
+      </ol>
+
+      <h2>Natural Bukan Berarti Mengubah Fakta</h2>
+
+      <p>
+        Proses humanizing sebaiknya hanya memperbaiki penyampaian. Fakta,
+        angka, nama, kutipan, istilah teknis, dan informasi penting harus
+        tetap diperiksa terhadap sumber aslinya.
+      </p>
+
+      <p>
+        Untuk konten informatif, akurasi tetap lebih penting daripada sekadar
+        membuat tulisan terdengar natural.
+      </p>
+
+      <h2>AI Text Humanizer dan SEO</h2>
+
+      <p>
+        Membuat tulisan lebih natural bukan berarti menjamin peringkat
+        pencarian. Kualitas konten juga dipengaruhi oleh relevansi,
+        kelengkapan informasi, pengalaman pembaca, struktur halaman, dan
+        berbagai faktor lainnya.
+      </p>
+
+      <p>
+        Karena itu, gunakan AI Text Humanizer sebagai bagian dari proses
+        editing, bukan sebagai jaminan untuk mendapatkan posisi tertentu di
+        mesin pencari.
+      </p>
+
+      <h2>AI Text Humanizer untuk Penulis</h2>
+
+      <p>
+        Penulis dapat menggunakan tool ini untuk menghasilkan alternatif
+        penyampaian sebelum melakukan editing manual. Dengan begitu, proses
+        revisi dapat menjadi lebih cepat dan fleksibel.
+      </p>
+
+      <h2>AI Text Humanizer AI Mr Ferdy</h2>
+
+      <p>
+        AI Text Humanizer AI Mr Ferdy dirancang untuk membantu membuat tulisan
+        menjadi lebih natural, jelas, dan nyaman dibaca. Gunakan hasilnya
+        sebagai bahan editing dan sesuaikan kembali dengan tujuan serta
+        karakter konten yang dibuat.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const inputText = document.getElementById("inputText");
+    const outputText = document.getElementById("outputText");
+    const tone = document.getElementById("tone");
+    const intensity = document.getElementById("intensity");
+
+    const humanizeBtn = document.getElementById("humanizeBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    const replacements = {
+      natural: [
+        ["pada saat ini", "saat ini"],
+        ["pada dasarnya", "sebenarnya"],
+        ["oleh karena itu", "karena itu"],
+        ["dalam rangka", "untuk"],
+        ["dapat dilakukan", "bisa dilakukan"],
+        ["dapat membantu", "bisa membantu"],
+        ["memiliki kemampuan untuk", "bisa"],
+        ["melakukan penggunaan", "menggunakan"],
+        ["sangat penting", "penting"],
+        ["hal tersebut", "hal ini"],
+        ["tersebut di atas", "di atas"],
+        ["bertujuan untuk dapat", "bertujuan untuk"],
+        ["memberikan manfaat", "bermanfaat"],
+        ["mengalami peningkatan", "meningkat"],
+        ["mengalami penurunan", "menurun"]
+      ],
+
+      professional: [
+        ["bisa", "dapat"],
+        ["nggak", "tidak"],
+        ["gak", "tidak"],
+        ["pada dasarnya", "secara umum"],
+        ["cara", "metode"],
+        ["masalah", "kendala"],
+        ["pakai", "menggunakan"],
+        ["buat", "untuk"],
+        ["membantu", "mendukung"]
+      ],
+
+      casual: [
+        ["dapat", "bisa"],
+        ["tidak", "nggak"],
+        ["Anda", "kamu"],
+        ["memerlukan", "butuh"],
+        ["menggunakan", "pakai"],
+        ["melakukan", "mengerjakan"],
+        ["tersebut", "ini"],
+        ["mengenai", "tentang"]
+      ],
+
+      formal: [
+        ["bisa", "dapat"],
+        ["nggak", "tidak"],
+        ["gak", "tidak"],
+        ["kamu", "Anda"],
+        ["pakai", "gunakan"],
+        ["buat", "untuk"],
+        ["cara", "metode"],
+        ["masalah", "permasalahan"]
+      ]
+    };
+
+    function replaceText(text, selectedTone) {
+      let result = text;
+      const list = replacements[selectedTone] || replacements.natural;
+
+      list.forEach(([from, to]) => {
+        const regex = new RegExp(
+          from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+          "gi"
+        );
+
+        result = result.replace(regex, to);
+      });
+
+      return result;
+    }
+
+    function improveSpacing(text) {
+      return text
+        .replace(/[ \t]+/g, " ")
+        .replace(/ +([,.!?;:])/g, "$1")
+        .replace(/([,.!?;:])([A-Za-zÀ-ÿ])/g, "$1 $2")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+    }
+
+    function improveSentences(text) {
+      const sentences = text.match(
+        /[^.!?]+[.!?]+|[^.!?]+$/g
+      ) || [];
+
+      return sentences
+        .map(sentence => sentence.trim())
+        .filter(Boolean)
+        .join(" ");
+    }
+
+    function humanize(text) {
+      let result = replaceText(text, tone.value);
+
+      result = improveSpacing(result);
+
+      if (intensity.value === "medium") {
+        result = improveSentences(result);
+      }
+
+      if (intensity.value === "strong") {
+        result = improveSentences(result)
+          .replace(/\byang mana\b/gi, "yang")
+          .replace(/\bdimana\b/gi, "di mana")
+          .replace(/\bsehingga hal ini\b/gi, "sehingga")
+          .replace(/\bdengan demikian\b/gi, "karena itu");
+
+        result = result
+          .split(/(?<=[.!?])\s+/)
+          .map(sentence => sentence.trim())
+          .filter(Boolean)
+          .join(" ");
+      }
+
+      return result;
+    }
+
+    humanizeBtn.addEventListener("click", () => {
+      const text = inputText.value.trim();
+
+      if (!text) {
+        outputText.value =
+          "Masukkan teks terlebih dahulu.";
+        return;
+      }
+
+      outputText.value = humanize(text);
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      const result = outputText.value.trim();
+
+      if (!result) return;
+
+      try {
+        await navigator.clipboard.writeText(result);
+
+        copyBtn.textContent = "✓ Tersalin";
+
+        setTimeout(() => {
+          copyBtn.textContent = "📋 Salin";
+        }, 1500);
+
+      } catch {
+        outputText.select();
+        document.execCommand("copy");
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      inputText.value = "";
+      outputText.value = "";
+    });
+  </script>
+</MainLayout>
