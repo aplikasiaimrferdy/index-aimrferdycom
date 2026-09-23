@@ -1,0 +1,714 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📋 SEO Content Brief Generator",
+  description:
+    "Buat content brief SEO lengkap dengan keyword utama, keyword pendukung, search intent, outline H1-H3, FAQ, dan struktur artikel.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO Tools</span>
+
+      <h1>SEO Content Brief Generator</h1>
+
+      <p>
+        Buat outline artikel, keyword, search intent, target audiens,
+        struktur heading, dan FAQ untuk membantu menyiapkan konten SEO.
+      </p>
+    </header>
+
+    <section class="tool-box">
+
+      <div class="tool-grid">
+
+        <div class="tool-input">
+
+          <label for="topic">
+            Topik Artikel
+          </label>
+
+          <input
+            type="text"
+            id="topic"
+            placeholder="Contoh: AI untuk bisnis"
+          />
+
+          <label for="keyword">
+            Keyword Utama
+          </label>
+
+          <input
+            type="text"
+            id="keyword"
+            placeholder="Contoh: AI untuk bisnis"
+          />
+
+          <label for="audience">
+            Target Audiens
+          </label>
+
+          <input
+            type="text"
+            id="audience"
+            placeholder="Contoh: pemilik bisnis dan marketer"
+          />
+
+          <div class="tool-options">
+
+            <div class="tool-field">
+
+              <label for="intent">
+                Search Intent
+              </label>
+
+              <select id="intent">
+                <option value="informational">
+                  Informational
+                </option>
+
+                <option value="commercial">
+                  Commercial
+                </option>
+
+                <option value="transactional">
+                  Transactional
+                </option>
+
+                <option value="navigational">
+                  Navigational
+                </option>
+              </select>
+
+            </div>
+
+            <div class="tool-field">
+
+              <label for="sections">
+                Jumlah Bagian
+              </label>
+
+              <select id="sections">
+                <option value="5">5 Bagian</option>
+                <option value="7" selected>7 Bagian</option>
+                <option value="10">10 Bagian</option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="tool-btn"
+            id="generateBtn"
+          >
+            ✨ Generate Content Brief
+          </button>
+
+        </div>
+
+        <div class="tool-output">
+
+          <label for="outputText">
+            SEO Content Brief
+          </label>
+
+          <textarea
+            id="outputText"
+            rows="22"
+            readonly
+            placeholder="Content brief akan muncul di sini..."
+          ></textarea>
+
+          <div class="tool-actions">
+
+            <button type="button" id="copyBtn">
+              📋 Salin
+            </button>
+
+            <button type="button" id="clearBtn">
+              🗑️ Bersihkan
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>SEO Content Brief Generator untuk Membuat Struktur Artikel</h2>
+
+      <p>
+        SEO Content Brief Generator adalah tool yang membantu membuat
+        perencanaan artikel sebelum proses penulisan dimulai. Content brief
+        dapat berisi keyword utama, keyword pendukung, search intent, target
+        audiens, struktur heading, FAQ, dan arahan konten.
+      </p>
+
+      <p>
+        Dengan content brief yang terstruktur, penulis dapat memiliki
+        gambaran yang lebih jelas mengenai informasi yang perlu dibahas dalam
+        sebuah artikel.
+      </p>
+
+      <h2>Apa Itu SEO Content Brief?</h2>
+
+      <p>
+        SEO content brief adalah dokumen atau panduan yang berisi informasi
+        penting mengenai sebuah konten yang akan dibuat.
+      </p>
+
+      <p>
+        Brief dapat membantu menentukan topik, keyword, tujuan halaman,
+        audiens, search intent, serta struktur pembahasan sebelum artikel
+        ditulis.
+      </p>
+
+      <h2>Mengapa Content Brief Penting?</h2>
+
+      <p>
+        Tanpa perencanaan, sebuah artikel dapat memiliki pembahasan yang
+        terlalu luas, berulang, atau tidak menjawab kebutuhan pembaca.
+      </p>
+
+      <p>
+        Content brief membantu penulis tetap fokus pada topik utama dan
+        memastikan bagian penting dari sebuah topik mendapatkan pembahasan
+        yang sesuai.
+      </p>
+
+      <h2>Keyword Utama</h2>
+
+      <p>
+        Keyword utama merupakan istilah yang paling mewakili topik artikel.
+        Keyword ini dapat digunakan sebagai dasar untuk menentukan judul,
+        heading, dan arah pembahasan.
+      </p>
+
+      <p>
+        Penggunaan keyword sebaiknya tetap natural. Tidak perlu mengulang
+        keyword secara berlebihan jika tidak diperlukan oleh konteks.
+      </p>
+
+      <h2>Keyword Pendukung</h2>
+
+      <p>
+        Keyword pendukung merupakan istilah yang masih berkaitan dengan topik
+        utama. Keyword tersebut dapat membantu memperluas pembahasan dan
+        mencakup variasi kebutuhan pencarian pengguna.
+      </p>
+
+      <p>
+        Contohnya, artikel dengan topik "AI untuk bisnis" dapat membahas
+        otomatisasi bisnis, produktivitas, AI marketing, AI customer service,
+        dan berbagai subtopik relevan lainnya.
+      </p>
+
+      <h2>Search Intent</h2>
+
+      <p>
+        Search intent menggambarkan tujuan pengguna ketika melakukan
+        pencarian. Memahami intent membantu menentukan jenis informasi yang
+        sebaiknya diberikan oleh halaman.
+      </p>
+
+      <h3>Informational</h3>
+
+      <p>
+        Pengguna ingin mengetahui atau mempelajari sesuatu. Artikel panduan,
+        tutorial, definisi, dan penjelasan biasanya termasuk dalam kategori
+        ini.
+      </p>
+
+      <h3>Commercial</h3>
+
+      <p>
+        Pengguna sedang mencari informasi untuk membandingkan atau
+        mengevaluasi pilihan sebelum mengambil keputusan.
+      </p>
+
+      <h3>Transactional</h3>
+
+      <p>
+        Pengguna memiliki tujuan melakukan tindakan seperti membeli,
+        mendaftar, mengunduh, atau menggunakan sebuah layanan.
+      </p>
+
+      <h3>Navigational</h3>
+
+      <p>
+        Pengguna mencari website, brand, produk, atau halaman tertentu.
+      </p>
+
+      <h2>Struktur H1, H2, dan H3</h2>
+
+      <p>
+        Heading membantu membagi artikel menjadi bagian yang lebih mudah
+        dipahami. H1 biasanya digunakan sebagai judul utama halaman,
+        sedangkan H2 dan H3 digunakan untuk mengorganisasi pembahasan.
+      </p>
+
+      <p>
+        Struktur heading sebaiknya dibuat berdasarkan kebutuhan pembaca,
+        bukan sekadar memasukkan keyword sebanyak mungkin.
+      </p>
+
+      <h2>Outline Artikel SEO</h2>
+
+      <p>
+        Outline merupakan kerangka pembahasan sebelum artikel ditulis.
+        Outline yang baik dapat membantu memastikan topik utama dan subtopik
+        penting tidak terlewat.
+      </p>
+
+      <p>
+        Sebuah artikel dapat dimulai dengan pengantar, dilanjutkan pembahasan
+        utama, contoh atau langkah praktis, FAQ, kemudian kesimpulan.
+      </p>
+
+      <h2>Target Audiens</h2>
+
+      <p>
+        Content brief juga sebaiknya menentukan siapa pembaca yang dituju.
+        Gaya bahasa dan tingkat kedalaman informasi dapat disesuaikan
+        berdasarkan target audiens.
+      </p>
+
+      <p>
+        Artikel untuk pemula, misalnya, membutuhkan penjelasan istilah yang
+        berbeda dibandingkan artikel yang ditujukan kepada pembaca
+        profesional.
+      </p>
+
+      <h2>FAQ dalam Artikel SEO</h2>
+
+      <p>
+        FAQ dapat digunakan untuk menjawab pertanyaan umum yang masih
+        berhubungan dengan topik artikel. Pertanyaan sebaiknya benar-benar
+        relevan dengan kebutuhan pembaca.
+      </p>
+
+      <p>
+        FAQ bukan sekadar tempat untuk menambahkan keyword. Jawaban harus
+        memberikan informasi yang jelas dan bermanfaat.
+      </p>
+
+      <h2>Cara Membuat SEO Content Brief</h2>
+
+      <ol>
+        <li>Tentukan topik utama.</li>
+        <li>Tentukan keyword utama.</li>
+        <li>Tentukan target audiens.</li>
+        <li>Pahami search intent.</li>
+        <li>Kumpulkan keyword pendukung.</li>
+        <li>Buat struktur H1, H2, dan H3.</li>
+        <li>Tentukan pertanyaan yang perlu dijawab.</li>
+        <li>Tentukan informasi penting yang harus tersedia.</li>
+      </ol>
+
+      <h2>Content Brief untuk Artikel Panjang</h2>
+
+      <p>
+        Artikel panjang membutuhkan perencanaan yang lebih terstruktur.
+        Pembahasan dapat dibagi menjadi beberapa bagian agar setiap subtopik
+        memiliki ruang yang cukup tanpa membuat artikel keluar dari topik.
+      </p>
+
+      <h2>Content Brief dan SEO</h2>
+
+      <p>
+        Content brief membantu proses SEO dari sisi perencanaan konten.
+        Namun, brief bukan jaminan sebuah artikel akan mendapatkan posisi
+        tertentu di mesin pencari.
+      </p>
+
+      <p>
+        Kualitas konten, relevansi dengan kebutuhan pengguna, struktur
+        website, pengalaman pengguna, dan berbagai faktor lainnya juga dapat
+        berperan dalam performa sebuah halaman.
+      </p>
+
+      <h2>Gunakan Content Brief sebagai Panduan</h2>
+
+      <p>
+        Content brief sebaiknya tidak dianggap sebagai aturan yang kaku.
+        Penulis tetap dapat mengubah struktur ketika menemukan informasi baru
+        atau ketika kebutuhan pembaca menunjukkan arah pembahasan yang lebih
+        relevan.
+      </p>
+
+      <h2>SEO Content Brief Generator AI Mr Ferdy</h2>
+
+      <p>
+        SEO Content Brief Generator AI Mr Ferdy membantu membuat kerangka
+        awal artikel berdasarkan topik, keyword utama, target audiens, dan
+        search intent. Gunakan hasilnya sebagai dasar untuk riset dan proses
+        penulisan konten yang lebih terstruktur.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const topicInput =
+      document.getElementById("topic");
+
+    const keywordInput =
+      document.getElementById("keyword");
+
+    const audienceInput =
+      document.getElementById("audience");
+
+    const intentSelect =
+      document.getElementById("intent");
+
+    const sectionsSelect =
+      document.getElementById("sections");
+
+    const outputText =
+      document.getElementById("outputText");
+
+    const generateBtn =
+      document.getElementById("generateBtn");
+
+    const copyBtn =
+      document.getElementById("copyBtn");
+
+    const clearBtn =
+      document.getElementById("clearBtn");
+
+    function clean(value) {
+      return value
+        .trim()
+        .replace(/\s+/g, " ");
+    }
+
+    function capitalize(value) {
+      if (!value) return "";
+
+      return value.charAt(0).toUpperCase()
+        + value.slice(1);
+    }
+
+    function createSupportKeywords(topic) {
+      return [
+        `${topic} untuk pemula`,
+        `cara menggunakan ${topic}`,
+        `manfaat ${topic}`,
+        `tips ${topic}`,
+        `panduan ${topic}`,
+        `${topic} terbaik`,
+        `${topic} gratis`,
+        `${topic} untuk bisnis`,
+        `${topic} untuk website`,
+        `kelebihan ${topic}`,
+        `kekurangan ${topic}`,
+        `alternatif ${topic}`
+      ];
+    }
+
+    function createOutline(topic, keyword, count) {
+      const main = keyword || topic;
+
+      const outlines = [
+        {
+          h2: `Apa Itu ${capitalize(main)}?`,
+          h3: [
+            `Pengertian ${main}`,
+            `Cara kerja ${main}`
+          ]
+        },
+
+        {
+          h2: `Mengapa ${capitalize(main)} Penting?`,
+          h3: [
+            `Manfaat utama ${main}`,
+            `Kegunaan ${main}`
+          ]
+        },
+
+        {
+          h2: `Cara Menggunakan ${capitalize(main)}`,
+          h3: [
+            `Persiapan sebelum menggunakan ${main}`,
+            `Langkah menggunakan ${main}`
+          ]
+        },
+
+        {
+          h2: `${capitalize(main)} untuk Pemula`,
+          h3: [
+            `Hal yang perlu diketahui`,
+            `Kesalahan yang perlu dihindari`
+          ]
+        },
+
+        {
+          h2: `Tips Menggunakan ${capitalize(main)}`,
+          h3: [
+            `Tips mendapatkan hasil yang lebih baik`,
+            `Praktik yang perlu diperhatikan`
+          ]
+        },
+
+        {
+          h2: `Kelebihan dan Kekurangan ${capitalize(main)}`,
+          h3: [
+            `Kelebihan`,
+            `Kekurangan`
+          ]
+        },
+
+        {
+          h2: `${capitalize(main)} untuk Bisnis`,
+          h3: [
+            `Contoh penggunaan`,
+            `Manfaat untuk produktivitas`
+          ]
+        },
+
+        {
+          h2: `Kesalahan yang Perlu Dihindari`,
+          h3: [
+            `Kesalahan umum`,
+            `Cara menghindarinya`
+          ]
+        },
+
+        {
+          h2: `Pertanyaan Umum tentang ${capitalize(main)}`,
+          h3: [
+            `Pertanyaan yang sering ditanyakan`,
+            `Hal penting lainnya`
+          ]
+        },
+
+        {
+          h2: `Kesimpulan`,
+          h3: [
+            `Ringkasan pembahasan`,
+            `Langkah berikutnya`
+          ]
+        }
+      ];
+
+      return outlines.slice(0, count);
+    }
+
+    function createFaq(topic, keyword) {
+      const main = keyword || topic;
+
+      return [
+        `Apa itu ${main}?`,
+        `Bagaimana cara menggunakan ${main}?`,
+        `Apa manfaat ${main}?`,
+        `Apakah ${main} cocok untuk pemula?`,
+        `Apa yang perlu diperhatikan saat menggunakan ${main}?`
+      ];
+    }
+
+    function intentDescription(intent) {
+      const descriptions = {
+        informational:
+          "Pembaca mencari informasi, penjelasan, panduan, atau jawaban mengenai topik.",
+
+        commercial:
+          "Pembaca sedang mengevaluasi pilihan dan membutuhkan informasi sebelum mengambil keputusan.",
+
+        transactional:
+          "Pembaca memiliki tujuan untuk melakukan tindakan seperti membeli, mendaftar, mengunduh, atau menggunakan layanan.",
+
+        navigational:
+          "Pembaca sedang mencari website, brand, produk, atau halaman tertentu."
+      };
+
+      return descriptions[intent] ||
+        descriptions.informational;
+    }
+
+    function generateBrief() {
+      const topic = clean(topicInput.value);
+      const keyword =
+        clean(keywordInput.value) || topic;
+
+      const audience =
+        clean(audienceInput.value) ||
+        "pembaca umum";
+
+      const intent =
+        intentSelect.value;
+
+      const count =
+        Number(sectionsSelect.value);
+
+      if (!topic) {
+        outputText.value =
+          "Masukkan topik artikel terlebih dahulu.";
+        return;
+      }
+
+      const supportKeywords =
+        createSupportKeywords(keyword);
+
+      const outline =
+        createOutline(
+          topic,
+          keyword,
+          count
+        );
+
+      const faq =
+        createFaq(topic, keyword);
+
+      const title =
+        `${capitalize(keyword)}: Panduan Lengkap`;
+
+      const description =
+        `Panduan lengkap tentang ${keyword}, termasuk pengertian, manfaat, cara penggunaan, tips, dan informasi penting untuk ${audience}.`;
+
+      const lines = [];
+
+      lines.push("SEO CONTENT BRIEF");
+      lines.push("=================");
+      lines.push("");
+
+      lines.push("TOPIK");
+      lines.push(topic);
+      lines.push("");
+
+      lines.push("KEYWORD UTAMA");
+      lines.push(keyword);
+      lines.push("");
+
+      lines.push("TARGET AUDIENS");
+      lines.push(audience);
+      lines.push("");
+
+      lines.push("SEARCH INTENT");
+      lines.push(intent);
+      lines.push(intentDescription(intent));
+      lines.push("");
+
+      lines.push("SEO TITLE");
+      lines.push(title);
+      lines.push("");
+
+      lines.push("META DESCRIPTION");
+      lines.push(description);
+      lines.push("");
+
+      lines.push("KEYWORD PENDUKUNG");
+
+      supportKeywords.forEach(
+        (item, index) => {
+          lines.push(
+            `${index + 1}. ${item}`
+          );
+        }
+      );
+
+      lines.push("");
+      lines.push("STRUKTUR ARTIKEL");
+      lines.push("");
+
+      lines.push(`H1: ${title}`);
+      lines.push("");
+
+      outline.forEach((section, index) => {
+        lines.push(
+          `H2: ${section.h2}`
+        );
+
+        section.h3.forEach(sub => {
+          lines.push(
+            `   H3: ${sub}`
+          );
+        });
+
+        lines.push("");
+      });
+
+      lines.push("FAQ");
+
+      faq.forEach((question, index) => {
+        lines.push(
+          `${index + 1}. ${question}`
+        );
+      });
+
+      lines.push("");
+      lines.push("ARAHAN PENULISAN");
+      lines.push("• Fokus pada search intent.");
+      lines.push("• Gunakan keyword secara natural.");
+      lines.push("• Hindari keyword stuffing.");
+      lines.push("• Berikan informasi yang relevan.");
+      lines.push("• Gunakan paragraf yang mudah dibaca.");
+      lines.push("• Tambahkan contoh jika diperlukan.");
+      lines.push("• Periksa fakta sebelum publikasi.");
+      lines.push("• Pastikan isi artikel sesuai dengan title dan description.");
+
+      outputText.value =
+        lines.join("\n");
+    }
+
+    generateBtn.addEventListener(
+      "click",
+      generateBrief
+    );
+
+    copyBtn.addEventListener(
+      "click",
+      async () => {
+        const result =
+          outputText.value.trim();
+
+        if (!result) return;
+
+        try {
+          await navigator.clipboard.writeText(
+            result
+          );
+
+          copyBtn.textContent =
+            "✓ Tersalin";
+
+          setTimeout(() => {
+            copyBtn.textContent =
+              "📋 Salin";
+          }, 1500);
+
+        } catch {
+          outputText.select();
+          document.execCommand("copy");
+        }
+      }
+    );
+
+    clearBtn.addEventListener(
+      "click",
+      () => {
+        topicInput.value = "";
+        keywordInput.value = "";
+        audienceInput.value = "";
+
+        outputText.value = "";
+      }
+    );
+  </script>
+</MainLayout>
