@@ -9,24 +9,17 @@ const POSTS_PER_PAGE = 9;
 let posts = await getCollection("blog");
 
 posts = posts.sort(
-  (a, b) => new Date(b.data.date) - new Date(a.data.date)
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
-// pagination
-const currentPage =
-  Number(Astro.url.searchParams.get("page")) || 1;
+const currentPage = 1;
 
-const totalPages =
-  Math.ceil(posts.length / POSTS_PER_PAGE);
+const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
 
-const start =
-  (currentPage - 1) * POSTS_PER_PAGE;
-
-const end =
-  start + POSTS_PER_PAGE;
-
-const paginatedPosts =
-  posts.slice(start, end);
+const paginatedPosts = posts.slice(
+  0,
+  POSTS_PER_PAGE
+);
 ---
 
 <MainLayout
@@ -116,21 +109,6 @@ const paginatedPosts =
 
       <div class="pagination">
 
-        {/* PREV */}
-        {currentPage > 1 && (
-          <a
-            href={
-              currentPage === 2
-                ? "/blog"
-                : `/blog?page=${currentPage - 1}`
-            }
-            class="pagination-btn"
-          >
-            ← Previous
-          </a>
-        )}
-
-        {/* NUMBERS */}
         <div class="pagination-pages">
 
           {Array.from(
@@ -141,13 +119,18 @@ const paginatedPosts =
             <a
               href={
                 page === 1
-                  ? "/blog"
-                  : `/blog?page=${page}`
+                  ? "/blog/"
+                  : `/blog/page/${page}/`
               }
               class:list={[
                 "pagination-number",
                 page === currentPage && "active"
               ]}
+              aria-current={
+                page === currentPage
+                  ? "page"
+                  : undefined
+              }
             >
               {page}
             </a>
@@ -156,10 +139,9 @@ const paginatedPosts =
 
         </div>
 
-        {/* NEXT */}
         {currentPage < totalPages && (
           <a
-            href={`/blog?page=${currentPage + 1}`}
+            href={`/blog/page/${currentPage + 1}/`}
             class="pagination-btn"
           >
             Next →
@@ -180,9 +162,7 @@ const paginatedPosts =
   align-items:center;
   justify-content:center;
   gap:14px;
-
   margin-top:60px;
-
   flex-wrap:wrap;
 }
 
@@ -190,7 +170,6 @@ const paginatedPosts =
   display:flex;
   align-items:center;
   gap:10px;
-
   flex-wrap:wrap;
 }
 
@@ -199,39 +178,28 @@ const paginatedPosts =
   display:inline-flex;
   align-items:center;
   justify-content:center;
-
   min-width:44px;
   height:44px;
-
   padding:0 16px;
-
   border:1px solid var(--border);
   border-radius:14px;
-
   background:var(--card);
-
   color:var(--text-soft);
   text-decoration:none;
-
   backdrop-filter:var(--blur);
-
   transition:var(--transition);
 }
 
 .pagination-btn:hover,
 .pagination-number:hover{
   transform:translateY(-2px);
-
   border-color:var(--border-strong);
-
   color:var(--text);
 }
 
 .pagination-number.active{
   background:var(--primary);
-
   color:#fff;
-
   border:none;
 }
 
