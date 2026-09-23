@@ -8,7 +8,7 @@ image: "https://cdn-my.pages.dev/logo/bnr1.jpeg"
 popular: true
 ---
 <p>Logo bukan sekadar identitas visual, tetapi juga representasi dari visi, nilai, dan arah sebuah perusahaan. Logo <strong>AI Mr Ferdy (AMF)</strong> dirancang untuk menggambarkan perpaduan antara kecerdasan buatan, kreativitas manusia, serta komitmen menghadirkan solusi digital yang modern, inovatif, dan mudah diakses oleh masyarakat Indonesia.</p>
-<img src="https://cdn-my.pages.dev/logo/logo-text.png" alt="Logo Text Ai Mr Ferdy">
+<img src="https://aimrferdy.com/img/logo-text.png" alt="Logo Text Ai Mr Ferdy">
 <hr />
 <h1>Filosofi Logo AI Mr Ferdy</h1>
 
@@ -157,7 +157,7 @@ popular: true
 <p><strong>Ide &rarr; Inovasi &rarr; Teknologi &rarr; Masa Depan</strong></p>
 
 <p>Gradasi juga menggambarkan bahwa perkembangan AI selalu bergerak maju tanpa henti.</p>
-<img src="https://cdn-my.pages.dev/logo/logo.png" alt="Logo Ai Mr Ferdy">
+<img src="https://aimrferdy.com/img/logo.png" alt="Logo Ai Mr Ferdy">
 <hr />
 <h1>Efek 3D</h1>
 
