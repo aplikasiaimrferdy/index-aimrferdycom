@@ -1,0 +1,750 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🧩 Schema Markup Generator",
+  description:
+    "Buat Schema Markup JSON-LD untuk Article, FAQ, Product, Organization, dan Breadcrumb dengan Schema Markup Generator dari AI Mr Ferdy.",
+  category: "SEO",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">SEO</span>
+
+      <h1>{meta.title}</h1>
+
+      <p>
+        Buat Schema Markup JSON-LD untuk Article, FAQ, Product,
+        Organization, dan Breadcrumb dengan cepat.
+      </p>
+    </header>
+
+    <section class="tool-box" aria-labelledby="schema-tool-title">
+
+      <div class="tool-grid">
+
+        <div class="tool-field">
+          <label for="schemaType">Jenis Schema</label>
+
+          <select id="schemaType" class="tool-input">
+            <option value="Article">Article</option>
+            <option value="FAQPage">FAQ</option>
+            <option value="Product">Product</option>
+            <option value="Organization">Organization</option>
+            <option value="BreadcrumbList">Breadcrumb</option>
+          </select>
+        </div>
+
+        <div class="tool-field">
+          <label for="schemaName">Nama / Judul</label>
+
+          <input
+            id="schemaName"
+            class="tool-input"
+            type="text"
+            placeholder="Contoh: AI Mr Ferdy"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="schemaDescription">Deskripsi</label>
+
+          <textarea
+            id="schemaDescription"
+            class="tool-input"
+            rows="4"
+            placeholder="Masukkan deskripsi..."
+          ></textarea>
+        </div>
+
+        <div class="tool-field">
+          <label for="schemaUrl">URL</label>
+
+          <input
+            id="schemaUrl"
+            class="tool-input"
+            type="url"
+            placeholder="https://aimrferdy.com/"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="schemaAuthor">Author / Publisher</label>
+
+          <input
+            id="schemaAuthor"
+            class="tool-input"
+            type="text"
+            placeholder="AI Mr Ferdy"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="schemaImage">Image URL</label>
+
+          <input
+            id="schemaImage"
+            class="tool-input"
+            type="url"
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
+
+      </div>
+
+      <div id="faqFields" class="tool-field" hidden>
+        <label for="faqInput">
+          FAQ
+        </label>
+
+        <textarea
+          id="faqInput"
+          class="tool-input"
+          rows="8"
+          placeholder={`Masukkan satu FAQ per baris dengan format:
+
+Apa itu AI?
+|AI adalah teknologi...|
+
+Bagaimana cara menggunakan AI?
+|Gunakan tool AI sesuai kebutuhan...|`}
+        ></textarea>
+
+        <small>
+          Format: Pertanyaan | Jawaban
+        </small>
+      </div>
+
+      <div id="productFields" class="tool-grid" hidden>
+
+        <div class="tool-field">
+          <label for="productBrand">Brand</label>
+
+          <input
+            id="productBrand"
+            class="tool-input"
+            type="text"
+            placeholder="AI Mr Ferdy"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="productSku">SKU</label>
+
+          <input
+            id="productSku"
+            class="tool-input"
+            type="text"
+            placeholder="PROD-001"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="productPrice">Harga</label>
+
+          <input
+            id="productPrice"
+            class="tool-input"
+            type="text"
+            placeholder="99.000"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="productCurrency">Currency</label>
+
+          <input
+            id="productCurrency"
+            class="tool-input"
+            type="text"
+            value="IDR"
+            placeholder="IDR"
+          />
+        </div>
+
+      </div>
+
+      <div id="breadcrumbFields" class="tool-field" hidden>
+
+        <label for="breadcrumbInput">
+          Breadcrumb
+        </label>
+
+        <textarea
+          id="breadcrumbInput"
+          class="tool-input"
+          rows="6"
+          placeholder={`Home | https://aimrferdy.com/
+Tools | https://aimrferdy.com/tools/
+Schema Markup Generator | https://aimrferdy.com/tools/seo/schema-markup-generator/`}
+        ></textarea>
+
+        <small>
+          Format: Nama | URL, satu breadcrumb per baris.
+        </small>
+
+      </div>
+
+      <div id="organizationFields" class="tool-grid" hidden>
+
+        <div class="tool-field">
+          <label for="orgLogo">Logo URL</label>
+
+          <input
+            id="orgLogo"
+            class="tool-input"
+            type="url"
+            placeholder="https://aimrferdy.com/images/logo.png"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="orgEmail">Email</label>
+
+          <input
+            id="orgEmail"
+            class="tool-input"
+            type="email"
+            placeholder="info@example.com"
+          />
+        </div>
+
+        <div class="tool-field">
+          <label for="orgSameAs">Social / SameAs</label>
+
+          <textarea
+            id="orgSameAs"
+            class="tool-input"
+            rows="4"
+            placeholder={`https://www.instagram.com/example/
+https://x.com/example/`}
+          ></textarea>
+        </div>
+
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="generateSchema"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Generate Schema
+        </button>
+
+        <button
+          id="clearSchema"
+          type="button"
+          class="tool-btn btn-secondary"
+        >
+          Bersihkan
+        </button>
+
+      </div>
+
+      <div class="tool-field">
+        <label for="schemaOutput">
+          JSON-LD Schema
+        </label>
+
+        <textarea
+          id="schemaOutput"
+          class="tool-output"
+          rows="20"
+          readonly
+          spellcheck="false"
+          placeholder="Hasil Schema Markup akan muncul di sini..."
+        ></textarea>
+      </div>
+
+      <div class="tool-actions">
+
+        <button
+          id="copySchema"
+          type="button"
+          class="tool-btn btn-primary"
+        >
+          Salin JSON-LD
+        </button>
+
+      </div>
+
+    </section>
+
+    <article class="tool-content">
+
+      <h2>Schema Markup Generator untuk SEO</h2>
+
+      <p>
+        Schema Markup Generator adalah tool untuk membuat structured data
+        dalam format JSON-LD. Structured data membantu mesin pencari
+        memahami jenis dan hubungan informasi yang terdapat pada sebuah
+        halaman.
+      </p>
+
+      <h2>Apa Itu Schema Markup?</h2>
+
+      <p>
+        Schema Markup adalah data terstruktur yang ditambahkan ke halaman
+        website menggunakan vocabulary seperti Schema.org. Format JSON-LD
+        merupakan salah satu cara umum untuk menyisipkan structured data
+        pada halaman HTML.
+      </p>
+
+      <h2>Jenis Schema yang Tersedia</h2>
+
+      <h3>Article</h3>
+
+      <p>
+        Schema Article digunakan untuk memberikan informasi terstruktur
+        mengenai artikel, seperti judul, deskripsi, URL, gambar, author,
+        dan publisher.
+      </p>
+
+      <h3>FAQ</h3>
+
+      <p>
+        FAQPage digunakan untuk merepresentasikan halaman yang berisi
+        pertanyaan dan jawaban yang tersedia secara langsung pada halaman.
+      </p>
+
+      <h3>Product</h3>
+
+      <p>
+        Product digunakan untuk memberikan informasi terstruktur mengenai
+        produk, misalnya nama produk, brand, SKU, harga, dan mata uang.
+      </p>
+
+      <h3>Organization</h3>
+
+      <p>
+        Organization digunakan untuk menjelaskan organisasi atau entitas
+        seperti nama, URL, logo, email, dan profil terkait.
+      </p>
+
+      <h3>Breadcrumb</h3>
+
+      <p>
+        BreadcrumbList digunakan untuk menggambarkan struktur navigasi
+        halaman dari level paling umum sampai halaman yang sedang dibuka.
+      </p>
+
+      <h2>Mengapa Schema Markup Penting?</h2>
+
+      <p>
+        Structured data dapat membantu mesin pencari memahami konteks
+        halaman dengan lebih baik. Namun, penggunaan Schema Markup tidak
+        menjamin halaman mendapatkan rich result atau posisi tertentu
+        dalam hasil pencarian.
+      </p>
+
+      <h2>Schema Markup dan SEO</h2>
+
+      <p>
+        Schema sebaiknya menggambarkan informasi yang benar-benar tersedia
+        pada halaman. Data terstruktur yang tidak sesuai dengan konten
+        halaman dapat menyebabkan markup tidak valid atau tidak memenuhi
+        persyaratan fitur pencarian tertentu.
+      </p>
+
+      <h2>Cara Menggunakan Schema Markup Generator</h2>
+
+      <ol>
+        <li>Pilih jenis Schema yang ingin dibuat.</li>
+        <li>Masukkan informasi yang sesuai dengan halaman.</li>
+        <li>Klik tombol Generate Schema.</li>
+        <li>Periksa JSON-LD yang dihasilkan.</li>
+        <li>Salin kode JSON-LD ke halaman website.</li>
+        <li>Validasi structured data sebelum dipublikasikan.</li>
+      </ol>
+
+      <h2>Tips Menggunakan Schema Markup</h2>
+
+      <ul>
+        <li>Gunakan informasi yang benar-benar ada pada halaman.</li>
+        <li>Pastikan URL menggunakan alamat yang benar.</li>
+        <li>Jangan membuat data palsu untuk mendapatkan rich result.</li>
+        <li>Gunakan jenis Schema yang sesuai dengan konten.</li>
+        <li>Validasi JSON-LD setelah melakukan perubahan.</li>
+      </ul>
+
+      <h2>Schema Markup Generator AI Mr Ferdy</h2>
+
+      <p>
+        Schema Markup Generator dari AI Mr Ferdy membantu membuat struktur
+        JSON-LD dasar untuk Article, FAQ, Product, Organization, dan
+        Breadcrumb secara langsung dari browser.
+      </p>
+
+      <p>
+        Tool ini menghasilkan template structured data berdasarkan data
+        yang dimasukkan pengguna. Hasil tetap perlu diperiksa dan
+        disesuaikan dengan konten halaman sebelum digunakan.
+      </p>
+
+    </article>
+
+  </div>
+
+  <script>
+    const schemaType =
+      document.querySelector("#schemaType");
+
+    const schemaName =
+      document.querySelector("#schemaName");
+
+    const schemaDescription =
+      document.querySelector("#schemaDescription");
+
+    const schemaUrl =
+      document.querySelector("#schemaUrl");
+
+    const schemaAuthor =
+      document.querySelector("#schemaAuthor");
+
+    const schemaImage =
+      document.querySelector("#schemaImage");
+
+    const schemaOutput =
+      document.querySelector("#schemaOutput");
+
+    const faqFields =
+      document.querySelector("#faqFields");
+
+    const productFields =
+      document.querySelector("#productFields");
+
+    const organizationFields =
+      document.querySelector("#organizationFields");
+
+    const breadcrumbFields =
+      document.querySelector("#breadcrumbFields");
+
+    const faqInput =
+      document.querySelector("#faqInput");
+
+    const productBrand =
+      document.querySelector("#productBrand");
+
+    const productSku =
+      document.querySelector("#productSku");
+
+    const productPrice =
+      document.querySelector("#productPrice");
+
+    const productCurrency =
+      document.querySelector("#productCurrency");
+
+    const orgLogo =
+      document.querySelector("#orgLogo");
+
+    const orgEmail =
+      document.querySelector("#orgEmail");
+
+    const orgSameAs =
+      document.querySelector("#orgSameAs");
+
+    const breadcrumbInput =
+      document.querySelector("#breadcrumbInput");
+
+    function clean(value) {
+      return String(value || "").trim();
+    }
+
+    function updateFields() {
+      const type = schemaType?.value;
+
+      if (faqFields) {
+        faqFields.hidden = type !== "FAQPage";
+      }
+
+      if (productFields) {
+        productFields.hidden = type !== "Product";
+      }
+
+      if (organizationFields) {
+        organizationFields.hidden =
+          type !== "Organization";
+      }
+
+      if (breadcrumbFields) {
+        breadcrumbFields.hidden =
+          type !== "BreadcrumbList";
+      }
+    }
+
+    function parseFaq() {
+      return clean(faqInput?.value)
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map(line => {
+          const parts = line.split("|");
+
+          return {
+            "@type": "Question",
+            name: clean(parts[0]),
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: clean(parts.slice(1).join("|"))
+            }
+          };
+        })
+        .filter(item =>
+          item.name &&
+          item.acceptedAnswer.text
+        );
+    }
+
+    function parseBreadcrumbs() {
+      return clean(breadcrumbInput?.value)
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map((line, index) => {
+          const parts = line.split("|");
+
+          return {
+            "@type": "ListItem",
+            position: index + 1,
+            name: clean(parts[0]),
+            item: clean(parts.slice(1).join("|"))
+          };
+        })
+        .filter(item =>
+          item.name &&
+          item.item
+        );
+    }
+
+    function generateSchema() {
+      const type = schemaType?.value;
+
+      const name =
+        clean(schemaName?.value) ||
+        "AI Mr Ferdy";
+
+      const description =
+        clean(schemaDescription?.value) ||
+        "Website resmi AI Mr Ferdy.";
+
+      const url =
+        clean(schemaUrl?.value) ||
+        "https://aimrferdy.com/";
+
+      const author =
+        clean(schemaAuthor?.value) ||
+        "AI Mr Ferdy";
+
+      const image =
+        clean(schemaImage?.value);
+
+      let schema;
+
+      if (type === "Article") {
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: name,
+          description,
+          url,
+          author: {
+            "@type": "Person",
+            name: author
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "AI Mr Ferdy",
+            url: "https://aimrferdy.com/"
+          }
+        };
+
+        if (image) {
+          schema.image = image;
+        }
+      }
+
+      if (type === "FAQPage") {
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: parseFaq()
+        };
+      }
+
+      if (type === "Product") {
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name,
+          description,
+          url
+        };
+
+        const brand = clean(productBrand?.value);
+        const sku = clean(productSku?.value);
+        const price = clean(productPrice?.value);
+        const currency =
+          clean(productCurrency?.value) || "IDR";
+
+        if (brand) {
+          schema.brand = {
+            "@type": "Brand",
+            name: brand
+          };
+        }
+
+        if (sku) {
+          schema.sku = sku;
+        }
+
+        if (image) {
+          schema.image = image;
+        }
+
+        if (price) {
+          schema.offers = {
+            "@type": "Offer",
+            url,
+            price,
+            priceCurrency: currency,
+            availability:
+              "https://schema.org/InStock"
+          };
+        }
+      }
+
+      if (type === "Organization") {
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name,
+          description,
+          url
+        };
+
+        const logo = clean(orgLogo?.value);
+        const email = clean(orgEmail?.value);
+
+        const sameAs = clean(orgSameAs?.value)
+          .split("\n")
+          .map(item => item.trim())
+          .filter(Boolean);
+
+        if (logo) {
+          schema.logo = logo;
+        }
+
+        if (email) {
+          schema.email = email;
+        }
+
+        if (sameAs.length) {
+          schema.sameAs = sameAs;
+        }
+      }
+
+      if (type === "BreadcrumbList") {
+        schema = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: parseBreadcrumbs()
+        };
+      }
+
+      if (schemaOutput) {
+        schemaOutput.value =
+          JSON.stringify(schema, null, 2);
+      }
+    }
+
+    async function copySchema() {
+      const value =
+        schemaOutput?.value || "";
+
+      if (!value) return;
+
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        schemaOutput?.select();
+        document.execCommand("copy");
+      }
+
+      const button =
+        document.querySelector("#copySchema");
+
+      if (button) {
+        const original =
+          button.textContent;
+
+        button.textContent =
+          "Berhasil Disalin ✓";
+
+        setTimeout(() => {
+          button.textContent = original;
+        }, 1500);
+      }
+    }
+
+    function clearSchema() {
+      document
+        .querySelectorAll(
+          ".tool-box input, .tool-box textarea"
+        )
+        .forEach(element => {
+          if (
+            element.id === "productCurrency"
+          ) {
+            element.value = "IDR";
+          } else {
+            element.value = "";
+          }
+        });
+
+      if (schemaOutput) {
+        schemaOutput.value = "";
+      }
+
+      updateFields();
+    }
+
+    schemaType?.addEventListener(
+      "change",
+      updateFields
+    );
+
+    document
+      .querySelector("#generateSchema")
+      ?.addEventListener(
+        "click",
+        generateSchema
+      );
+
+    document
+      .querySelector("#copySchema")
+      ?.addEventListener(
+        "click",
+        copySchema
+      );
+
+    document
+      .querySelector("#clearSchema")
+      ?.addEventListener(
+        "click",
+        clearSchema
+      );
+
+    updateFields();
+  </script>
+</MainLayout>
