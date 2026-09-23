@@ -1105,3 +1105,35 @@ select {
   }
 
 }
+
+
+/* =========================================================
+   TOOL CATEGORY BADGE
+========================================================= */
+
+.tool-category {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+
+  margin-bottom: 10px;
+  padding: 5px 9px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  background: var(--bg);
+  color: var(--soft);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  white-space: nowrap;
+}
