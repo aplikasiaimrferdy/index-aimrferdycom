@@ -17,7 +17,8 @@
 /* =====================================
    CART BUTTON
 ===================================== */
-.add-cart{
+.add-cart,
+.checkout-button{
   width:100%;
   padding:14px 20px;
   border:1px solid var(--border);
@@ -28,28 +29,34 @@
   font-weight:700;
   line-height:1.4;
   text-align:center;
+  text-decoration:none;
   cursor:pointer;
   transition:all .25s ease;
   box-shadow:0 8px 24px rgba(37,99,235,.18);
+  box-sizing:border-box;
 }
 
-.add-cart:hover{
+.add-cart:hover,
+.checkout-button:hover{
   transform:translateY(-2px);
   background:linear-gradient(135deg,#2563eb,#06b6d4);
   box-shadow:0 12px 30px rgba(37,99,235,.28);
 }
 
-.add-cart:active{
+.add-cart:active,
+.checkout-button:active{
   transform:translateY(0);
   box-shadow:0 6px 16px rgba(37,99,235,.18);
 }
 
-.add-cart:focus-visible{
+.add-cart:focus-visible,
+.checkout-button:focus-visible{
   outline:2px solid #38bdf8;
   outline-offset:3px;
 }
 
-.add-cart:disabled{
+.add-cart:disabled,
+.checkout-button:disabled{
   opacity:.6;
   cursor:not-allowed;
   transform:none;
