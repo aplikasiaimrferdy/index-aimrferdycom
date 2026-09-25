@@ -18,7 +18,8 @@
    CART BUTTON
 ===================================== */
 .add-cart,
-.checkout-button{
+.checkout-button,
+.whatsapp-btn{
   width:100%;
   padding:14px 20px;
   border:1px solid var(--border);
@@ -37,20 +38,23 @@
 }
 
 .add-cart:hover,
-.checkout-button:hover{
+.checkout-button:hover,
+.whatsapp-btn:hover{
   transform:translateY(-2px);
   background:linear-gradient(135deg,#2563eb,#06b6d4);
   box-shadow:0 12px 30px rgba(37,99,235,.28);
 }
 
 .add-cart:active,
-.checkout-button:active{
+.checkout-button:active,
+.whatsapp-btn:active{
   transform:translateY(0);
   box-shadow:0 6px 16px rgba(37,99,235,.18);
 }
 
 .add-cart:focus-visible,
-.checkout-button:focus-visible{
+.checkout-button:focus-visible,
+.whatsapp-btn:focus-visible{
   outline:2px solid #38bdf8;
   outline-offset:3px;
 }
