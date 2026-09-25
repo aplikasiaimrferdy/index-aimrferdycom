@@ -10,7 +10,6 @@ const navItems = [
 ];
 ---
 
-
 <!-- HEADER -->
 
 <header class="main-header">
@@ -44,6 +43,40 @@ const navItems = [
 
 <div class="right-nav">
 
+<!-- CART -->
+
+<a
+  href="/product/cart"
+  class="cart-btn"
+  aria-label="Shopping cart"
+>
+
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="9" cy="20" r="1"/>
+    <circle cx="18" cy="20" r="1"/>
+    <path d="M3 4h2l2.4 11.5a2 2 0 0 0 2 1.5h7.7a2 2 0 0 0 2-1.5L21 8H6"/>
+  </svg>
+
+  <span
+    class="cart-count"
+    id="cartCount"
+    aria-live="polite"
+  >
+    0
+  </span>
+
+</a>
+
+<!-- THEME -->
+
 <button
   class="theme-btn"
   id="themeToggle"
@@ -51,6 +84,7 @@ const navItems = [
 >
 
   <!-- MOON -->
+
   <svg
     class="moon-icon"
     viewBox="0 0 24 24"
@@ -66,6 +100,7 @@ const navItems = [
   </svg>
 
   <!-- SUN -->
+
   <svg
     class="sun-icon"
     viewBox="0 0 24 24"
@@ -118,7 +153,6 @@ const navItems = [
 <p>Jakarta, Indonesia</p>
 <p>hello@aimrferdy.com</p>
 
-
 </div>
 
 <!-- <div class="mobile-social">
@@ -129,3 +163,115 @@ const navItems = [
 <a href="#">Pinterest</a>
 
 </div> -->
+
+<script is:inline>
+
+/* =========================================================
+   CART STORAGE
+========================================================= */
+
+const CART_KEY = 'cart';
+
+
+/* =========================================================
+   UPDATE CART COUNT
+========================================================= */
+
+function updateCartCount(){
+
+  const badge =
+    document.getElementById('cartCount');
+
+  if(!badge) return;
+
+  try{
+
+    const cart =
+      JSON.parse(
+        localStorage.getItem(CART_KEY) || '[]'
+      );
+
+    const count =
+      Array.isArray(cart)
+        ? cart.reduce(
+            (total, item) =>
+              total +
+              Math.max(
+                0,
+                Number(item.quantity || 0)
+              ),
+            0
+          )
+        : 0;
+
+    badge.textContent =
+      count > 99
+        ? '99+'
+        : String(count);
+
+    badge.style.display =
+      count > 0
+        ? 'flex'
+        : 'none';
+
+  }catch(error){
+
+    console.error(
+      'Cart error:',
+      error
+    );
+
+    badge.textContent = '0';
+
+    badge.style.display = 'none';
+
+  }
+
+}
+
+
+/* =========================================================
+   CART EVENTS
+========================================================= */
+
+window.addEventListener(
+  'cartUpdated',
+  updateCartCount
+);
+
+
+window.addEventListener(
+  'storage',
+  (event) => {
+
+    if(event.key === CART_KEY){
+
+      updateCartCount();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INITIAL CART
+========================================================= */
+
+if(
+  document.readyState === 'loading'
+){
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    updateCartCount,
+    { once:true }
+  );
+
+}else{
+
+  updateCartCount();
+
+}
+
+</script>
