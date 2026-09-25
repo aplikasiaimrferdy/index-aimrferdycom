@@ -17,13 +17,12 @@
 /* =====================================
    CART BUTTON
 ===================================== */
-
 .add-cart{
   width:100%;
   padding:14px 20px;
   border:1px solid var(--border);
   border-radius:12px;
-  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  background:linear-gradient(135deg,#1d4ed8,#0891b2);
   color:#fff;
   font-size:15px;
   font-weight:700;
@@ -36,7 +35,7 @@
 
 .add-cart:hover{
   transform:translateY(-2px);
-  background:linear-gradient(135deg,#1d4ed8,#0891b2);
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
   box-shadow:0 12px 30px rgba(37,99,235,.28);
 }
 
