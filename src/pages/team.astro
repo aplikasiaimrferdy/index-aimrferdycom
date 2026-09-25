@@ -1,20 +1,25 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import { SITE } from '../../lib/site';
 
-const title = 'People Behind AI Mr. Ferdy';
-const description = 'Meet the people behind AI Mr. Ferdy, including its founder, partners, and contributors building practical AI resources for digital creation.';
-const canonical = 'https://aimrferdy.com/team/';
+const pageTitle =
+  'People Behind AI Mr. Ferdy - Founder, Partner & Contributors';
+
+const pageDescription =
+  'Meet the people behind AI Mr. Ferdy, including its founder, partners, and contributors building practical AI resources for digital creation.';
+
+const canonical = `${SITE.url()}/team`;
 
 const articleSchema = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'Organization',
-      '@id': 'https://aimrferdy.com/#organization',
+      '@id': `${SITE.url()}/#organization`,
       name: 'AI Mr. Ferdy',
-      url: 'https://aimrferdy.com/',
+      url: `${SITE.url()}/`,
       sameAs: [
-        'https://aimrferdy.com/',
+        `${SITE.url()}/`,
         'https://www.youtube.com/@aimrferdy',
         'https://medium.com/@mrferdy',
         'https://x.com/ai_mr_ferdy',
@@ -22,62 +27,59 @@ const articleSchema = {
         'https://www.linkedin.com/in/aimrferdy/'
       ],
       founder: {
-        '@id': 'https://aimrferdy.com/team/#ferdy'
+        '@id': `${SITE.url()}/team/#ferdy`
       },
       member: [
         {
-          '@id': 'https://aimrferdy.com/team/#andini'
+          '@id': `${SITE.url()}/team/#andini`
         }
       ]
     },
     {
       '@type': 'Person',
-      '@id': 'https://aimrferdy.com/team/#ferdy',
+      '@id': `${SITE.url()}/team/#ferdy`,
       name: 'Ferdy',
       jobTitle: 'Founder of AI Mr. Ferdy',
-      url: 'https://aimrferdy.com/team/#ferdy',
+      url: `${SITE.url()}/team/#ferdy`,
       sameAs: [
         'https://www.linkedin.com/in/mrferdy/'
       ],
       worksFor: {
-        '@id': 'https://aimrferdy.com/#organization'
+        '@id': `${SITE.url()}/#organization`
       }
     },
     {
       '@type': 'Person',
-      '@id': 'https://aimrferdy.com/team/#andini',
+      '@id': `${SITE.url()}/team/#andini`,
       name: 'Andini Pramita',
       jobTitle: 'Partner of AI Mr. Ferdy',
-      url: 'https://aimrferdy.com/team/#andini',
+      url: `${SITE.url()}/team/#andini`,
       sameAs: [
         'https://id.linkedin.com/in/andini-pramita-b64457412'
       ],
       memberOf: {
-        '@id': 'https://aimrferdy.com/#organization'
+        '@id': `${SITE.url()}/#organization`
       }
     }
   ]
 };
-
-const breadcrumbs = [
-  { name: 'Home', url: '/' },
-  { name: 'Team', url: '/team/' }
-];
 ---
 
 <MainLayout
-  title={title}
-  description={description}
+  title={pageTitle}
+  description={pageDescription}
   canonical={canonical}
   articleSchema={articleSchema}
-  breadcrumbs={breadcrumbs}
-  pageCSS={['team']}
 >
+
   <main class="team-page">
+
     <section class="team-hero">
       <div class="team-container">
         <span class="eyebrow">AI Mr. Ferdy</span>
+
         <h1>People Behind AI Mr. Ferdy</h1>
+
         <p>
           Meet the people behind AI Mr. Ferdy — a digital project exploring
           practical applications of artificial intelligence for digital
@@ -95,12 +97,20 @@ const breadcrumbs = [
         </div>
 
         <article class="team-card" id="ferdy">
-          <div class="team-avatar">F</div>
+
+          <div class="team-avatar">
+            F
+          </div>
 
           <div class="team-content">
+
             <span class="role">Founder</span>
+
             <h3>Ferdy</h3>
-            <p class="position">Founder of AI Mr. Ferdy</p>
+
+            <p class="position">
+              Founder of AI Mr. Ferdy
+            </p>
 
             <p>
               Ferdy is the founder of AI Mr. Ferdy, a digital project focused
@@ -121,6 +131,7 @@ const breadcrumbs = [
             >
               LinkedIn
             </a>
+
           </div>
         </article>
 
@@ -130,12 +141,20 @@ const breadcrumbs = [
         </div>
 
         <article class="team-card" id="andini">
-          <div class="team-avatar">A</div>
+
+          <div class="team-avatar">
+            A
+          </div>
 
           <div class="team-content">
+
             <span class="role">Partner</span>
+
             <h3>Andini Pramita</h3>
-            <p class="position">Partner of AI Mr. Ferdy</p>
+
+            <p class="position">
+              Partner of AI Mr. Ferdy
+            </p>
 
             <p>
               Andini Pramita collaborates with AI Mr. Ferdy on projects and
@@ -156,6 +175,7 @@ const breadcrumbs = [
             >
               LinkedIn
             </a>
+
           </div>
         </article>
 
@@ -165,15 +185,21 @@ const breadcrumbs = [
         </div>
 
         <div class="contributors">
+
           <p>
             AI Mr. Ferdy also welcomes contributors and collaborators who
             share an interest in artificial intelligence, digital technology,
             content creation, websites, automation, and SEO.
           </p>
+
         </div>
 
         <div class="about-team">
-          <span class="eyebrow">About AI Mr. Ferdy</span>
+
+          <span class="eyebrow">
+            About AI Mr. Ferdy
+          </span>
+
           <h2>Exploring Practical AI</h2>
 
           <p>
@@ -196,17 +222,21 @@ const breadcrumbs = [
           <a class="primary-link" href="/tools/">
             Explore AI Tools
           </a>
+
         </div>
 
       </div>
     </section>
+
   </main>
+
 </MainLayout>
 
 <style>
 .team-page{
   width:100%;
 }
+
 .team-container{
   width:100%;
   max-width:1280px;
@@ -214,13 +244,16 @@ const breadcrumbs = [
   padding:0 24px;
   box-sizing:border-box;
 }
+
 .team-hero{
   padding:120px 0 80px;
   text-align:center;
 }
+
 .team-hero .team-container{
   max-width:900px;
 }
+
 .eyebrow{
   display:inline-block;
   margin-bottom:12px;
@@ -230,12 +263,14 @@ const breadcrumbs = [
   text-transform:uppercase;
   color:#38bdf8;
 }
+
 .team-hero h1{
   margin:0 0 20px;
   font-size:clamp(2.5rem,6vw,5rem);
   line-height:1.05;
   color:var(--text);
 }
+
 .team-hero p{
   margin:0 auto;
   max-width:760px;
@@ -243,18 +278,22 @@ const breadcrumbs = [
   line-height:1.8;
   color:var(--soft);
 }
+
 .team-section{
   padding:40px 0 100px;
 }
+
 .section-heading{
   margin:0 0 28px;
 }
+
 .section-heading h2,
 .about-team h2{
   margin:0;
   color:var(--text);
   font-size:clamp(1.8rem,3vw,2.6rem);
 }
+
 .team-card{
   display:grid;
   grid-template-columns:120px 1fr;
@@ -265,6 +304,7 @@ const breadcrumbs = [
   border-radius:28px;
   background:var(--card);
 }
+
 .team-avatar{
   width:120px;
   height:120px;
@@ -276,6 +316,7 @@ const breadcrumbs = [
   color:var(--text);
   background:linear-gradient(135deg,#0ea5e9,#6366f1);
 }
+
 .team-content .role{
   font-size:.8rem;
   font-weight:700;
@@ -283,16 +324,19 @@ const breadcrumbs = [
   text-transform:uppercase;
   color:#38bdf8;
 }
+
 .team-content h3{
   margin:8px 0 4px;
   font-size:2rem;
   color:var(--text);
 }
+
 .position{
   margin:0 0 20px;
   color:var(--soft);
   font-weight:600;
 }
+
 .team-content p,
 .contributors p,
 .about-team p{
@@ -300,6 +344,7 @@ const breadcrumbs = [
   color:var(--soft);
   line-height:1.8;
 }
+
 .team-content a,
 .primary-link{
   display:inline-block;
@@ -308,9 +353,11 @@ const breadcrumbs = [
   font-weight:700;
   text-decoration:none;
 }
+
 .partner-heading{
   margin-top:20px;
 }
+
 .contributors{
   padding:32px;
   margin-bottom:90px;
@@ -318,18 +365,21 @@ const breadcrumbs = [
   border-radius:24px;
   background:var(--card);
 }
+
 .about-team{
   padding:50px;
   border:1px solid var(--border);
   border-radius:28px;
   background:var(--card);
 }
+
 .topics{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
   margin:28px 0;
 }
+
 .topics span{
   padding:9px 14px;
   border:1px solid var(--border);
@@ -337,25 +387,30 @@ const breadcrumbs = [
   color:var(--soft);
   font-size:.9rem;
 }
+
 .primary-link{
   padding:13px 20px;
   border-radius:12px;
   background:#0ea5e9;
   color:#fff;
 }
+
 @media(max-width:700px){
   .team-hero{
     padding:80px 0 50px;
   }
+
   .team-card{
     grid-template-columns:1fr;
     padding:28px;
   }
+
   .team-avatar{
     width:90px;
     height:90px;
     font-size:2.2rem;
   }
+
   .about-team{
     padding:30px;
   }
