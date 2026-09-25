@@ -1,0 +1,156 @@
+---
+interface Props {
+  title: string;
+  url?: string;
+}
+
+const { title, url = Astro.url.href } = Astro.props;
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+---
+
+<div class="share-box">
+  <span class="share-title">Bagikan artikel</span>
+
+  <div class="share-buttons">
+    <a
+      href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Bagikan ke WhatsApp"
+      class="share-btn"
+    >
+      WhatsApp
+    </a>
+
+    <a
+      href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Bagikan ke Facebook"
+      class="share-btn"
+    >
+      Facebook
+    </a>
+
+    <a
+      href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Bagikan ke X"
+      class="share-btn"
+    >
+      X
+    </a>
+
+    <a
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Bagikan ke LinkedIn"
+      class="share-btn"
+    >
+      LinkedIn
+    </a>
+
+    <a
+      href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Bagikan ke Telegram"
+      class="share-btn"
+    >
+      Telegram
+    </a>
+
+    <button
+      type="button"
+      class="share-btn"
+      id="copyShareLink"
+      aria-label="Salin link artikel"
+    >
+      Copy Link
+    </button>
+  </div>
+</div>
+
+<script>
+  const copyButton = document.getElementById('copyShareLink');
+
+  copyButton?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+
+      const originalText = copyButton.textContent;
+      copyButton.textContent = 'Copied!';
+
+      setTimeout(() => {
+        copyButton.textContent = originalText;
+      }, 1800);
+    } catch {
+      copyButton.textContent = 'Gagal menyalin';
+
+      setTimeout(() => {
+        copyButton.textContent = 'Copy Link';
+      }, 1800);
+    }
+  });
+</script>
+
+<style>
+  .share-box {
+    margin: 40px 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+  }
+
+  .share-title {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .2s ease;
+  }
+
+  .share-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.08);
+  }
+
+  @media (max-width: 600px) {
+    .share-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .share-btn {
+      width: 100%;
+    }
+  }
+</style>
