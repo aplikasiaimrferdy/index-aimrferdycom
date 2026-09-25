@@ -1,75 +1,19 @@
+
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
-import { SITE } from '../../lib/site';
+import MainLayout from '../layouts/MainLayout.astro';
+import { SITE } from '../lib/site';
 
 const pageTitle =
   'People Behind AI Mr. Ferdy - Founder, Partner & Contributors';
 
 const pageDescription =
   'Meet the people behind AI Mr. Ferdy, including its founder, partners, and contributors building practical AI resources for digital creation.';
-
-const canonical = `${SITE.url()}/team`;
-
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      '@id': `${SITE.url()}/#organization`,
-      name: 'AI Mr. Ferdy',
-      url: `${SITE.url()}/`,
-      sameAs: [
-        `${SITE.url()}/`,
-        'https://www.youtube.com/@aimrferdy',
-        'https://medium.com/@mrferdy',
-        'https://x.com/ai_mr_ferdy',
-        'https://heylink.me/mrferdy',
-        'https://www.linkedin.com/in/aimrferdy/'
-      ],
-      founder: {
-        '@id': `${SITE.url()}/team/#ferdy`
-      },
-      member: [
-        {
-          '@id': `${SITE.url()}/team/#andini`
-        }
-      ]
-    },
-    {
-      '@type': 'Person',
-      '@id': `${SITE.url()}/team/#ferdy`,
-      name: 'Ferdy',
-      jobTitle: 'Founder of AI Mr. Ferdy',
-      url: `${SITE.url()}/team/#ferdy`,
-      sameAs: [
-        'https://www.linkedin.com/in/mrferdy/'
-      ],
-      worksFor: {
-        '@id': `${SITE.url()}/#organization`
-      }
-    },
-    {
-      '@type': 'Person',
-      '@id': `${SITE.url()}/team/#andini`,
-      name: 'Andini Pramita',
-      jobTitle: 'Partner of AI Mr. Ferdy',
-      url: `${SITE.url()}/team/#andini`,
-      sameAs: [
-        'https://id.linkedin.com/in/andini-pramita-b64457412'
-      ],
-      memberOf: {
-        '@id': `${SITE.url()}/#organization`
-      }
-    }
-  ]
-};
 ---
 
 <MainLayout
   title={pageTitle}
   description={pageDescription}
-  canonical={canonical}
-  articleSchema={articleSchema}
+  canonical={`${SITE.url()}/about`}
 >
 
   <main class="team-page">
