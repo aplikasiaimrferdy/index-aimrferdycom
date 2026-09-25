@@ -14,3 +14,43 @@
 
   color:var(--text);
 }
+/* =====================================
+   CART BUTTON
+===================================== */
+
+.cart-btn{
+  position:relative;
+
+  width:44px;
+  height:44px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--text);
+  background:var(--surface);
+
+  border:1px solid var(--border);
+  border-radius:10px;
+
+  text-decoration:none;
+
+  transition:
+    background .25s ease,
+    border-color .25s ease,
+    transform .25s ease;
+}
+
+.cart-btn svg{
+  width:21px;
+  height:21px;
+}
+
+.cart-btn:hover{
+  background:var(--surface-hover);
+
+  border-color:var(--primary);
+
+  transform:translateY(-1px);
+}
