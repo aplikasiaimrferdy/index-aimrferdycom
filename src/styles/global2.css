@@ -54,3 +54,6 @@
 
   transform:translateY(-1px);
 }
+
+
+.add-cart{height:52px;border:0;border-radius:10px;background:var(--bgbtn);color:var(--textbtn);font-size:13px;font-weight:700;transition:var(--transition);cursor:pointer}.add-cart:hover{transform:translateY(-1px);filter:brightness(1.05)}.add-cart.added{background:var(--primary);color:#fff;transform:translateY(-1px)}.buy-now{width:100%;height:52px;margin-top:9px;border:1px solid var(--primary);border-radius:10px;background:none;color:var(--primary);font-size:13px;font-weight:700;transition:var(--transition);cursor:pointer}
