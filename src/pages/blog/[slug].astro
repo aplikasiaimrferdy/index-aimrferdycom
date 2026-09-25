@@ -2,7 +2,6 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import { SITE } from '../../lib/site';
 import '../../styles/blog.css';
-import ShareButtons from '../../components/ShareButtons.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 
 import { getCollection, render } from 'astro:content';
@@ -206,7 +205,6 @@ const articleSchema = {
         <!-- Content -->
         <article class="article-content">
           <Content />
-<ShareButtons title={post.data.title} />
         </article>
 
         <!-- Related Posts -->
