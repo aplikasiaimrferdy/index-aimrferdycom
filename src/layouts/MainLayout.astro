@@ -6,14 +6,7 @@ import Footer from "../components/Footer.astro";
 import RelatedTools from "../components/RelatedTools.astro";
 import { generateFaqSchema } from "../lib/faq-schema";
 import { homeSchema } from "../lib/home-schema";
-import ShareButtons from '../components/ShareButtons.astro';
-
-const pathname = Astro.url.pathname;
-
-const enableShare =
-  pathname.startsWith('/blog/') ||
-  pathname.startsWith('/tools/');
-
+import ShareButtons from "../components/ShareButtons.astro";
 
 const {
   title,
@@ -30,9 +23,14 @@ const {
   lang = "id"
 } = Astro.props;
 
-const autoPageCSS = [...pageCSS];
-
 const pathname = Astro.url.pathname;
+
+const enableShare =
+  pathname.startsWith("/blog/") ||
+  pathname.startsWith("/tools/") ||
+  pathname.startsWith("/product/");
+
+const autoPageCSS = [...pageCSS];
 
 /* =========================================
    AUTO CSS UNTUK SEMUA HALAMAN TOOLS
