@@ -1,0 +1,221 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { SITE } from "../../../lib/site";
+
+export function getStaticPaths() {
+  const modules = import.meta.glob("../**/*.astro", {
+    eager: true
+  });
+
+  const categories = new Set();
+
+  for (const file of Object.keys(modules)) {
+    const match = file.match(/^\.\.\/([^/]+)\/(.+)\.astro$/);
+
+    if (!match) continue;
+
+    const category = match[1];
+    const slug = match[2];
+
+    if (
+      category === "[category]" ||
+      slug === "index"
+    ) continue;
+
+    categories.add(category);
+  }
+
+  return [...categories].map(category => ({
+    params: { category }
+  }));
+}
+
+const { category } = Astro.params;
+
+const modules = Object.entries(
+  import.meta.glob("../**/*.astro", {
+    eager: true
+  })
+);
+
+const tools = modules
+  .map(([file, mod]) => {
+    const match = file.match(
+      /^\.\.\/([^/]+)\/(.+)\.astro$/
+    );
+
+    if (!match) return null;
+
+    const toolCategory = match[1];
+    const slug = match[2];
+
+    if (
+      toolCategory === "[category]" ||
+      slug === "index" ||
+      toolCategory !== category
+    ) {
+      return null;
+    }
+
+    if (!mod.meta) return null;
+
+    return {
+      ...mod.meta,
+      category: toolCategory,
+      slug,
+      url: `/tools/${toolCategory}/${slug}/`
+    };
+  })
+  .filter(Boolean)
+  .sort((a, b) =>
+    (a.title || "").localeCompare(
+      b.title || "",
+      "id"
+    )
+  );
+
+const categoryName = (category || "")
+  .replace(/[-_]/g, " ")
+  .replace(/\b\w/g, char => char.toUpperCase());
+
+const pageUrl = SITE.url(`/tools/${category}/`);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `${categoryName} Tools | ${SITE.title}`,
+  description: `Kumpulan tools kategori ${categoryName} yang dapat digunakan langsung dari browser.`,
+  url: pageUrl,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: tools.length,
+    itemListElement: tools.map((tool, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: tool.title,
+      url: SITE.url(tool.url)
+    }))
+  }
+};
+---
+
+<MainLayout
+  title={`${categoryName} Tools | ${SITE.title}`}
+  description={`Kumpulan tools kategori ${categoryName} yang dapat digunakan langsung dari browser.`}
+>
+
+  <section class="tools-page">
+
+    <header class="tool-header">
+
+      <span class="page-badge">
+        {categoryName.toUpperCase()}
+      </span>
+
+      <h1>
+        {categoryName} Tools
+      </h1>
+
+      <p>
+        Kumpulan tools {categoryName} yang dapat digunakan langsung dari browser.
+      </p>
+
+    </header>
+
+    <section
+      class="tools-section"
+      aria-labelledby="tools-title"
+    >
+
+      <div class="section-heading">
+
+        <h2 id="tools-title">
+          Semua {categoryName} Tools
+        </h2>
+
+        <span class="tool-count">
+          {tools.length} tools
+        </span>
+
+      </div>
+
+      {tools.length > 0 ? (
+
+        <div class="tools-grid">
+
+          {tools.map(tool => (
+
+            <article class="tool-card">
+
+              {tool.featured && (
+                <span class="badge">
+                  HOT
+                </span>
+              )}
+
+              {tool.icon && (
+                <div
+                  class="tool-icon"
+                  aria-hidden="true"
+                >
+                  {tool.icon}
+                </div>
+              )}
+
+              <div class="tool-category">
+                {categoryName}
+              </div>
+
+              <h3>
+                <a href={tool.url}>
+                  {tool.title}
+                </a>
+              </h3>
+
+              {tool.description && (
+                <p>
+                  {tool.description}
+                </p>
+              )}
+
+              <a
+                href={tool.url}
+                class="btn btn-primary"
+                aria-label={`Buka ${tool.title}`}
+              >
+                Buka Tool
+                <span aria-hidden="true">→</span>
+              </a>
+
+            </article>
+
+          ))}
+
+        </div>
+
+      ) : (
+
+        <div class="tools-empty">
+
+          <strong>
+            Belum ada tools
+          </strong>
+
+          <p>
+            Belum ada tools dalam kategori ini.
+          </p>
+
+        </div>
+
+      )}
+
+    </section>
+
+  </section>
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+
+</MainLayout>
