@@ -23,7 +23,7 @@ main {
   align-items: center;
   flex-wrap: wrap;
 
-  width: min(100% - 32px, 1100px);
+  width: min(100% - 32px, 1280px);
 
   margin: 0 auto;
   padding: 12px 0;
