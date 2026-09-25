@@ -4,7 +4,10 @@ description: "AI Humanizer dari AI Mr Ferdy membantu mengubah teks AI menjadi tu
 price: "Gratis"
 oldPrice: ""
 category: "AI Tools"
-image: "/images/products/ai-humanizer.jpeg"
+image: ""
+gallery:
+  - ""
+  - ""
 featured: true
 ---
 
