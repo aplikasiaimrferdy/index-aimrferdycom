@@ -831,9 +831,11 @@ opacity:1;
    LEGAL HERO
 ========================= */
 
+
 .hero-content {
   max-width: 900px;
   margin-inline: auto;
+  text-align: center;
 }
 
 .badge {
@@ -858,4 +860,6 @@ opacity:1;
 
 .hero-content p {
   max-width: 800px;
+  margin-inline: auto;
 }
+
