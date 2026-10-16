@@ -755,17 +755,19 @@ opacity:1;
   min-height: 70vh;
 }
 
-.content-card {
+
+.content-block {
   max-width: 900px;
-  margin: 0 auto;
+  margin-inline: auto;
   padding: 48px;
+
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 28px;
+
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
-
 .content-block h1 {
   font-size: clamp(32px, 5vw, 48px);
   line-height: 1.2;
