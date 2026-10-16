@@ -741,3 +741,88 @@ opacity:0;
 html.light-mode .sun-icon{
 opacity:1;
 }
+
+
+
+/* PAGE */
+
+/* =========================
+   CONTENT / TERMS OF SERVICE
+========================= */
+
+.content-section {
+  padding: 140px 0 90px;
+  min-height: 70vh;
+}
+
+.content-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.content-block h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.2;
+  margin-bottom: 28px;
+  color: var(--text);
+}
+
+.content-block h2 {
+  font-size: 23px;
+  line-height: 1.4;
+  margin: 34px 0 14px;
+  color: var(--text);
+}
+
+.content-block p,
+.content-block li {
+  color: var(--soft);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.content-block p {
+  margin-bottom: 18px;
+}
+
+.content-block ul,
+.content-block ol {
+  padding-left: 24px;
+  margin: 0 0 24px;
+}
+
+.content-block li {
+  padding-left: 4px;
+  margin-bottom: 8px;
+}
+
+.content-block strong {
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .content-section {
+    padding: 110px 0 60px;
+  }
+
+  .content-card {
+    padding: 26px 22px;
+    border-radius: 20px;
+  }
+
+  .content-block h2 {
+    font-size: 20px;
+  }
+
+  .content-block p,
+  .content-block li {
+    font-size: 15px;
+  }
+}
+
