@@ -59,15 +59,15 @@ export async function getFooterData() {
         b.data.pubDate.getTime() -
         a.data.pubDate.getTime()
     )
-    .slice(0, 4);
+    .slice(0, 3);
 
   const featuredProducts = products
     .filter((product) => product.data.featured)
-    .slice(0, 4);
+    .slice(0, 3);
 
   return {
     latestPosts,
-    popularTools: tools.slice(0, 4),
+    popularTools: tools.slice(0, 3),
     featuredProducts,
   };
 }
