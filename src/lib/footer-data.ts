@@ -59,7 +59,7 @@ export async function getFooterData() {
         b.data.pubDate.getTime() -
         a.data.pubDate.getTime()
     )
-    .slice(0, 3);
+    .slice(0, 4);
 
   const featuredProducts = products
     .filter((product) => product.data.featured)
