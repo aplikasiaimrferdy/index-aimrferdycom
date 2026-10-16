@@ -26,13 +26,13 @@ export const homeSchema = {
 ],
       "sameAs": [
     "https://www.youtube.com/@aimrferdy",
+	"https://chat.aimrferdy.com/",
     "https://medium.com/@aimrferdy",
     "https://github.com/aimrferdy",
     "https://facebook.com/ai.mr.ferdy",
 	"https://www.linkedin.com/in/aimrferdy",
 	"https://aimrferdy.net/",
-    "https://chat.aimrferdy.net/",
-    "https://blog.aimrferdy.net/",
+	"https://www.instagram.com/ai_mr.ferdy",	  
     "https://heylink.me/mrferdy"
       ]
     },
