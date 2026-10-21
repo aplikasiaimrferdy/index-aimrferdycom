@@ -834,11 +834,6 @@ opacity:1;
 ========================= */
 
 
-.hero-content {
-  max-width: 900px;
-  margin-inline: auto;
-  text-align: center;
-}
 
 .badge {
   display: inline-block;
