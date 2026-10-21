@@ -832,6 +832,11 @@ opacity:1;
 /* =========================
    LEGAL HERO
 ========================= */
+.hero-page {
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: center;
+}
 
 
 
@@ -851,11 +856,11 @@ opacity:1;
   border-radius: 100px;
 }
 
-.hero-content h1 {
+.hero-page h1 {
   overflow-wrap: anywhere;
 }
 
-.hero-content p {
+.hero-page p {
   max-width: 800px;
   margin-inline: auto;
 }
