@@ -33,7 +33,7 @@ export const homeSchema = {
 	"https://www.linkedin.com/in/aimrferdy",
 	"https://aimrferdy.net/",
 	"https://aimrferdy.org/",
-	"https://www.instagram.com/ai_mr.ferdy",	  
+	"https://www.instagram.com/aimrferdycom",	  
     "https://heylink.me/mrferdy"
       ]
     },
