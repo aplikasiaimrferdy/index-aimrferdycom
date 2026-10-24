@@ -51,25 +51,6 @@ const totalPages = Math.ceil(
     </div>
 
 
-
-
-<!-- BLOG SEARCH -->
-<div class="blog-search">
-  <label for="blogSearch">Cari artikel</label>
-
-  <input
-    id="blogSearch"
-    type="search"
-    placeholder="Cari judul atau topik artikel..."
-    autocomplete="off"
-    spellcheck="false"
-  />
-
-  <p id="blog-search-count" aria-live="polite">
-    Menampilkan artikel terbaru
-  </p>
-</div>
-
     <!-- POSTS -->
     <div
       class="blog-grid"
@@ -646,59 +627,3 @@ const totalPages = Math.ceil(
 
 </MainLayout>
 
-
-<style>
-
-.blog-search {
-  max-width: 720px;
-  margin: 0 auto 32px;
-}
-
-.blog-search label {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--text);
-  font-weight: 600;
-}
-
-.blog-search input {
-  display: block;
-  width: 100%;
-  min-height: 50px;
-  padding: 12px 16px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--card);
-  color: var(--text);
-  font: inherit;
-  outline: none;
-  transition: var(--transition);
-}
-
-.blog-search input::placeholder {
-  color: var(--text-soft);
-  opacity: 0.8;
-}
-
-.blog-search input:focus {
-  border-color: var(--primary);
-}
-
-#blog-search-count {
-  margin: 10px 0 0;
-  color: var(--text-soft);
-  font-size: 0.875rem;
-  line-height: 1.6;
-}
-
-#blog-grid .blog-card[hidden] {
-  display: none !important;
-}
-
-@media (max-width: 640px) {
-  .blog-search {
-    margin-bottom: 24px;
-  }
-}
-
-</style>
