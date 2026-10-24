@@ -44,6 +44,32 @@ const navItems = [
 
 <div class="right-nav">
 
+
+
+<!-- SEARCH -->
+
+<a
+  href="/search/"
+  class="header-search-btn"
+  aria-label="Cari artikel, AI Tools, dan produk"
+  title="Search"
+>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="7" />
+    <path d="m20 20-4-4" />
+  </svg>
+</a>
+
+
+
 <!-- CART -->
 
 <a
@@ -278,6 +304,52 @@ if(
 </script>
 
 <style is:global>
+
+
+/* =========================================================
+   HEADER SEARCH
+========================================================= */
+
+.header-search-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 10px;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
+}
+
+.header-search-btn:hover {
+  color: #38bdf8;
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.header-search-btn svg {
+  display: block;
+  width: 21px;
+  height: 21px;
+}
+
+@media (max-width: 768px) {
+  .header-search-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .header-search-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
 /* =========================================================
    CART
 ========================================================= */
