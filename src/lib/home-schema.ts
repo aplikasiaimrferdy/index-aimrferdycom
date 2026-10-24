@@ -200,8 +200,8 @@ export const homeSchema = {
   "browserRequirements": "Requires JavaScript",
 },
 
-    // FAQ
-   {
+// FAQ
+{
   "@type": "FAQPage",
   "@id": "https://aimrferdy.com/#faq",
   "mainEntity": [
@@ -210,23 +210,23 @@ export const homeSchema = {
       "name": "Apa itu AI Mr Ferdy?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AI Mr Ferdy adalah platform AI Indonesia yang menyediakan berbagai AI Tools, solusi otomatisasi, teknologi, pembuatan konten, dan layanan digital untuk membantu meningkatkan produktivitas individu maupun bisnis."
+        "text": "AI Mr Ferdy adalah platform digital yang menyediakan berbagai AI Tools dan panduan praktis untuk membantu pembuatan konten, pengembangan website, optimasi SEO, serta otomatisasi pekerjaan digital bagi individu maupun bisnis."
       }
     },
     {
       "@type": "Question",
-      "name": "Apa saja layanan yang tersedia di AI Mr Ferdy?",
+      "name": "Apa saja fitur dan layanan AI Mr Ferdy?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AI Mr Ferdy menyediakan AI Tools, Prompt Generator, AI Humanizer, solusi SEO, automasi digital, artikel edukasi, serta berbagai produk digital yang terus dikembangkan."
+        "text": "AI Mr Ferdy menghadirkan berbagai alat bantu AI, seperti generator konten, AI Article Writer, AI Humanizer, prompt generator, serta tools dan panduan seputar website, SEO, dan otomatisasi digital. Ketersediaan fitur dapat berbeda sesuai layanan yang tersedia di website."
       }
     },
     {
       "@type": "Question",
-      "name": "Apakah AI Mr Ferdy dapat digunakan secara gratis?",
+      "name": "Apakah AI Mr Ferdy gratis untuk digunakan?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AI Mr Ferdy menyediakan berbagai AI Tools yang dapat digunakan secara gratis. Beberapa layanan lanjutan tersedia dalam paket premium dengan fitur tambahan."
+        "text": "Beberapa AI Tools di AI Mr Ferdy dapat digunakan secara gratis. Ketentuan penggunaan, batas pemakaian, atau biaya tambahan dapat berbeda pada setiap layanan. Periksa informasi pada halaman tools yang ingin Anda gunakan untuk mengetahui ketentuannya."
       }
     },
     {
@@ -234,58 +234,27 @@ export const homeSchema = {
       "name": "Apakah AI Mr Ferdy aman digunakan?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ya. AI Mr Ferdy dikembangkan dengan memperhatikan keamanan, performa, dan pengalaman pengguna sehingga layanan dapat digunakan secara nyaman melalui website resmi."
+        "text": "Gunakan website resmi https://aimrferdy.com dan baca ketentuan serta kebijakan privasi yang berlaku. Hindari memasukkan kata sandi, data keuangan, atau informasi pribadi yang sensitif ke dalam prompt AI. Keamanan juga bergantung pada jenis layanan dan informasi yang Anda bagikan."
       }
     },
     {
       "@type": "Question",
-      "name": "Apakah AI Mr Ferdy dapat digunakan di perangkat mobile?",
+      "name": "Apakah AI Mr Ferdy bisa diakses melalui HP?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ya. Seluruh website dan AI Tools AI Mr Ferdy dirancang menggunakan pendekatan mobile-first sehingga dapat diakses melalui smartphone, tablet, maupun desktop."
+        "text": "Ya, website AI Mr Ferdy dapat diakses melalui smartphone, tablet, maupun komputer menggunakan browser yang kompatibel. Tampilan dan fungsi tertentu dapat berbeda bergantung pada perangkat, browser, dan layanan yang digunakan."
       }
     },
     {
       "@type": "Question",
-      "name": "Di mana website resmi AI Mr Ferdy?",
+      "name": "Di mana alamat website resmi AI Mr Ferdy?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Website resmi AI Mr Ferdy adalah https://aimrferdy.com, yang menyediakan informasi terbaru, AI Tools, artikel, produk digital, dan layanan resmi AI Mr Ferdy."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Apakah AI Mr Ferdy menyediakan AI Tools?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ya. AI Mr Ferdy menyediakan berbagai AI Tools untuk membantu pembuatan konten, optimasi SEO, otomatisasi pekerjaan, dan meningkatkan produktivitas digital."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Apakah AI Mr Ferdy menyediakan solusi SEO modern?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ya. AI Mr Ferdy menyediakan solusi SEO modern, automasi, serta ekosistem digital yang dirancang untuk membantu meningkatkan visibilitas website di mesin pencari."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Bagaimana cara mulai menggunakan AI Mr Ferdy?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Pengguna dapat mengunjungi website resmi AI Mr Ferdy atau membuka aplikasi AI melalui platform yang tersedia untuk mulai menggunakan berbagai fitur dan layanan."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Apakah AI Mr Ferdy mendukung bisnis dan individu?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ya. AI Mr Ferdy dirancang untuk individu, kreator konten, UMKM, maupun perusahaan yang membutuhkan AI Tools, automasi, SEO, dan solusi digital modern."
+        "text": "Website resmi AI Mr Ferdy dapat dikunjungi melalui https://aimrferdy.com/. Di sana, Anda dapat menjelajahi AI Tools, membaca artikel dan panduan digital, serta melihat produk dan layanan yang tersedia."
       }
     }
   ]
 }
+
   ]
 };
