@@ -3,23 +3,19 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import { SITE } from "../../lib/site";
 
-/* =========================================================
-   LOAD ALL TOOLS
-========================================================= */
-
+/* LOAD ALL TOOLS */
 const modules = Object.entries(
   import.meta.glob("./**/*.astro", {
     eager: true,
   })
 );
 
-/* =========================================================
-   BUILD TOOL LIST
-========================================================= */
-
+/* BUILD TOOL LIST */
 const tools = modules
   .map(([file, mod]) => {
-    const match = file.match(/^\.\/([^/]+)\/(.+)\.astro$/);
+    const match = file.match(
+      /^\.\/([^/]+)\/(.+)\.astro$/
+    );
 
     if (!match) return null;
 
@@ -27,63 +23,37 @@ const tools = modules
     const slug = match[2];
 
     if (
-      category.startsWith("[") ||
-      slug === "index" ||
-      slug.includes("[")
+      category === "[category]" ||
+      slug === "index"
     ) {
       return null;
     }
 
-    if (!mod.meta || typeof mod.meta !== "object") {
-      return null;
-    }
-
-    const meta = mod.meta;
-
-    const keywords = Array.isArray(meta.keywords)
-      ? meta.keywords.join(" ")
-      : typeof meta.keywords === "string"
-        ? meta.keywords
-        : "";
+    if (!mod.meta) return null;
 
     return {
-      ...meta,
-      title: meta.title || slug.replace(/[-_]/g, " "),
-      description: meta.description || "",
+      ...mod.meta,
       category,
       slug,
       url: `/tools/${category}/${slug}/`,
-      searchText: [
-        meta.title || "",
-        meta.description || "",
-        meta.category || "",
-        category,
-        slug,
-        keywords,
-      ]
-        .join(" ")
-        .toLocaleLowerCase("id"),
     };
   })
   .filter(Boolean)
   .sort((a, b) =>
-    a.title.localeCompare(b.title, "id")
+    (a.title || "").localeCompare(
+      b.title || "",
+      "id"
+    )
   );
 
-/* =========================================================
-   STATS
-========================================================= */
-
+/* STATS */
 const totalTools = tools.length;
 
 const totalCategories = new Set(
   tools.map((tool) => tool.category)
 ).size;
 
-/* =========================================================
-   SEO
-========================================================= */
-
+/* SEO */
 const pageUrl = SITE.url("/tools/");
 
 const jsonLd = {
@@ -111,20 +81,21 @@ const jsonLd = {
   description="Kumpulan AI tools dan utility online yang dapat digunakan langsung dari browser."
 >
   <section class="tools-page">
-    <!-- HEADER -->
     <header class="tool-header">
       <span class="page-badge">AI TOOLS</span>
 
       <h1>Tools Online</h1>
 
       <p>
-        Kumpulan AI tools dan utility online yang dapat digunakan
-        langsung dari browser.
+        Kumpulan AI tools dan utility online yang dapat
+        digunakan langsung dari browser.
       </p>
     </header>
 
-    <!-- STATS -->
-    <section class="tools-stats" aria-label="Statistik tools">
+    <section
+      class="tools-stats"
+      aria-label="Statistik tools"
+    >
       <div>
         <strong>{totalTools}</strong>
         <span>Tools</span>
@@ -141,7 +112,6 @@ const jsonLd = {
       </div>
     </section>
 
-    <!-- SEARCH -->
     <div class="tools-search">
       <label for="toolSearch" class="tool-field-label">
         Cari tools
@@ -150,14 +120,12 @@ const jsonLd = {
       <input
         id="toolSearch"
         type="search"
-        placeholder="Cari judul, kategori, atau fungsi tools..."
+        placeholder="Cari nama tools, kategori, atau fungsi..."
         autocomplete="off"
         spellcheck="false"
-        aria-label="Cari AI tools"
       />
     </div>
 
-    <!-- TOOLS -->
     {tools.length > 0 ? (
       <section
         class="tools-section"
@@ -166,8 +134,9 @@ const jsonLd = {
         <div class="section-heading">
           <h2 id="tools-title">Semua Tools</h2>
 
-          <span class="tool-count" id="toolCount">
-            {totalTools} tools
+          <span class="tool-count">
+            <span id="visibleToolCount">{totalTools}</span>
+            {" "}dari {totalTools} tools
           </span>
         </div>
 
@@ -175,12 +144,17 @@ const jsonLd = {
           {tools.map((tool) => (
             <article
               class="tool-card"
-              data-search={tool.searchText}
+              data-search={`${tool.title || ""} ${tool.description || ""} ${tool.category || ""} ${tool.slug || ""}`}
             >
-              {tool.featured && <span class="badge">HOT</span>}
+              {tool.featured && (
+                <span class="badge">HOT</span>
+              )}
 
               {tool.icon && (
-                <div class="tool-icon" aria-hidden="true">
+                <div
+                  class="tool-icon"
+                  aria-hidden="true"
+                >
                   {tool.icon}
                 </div>
               )}
@@ -188,14 +162,20 @@ const jsonLd = {
               <div class="tool-category">
                 {tool.category
                   .replace(/[-_]/g, " ")
-                  .replace(/\b\w/g, (char) => char.toUpperCase())}
+                  .replace(/\b\w/g, (char) =>
+                    char.toUpperCase()
+                  )}
               </div>
 
               <h3>
-                <a href={tool.url}>{tool.title}</a>
+                <a href={tool.url}>
+                  {tool.title}
+                </a>
               </h3>
 
-              {tool.description && <p>{tool.description}</p>}
+              {tool.description && (
+                <p>{tool.description}</p>
+              )}
 
               <a
                 href={tool.url}
@@ -209,61 +189,63 @@ const jsonLd = {
           ))}
         </div>
 
-        <!-- EMPTY SEARCH -->
-        <div id="emptyState" class="tools-empty" hidden>
+        <div
+          id="emptyState"
+          class="tools-empty"
+          hidden
+        >
           <strong>Tool tidak ditemukan</strong>
-
           <p>
-            Coba gunakan kata kunci pencarian lainnya.
+            Coba kata kunci lain atau gunakan nama kategori.
           </p>
         </div>
       </section>
     ) : (
       <div class="tools-empty">
         <strong>Belum ada tools</strong>
-
-        <p>
-          Tidak ada halaman tools dengan metadata yang berhasil dibaca.
-        </p>
+        <p>Belum ada file tool yang tersedia.</p>
       </div>
     )}
   </section>
 
-  <!-- SEARCH SCRIPT -->
   <script>
     const searchInput =
-      document.querySelector("#toolSearch");
+      document.querySelector<HTMLInputElement>(
+        "#toolSearch"
+      );
 
     const cards =
-      document.querySelectorAll(".tool-card");
+      document.querySelectorAll<HTMLElement>(
+        ".tool-card"
+      );
 
     const emptyState =
-      document.querySelector("#emptyState");
+      document.querySelector<HTMLElement>(
+        "#emptyState"
+      );
 
-    const toolCount =
-      document.querySelector("#toolCount");
+    const visibleToolCount =
+      document.querySelector<HTMLElement>(
+        "#visibleToolCount"
+      );
 
-    function normalizeText(value) {
-      return (value || "")
+    const normalizeText = (value: string) =>
+      value
         .toLocaleLowerCase("id")
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .trim();
-    }
 
-    function runSearch() {
-      if (!searchInput) return;
-
+    searchInput?.addEventListener("input", () => {
       const query = normalizeText(searchInput.value);
       let visible = 0;
 
       cards.forEach((card) => {
-        const text = normalizeText(
+        const searchableText = normalizeText(
           `${card.dataset.search || ""} ${card.textContent || ""}`
         );
 
-        const matches =
-          query === "" || text.includes(query);
+        const matches = searchableText.includes(query);
 
         card.hidden = !matches;
 
@@ -271,23 +253,318 @@ const jsonLd = {
       });
 
       if (emptyState) {
-        emptyState.hidden = visible !== 0;
+        emptyState.hidden = visible > 0;
       }
 
-      if (toolCount) {
-        toolCount.textContent =
-          query === ""
-            ? `${cards.length} tools`
-            : `${visible} dari ${cards.length} tools`;
+      if (visibleToolCount) {
+        visibleToolCount.textContent = String(visible);
       }
-    }
-
-    searchInput?.addEventListener("input", runSearch);
+    });
   </script>
 
-  <!-- JSON-LD -->
   <script
     type="application/ld+json"
     set:html={JSON.stringify(jsonLd)}
   />
+
+  <style>
+    .tools-page {
+      width: min(100% - 32px, 1200px);
+      margin-inline: auto;
+      padding-block: 32px 64px;
+      color: var(--text, #f8fafc);
+    }
+
+    .tool-header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.1);
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .tool-header h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+    }
+
+    .tool-header p {
+      max-width: 680px;
+      margin: 0 auto;
+      color: var(--soft, #94a3b8);
+      line-height: 1.75;
+    }
+
+    .tools-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .tools-stats > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 20px 12px;
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+      border-radius: 16px;
+      background: var(--card, rgba(15, 23, 42, 0.72));
+      text-align: center;
+    }
+
+    .tools-stats strong {
+      color: #38bdf8;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1.2;
+    }
+
+    .tools-stats span {
+      color: var(--soft, #94a3b8);
+      font-size: 0.875rem;
+    }
+
+    .tools-search {
+      max-width: 720px;
+      margin: 0 auto 36px;
+    }
+
+    .tool-field-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .tools-search input {
+      display: block;
+      width: 100%;
+      min-height: 52px;
+      padding: 13px 16px;
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+      border-radius: 12px;
+      outline: none;
+      background: var(--card, rgba(15, 23, 42, 0.72));
+      color: var(--text, #f8fafc);
+      font: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .tools-search input::placeholder {
+      color: var(--soft, #94a3b8);
+      opacity: 0.8;
+    }
+
+    .tools-search input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.65rem);
+      line-height: 1.3;
+    }
+
+    .tool-count {
+      color: var(--soft, #94a3b8);
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .tool-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 22px;
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+      border-radius: 16px;
+      background: var(--card, rgba(15, 23, 42, 0.72));
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .tool-card[hidden],
+    .tools-empty[hidden] {
+      display: none !important;
+    }
+
+    .tool-card .badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(14, 165, 233, 0.14);
+      color: #38bdf8;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .tool-icon {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      margin-bottom: 16px;
+      place-items: center;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      background: rgba(14, 165, 233, 0.1);
+      font-size: 1.5rem;
+    }
+
+    .tool-category {
+      margin-bottom: 8px;
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .tool-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      line-height: 1.45;
+    }
+
+    .tool-card h3 a {
+      color: var(--text, #f8fafc);
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .tool-card h3 a:hover {
+      color: #38bdf8;
+    }
+
+    .tool-card p {
+      flex: 1;
+      margin: 0 0 20px;
+      color: var(--soft, #94a3b8);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .tool-card .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 10px 15px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 10px;
+      background: rgba(14, 165, 233, 0.12);
+      color: #38bdf8;
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tool-card .btn:hover {
+      background: #0284c7;
+      color: #fff;
+    }
+
+    .tools-empty {
+      margin-top: 20px;
+      padding: 28px 20px;
+      border: 1px dashed var(--border, rgba(255, 255, 255, 0.15));
+      border-radius: 14px;
+      color: var(--text, #f8fafc);
+      text-align: center;
+    }
+
+    .tools-empty strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .tools-empty p {
+      margin: 0;
+      color: var(--soft, #94a3b8);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .tool-card {
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .tools-page {
+        width: min(100% - 24px, 1200px);
+        padding-block: 24px 44px;
+      }
+
+      .tools-stats {
+        gap: 8px;
+        margin: 22px 0;
+      }
+
+      .tools-stats > div {
+        padding: 15px 6px;
+        border-radius: 12px;
+      }
+
+      .tools-stats span {
+        font-size: 0.78rem;
+      }
+
+      .tools-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+      }
+
+      .tool-card {
+        padding: 20px;
+      }
+    }
+  </style>
 </MainLayout>
