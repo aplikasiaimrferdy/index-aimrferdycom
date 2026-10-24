@@ -1,350 +1,318 @@
+
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
+const tools = await getCollection("tools");
 const products = await getCollection("product");
 ---
 
 <MainLayout
-  title="Search - AI Mr Ferdy"
-  description="Cari artikel, tools, dan produk di AI Mr Ferdy."
+  title="Cari AI Tools, Artikel & Produk | AI Mr Ferdy"
+  description="Cari AI Tools, artikel edukasi, dan produk digital di AI Mr Ferdy."
   robots="noindex,follow"
 >
-
   <div class="search-page">
+    <h1>Cari di AI Mr Ferdy</h1>
 
-    <h1>Search AI Mr Ferdy</h1>
+    <p class="search-description">
+      Temukan AI Tools, artikel, dan produk digital sesuai kebutuhanmu.
+    </p>
 
-    <form id="searchForm">
+    <form id="searchForm" role="search">
+      <label for="searchInput">Kata kunci</label>
 
       <input
         id="searchInput"
+        name="q"
+        type="search"
         placeholder="Cari artikel, tools, atau produk..."
+        autocomplete="off"
+        aria-label="Kata kunci pencarian"
       />
 
-      <select id="typeFilter">
+      <label for="typeFilter">Kategori</label>
 
-        <option value="all">
-          Semua
-        </option>
-
-        <option value="blog">
-          Blog
-        </option>
-
-        <option value="tool">
-          Tools
-        </option>
-
-        <option value="product">
-          Product
-        </option>
-
+      <select id="typeFilter" name="type">
+        <option value="all">Semua kategori</option>
+        <option value="blog">Artikel / Blog</option>
+        <option value="tool">AI Tools</option>
+        <option value="product">Produk</option>
       </select>
 
-      <button
-        type="submit"
-        class="search-btn"
-      >
-        Search
+      <button type="submit" class="search-btn">
+        Cari
       </button>
-
     </form>
 
-    <p id="emptyState">
-      Ketik kata kunci lalu klik Search.
+    <p id="resultCount" aria-live="polite"></p>
+
+    <p id="emptyState" aria-live="polite">
+      Masukkan kata kunci untuk mencari.
     </p>
 
     <div id="results">
-
       {posts.map((post) => (
-
         <a
           class="item"
           data-type="blog"
           href={`/blog/${post.slug}/`}
         >
-
-          <span class="badge">
-            Blog
-          </span>
-
-          <h3>
-            {post.data.title}
-          </h3>
-
-          <p>
-            {post.data.description}
-          </p>
-
+          <span class="badge">Artikel</span>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
         </a>
+      ))}
 
+      {tools.map((tool) => (
+        <a
+          class="item"
+          data-type="tool"
+          href={`/tools/${tool.slug}/`}
+        >
+          <span class="badge">AI Tool</span>
+          <h2>{tool.data.title}</h2>
+          <p>{tool.data.description}</p>
+        </a>
       ))}
 
       {products.map((product) => (
-
         <a
           class="item"
           data-type="product"
           href={`/product/${product.slug}/`}
         >
-
-          <span class="badge">
-            Product
-          </span>
-
-          <h3>
-            {product.data.title}
-          </h3>
-
-          <p>
-            {product.data.description}
-          </p>
-
+          <span class="badge">Produk</span>
+          <h2>{product.data.title}</h2>
+          <p>{product.data.description}</p>
         </a>
-
       ))}
-
     </div>
-
   </div>
-
 </MainLayout>
 
 <script is:inline>
+  const form = document.getElementById("searchForm");
+  const input = document.getElementById("searchInput");
+  const filter = document.getElementById("typeFilter");
+  const items = document.querySelectorAll("#results .item");
+  const emptyState = document.getElementById("emptyState");
+  const resultCount = document.getElementById("resultCount");
 
-const form =
-  document.getElementById("searchForm");
+  const validTypes = ["all", "blog", "tool", "product"];
 
-const input =
-  document.getElementById("searchInput");
+  function runSearch() {
+    const keyword = input.value.trim().toLocaleLowerCase();
+    const selectedType = filter.value;
+    let count = 0;
 
-const filter =
-  document.getElementById("typeFilter");
+    items.forEach((item) => {
+      const text = item.textContent.toLocaleLowerCase();
+      const itemType = item.dataset.type;
 
-const items =
-  document.querySelectorAll(".item");
+      const matchKeyword =
+        keyword !== "" && text.includes(keyword);
 
-const emptyState =
-  document.getElementById("emptyState");
+      const matchType =
+        selectedType === "all" || itemType === selectedType;
 
-items.forEach(item => {
-  item.style.display = "none";
-});
+      const show = matchKeyword && matchType;
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+      item.hidden = !show;
 
-input.value =
-  params.get("q") || "";
-
-filter.value =
-  params.get("type") || "all";
-
-if (input.value.trim()) {
-  runSearch();
-}
-
-function runSearch() {
-
-  const keyword =
-    input.value.trim().toLowerCase();
-
-  const selectedType =
-    filter.value;
-
-  let found = false;
-
-  items.forEach(item => {
-
-    const text =
-      item.innerText.toLowerCase();
-
-    const itemType =
-      item.dataset.type;
-
-    const matchKeyword =
-      keyword !== "" &&
-      text.includes(keyword);
-
-    const matchType =
-      selectedType === "all" ||
-      itemType === selectedType;
-
-    const show =
-      matchKeyword &&
-      matchType;
-
-    item.style.display =
-      show ? "block" : "none";
-
-    if (show) {
-      found = true;
-    }
-
-  });
-
-  if (keyword === "") {
-
-    emptyState.textContent =
-      "Ketik kata kunci lalu klik Search.";
-
-    emptyState.style.display =
-      "block";
-
-    items.forEach(item => {
-      item.style.display = "none";
+      if (show) count++;
     });
 
-    return;
-  }
+    resultCount.textContent =
+      keyword ? `${count} hasil ditemukan.` : "";
 
-  emptyState.style.display =
-    found ? "none" : "block";
+    emptyState.hidden = keyword !== "" && count > 0;
 
-  if (!found) {
-
-    emptyState.textContent =
-      "Tidak ada hasil ditemukan.";
-
-  }
-
-}
-
-form.addEventListener(
-  "submit",
-  (e) => {
-
-    e.preventDefault();
-
-    const keyword =
-      input.value.trim();
-
-    const selectedType =
-      filter.value;
-
-    const params =
-      new URLSearchParams();
-
-    if (keyword) {
-      params.set("q", keyword);
+    if (!keyword) {
+      emptyState.textContent =
+        "Masukkan kata kunci untuk mencari.";
+    } else if (count === 0) {
+      emptyState.textContent =
+        "Tidak ada hasil ditemukan. Coba kata kunci atau kategori lain.";
     }
 
-    if (
-      selectedType &&
-      selectedType !== "all"
-    ) {
-      params.set(
-        "type",
-        selectedType
-      );
-    }
+    return count;
+  }
 
-    const query =
-      params.toString();
+  function syncUrl() {
+    const params = new URLSearchParams();
+    const keyword = input.value.trim();
+    const type = filter.value;
 
-    history.replaceState(
-      {},
-      "",
-      query
-        ? `${window.location.pathname}?${query}`
-        : window.location.pathname
-    );
+    if (keyword) params.set("q", keyword);
+    if (type !== "all") params.set("type", type);
 
+    const query = params.toString();
+    const url = query
+      ? `${window.location.pathname}?${query}`
+      : window.location.pathname;
+
+    history.replaceState({}, "", url);
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    syncUrl();
     runSearch();
+  });
 
+  filter.addEventListener("change", () => {
+    if (input.value.trim()) {
+      syncUrl();
+      runSearch();
+    }
+  });
+
+  const params = new URLSearchParams(window.location.search);
+
+  input.value = params.get("q") || "";
+
+  const requestedType = params.get("type") || "all";
+  filter.value = validTypes.includes(requestedType)
+    ? requestedType
+    : "all";
+
+  items.forEach((item) => {
+    item.hidden = true;
+  });
+
+  if (input.value.trim()) {
+    runSearch();
   }
-);
-
 </script>
 
 <style>
+  .search-page {
+    max-width: 800px;
+    margin: 64px auto;
+    padding: 0 20px;
+    color: var(--text, #f8fafc);
+  }
 
-.search-page {
-  max-width: 800px;
-  margin: 80px auto;
-  padding: 0 20px;
-}
+  .search-page h1 {
+    margin: 0 0 12px;
+    font-size: clamp(28px, 5vw, 36px);
+    line-height: 1.2;
+  }
 
-.search-page h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
+  .search-description {
+    margin-bottom: 24px;
+    color: var(--soft, #94a3b8);
+    line-height: 1.7;
+  }
 
-#searchForm {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 20px;
-}
+  #searchForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
 
-#searchInput,
-#typeFilter {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 12px;
-  font-size: 16px;
-  outline: none;
-}
+  #searchInput,
+  #typeFilter {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 12px;
+    background: var(--card, #fff);
+    color: var(--text, #111827);
+    font: inherit;
+  }
 
-.search-btn {
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-}
+  #searchInput:focus,
+  #typeFilter:focus {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: 2px;
+  }
 
-#emptyState {
-  opacity: .6;
-  margin-bottom: 20px;
-}
+  #searchForm label {
+    font-size: 14px;
+    font-weight: 600;
+  }
 
-#results {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+  .search-btn {
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--primary, #2563eb);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
 
-.item {
-  display: block;
-  padding: 16px;
-  border: 1px solid var(--border, #eee);
-  border-radius: 14px;
-  text-decoration: none;
-  color: inherit;
-  transition: .2s;
-}
+  .search-btn:hover {
+    filter: brightness(1.08);
+  }
 
-.item:hover {
-  transform: translateY(-2px);
-}
+  #resultCount,
+  #emptyState {
+    color: var(--soft, #94a3b8);
+    line-height: 1.6;
+  }
 
-.item h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
-}
+  #results {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-.item p {
-  margin: 0;
-  opacity: .7;
-  font-size: 14px;
-}
+  .item[hidden],
+  #emptyState[hidden] {
+    display: none;
+  }
 
-.badge {
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  background: #f3f4f6;
-}
+  .item {
+    display: block;
+    padding: 18px;
+    border: 1px solid var(--border, #eee);
+    border-radius: 14px;
+    background: var(--card, transparent);
+    color: var(--text, inherit);
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
 
+  .item:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary, #3b82f6);
+  }
+
+  .item h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .item p {
+    margin: 0;
+    color: var(--soft, #64748b);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .badge {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    border: 1px solid var(--border, #eee);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .item {
+      transition: none;
+    }
+  }
 </style>
-
