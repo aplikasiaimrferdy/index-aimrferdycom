@@ -4,7 +4,7 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import { SITE } from "../../lib/site";
 
 /* =========================================================
-   LOAD ALL TOOL PAGES
+   LOAD ALL TOOLS
 ========================================================= */
 
 const modules = Object.entries(
@@ -19,7 +19,6 @@ const modules = Object.entries(
 
 const tools = modules
   .map(([file, mod]) => {
-    // Contoh: ./ai/ai-article-writer.astro
     const match = file.match(/^\.\/([^/]+)\/(.+)\.astro$/);
 
     if (!match) return null;
@@ -27,7 +26,6 @@ const tools = modules
     const category = match[1];
     const slug = match[2];
 
-    // Abaikan route dinamis dan halaman index kategori.
     if (
       category.startsWith("[") ||
       slug === "index" ||
@@ -36,12 +34,17 @@ const tools = modules
       return null;
     }
 
-    // File tool harus mengekspor metadata melalui mod.meta.
     if (!mod.meta || typeof mod.meta !== "object") {
       return null;
     }
 
     const meta = mod.meta;
+
+    const keywords = Array.isArray(meta.keywords)
+      ? meta.keywords.join(" ")
+      : typeof meta.keywords === "string"
+        ? meta.keywords
+        : "";
 
     return {
       ...meta,
@@ -56,10 +59,10 @@ const tools = modules
         meta.category || "",
         category,
         slug,
-        ...(Array.isArray(meta.keywords) ? meta.keywords : []),
+        keywords,
       ]
         .join(" ")
-        .toLowerCase(),
+        .toLocaleLowerCase("id"),
     };
   })
   .filter(Boolean)
@@ -108,15 +111,19 @@ const jsonLd = {
   description="Kumpulan AI tools dan utility online yang dapat digunakan langsung dari browser."
 >
   <section class="tools-page">
+    <!-- HEADER -->
     <header class="tool-header">
       <span class="page-badge">AI TOOLS</span>
+
       <h1>Tools Online</h1>
+
       <p>
         Kumpulan AI tools dan utility online yang dapat digunakan
         langsung dari browser.
       </p>
     </header>
 
+    <!-- STATS -->
     <section class="tools-stats" aria-label="Statistik tools">
       <div>
         <strong>{totalTools}</strong>
@@ -134,6 +141,7 @@ const jsonLd = {
       </div>
     </section>
 
+    <!-- SEARCH -->
     <div class="tools-search">
       <label for="toolSearch" class="tool-field-label">
         Cari tools
@@ -145,18 +153,19 @@ const jsonLd = {
         placeholder="Cari judul, kategori, atau fungsi tools..."
         autocomplete="off"
         spellcheck="false"
-        aria-describedby="searchHelp"
+        aria-label="Cari AI tools"
       />
-
-      <p id="searchHelp" class="search-help">
-        Cari berdasarkan nama tool, kategori, atau kata kunci.
-      </p>
     </div>
 
+    <!-- TOOLS -->
     {tools.length > 0 ? (
-      <section class="tools-section" aria-labelledby="tools-title">
+      <section
+        class="tools-section"
+        aria-labelledby="tools-title"
+      >
         <div class="section-heading">
           <h2 id="tools-title">Semua Tools</h2>
+
           <span class="tool-count" id="toolCount">
             {totalTools} tools
           </span>
@@ -193,64 +202,68 @@ const jsonLd = {
                 class="btn btn-primary"
                 aria-label={`Buka ${tool.title}`}
               >
-                Buka Tool <span aria-hidden="true">→</span>
+                Buka Tool
+                <span aria-hidden="true">→</span>
               </a>
             </article>
           ))}
         </div>
 
+        <!-- EMPTY SEARCH -->
         <div id="emptyState" class="tools-empty" hidden>
           <strong>Tool tidak ditemukan</strong>
+
           <p>
-            Coba kata kunci lain, misalnya nama tool atau kategorinya.
+            Coba gunakan kata kunci pencarian lainnya.
           </p>
         </div>
       </section>
     ) : (
       <div class="tools-empty">
         <strong>Belum ada tools</strong>
+
         <p>
-          Tidak ada file tool dengan metadata yang berhasil dibaca.
-          Pastikan setiap halaman tool mengekspor objek <code>meta</code>.
+          Tidak ada halaman tools dengan metadata yang berhasil dibaca.
         </p>
       </div>
     )}
   </section>
 
+  <!-- SEARCH SCRIPT -->
   <script>
     const searchInput =
-      document.querySelector<HTMLInputElement>("#toolSearch");
+      document.querySelector("#toolSearch");
 
     const cards =
-      Array.from(document.querySelectorAll<HTMLElement>(".tool-card"));
+      document.querySelectorAll(".tool-card");
 
     const emptyState =
-      document.querySelector<HTMLElement>("#emptyState");
+      document.querySelector("#emptyState");
 
     const toolCount =
-      document.querySelector<HTMLElement>("#toolCount");
+      document.querySelector("#toolCount");
 
-    function normalizeText(value: string): string {
-      return value
+    function normalizeText(value) {
+      return (value || "")
         .toLocaleLowerCase("id")
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .trim();
     }
 
-    function runSearch(): void {
+    function runSearch() {
       if (!searchInput) return;
 
       const query = normalizeText(searchInput.value);
       let visible = 0;
 
       cards.forEach((card) => {
-        const searchText = normalizeText(
-          card.dataset.search || card.textContent || ""
+        const text = normalizeText(
+          `${card.dataset.search || ""} ${card.textContent || ""}`
         );
 
         const matches =
-          query === "" || searchText.includes(query);
+          query === "" || text.includes(query);
 
         card.hidden = !matches;
 
@@ -272,74 +285,9 @@ const jsonLd = {
     searchInput?.addEventListener("input", runSearch);
   </script>
 
+  <!-- JSON-LD -->
   <script
     type="application/ld+json"
     set:html={JSON.stringify(jsonLd)}
   />
 </MainLayout>
-
-<style>
-  .tools-search {
-    margin-bottom: 28px;
-  }
-
-  .tool-field-label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text, #f8fafc);
-  }
-
-  #toolSearch {
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 48px;
-    padding: 12px 16px;
-    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
-    border-radius: 12px;
-    background: var(--card, rgba(15, 23, 42, 0.72));
-    color: var(--text, #f8fafc);
-    font: inherit;
-  }
-
-  #toolSearch::placeholder {
-    color: var(--soft, #94a3b8);
-  }
-
-  #toolSearch:focus {
-    outline: 2px solid var(--primary, #3b82f6);
-    outline-offset: 2px;
-  }
-
-  .search-help {
-    margin: 8px 0 0;
-    color: var(--soft, #94a3b8);
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .tool-card[hidden],
-  .tools-empty[hidden] {
-    display: none !important;
-  }
-
-  .tools-empty {
-    padding: 28px 20px;
-    text-align: center;
-    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
-    border-radius: 14px;
-    color: var(--text, #f8fafc);
-  }
-
-  .tools-empty p {
-    color: var(--soft, #94a3b8);
-    line-height: 1.7;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tool-card {
-      transition: none !important;
-    }
-  }
-</style>
