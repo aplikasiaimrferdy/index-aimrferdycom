@@ -4,8 +4,30 @@ import MainLayout from "../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
-const tools = await getCollection("tools");
 const products = await getCollection("product");
+
+// Baca metadata dari halaman tools .astro secara langsung.
+// Mendukung export const meta = { title, description }.
+const toolModules = import.meta.glob("./tools/**/*.astro", {
+  eager: true,
+  import: "meta",
+});
+
+const toolPages = Object.entries(toolModules)
+  .filter(([, meta]) => meta && typeof meta === "object")
+  .map(([filePath, meta]) => {
+    const relativePath = filePath
+      .replace(/^\.\/tools\//, "")
+      .replace(/\/index\.astro$/, "")
+      .replace(/\.astro$/, "");
+
+    return {
+      title: meta.title || "",
+      description: meta.description || "",
+      url: `/tools/${relativePath}/`,
+    };
+  })
+  .filter((tool) => tool.title);
 ---
 
 <MainLayout
@@ -15,25 +37,21 @@ const products = await getCollection("product");
 >
   <div class="search-page">
     <h1>Cari di AI Mr Ferdy</h1>
-
     <p class="search-description">
       Temukan AI Tools, artikel, dan produk digital sesuai kebutuhanmu.
     </p>
 
     <form id="searchForm" role="search">
       <label for="searchInput">Kata kunci</label>
-
       <input
         id="searchInput"
         name="q"
         type="search"
         placeholder="Cari artikel, tools, atau produk..."
         autocomplete="off"
-        aria-label="Kata kunci pencarian"
       />
 
       <label for="typeFilter">Kategori</label>
-
       <select id="typeFilter" name="type">
         <option value="all">Semua kategori</option>
         <option value="blog">Artikel / Blog</option>
@@ -41,48 +59,33 @@ const products = await getCollection("product");
         <option value="product">Produk</option>
       </select>
 
-      <button type="submit" class="search-btn">
-        Cari
-      </button>
+      <button type="submit" class="search-btn">Cari</button>
     </form>
 
     <p id="resultCount" aria-live="polite"></p>
-
     <p id="emptyState" aria-live="polite">
       Masukkan kata kunci untuk mencari.
     </p>
 
     <div id="results">
       {posts.map((post) => (
-        <a
-          class="item"
-          data-type="blog"
-          href={`/blog/${post.slug}/`}
-        >
+        <a class="item" data-type="blog" href={`/blog/${post.slug}/`}>
           <span class="badge">Artikel</span>
           <h2>{post.data.title}</h2>
           <p>{post.data.description}</p>
         </a>
       ))}
 
-      {tools.map((tool) => (
-        <a
-          class="item"
-          data-type="tool"
-          href={`/tools/${tool.slug}/`}
-        >
+      {toolPages.map((tool) => (
+        <a class="item" data-type="tool" href={tool.url}>
           <span class="badge">AI Tool</span>
-          <h2>{tool.data.title}</h2>
-          <p>{tool.data.description}</p>
+          <h2>{tool.title}</h2>
+          <p>{tool.description}</p>
         </a>
       ))}
 
       {products.map((product) => (
-        <a
-          class="item"
-          data-type="product"
-          href={`/product/${product.slug}/`}
-        >
+        <a class="item" data-type="product" href={`/product/${product.slug}/`}>
           <span class="badge">Produk</span>
           <h2>{product.data.title}</h2>
           <p>{product.data.description}</p>
@@ -99,54 +102,41 @@ const products = await getCollection("product");
   const items = document.querySelectorAll("#results .item");
   const emptyState = document.getElementById("emptyState");
   const resultCount = document.getElementById("resultCount");
-
   const validTypes = ["all", "blog", "tool", "product"];
 
   function runSearch() {
-    const keyword = input.value.trim().toLocaleLowerCase();
+    const keyword = input.value.trim().toLowerCase();
     const selectedType = filter.value;
     let count = 0;
 
     items.forEach((item) => {
-      const text = item.textContent.toLocaleLowerCase();
-      const itemType = item.dataset.type;
-
-      const matchKeyword =
-        keyword !== "" && text.includes(keyword);
-
-      const matchType =
-        selectedType === "all" || itemType === selectedType;
-
-      const show = matchKeyword && matchType;
+      const text = item.textContent.toLowerCase();
+      const matchesKeyword = keyword !== "" && text.includes(keyword);
+      const matchesType =
+        selectedType === "all" || item.dataset.type === selectedType;
+      const show = matchesKeyword && matchesType;
 
       item.hidden = !show;
-
       if (show) count++;
     });
 
-    resultCount.textContent =
-      keyword ? `${count} hasil ditemukan.` : "";
-
+    resultCount.textContent = keyword ? `${count} hasil ditemukan.` : "";
     emptyState.hidden = keyword !== "" && count > 0;
 
     if (!keyword) {
-      emptyState.textContent =
-        "Masukkan kata kunci untuk mencari.";
+      emptyState.textContent = "Masukkan kata kunci untuk mencari.";
     } else if (count === 0) {
       emptyState.textContent =
         "Tidak ada hasil ditemukan. Coba kata kunci atau kategori lain.";
     }
-
-    return count;
   }
 
   function syncUrl() {
     const params = new URLSearchParams();
     const keyword = input.value.trim();
-    const type = filter.value;
 
     if (keyword) params.set("q", keyword);
-    if (type !== "all") params.set("type", type);
+    if (filter.value !== "all") params.set("type", filter.value);
 
     const query = params.toString();
     const url = query
@@ -170,21 +160,16 @@ const products = await getCollection("product");
   });
 
   const params = new URLSearchParams(window.location.search);
-
   input.value = params.get("q") || "";
 
   const requestedType = params.get("type") || "all";
-  filter.value = validTypes.includes(requestedType)
-    ? requestedType
-    : "all";
+  filter.value = validTypes.includes(requestedType) ? requestedType : "all";
 
   items.forEach((item) => {
     item.hidden = true;
   });
 
-  if (input.value.trim()) {
-    runSearch();
-  }
+  if (input.value.trim()) runSearch();
 </script>
 
 <style>
