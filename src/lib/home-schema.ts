@@ -192,11 +192,11 @@ export const homeSchema = {
 {
   "@type": "WebApplication",
   "@id": "https://aimrferdy.com/#app",
-  "name": "AI Mr Ferdy App",
-  "url": "https://app.aimrferdy.workers.dev/",
+  "name": "Ai Chat Ai Mr Ferdy",
+  "url": "https://chat.aimrferdy.com/",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
-  "applicationSubCategory": "AI Tools",
+  "applicationSubCategory": "Ai Chat",
   "browserRequirements": "Requires JavaScript",
 },
 
