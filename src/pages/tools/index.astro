@@ -1,17 +1,17 @@
+
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import { SITE } from "../../lib/site";
 
 /* =========================================================
-   LOAD ALL TOOLS
+   LOAD ALL TOOL PAGES
 ========================================================= */
 
 const modules = Object.entries(
   import.meta.glob("./**/*.astro", {
-    eager: true
+    eager: true,
   })
 );
-
 
 /* =========================================================
    BUILD TOOL LIST
@@ -19,44 +19,53 @@ const modules = Object.entries(
 
 const tools = modules
   .map(([file, mod]) => {
+    // Contoh: ./ai/ai-article-writer.astro
+    const match = file.match(/^\.\/([^/]+)\/(.+)\.astro$/);
 
-    const match = file.match(
-      /^\.\/([^/]+)\/(.+)\.astro$/
-    );
-
-    if (!match) {
-      return null;
-    }
+    if (!match) return null;
 
     const category = match[1];
     const slug = match[2];
 
+    // Abaikan route dinamis dan halaman index kategori.
     if (
-      category === "[category]" ||
-      slug === "index"
+      category.startsWith("[") ||
+      slug === "index" ||
+      slug.includes("[")
     ) {
       return null;
     }
 
-    if (!mod.meta) {
+    // File tool harus mengekspor metadata melalui mod.meta.
+    if (!mod.meta || typeof mod.meta !== "object") {
       return null;
     }
 
+    const meta = mod.meta;
+
     return {
-      ...mod.meta,
+      ...meta,
+      title: meta.title || slug.replace(/[-_]/g, " "),
+      description: meta.description || "",
       category,
       slug,
-      url: `/tools/${category}/${slug}/`
+      url: `/tools/${category}/${slug}/`,
+      searchText: [
+        meta.title || "",
+        meta.description || "",
+        meta.category || "",
+        category,
+        slug,
+        ...(Array.isArray(meta.keywords) ? meta.keywords : []),
+      ]
+        .join(" ")
+        .toLowerCase(),
     };
   })
   .filter(Boolean)
   .sort((a, b) =>
-    (a.title || "").localeCompare(
-      b.title || "",
-      "id"
-    )
+    a.title.localeCompare(b.title, "id")
   );
-
 
 /* =========================================================
    STATS
@@ -64,64 +73,33 @@ const tools = modules
 
 const totalTools = tools.length;
 
-const totalCategories =
-  new Set(
-    tools.map(tool => tool.category)
-  ).size;
-
+const totalCategories = new Set(
+  tools.map((tool) => tool.category)
+).size;
 
 /* =========================================================
    SEO
 ========================================================= */
 
-const pageUrl =
-  SITE.url("/tools/");
-
+const pageUrl = SITE.url("/tools/");
 
 const jsonLd = {
-
-  "@context":
-    "https://schema.org",
-
-  "@type":
-    "CollectionPage",
-
-  name:
-    `Tools | ${SITE.title}`,
-
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `Tools | ${SITE.title}`,
   description:
     "Kumpulan AI tools dan utility online yang dapat digunakan langsung dari browser.",
-
-  url:
-    pageUrl,
-
+  url: pageUrl,
   mainEntity: {
-
-    "@type":
-      "ItemList",
-
-    numberOfItems:
-      totalTools,
-
-    itemListElement:
-      tools.map((tool, index) => ({
-
-        "@type":
-          "ListItem",
-
-        position:
-          index + 1,
-
-        name:
-          tool.title,
-
-        url:
-          SITE.url(tool.url)
-
-      }))
-
-  }
-
+    "@type": "ItemList",
+    numberOfItems: totalTools,
+    itemListElement: tools.map((tool, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: tool.title,
+      url: SITE.url(tool.url),
+    })),
+  },
 };
 ---
 
@@ -129,310 +107,239 @@ const jsonLd = {
   title={`Tools | ${SITE.title}`}
   description="Kumpulan AI tools dan utility online yang dapat digunakan langsung dari browser."
 >
-
   <section class="tools-page">
-
-    <!-- HEADER -->
-
     <header class="tool-header">
-
-      <span class="page-badge">
-        AI TOOLS
-      </span>
-
-      <h1>
-        Tools Online
-      </h1>
-
+      <span class="page-badge">AI TOOLS</span>
+      <h1>Tools Online</h1>
       <p>
-        Kumpulan AI tools dan utility online
-        yang dapat digunakan langsung dari browser.
+        Kumpulan AI tools dan utility online yang dapat digunakan
+        langsung dari browser.
       </p>
-
     </header>
 
-
-    <!-- STATS -->
-
-    <section
-      class="tools-stats"
-      aria-label="Statistik tools"
-    >
-
+    <section class="tools-stats" aria-label="Statistik tools">
       <div>
-        <strong>
-          {totalTools}
-        </strong>
-
-        <span>
-          Tools
-        </span>
+        <strong>{totalTools}</strong>
+        <span>Tools</span>
       </div>
 
-
       <div>
-        <strong>
-          {totalCategories}
-        </strong>
-
-        <span>
-          Kategori
-        </span>
+        <strong>{totalCategories}</strong>
+        <span>Kategori</span>
       </div>
 
-
       <div>
-        <strong>
-          100%
-        </strong>
-
-        <span>
-          Gratis
-        </span>
+        <strong>100%</strong>
+        <span>Gratis</span>
       </div>
-
     </section>
 
-
-    <!-- SEARCH -->
-
     <div class="tools-search">
-
-      <label
-        for="toolSearch"
-        class="tool-field-label"
-      >
+      <label for="toolSearch" class="tool-field-label">
         Cari tools
       </label>
 
       <input
         id="toolSearch"
         type="search"
-        placeholder="Cari tools..."
+        placeholder="Cari judul, kategori, atau fungsi tools..."
         autocomplete="off"
         spellcheck="false"
+        aria-describedby="searchHelp"
       />
 
+      <p id="searchHelp" class="search-help">
+        Cari berdasarkan nama tool, kategori, atau kata kunci.
+      </p>
     </div>
 
-
-    <!-- TOOLS -->
-
     {tools.length > 0 ? (
-
-      <section
-        class="tools-section"
-        aria-labelledby="tools-title"
-      >
-
+      <section class="tools-section" aria-labelledby="tools-title">
         <div class="section-heading">
-
-          <h2 id="tools-title">
-            Semua Tools
-          </h2>
-
-          <span class="tool-count">
+          <h2 id="tools-title">Semua Tools</h2>
+          <span class="tool-count" id="toolCount">
             {totalTools} tools
           </span>
-
         </div>
 
-
-        <div
-          id="toolsGrid"
-          class="tools-grid"
-        >
-
+        <div id="toolsGrid" class="tools-grid">
           {tools.map((tool) => (
-
             <article
               class="tool-card"
-              data-search={
-                `${tool.title || ""}
-                 ${tool.description || ""}
-                 ${tool.category || ""}`
-              }
+              data-search={tool.searchText}
             >
-
-              {tool.featured && (
-
-                <span class="badge">
-                  HOT
-                </span>
-
-              )}
-
+              {tool.featured && <span class="badge">HOT</span>}
 
               {tool.icon && (
-
-                <div
-                  class="tool-icon"
-                  aria-hidden="true"
-                >
+                <div class="tool-icon" aria-hidden="true">
                   {tool.icon}
                 </div>
-
               )}
-
 
               <div class="tool-category">
-
                 {tool.category
                   .replace(/[-_]/g, " ")
-                  .replace(/\b\w/g, char =>
-                    char.toUpperCase()
-                  )}
-
+                  .replace(/\b\w/g, (char) => char.toUpperCase())}
               </div>
 
-
               <h3>
-
-                <a href={tool.url}>
-                  {tool.title}
-                </a>
-
+                <a href={tool.url}>{tool.title}</a>
               </h3>
 
-
-              {tool.description && (
-
-                <p>
-                  {tool.description}
-                </p>
-
-              )}
-
+              {tool.description && <p>{tool.description}</p>}
 
               <a
                 href={tool.url}
                 class="btn btn-primary"
                 aria-label={`Buka ${tool.title}`}
               >
-                Buka Tool
-
-                <span aria-hidden="true">
-                  →
-                </span>
-
+                Buka Tool <span aria-hidden="true">→</span>
               </a>
-
             </article>
-
           ))}
-
         </div>
 
-
-        <!-- EMPTY SEARCH -->
-
-        <div
-          id="emptyState"
-          class="tools-empty"
-          hidden
-        >
-
-          <strong>
-            Tool tidak ditemukan
-          </strong>
-
+        <div id="emptyState" class="tools-empty" hidden>
+          <strong>Tool tidak ditemukan</strong>
           <p>
-            Coba gunakan kata kunci pencarian lainnya.
+            Coba kata kunci lain, misalnya nama tool atau kategorinya.
           </p>
-
         </div>
-
       </section>
-
     ) : (
-
       <div class="tools-empty">
-
-        <strong>
-          Belum ada tools
-        </strong>
-
+        <strong>Belum ada tools</strong>
         <p>
-          Belum ada file tool yang tersedia.
+          Tidak ada file tool dengan metadata yang berhasil dibaca.
+          Pastikan setiap halaman tool mengekspor objek <code>meta</code>.
         </p>
-
       </div>
-
     )}
-
   </section>
 
-
-  <!-- SEARCH SCRIPT -->
-
   <script>
-
     const searchInput =
-      document.querySelector("#toolSearch");
+      document.querySelector<HTMLInputElement>("#toolSearch");
 
     const cards =
-      document.querySelectorAll(".tool-card");
+      Array.from(document.querySelectorAll<HTMLElement>(".tool-card"));
 
     const emptyState =
-      document.querySelector("#emptyState");
+      document.querySelector<HTMLElement>("#emptyState");
 
+    const toolCount =
+      document.querySelector<HTMLElement>("#toolCount");
 
-    searchInput?.addEventListener(
-      "input",
-      () => {
+    function normalizeText(value: string): string {
+      return value
+        .toLocaleLowerCase("id")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+    }
 
-        const query =
-          searchInput.value
-            .toLowerCase()
-            .trim();
+    function runSearch(): void {
+      if (!searchInput) return;
 
+      const query = normalizeText(searchInput.value);
+      let visible = 0;
 
-        let visible = 0;
+      cards.forEach((card) => {
+        const searchText = normalizeText(
+          card.dataset.search || card.textContent || ""
+        );
 
+        const matches =
+          query === "" || searchText.includes(query);
 
-        cards.forEach((card) => {
+        card.hidden = !matches;
 
-          const text =
-            card.dataset.search ||
-            card.textContent ||
-            "";
+        if (matches) visible++;
+      });
 
-
-          const match =
-            text
-              .toLowerCase()
-              .includes(query);
-
-
-          card.hidden =
-            !match;
-
-
-          if (match) {
-            visible++;
-          }
-
-        });
-
-
-        if (emptyState) {
-
-          emptyState.hidden =
-            visible !== 0;
-
-        }
-
+      if (emptyState) {
+        emptyState.hidden = visible !== 0;
       }
-    );
 
+      if (toolCount) {
+        toolCount.textContent =
+          query === ""
+            ? `${cards.length} tools`
+            : `${visible} dari ${cards.length} tools`;
+      }
+    }
+
+    searchInput?.addEventListener("input", runSearch);
   </script>
-
-
-  <!-- JSON-LD -->
 
   <script
     type="application/ld+json"
     set:html={JSON.stringify(jsonLd)}
   />
-
 </MainLayout>
+
+<style>
+  .tools-search {
+    margin-bottom: 28px;
+  }
+
+  .tool-field-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text, #f8fafc);
+  }
+
+  #toolSearch {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    border-radius: 12px;
+    background: var(--card, rgba(15, 23, 42, 0.72));
+    color: var(--text, #f8fafc);
+    font: inherit;
+  }
+
+  #toolSearch::placeholder {
+    color: var(--soft, #94a3b8);
+  }
+
+  #toolSearch:focus {
+    outline: 2px solid var(--primary, #3b82f6);
+    outline-offset: 2px;
+  }
+
+  .search-help {
+    margin: 8px 0 0;
+    color: var(--soft, #94a3b8);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .tool-card[hidden],
+  .tools-empty[hidden] {
+    display: none !important;
+  }
+
+  .tools-empty {
+    padding: 28px 20px;
+    text-align: center;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    border-radius: 14px;
+    color: var(--text, #f8fafc);
+  }
+
+  .tools-empty p {
+    color: var(--soft, #94a3b8);
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tool-card {
+      transition: none !important;
+    }
+  }
+</style>
