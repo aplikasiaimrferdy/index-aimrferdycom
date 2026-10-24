@@ -1,3 +1,4 @@
+
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
@@ -109,15 +110,28 @@ const featuredProducts = products
 
       <div class="filters">
 
-        <button class="active">
+        <button
+          type="button"
+          class="active"
+          data-filter="trending"
+          aria-pressed="true"
+        >
           Trending
         </button>
 
-        <button>
+        <button
+          type="button"
+          data-filter="latest"
+          aria-pressed="false"
+        >
           Latest
         </button>
 
-        <button>
+        <button
+          type="button"
+          data-filter="popular"
+          aria-pressed="false"
+        >
           Popular
         </button>
 
@@ -126,14 +140,50 @@ const featuredProducts = products
     </div>
 
 
+    <!-- PRODUCT SEARCH -->
+
+    <div class="product-search">
+
+      <label for="productSearch">
+        Cari produk
+      </label>
+
+      <input
+        id="productSearch"
+        type="search"
+        placeholder="Cari nama produk, deskripsi, atau kategori..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+
+      <p
+        id="productSearchCount"
+        aria-live="polite"
+      ></p>
+
+    </div>
+
+
+    <!-- PRODUCT GRID -->
+
     <div class="products-grid">
 
       {
-        featuredProducts.map(product => (
+        featuredProducts.map((product, index) => (
 
           <a
             href={`/product/${product.slug}`}
             class="product-card"
+            data-title={product.data.title}
+            data-description={product.data.description || ""}
+            data-category={product.data.category || ""}
+            data-popular={product.data.popular ? "true" : "false"}
+            data-date={product.data.pubDate
+              ? new Date(product.data.pubDate).getTime()
+              : product.data.date
+                ? new Date(product.data.date).getTime()
+                : 0}
+            data-order={index}
           >
 
             <div class="product-image">
@@ -204,6 +254,21 @@ const featuredProducts = products
         ))
       }
 
+    </div>
+
+
+    <!-- EMPTY STATE -->
+
+    <div
+      id="productEmptyState"
+      class="product-empty"
+      hidden
+    >
+      <strong>Produk tidak ditemukan</strong>
+
+      <p>
+        Coba kata kunci lain atau pilih filter yang berbeda.
+      </p>
     </div>
 
   </section>
@@ -468,6 +533,79 @@ const featuredProducts = products
 .filters .active{
   background:linear-gradient(135deg,#1d4ed8,#0891b2);
   color:#fff;
+}
+
+
+/* =========================================================
+   PRODUCT SEARCH
+========================================================= */
+
+.product-search{
+  max-width:720px;
+  margin:0 0 28px;
+}
+
+.product-search label{
+  display:block;
+  margin-bottom:10px;
+  color:var(--text);
+  font-weight:600;
+}
+
+.product-search input{
+  display:block;
+  width:100%;
+  min-height:50px;
+  padding:12px 16px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--card);
+  color:var(--text);
+  font:inherit;
+  outline:none;
+  box-sizing:border-box;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+
+.product-search input::placeholder{
+  color:var(--soft);
+  opacity:.85;
+}
+
+.product-search input:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 0 3px rgba(56,189,248,.12);
+}
+
+#productSearchCount{
+  margin:10px 0 0;
+  color:var(--soft);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.products-grid .product-card[hidden],
+.product-empty[hidden]{
+  display:none !important;
+}
+
+.product-empty{
+  margin-top:20px;
+  padding:28px 20px;
+  border:1px dashed var(--border);
+  border-radius:16px;
+  color:var(--text);
+  text-align:center;
+}
+
+.product-empty strong{
+  display:block;
+}
+
+.product-empty p{
+  margin:8px 0 0;
+  color:var(--soft);
+  line-height:1.6;
 }
 
 
@@ -762,7 +900,112 @@ const featuredProducts = products
   }
 
 }
+
 </style>
 
-</MainLayout>
 
+<script>
+  const productSearch = document.getElementById("productSearch");
+
+  const productGrid = document.querySelector(".products-grid");
+
+  const productCards = Array.from(
+    document.querySelectorAll(".products-grid .product-card")
+  );
+
+  const productFilters = Array.from(
+    document.querySelectorAll(".filters [data-filter]")
+  );
+
+  const productCount = document.getElementById("productSearchCount");
+
+  const productEmpty = document.getElementById("productEmptyState");
+
+  let activeFilter = "trending";
+
+  function normalizeProductText(value) {
+    return String(value || "")
+      .toLocaleLowerCase("id")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+  }
+
+  function applyProductFilters() {
+    const query = normalizeProductText(productSearch?.value);
+
+    let results = productCards.filter((card) => {
+      const searchable = normalizeProductText([
+        card.dataset.title,
+        card.dataset.description,
+        card.dataset.category,
+        card.textContent
+      ].join(" "));
+
+      return searchable.includes(query);
+    });
+
+    if (activeFilter === "latest") {
+      results.sort((a, b) => {
+        const dateA = Number(a.dataset.date) || 0;
+        const dateB = Number(b.dataset.date) || 0;
+
+        return dateB - dateA ||
+          Number(a.dataset.order) - Number(b.dataset.order);
+      });
+    } else if (activeFilter === "popular") {
+      results.sort((a, b) => {
+        const popularA = a.dataset.popular === "true" ? 1 : 0;
+        const popularB = b.dataset.popular === "true" ? 1 : 0;
+
+        return popularB - popularA ||
+          Number(a.dataset.order) - Number(b.dataset.order);
+      });
+    } else {
+      results.sort(
+        (a, b) =>
+          Number(a.dataset.order) - Number(b.dataset.order)
+      );
+    }
+
+    const visibleCards = new Set(results);
+
+    productCards.forEach((card) => {
+      card.hidden = !visibleCards.has(card);
+    });
+
+    results.forEach((card) => {
+      productGrid?.appendChild(card);
+    });
+
+    if (productCount) {
+      productCount.textContent = query
+        ? `${results.length} produk ditemukan`
+        : `${results.length} produk tersedia`;
+    }
+
+    if (productEmpty) {
+      productEmpty.hidden = results.length > 0;
+    }
+  }
+
+  productSearch?.addEventListener("input", applyProductFilters);
+
+  productFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeFilter = button.dataset.filter || "trending";
+
+      productFilters.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
+
+      applyProductFilters();
+    });
+  });
+
+  applyProductFilters();
+</script>
+
+</MainLayout>
