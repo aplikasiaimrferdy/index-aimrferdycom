@@ -8,16 +8,6 @@ image: ""
 popular: true
 ---
 
----
-title: "AI Mr Ferdy: Mengenal Platform AI untuk Kreativitas dan Produktivitas Digital"
-description: "Kenali AI Mr Ferdy, platform digital untuk asisten AI, coding, SEO, pembuatan konten, pengembangan website, dan produktivitas."
-pubDate: 2026-10-23
-updatedDate: 2026-10-27
-author: "Ai Mr Ferdy"
-image: ""
-popular: true
----
-
 <h1>Mengenal AI Mr Ferdy, Platform Asisten AI untuk Kebutuhan Digital</h1>
 
 <p><strong>AI Mr Ferdy</strong> merupakan brand platform digital yang berfokus pada pemanfaatan kecerdasan buatan (Artificial Intelligence atau AI) untuk mendukung kreativitas, pembelajaran, pengembangan website, optimasi SEO, dan produktivitas sehari-hari.</p>
