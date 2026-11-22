@@ -42,6 +42,9 @@ export const meta = {
             <span class="webp-preview-label">Hasil WebP</span>
             <img id="resultPreview" alt="Preview hasil WebP" />
             <p id="resultInfo">Hasil konversi akan ditampilkan di sini.</p>
+            <div class="tool-actions" id="downloadArea" hidden>
+              <a class="tool-btn" id="downloadBtn" download="converted-image.webp">Download WebP</a>
+            </div>
           </div>
         </div>
 
@@ -49,7 +52,7 @@ export const meta = {
           <div class="webp-setting-row">
             <label for="targetSize">Target ukuran file</label>
             <select id="targetSize" class="tool-select">
-              <option value="100">Di bawah 100 KB</option>
+              <option value="100" selected>Di bawah 100 KB</option>
               <option value="200">Di bawah 200 KB</option>
               <option value="300">Di bawah 300 KB</option>
               <option value="500">Di bawah 500 KB</option>
@@ -69,9 +72,6 @@ export const meta = {
         </div>
         <div id="status" class="tool-result" aria-live="polite" hidden></div>
         <div id="resultSummary" class="webp-summary" hidden></div>
-        <div class="tool-actions" id="downloadArea" hidden>
-          <a class="tool-btn" id="downloadBtn" download="converted-image.webp">Download WebP</a>
-        </div>
       </div>
     </section>
 
