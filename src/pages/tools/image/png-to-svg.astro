@@ -1,0 +1,143 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🧩 PNG to SVG Converter",
+  description: "Convert PNG ke SVG secara online gratis. Cocok untuk logo dan gambar sederhana.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🧩 PNG to SVG Converter</h1>
+  <p>
+    Ubah PNG menjadi SVG (vector). Cocok untuk logo sederhana & ikon.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload PNG</label>
+    <input type="file" id="file" accept="image/png" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="convert()">🔄 Convert to SVG</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview (Bitmap)</label>
+    <canvas id="canvas" class="tool-result"></canvas>
+  </div>
+
+  <!-- SVG OUTPUT -->
+  <div class="form-group">
+    <label>Hasil SVG</label>
+    <textarea id="result" class="tool-textarea" placeholder="SVG akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="image.svg">⬇️ Download SVG</a>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+  <h2>Apa Itu PNG ke SVG?</h2>
+  <p>
+    PNG ke SVG adalah proses mengubah gambar raster menjadi vector.
+    Hasil SVG bisa diperbesar tanpa pecah.
+  </p>
+
+  <h2>Kapan Digunakan?</h2>
+  <ul>
+    <li>Logo & ikon</li>
+    <li>Desain UI</li>
+    <li>Ilustrasi sederhana</li>
+  </ul>
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>Upload PNG → klik convert → download SVG.</p>
+  </details>
+
+  <details>
+    <summary>Catatan Penting</summary>
+    <ul>
+      <li>Hasil terbaik untuk gambar sederhana</li>
+      <li>Tidak cocok untuk foto</li>
+      <li>Semakin kontras, semakin bagus</li>
+    </ul>
+  </details>
+</section>
+
+<script is:inline>
+window.convert = function(){
+  const file = document.getElementById("file").files[0];
+  if(!file){
+    alert("Upload PNG dulu!");
+    return;
+  }
+
+  const reader = new FileReader();
+  const img = new Image();
+
+  reader.onload = e => img.src = e.target.result;
+
+  img.onload = () => {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    let path = "";
+
+    // simple threshold (black/white)
+    for(let y=0; y<canvas.height; y+=2){
+      for(let x=0; x<canvas.width; x+=2){
+        const i = (y * canvas.width + x) * 4;
+        const brightness = (data[i] + data[i+1] + data[i+2]) / 3;
+
+        if(brightness < 128){
+          path += `M${x} ${y}h1v1h-1z `;
+        }
+      }
+    }
+
+    const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="${canvas.width}" height="${canvas.height}" viewBox="0 0 ${canvas.width} ${canvas.height}">
+  <path d="${path}" fill="black"/>
+</svg>`;
+
+    document.getElementById("result").value = svg;
+
+    const blob = new Blob([svg], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.href = url;
+
+    document.getElementById("downloadWrap").style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+};
+</script>
+
+</MainLayout>

@@ -1,0 +1,140 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ WEBP to JPG Converter",
+  description: "Convert gambar WEBP ke JPG secara online gratis. Cepat, tanpa install, langsung di browser.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🖼️ WEBP to JPG Converter Online</h1>
+  <p>
+    Ubah gambar WEBP ke JPG dengan cepat dan mudah.
+    Gratis tanpa install.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload WEBP</label>
+    <input type="file" id="file" accept="image/webp" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="convert()">🔄 Convert to JPG</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <canvas id="canvas" class="tool-result"></canvas>
+  </div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="image.jpg">⬇️ Download JPG</a>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Upload WEBP lalu convert ke JPG</strong>
+  </p>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu WEBP ke JPG?</h2>
+  <p>
+    WEBP ke JPG adalah proses mengubah format gambar WEBP menjadi JPG
+    agar kompatibel dengan lebih banyak aplikasi dan perangkat.
+  </p>
+
+  <h2>Kenapa Convert ke JPG?</h2>
+  <ul>
+    <li>Kompatibel di semua device</li>
+    <li>Mudah dibuka di aplikasi lama</li>
+    <li>Cocok untuk upload ke website tertentu</li>
+    <li>Format paling umum digunakan</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload file WEBP, klik convert, lalu download hasil JPG.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Convert WEBP ke JPG</li>
+      <li>Tanpa upload server (aman)</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Digunakan?</summary>
+    <ul>
+      <li>Upload ke platform yang tidak support WEBP</li>
+      <li>Edit di software lama</li>
+      <li>Konversi format gambar</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.convert = function(){
+  const fileInput = document.getElementById("file");
+  const file = fileInput.files[0];
+
+  if(!file){
+    alert("Upload file WEBP dulu!");
+    return;
+  }
+
+  const img = new Image();
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    img.src = e.target.result;
+  };
+
+  img.onload = function(){
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.drawImage(img, 0, 0);
+
+    const jpg = canvas.toDataURL("image/jpeg", 0.9);
+
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.href = jpg;
+
+    document.getElementById("downloadWrap").style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+};
+</script>
+
+</MainLayout>

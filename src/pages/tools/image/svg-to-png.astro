@@ -1,0 +1,146 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ SVG to PNG Converter",
+  description: "Convert SVG ke PNG secara online gratis. Cepat, tanpa install, langsung di browser.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🖼️ SVG to PNG Converter</h1>
+  <p>
+    Ubah file SVG menjadi PNG dengan mudah dan cepat.
+    Gratis tanpa install.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload SVG</label>
+    <input type="file" id="file" accept=".svg,image/svg+xml" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="convert()">🔄 Convert to PNG</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <canvas id="canvas" class="tool-result"></canvas>
+  </div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="image.png">⬇️ Download PNG</a>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Upload SVG lalu convert ke PNG</strong>
+  </p>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu SVG ke PNG?</h2>
+  <p>
+    SVG ke PNG adalah proses mengubah gambar vector menjadi bitmap
+    agar bisa digunakan di semua platform dan aplikasi.
+  </p>
+
+  <h2>Kenapa Convert SVG ke PNG?</h2>
+  <ul>
+    <li>Kompatibel di semua device</li>
+    <li>Cocok untuk upload ke media sosial</li>
+    <li>Bisa digunakan di aplikasi desain lama</li>
+    <li>Export gambar vector ke raster</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload SVG, klik convert, lalu download hasil PNG.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Convert SVG ke PNG</li>
+      <li>Tanpa upload server (aman)</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Digunakan?</summary>
+    <ul>
+      <li>Export icon/logo</li>
+      <li>Upload ke platform tertentu</li>
+      <li>Konversi format gambar</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.convert = function(){
+  const file = document.getElementById("file").files[0];
+
+  if(!file){
+    alert("Upload file SVG dulu!");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    const svgData = e.target.result;
+
+    const img = new Image();
+    const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
+
+    img.onload = function(){
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      ctx.drawImage(img, 0, 0);
+
+      const png = canvas.toDataURL("image/png");
+
+      const downloadBtn = document.getElementById("downloadBtn");
+      downloadBtn.href = png;
+
+      document.getElementById("downloadWrap").style.display = "block";
+
+      URL.revokeObjectURL(url);
+    };
+
+    img.src = url;
+  };
+
+  reader.readAsText(file);
+};
+</script>
+
+</MainLayout>

@@ -1,0 +1,381 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Image Compressor Online",
+  description: "Kompres gambar JPG, PNG, WebP dengan cepat dan gratis. Kurangi ukuran hingga 90% tanpa kehilangan kualitas. 100% Client Side & Privasi Aman.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="compressor-app">
+    <!-- LEFT PANEL -->
+    <div class="comp-panel">
+      <div class="comp-title">Upload Gambar</div>
+      
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" hidden>
+        <div class="upload-content">
+          <span class="upload-icon">📁</span>
+          <p>Klik atau drop gambar di sini</p>
+          <small>JPG • PNG • WebP • Maksimal 10MB</small>
+        </div>
+      </div>
+
+      <div id="settings" class="settings hidden">
+        <label>Kualitas Kompresi: <span id="qualityValue">80</span>%</label>
+        <input type="range" id="quality" min="10" max="100" value="80" class="quality-slider">
+
+        <label>Format Output</label>
+        <select id="format">
+          <option value="image/jpeg">JPEG (.jpg)</option>
+          <option value="image/webp" selected>WebP (.webp) - Paling Ringan</option>
+          <option value="image/png">PNG (.png)</option>
+        </select>
+
+        <label>Lebar Maksimal (px)</label>
+        <input type="number" id="maxWidth" value="1920" placeholder="1920">
+
+        <button class="btn-primary" onclick="compressImage()">🔄 Kompres Gambar</button>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="comp-panel">
+      <div class="comp-title">Preview</div>
+      
+      <div class="preview-container">
+        <!-- Original -->
+        <div class="preview-box">
+          <p class="preview-label">Original</p>
+          <div class="image-wrapper" id="originalWrapper">
+            <img id="originalImg" alt="Original Image" style="display:none;">
+            <div class="placeholder" id="originalPlaceholder">
+              <span class="upload-icon">📸</span>
+              <p>Belum ada gambar</p>
+            </div>
+          </div>
+          <small id="originalSize"></small>
+        </div>
+
+        <!-- Compressed -->
+        <div class="preview-box">
+          <p class="preview-label">Hasil Kompresi</p>
+          <div class="image-wrapper" id="compressedWrapper">
+            <img id="compressedImg" alt="Compressed Image" style="display:none;">
+            <div class="placeholder" id="compressedPlaceholder">
+              <span class="upload-icon">📦</span>
+              <p>Menunggu kompresi...</p>
+            </div>
+          </div>
+          <small id="compressedSize"></small>
+          <div id="reduction" class="reduction hidden"></div>
+        </div>
+      </div>
+
+      <div id="downloadSection" class="download-section hidden">
+        <button onclick="downloadCompressed()" class="btn-primary">
+          ⬇️ Download Gambar Kompresi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Image Compressor Online Gratis</h1>
+  <p>Kompres gambar JPG, PNG, dan WebP dengan cepat. Kurangi ukuran file hingga 90% tanpa kehilangan kualitas yang berarti.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Apa Itu Image Compressor Online?</h2>
+  <p>
+    Image Compressor Online adalah alat gratis yang membantu mengurangi ukuran file gambar tanpa mengurangi kualitas secara signifikan. 
+    Semua proses dilakukan langsung di browser Anda (client-side), sehingga privasi gambar terjaga 100%.
+  </p>
+
+  <h2>Kenapa Harus Mengompres Gambar?</h2>
+  <ul>
+    <li>Mempercepat loading website dan meningkatkan SEO</li>
+    <li>Menghemat kuota internet dan ruang penyimpanan</li>
+    <li>Memudahkan upload ke Instagram, WhatsApp, Tokopedia, Shopee, dll</li>
+    <li>Meningkatkan performa blog dan landing page</li>
+  </ul>
+</section>
+
+<!-- COLLAPSE CONTENT + FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Image Compressor</summary>
+    <ol>
+      <li>Klik area upload atau drag & drop foto/gambar Anda</li>
+      <li>Atur kualitas kompresi (rekomendasi 75-85%)</li>
+      <li>Pilih format output (WebP paling ringan)</li>
+      <li>Klik tombol <strong>Kompres Gambar</strong></li>
+      <li>Download hasil kompresi</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Unggulan</summary>
+    <ul>
+      <li>Kompresi hingga <strong>90% lebih kecil</strong></li>
+      <li>Support JPG, PNG, WebP</li>
+      <li>Resize otomatis + custom max width</li>
+      <li>Preview Before & After</li>
+      <li>100% Client Side (privasi aman)</li>
+      <li>Gratis tanpa batas & tanpa watermark</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Mengompres Gambar Optimal</summary>
+    <ul>
+      <li>Gunakan <strong>WebP</strong> untuk hasil paling ringan</li>
+      <li>Kualitas 75-85% sudah sangat baik untuk kebanyakan keperluan</li>
+      <li>Untuk logo/gambar teks, gunakan kualitas lebih tinggi</li>
+      <li>Kompres sebelum upload ke website atau media sosial</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Pertanyaan yang Sering Ditanyakan (FAQ)</summary>
+    <div class="faq-list">
+      <h4>Apakah tool ini gratis?</h4>
+      <p>Ya, 100% gratis, tanpa login, tanpa batas, dan tanpa watermark.</p>
+
+      <h4>Apakah gambar saya aman?</h4>
+      <p>Sangat aman. Semua proses kompresi dilakukan di perangkat Anda sendiri, tidak ada data yang diupload ke server.</p>
+
+      <h4>Format mana yang paling bagus?</h4>
+      <p><strong>WebP</strong> adalah yang terbaik untuk ukuran kecil dengan kualitas tinggi.</p>
+
+      <h4>Berapa persen ukuran bisa dikurangi?</h4>
+      <p>Biasanya 60% - 90%, tergantung pengaturan dan jenis gambar.</p>
+
+      <h4>Apakah kualitas gambar turun drastis?</h4>
+      <p>Tidak, jika kualitas di atas 70%. Perbedaannya hampir tidak terlihat.</p>
+    </div>
+  </details>
+</section>
+
+<!-- FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah Image Compressor ini gratis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, sepenuhnya gratis tanpa batas dan tanpa pendaftaran." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah gambar saya aman?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, 100% aman karena proses dilakukan di browser Anda sendiri." }
+    },
+    {
+      "@type": "Question",
+      "name": "Format mana yang paling direkomendasikan?",
+      "acceptedAnswer": { "@type": "Answer", "text": "WebP adalah format terbaik untuk ukuran kecil dengan kualitas tinggi." }
+    }
+  ]
+}
+</script>
+
+<script client:load>
+let originalFile = null;
+let compressedDataUrl = null;
+let originalSize = 0;
+
+const uploadArea = document.getElementById('uploadArea');
+const imageInput = document.getElementById('imageInput');
+const settings = document.getElementById('settings');
+const qualitySlider = document.getElementById('quality');
+const qualityValue = document.getElementById('qualityValue');
+
+qualitySlider.addEventListener('input', () => {
+  qualityValue.textContent = qualitySlider.value;
+});
+
+// Upload
+uploadArea.addEventListener('click', () => imageInput.click());
+imageInput.addEventListener('change', e => e.target.files[0] && handleFile(e.target.files[0]));
+
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.style.borderColor = 'var(--accent)'; });
+uploadArea.addEventListener('dragleave', () => uploadArea.style.borderColor = 'var(--border)');
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadArea.style.borderColor = 'var(--border)';
+  if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+});
+
+function handleFile(file) {
+  if (!file.type.startsWith('image/')) {
+    alert('Mohon upload file gambar (JPG, PNG, WebP)');
+    return;
+  }
+
+  originalFile = file;
+  originalSize = file.size;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('originalImg').src = e.target.result;
+    document.getElementById('originalImg').style.display = 'block';
+    document.getElementById('originalPlaceholder').style.display = 'none';
+
+    document.getElementById('originalSize').textContent = `Ukuran: ${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+
+    settings.classList.remove('hidden');
+    document.getElementById('downloadSection').classList.add('hidden');
+    document.getElementById('compressedImg').style.display = 'none';
+    document.getElementById('compressedPlaceholder').style.display = 'flex';
+  };
+  reader.readAsDataURL(file);
+}
+
+window.compressImage = function() {
+  if (!originalFile) return;
+
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+
+  img.onload = function() {
+    let { width, height } = img;
+    const maxWidth = parseInt(document.getElementById('maxWidth').value) || 1920;
+
+    if (width > maxWidth) {
+      height = Math.round((height * maxWidth) / width);
+      width = maxWidth;
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+
+    const format = document.getElementById('format').value;
+    const quality = parseInt(qualitySlider.value) / 100;
+
+    compressedDataUrl = canvas.toDataURL(format, quality);
+
+    document.getElementById('compressedImg').src = compressedDataUrl;
+    document.getElementById('compressedImg').style.display = 'block';
+    document.getElementById('compressedPlaceholder').style.display = 'none';
+
+    const compressedSizeKB = Math.round((compressedDataUrl.length * 0.75) / 1024);
+    const reduction = Math.round(((originalSize / 1024) - compressedSizeKB) / (originalSize / 1024) * 100);
+
+    document.getElementById('compressedSize').innerHTML = `
+      Ukuran: ${compressedSizeKB} KB 
+      <span style="color:var(--success)">(-${reduction}%)</span>
+    `;
+
+    document.getElementById('reduction').classList.remove('hidden');
+    document.getElementById('downloadSection').classList.remove('hidden');
+  };
+
+  img.src = URL.createObjectURL(originalFile);
+};
+
+window.downloadCompressed = function() {
+  if (!compressedDataUrl) return;
+  const link = document.createElement('a');
+  const ext = document.getElementById('format').value === 'image/webp' ? 'webp' : 
+              document.getElementById('format').value === 'image/png' ? 'png' : 'jpg';
+  link.download = `compressed-image.${ext}`;
+  link.href = compressedDataUrl;
+  link.click();
+};
+</script>
+
+<style is:global>
+.compressor-app { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+@media (max-width: 768px) { .compressor-app { grid-template-columns: 1fr; } }
+
+.comp-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.comp-title { font-size: 20px; font-weight: 600; margin-bottom: 16px; }
+
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: 16px;
+  padding: 60px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.upload-area:hover { border-color: var(--accent); }
+
+.settings { margin-top: 20px; display: flex; flex-direction: column; gap: 16px; }
+.quality-slider { width: 100%; accent-color: var(--accent); }
+
+.preview-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 640px) { .preview-container { grid-template-columns: 1fr; } }
+
+.image-wrapper {
+  position: relative;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  max-height: 280px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.placeholder { text-align: center; color: var(--muted); }
+.placeholder .upload-icon { font-size: 42px; margin-bottom: 8px; opacity: 0.6; }
+
+.preview-label { font-weight: 600; margin-bottom: 12px; color: var(--text); }
+
+.reduction {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #d1fae5;
+  color: #10b981;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.faq-list h4 { margin: 16px 0 6px; font-size: 15px; }
+.faq-list p { margin-bottom: 16px; color: var(--text-soft); }
+</style>
+
+</MainLayout>

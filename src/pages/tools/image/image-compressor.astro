@@ -1,0 +1,162 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🗜️ Image Compressor PRO",
+  description: "Compress gambar JPG, PNG, WEBP online gratis dengan kualitas terbaik. Tanpa upload server.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🗜️ Image Compressor PRO</h1>
+  <p>
+    Compress gambar tanpa mengurangi kualitas secara signifikan.
+    Cepat, gratis, dan tanpa upload server.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload Image</label>
+    <input type="file" id="file" accept="image/*" />
+  </div>
+
+  <!-- QUALITY -->
+  <div class="form-group">
+    <label>Quality: <span id="qLabel">80%</span></label>
+    <input type="range" id="quality" min="10" max="100" value="80" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="compress()">🗜️ Compress</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <canvas id="canvas" class="tool-result"></canvas>
+  </div>
+
+  <!-- INFO -->
+  <div id="info" class="tool-result" style="display:none;"></div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="compressed.jpg">⬇️ Download</a>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Image Compressor?</h2>
+  <p>
+    Image compressor adalah alat untuk mengecilkan ukuran file gambar
+    tanpa mengurangi kualitas secara signifikan.
+  </p>
+
+  <h2>Kenapa Harus Compress Gambar?</h2>
+  <ul>
+    <li>Mempercepat loading website</li>
+    <li>Menghemat bandwidth</li>
+    <li>Meningkatkan SEO</li>
+    <li>Upload lebih cepat</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload gambar → atur kualitas → klik compress → download hasil.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur PRO</summary>
+    <ul>
+      <li>Quality control slider</li>
+      <li>Preview hasil</li>
+      <li>Info ukuran sebelum & sesudah</li>
+      <li>Tanpa upload server (aman)</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Compress</summary>
+    <ul>
+      <li>Gunakan 60–80% untuk hasil optimal</li>
+      <li>Jangan terlalu rendah (gambar pecah)</li>
+      <li>Gunakan JPG untuk foto</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+const qualityInput = document.getElementById("quality");
+const qLabel = document.getElementById("qLabel");
+
+qualityInput.addEventListener("input", () => {
+  qLabel.innerText = qualityInput.value + "%";
+});
+
+window.compress = function(){
+  const file = document.getElementById("file").files[0];
+  const quality = qualityInput.value / 100;
+
+  if(!file){
+    alert("Upload gambar dulu!");
+    return;
+  }
+
+  const reader = new FileReader();
+  const img = new Image();
+
+  reader.onload = e => img.src = e.target.result;
+
+  img.onload = () => {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.drawImage(img, 0, 0);
+
+    const compressed = canvas.toDataURL("image/jpeg", quality);
+
+    const originalSize = (file.size / 1024).toFixed(2);
+    const newSize = (compressed.length * 0.75 / 1024).toFixed(2);
+
+    const reduction = ((1 - newSize/originalSize) * 100).toFixed(1);
+
+    document.getElementById("info").style.display = "block";
+    document.getElementById("info").innerHTML = `
+      <strong>Original:</strong> ${originalSize} KB<br>
+      <strong>Compressed:</strong> ${newSize} KB<br>
+      <strong>Reduction:</strong> ${reduction}%
+    `;
+
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.href = compressed;
+
+    document.getElementById("downloadWrap").style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+};
+</script>
+
+</MainLayout>

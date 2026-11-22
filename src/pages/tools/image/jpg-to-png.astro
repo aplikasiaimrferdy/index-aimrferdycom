@@ -1,0 +1,140 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ JPG to PNG Converter",
+  description: "Convert gambar JPG ke PNG secara online gratis. Cepat, tanpa install, langsung di browser.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🖼️ JPG to PNG Converter Online</h1>
+  <p>
+    Ubah gambar JPG ke PNG dengan mudah dan cepat.
+    Gratis tanpa install dan langsung di browser.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload JPG</label>
+    <input type="file" id="file" accept="image/jpeg,image/jpg" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="convert()">🔄 Convert to PNG</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <canvas id="canvas" class="tool-result"></canvas>
+  </div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="image.png">⬇️ Download PNG</a>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Upload JPG lalu convert ke PNG</strong>
+  </p>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu JPG ke PNG?</h2>
+  <p>
+    JPG ke PNG adalah proses mengubah format gambar JPG menjadi PNG
+    untuk mendapatkan kualitas lebih baik atau mendukung transparansi.
+  </p>
+
+  <h2>Kenapa Convert JPG ke PNG?</h2>
+  <ul>
+    <li>Kualitas gambar lebih stabil</li>
+    <li>Cocok untuk editing desain</li>
+    <li>Mendukung transparansi (setelah edit)</li>
+    <li>Format umum untuk desain grafis</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload file JPG, klik convert, lalu download hasil PNG.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Convert JPG ke PNG</li>
+      <li>Tanpa upload ke server (aman)</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Digunakan?</summary>
+    <ul>
+      <li>Edit desain</li>
+      <li>Convert format gambar</li>
+      <li>Optimasi workflow desain</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.convert = function(){
+  const fileInput = document.getElementById("file");
+  const file = fileInput.files[0];
+
+  if(!file){
+    alert("Upload file JPG dulu!");
+    return;
+  }
+
+  const img = new Image();
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    img.src = e.target.result;
+  };
+
+  img.onload = function(){
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.drawImage(img, 0, 0);
+
+    const png = canvas.toDataURL("image/png");
+
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.href = png;
+
+    document.getElementById("downloadWrap").style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+};
+</script>
+
+</MainLayout>
