@@ -1,0 +1,176 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📜 Terms & Conditions Generator",
+  description: "Buat Terms & Conditions untuk website secara otomatis dan gratis. Cocok untuk blog, bisnis, dan aplikasi.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>📜 Terms & Conditions Generator Gratis</h1>
+  <p>
+    Buat halaman Terms & Conditions untuk website kamu secara otomatis.
+    Cepat, mudah, dan tanpa ribet.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Nama Website</label>
+    <input id="site" placeholder="Contoh: aimrferdy.net" />
+  </div>
+
+  <div class="form-group">
+    <label>Nama Perusahaan / Pemilik</label>
+    <input id="company" placeholder="Contoh: AI Mr Ferdy" />
+  </div>
+
+  <div class="form-group">
+    <label>Email Kontak</label>
+    <input id="email" placeholder="Contoh: admin@email.com" />
+  </div>
+
+  <div class="form-group">
+    <label>Negara</label>
+    <input id="country" placeholder="Contoh: Indonesia" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateTerms()">🚀 Generate</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Terms & Conditions</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Generate Terms & Conditions untuk website kamu</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Terms & Conditions?</h2>
+  <p>
+    Terms & Conditions adalah halaman hukum yang menjelaskan aturan penggunaan
+    website atau layanan. Hal ini penting untuk melindungi pemilik website
+    dari risiko hukum.
+  </p>
+
+  <h2>Kenapa Website Harus Punya Terms?</h2>
+  <ul>
+    <li>Melindungi dari penyalahgunaan</li>
+    <li>Menjelaskan hak & kewajiban user</li>
+    <li>Meningkatkan kredibilitas</li>
+    <li>Penting untuk monetisasi (Ads, affiliate, dll)</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Membuat Terms & Conditions</summary>
+    <p>
+      Isi data website kamu, lalu klik generate.
+      Hasil bisa langsung kamu copy dan pasang di halaman website.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate otomatis</li>
+      <li>Gratis tanpa login</li>
+      <li>Cocok untuk blog & bisnis</li>
+      <li>Format siap pakai</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Penting</summary>
+    <ul>
+      <li>Tambahkan halaman Privacy Policy</li>
+      <li>Update jika ada perubahan layanan</li>
+      <li>Gunakan bahasa yang jelas</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateTerms = function(){
+  const site = document.getElementById("site").value || "Website";
+  const company = document.getElementById("company").value || "Kami";
+  const email = document.getElementById("email").value || "email@domain.com";
+  const country = document.getElementById("country").value || "Negara";
+
+  const text = `
+Terms and Conditions
+
+Welcome to ${site}.
+
+By accessing this website, you agree to be bound by these Terms and Conditions.
+
+Use License:
+Permission is granted to temporarily use the materials on ${site} for personal, non-commercial use only.
+
+Disclaimer:
+All materials on ${site} are provided "as is". ${company} makes no warranties.
+
+Limitations:
+In no event shall ${company} be liable for any damages arising from the use of this website.
+
+User Responsibilities:
+Users agree not to misuse the website or engage in illegal activities.
+
+Changes:
+${company} may revise these terms at any time without notice.
+
+Governing Law:
+These terms are governed by the laws of ${country}.
+
+Contact:
+If you have any questions, contact us at ${email}.
+`;
+
+  document.getElementById("result").value = text.trim();
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

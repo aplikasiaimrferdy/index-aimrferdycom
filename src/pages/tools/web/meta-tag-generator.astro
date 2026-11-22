@@ -1,0 +1,157 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Meta Tag Generator Online Gratis (SEO Friendly)",
+  description: "Buat meta tag SEO seperti title, description, robots, dan viewport dengan mudah dan cepat.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🏷️ Meta Tag Generator</h1>
+
+<p class="tools-sub">
+Buat meta tag SEO lengkap untuk website kamu dalam hitungan detik.
+</p>
+
+<div class="tool-box">
+
+<input type="text" id="title" placeholder="Meta Title" class="tool-input">
+<input type="text" id="desc" placeholder="Meta Description" class="tool-input">
+<input type="text" id="keywords" placeholder="Keywords (opsional)" class="tool-input">
+<input type="text" id="author" placeholder="Author (opsional)" class="tool-input">
+
+<select id="robots" class="tool-input">
+  <option value="index, follow">Index, Follow</option>
+  <option value="noindex, follow">NoIndex, Follow</option>
+  <option value="index, nofollow">Index, NoFollow</option>
+  <option value="noindex, nofollow">NoIndex, NoFollow</option>
+</select>
+
+<button class="btn-primary" onclick="generateMeta()">
+Generate Meta Tag
+</button>
+
+</div>
+
+<div id="preview" class="tool-result">
+Preview Google akan muncul di sini...
+</div>
+
+<div id="result" class="tool-result">
+Meta tag akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Meta Tag?</h2>
+  <p>
+    Meta tag adalah elemen HTML yang memberikan informasi tentang halaman web kepada mesin pencari seperti Google. Meta tag tidak terlihat oleh pengguna, tetapi sangat penting untuk SEO.
+  </p>
+
+  <h2>Kenapa Meta Tag Penting?</h2>
+  <ul>
+    <li>Meningkatkan ranking di Google</li>
+    <li>Meningkatkan CTR (klik dari search)</li>
+    <li>Membantu mesin pencari memahami konten</li>
+    <li>Meningkatkan kualitas SEO on-page</li>
+  </ul>
+
+  <h2>Meta Tag yang Wajib Digunakan</h2>
+  <p>
+    Meta title, description, robots, dan viewport adalah elemen penting yang harus ada di setiap halaman website.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Meta Tag Generator</summary>
+    <ul>
+      <li>Isi title dan description</li>
+      <li>Tambahkan keyword jika perlu</li>
+      <li>Klik generate</li>
+      <li>Copy hasil meta tag</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate meta lengkap</li>
+      <li>Preview tampilan Google</li>
+      <li>Gratis tanpa login</li>
+      <li>SEO friendly</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function generateMeta(){
+  const title = document.getElementById("title").value;
+  const desc = document.getElementById("desc").value;
+  const keywords = document.getElementById("keywords").value;
+  const author = document.getElementById("author").value;
+  const robots = document.getElementById("robots").value;
+
+  const resultBox = document.getElementById("result");
+  const previewBox = document.getElementById("preview");
+
+  if(!title || !desc){
+    resultBox.innerHTML = "❌ Title dan Description wajib diisi.";
+    return;
+  }
+
+  // preview google
+  previewBox.innerHTML = `
+    <div style="text-align:left;">
+      <b style="color:#1a0dab; font-size:18px;">${title}</b><br>
+      <span style="color:green;">www.yoursite.com</span><br>
+      <span style="color:#545454;">${desc}</span>
+    </div>
+  `;
+
+  // generate meta
+  let metaTags = `
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<meta name="robots" content="${robots}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+`;
+
+  if(keywords){
+    metaTags += `<meta name="keywords" content="${keywords}">\n`;
+  }
+
+  if(author){
+    metaTags += `<meta name="author" content="${author}">\n`;
+  }
+
+  resultBox.innerHTML = `
+    <pre>${metaTags}</pre>
+    <button onclick="copyMeta()">Copy Meta</button>
+  `;
+
+  window.generatedMeta = metaTags;
+}
+
+function copyMeta(){
+  navigator.clipboard.writeText(window.generatedMeta);
+  alert("✅ Meta tag copied!");
+}
+</script>
+
+</MainLayout>

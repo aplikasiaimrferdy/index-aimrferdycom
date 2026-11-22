@@ -1,0 +1,153 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Sitemap Generator Online (Buat XML Sitemap Gratis)",
+  description: "Buat sitemap XML untuk website kamu secara online. Mudah, cepat, dan bisa langsung download.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🗺️ Sitemap Generator</h1>
+
+<p class="tools-sub">
+Buat sitemap XML untuk website kamu dan download langsung.
+</p>
+
+<div class="tool-box">
+
+<textarea id="urls" placeholder="Masukkan URL (1 per baris)" class="tool-input"></textarea>
+
+<select id="changefreq" class="tool-input">
+  <option value="daily">Daily</option>
+  <option value="weekly">Weekly</option>
+  <option value="monthly">Monthly</option>
+</select>
+
+<select id="priority" class="tool-input">
+  <option value="1.0">1.0</option>
+  <option value="0.8">0.8</option>
+  <option value="0.5">0.5</option>
+</select>
+
+<button class="btn-primary" onclick="generateSitemap()">
+Generate Sitemap
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+XML sitemap akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Sitemap XML?</h2>
+  <p>
+    Sitemap XML adalah file yang berisi daftar URL website yang membantu mesin pencari seperti Google untuk memahami struktur situs dan mengindeks halaman dengan lebih baik.
+  </p>
+
+  <h2>Kenapa Sitemap Penting?</h2>
+  <ul>
+    <li>Membantu Google meng-crawl website</li>
+    <li>Mempercepat indexing halaman baru</li>
+    <li>Meningkatkan SEO teknis</li>
+    <li>Mempermudah struktur website</li>
+  </ul>
+
+  <h2>Kapan Harus Menggunakan Sitemap?</h2>
+  <p>
+    Sitemap sangat penting untuk website baru, blog, toko online, atau website dengan banyak halaman.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Sitemap Generator</summary>
+    <ul>
+      <li>Masukkan daftar URL</li>
+      <li>Pilih change frequency</li>
+      <li>Pilih priority</li>
+      <li>Klik generate</li>
+      <li>Download file XML</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate sitemap XML otomatis</li>
+      <li>Download langsung</li>
+      <li>Gratis tanpa login</li>
+      <li>SEO friendly</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function generateSitemap(){
+  const urlsInput = document.getElementById("urls").value.trim();
+  const changefreq = document.getElementById("changefreq").value;
+  const priority = document.getElementById("priority").value;
+  const resultBox = document.getElementById("result");
+
+  if(!urlsInput){
+    resultBox.innerHTML = "❌ Masukkan minimal 1 URL.";
+    return;
+  }
+
+  const urls = urlsInput.split("\n").map(u => u.trim()).filter(u => u);
+
+  const today = new Date().toISOString().split("T")[0];
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+  urls.forEach(url => {
+    xml += `
+  <url>
+    <loc>${url}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+  });
+
+  xml += `\n</urlset>`;
+
+  resultBox.innerHTML = `
+    <pre>${xml}</pre>
+    <button onclick="downloadXML()">Download XML</button>
+  `;
+
+  window.generatedXML = xml;
+}
+
+function downloadXML(){
+  const blob = new Blob([window.generatedXML], { type: "application/xml" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "sitemap.xml";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</MainLayout>

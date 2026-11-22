@@ -1,0 +1,133 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "SEO Checker Online Gratis (Analisis Website)",
+  description: "Cek SEO website kamu secara online. Analisis title, meta description, heading, dan keyword secara gratis.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🔍 SEO Checker</h1>
+
+<p class="tools-sub">
+Cek kualitas SEO website kamu secara cepat dan gratis.
+</p>
+
+<div class="tool-box">
+
+<input type="text" id="urlInput" placeholder="Masukkan URL website..." class="tool-input">
+
+<button class="btn-primary" onclick="checkSEO()">
+Cek SEO
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil analisis akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu SEO Checker?</h2>
+  <p>
+    SEO Checker adalah tools online yang digunakan untuk menganalisis kualitas optimasi sebuah website. Tools ini membantu melihat apakah halaman sudah sesuai dengan standar SEO seperti penggunaan title, meta description, dan struktur heading.
+  </p>
+
+  <h2>Kenapa SEO Checker Penting?</h2>
+  <ul>
+    <li>Membantu meningkatkan ranking di Google</li>
+    <li>Mengetahui kesalahan SEO</li>
+    <li>Optimasi konten lebih maksimal</li>
+    <li>Meningkatkan traffic website</li>
+  </ul>
+
+  <h2>Faktor SEO yang Dicek</h2>
+  <p>
+    Tools ini mengecek beberapa faktor dasar seperti panjang title, meta description, heading, serta struktur konten.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan SEO Checker</summary>
+    <ul>
+      <li>Masukkan URL website</li>
+      <li>Klik tombol cek</li>
+      <li>Lihat hasil analisis</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Analisis SEO dasar</li>
+      <li>Cek title & description</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan di browser</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+async function checkSEO(){
+  const url = document.getElementById("urlInput").value;
+  const resultBox = document.getElementById("result");
+
+  if(!url){
+    resultBox.innerHTML = "❌ Masukkan URL terlebih dahulu.";
+    return;
+  }
+
+  resultBox.innerHTML = "⏳ Mengambil data website...";
+
+  try {
+    const proxy = "https://api.allorigins.win/raw?url=";
+    const res = await fetch(proxy + encodeURIComponent(url));
+    const html = await res.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("title")?.innerText || "-";
+    const desc = doc.querySelector('meta[name="description"]')?.content || "-";
+    const h1 = doc.querySelectorAll("h1").length;
+    const h2 = doc.querySelectorAll("h2").length;
+
+    let score = 0;
+
+    if(title.length >= 30 && title.length <= 60) score += 25;
+    if(desc.length >= 50 && desc.length <= 160) score += 25;
+    if(h1 >= 1) score += 25;
+    if(h2 >= 1) score += 25;
+
+    resultBox.innerHTML = `
+      <b>Title:</b> ${title}<br><br>
+      <b>Description:</b> ${desc}<br><br>
+      <b>H1:</b> ${h1}<br>
+      <b>H2:</b> ${h2}<br><br>
+      🎯 <b>SEO Score: ${score}/100</b>
+    `;
+
+  } catch(e){
+    resultBox.innerHTML = "❌ Gagal mengambil data. Coba URL lain.";
+  }
+}
+</script>
+
+</MainLayout>

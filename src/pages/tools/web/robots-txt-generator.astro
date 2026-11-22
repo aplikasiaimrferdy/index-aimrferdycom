@@ -1,0 +1,151 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Robots.txt Generator Online (SEO Friendly)",
+  description: "Buat file robots.txt dengan mudah untuk mengatur crawling mesin pencari seperti Google.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🤖 Robots.txt Generator</h1>
+
+<p class="tools-sub">
+Buat file robots.txt untuk mengontrol crawler mesin pencari.
+</p>
+
+<div class="tool-box">
+
+<input type="text" id="sitemap" placeholder="Sitemap URL (opsional)" class="tool-input">
+
+<select id="agent" class="tool-input">
+  <option value="*">All Bots (*)</option>
+  <option value="Googlebot">Googlebot</option>
+  <option value="Bingbot">Bingbot</option>
+</select>
+
+<textarea id="allow" placeholder="Allow (1 path per baris, opsional)" class="tool-input"></textarea>
+
+<textarea id="disallow" placeholder="Disallow (1 path per baris)" class="tool-input"></textarea>
+
+<button class="btn-primary" onclick="generateRobots()">
+Generate Robots.txt
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Robots.txt akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Robots.txt?</h2>
+  <p>
+    Robots.txt adalah file yang digunakan untuk mengatur akses crawler mesin pencari ke halaman tertentu di website. File ini membantu mengontrol halaman mana yang boleh atau tidak boleh diindeks.
+  </p>
+
+  <h2>Kenapa Robots.txt Penting?</h2>
+  <ul>
+    <li>Mengontrol crawling bot</li>
+    <li>Melindungi halaman sensitif</li>
+    <li>Meningkatkan efisiensi SEO</li>
+    <li>Menghindari indexing halaman tidak penting</li>
+  </ul>
+
+  <h2>Contoh Penggunaan</h2>
+  <p>
+    Kamu bisa memblokir folder admin atau halaman private agar tidak muncul di hasil pencarian.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Robots.txt Generator</summary>
+    <ul>
+      <li>Pilih user-agent</li>
+      <li>Isi allow/disallow path</li>
+      <li>Tambahkan sitemap jika ada</li>
+      <li>Klik generate</li>
+      <li>Copy atau download file</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate robots.txt otomatis</li>
+      <li>Support multiple rules</li>
+      <li>Download langsung</li>
+      <li>SEO friendly</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function generateRobots(){
+  const sitemap = document.getElementById("sitemap").value.trim();
+  const agent = document.getElementById("agent").value;
+  const allowInput = document.getElementById("allow").value;
+  const disallowInput = document.getElementById("disallow").value;
+  const resultBox = document.getElementById("result");
+
+  let robots = `User-agent: ${agent}\n`;
+
+  const allows = allowInput.split("\n").map(x => x.trim()).filter(Boolean);
+  const disallows = disallowInput.split("\n").map(x => x.trim()).filter(Boolean);
+
+  allows.forEach(path => {
+    robots += `Allow: ${path}\n`;
+  });
+
+  disallows.forEach(path => {
+    robots += `Disallow: ${path}\n`;
+  });
+
+  if(sitemap){
+    robots += `\nSitemap: ${sitemap}`;
+  }
+
+  resultBox.innerHTML = `
+    <pre>${robots}</pre>
+    <button onclick="copyRobots()">Copy</button>
+    <button onclick="downloadRobots()">Download</button>
+  `;
+
+  window.generatedRobots = robots;
+}
+
+function copyRobots(){
+  navigator.clipboard.writeText(window.generatedRobots);
+  alert("✅ Copied!");
+}
+
+function downloadRobots(){
+  const blob = new Blob([window.generatedRobots], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "robots.txt";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</MainLayout>

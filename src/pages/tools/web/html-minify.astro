@@ -1,0 +1,151 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "⚡ HTML Minify Online",
+  description: "Minify HTML secara online gratis. Hilangkan spasi dan komentar untuk memperkecil ukuran HTML.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>⚡ HTML Minify Online Gratis</h1>
+  <p>
+    Perkecil ukuran HTML dengan menghapus spasi dan komentar.
+    Cepat, gratis, dan langsung di browser.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>HTML Input</label>
+    <textarea id="input" class="tool-textarea" placeholder="Masukkan kode HTML di sini..."></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="minifyHTML()">⚡ Minify</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Minify</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil HTML minify akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk memperkecil ukuran HTML</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu HTML Minify?</h2>
+  <p>
+    HTML Minify adalah proses menghapus spasi, komentar, dan karakter yang tidak diperlukan
+    dari kode HTML untuk mengurangi ukuran file tanpa mengubah tampilannya.
+  </p>
+
+  <h2>Kenapa HTML Minify Penting?</h2>
+  <ul>
+    <li>Mempercepat loading website</li>
+    <li>Mengurangi ukuran file HTML</li>
+    <li>Meningkatkan performa SEO</li>
+    <li>Optimasi PageSpeed</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Minify HTML</summary>
+    <p>
+      Masukkan kode HTML, lalu klik tombol Minify.
+      Hasil akan langsung muncul dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Minify HTML otomatis</li>
+      <li>Hapus komentar & spasi</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Minify HTML?</summary>
+    <ul>
+      <li>Sebelum deploy website</li>
+      <li>Optimasi kecepatan loading</li>
+      <li>Meningkatkan skor PageSpeed</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.minifyHTML = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan HTML dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try {
+    let html = input;
+
+    // hapus komentar <!-- -->
+    html = html.replace(/<!--[\s\S]*?-->/g, '');
+
+    // hapus spasi antar tag
+    html = html.replace(/>\s+</g, '><');
+
+    // hapus spasi berlebih
+    html = html.replace(/\s+/g, ' ');
+
+    result.value = html.trim();
+
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "Gagal minify HTML.";
+  }
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

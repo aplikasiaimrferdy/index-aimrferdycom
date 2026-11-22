@@ -1,0 +1,154 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "⚡ CSS Minify Online",
+  description: "Minify CSS secara online gratis. Hilangkan spasi, komentar, dan perkecil ukuran file CSS dengan cepat.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>⚡ CSS Minify Online Gratis</h1>
+  <p>
+    Perkecil ukuran CSS dengan menghapus spasi dan komentar.
+    Cepat, gratis, dan langsung di browser.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>CSS Input</label>
+    <textarea id="input" class="tool-textarea" placeholder="Masukkan kode CSS di sini..."></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="minifyCSS()">⚡ Minify</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Minify</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil CSS minify akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk memperkecil ukuran CSS</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu CSS Minify?</h2>
+  <p>
+    CSS Minify adalah proses menghapus spasi, komentar, dan karakter yang tidak diperlukan 
+    dari file CSS untuk mengurangi ukuran file tanpa mengubah fungsinya.
+  </p>
+
+  <h2>Kenapa CSS Minify Penting?</h2>
+  <ul>
+    <li>Mempercepat loading website</li>
+    <li>Mengurangi ukuran file</li>
+    <li>Meningkatkan performa SEO</li>
+    <li>Optimasi website lebih ringan</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Minify CSS</summary>
+    <p>
+      Masukkan kode CSS, lalu klik tombol Minify.
+      Hasil akan langsung muncul dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Minify CSS otomatis</li>
+      <li>Hapus komentar & spasi</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Minify CSS?</summary>
+    <ul>
+      <li>Sebelum deploy website</li>
+      <li>Optimasi kecepatan loading</li>
+      <li>Meningkatkan skor PageSpeed</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.minifyCSS = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan CSS dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try {
+    let css = input;
+
+    // hapus komentar
+    css = css.replace(/\/\*[\s\S]*?\*\//g, '');
+
+    // hapus spasi berlebih
+    css = css.replace(/\s+/g, ' ');
+
+    // hapus spasi sekitar simbol
+    css = css.replace(/\s*([{}:;,])\s*/g, '$1');
+
+    // hapus ; terakhir sebelum }
+    css = css.replace(/;}/g, '}');
+
+    result.value = css.trim();
+
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "Gagal minify CSS.";
+  }
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

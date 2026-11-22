@@ -1,0 +1,151 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🎨 HEX ↔ RGB Converter",
+  description: "Convert warna HEX ke RGB dan sebaliknya secara online gratis. Cocok untuk web developer dan designer.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🎨 HEX ↔ RGB Converter Online</h1>
+  <p>
+    Convert warna HEX ke RGB dan sebaliknya dengan mudah.
+    Cepat, gratis, dan langsung di browser.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <!-- HEX -->
+  <div class="form-group">
+    <label>HEX</label>
+    <input id="hex" placeholder="#ff5733" />
+  </div>
+
+  <!-- RGB -->
+  <div class="form-group">
+    <label>RGB</label>
+    <input id="rgb" placeholder="rgb(255, 87, 51)" />
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <div id="preview" class="tool-result" style="height:80px;"></div>
+  </div>
+
+  <!-- BUTTON -->
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="hexToRgb()">HEX → RGB</button>
+    <button class="btn btn-secondary" onclick="rgbToHex()">RGB → HEX</button>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu HEX dan RGB?</h2>
+  <p>
+    HEX dan RGB adalah format warna yang digunakan dalam desain web.
+    HEX menggunakan kode heksadesimal, sedangkan RGB menggunakan kombinasi merah, hijau, dan biru.
+  </p>
+
+  <h2>Kenapa Perlu Converter Warna?</h2>
+  <ul>
+    <li>Memudahkan coding CSS</li>
+    <li>Konversi antar format warna</li>
+    <li>Membantu desain UI</li>
+    <li>Digunakan di semua website</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Converter</summary>
+    <p>
+      Masukkan HEX atau RGB, lalu klik tombol convert.
+      Hasil akan otomatis muncul beserta preview warna.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>HEX ke RGB</li>
+      <li>RGB ke HEX</li>
+      <li>Live preview warna</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Digunakan?</summary>
+    <ul>
+      <li>Desain UI/UX</li>
+      <li>Frontend development</li>
+      <li>Styling CSS</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+function updatePreview(color){
+  const preview = document.getElementById("preview");
+  preview.style.background = color;
+}
+
+window.hexToRgb = function(){
+  let hex = document.getElementById("hex").value.replace("#","");
+
+  if(hex.length === 3){
+    hex = hex.split("").map(c => c + c).join("");
+  }
+
+  if(hex.length !== 6){
+    alert("HEX tidak valid!");
+    return;
+  }
+
+  const r = parseInt(hex.substring(0,2), 16);
+  const g = parseInt(hex.substring(2,4), 16);
+  const b = parseInt(hex.substring(4,6), 16);
+
+  const rgb = `rgb(${r}, ${g}, ${b})`;
+
+  document.getElementById("rgb").value = rgb;
+  updatePreview(rgb);
+};
+
+window.rgbToHex = function(){
+  const input = document.getElementById("rgb").value;
+  const nums = input.match(/\d+/g);
+
+  if(!nums || nums.length < 3){
+    alert("RGB tidak valid!");
+    return;
+  }
+
+  const r = parseInt(nums[0]).toString(16).padStart(2,"0");
+  const g = parseInt(nums[1]).toString(16).padStart(2,"0");
+  const b = parseInt(nums[2]).toString(16).padStart(2,"0");
+
+  const hex = `#${r}${g}${b}`;
+
+  document.getElementById("hex").value = hex;
+  updatePreview(hex);
+};
+</script>
+
+</MainLayout>

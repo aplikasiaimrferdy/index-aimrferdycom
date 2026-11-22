@@ -1,0 +1,148 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Keyword Density Checker Online Gratis",
+  description: "Cek keyword density dari teks atau artikel. Analisis frekuensi kata dan optimasi SEO secara mudah.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🧠 Keyword Density Checker</h1>
+
+<p class="tools-sub">
+Analisis frekuensi dan persentase keyword dalam artikel kamu untuk optimasi SEO.
+</p>
+
+<div class="tool-box">
+
+<textarea id="textInput" placeholder="Masukkan artikel atau teks..." class="tool-input"></textarea>
+
+<input type="text" id="keywordInput" placeholder="Keyword utama (opsional)" class="tool-input">
+
+<button class="btn-primary" onclick="analyzeText()">
+Cek Keyword
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil analisis akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Keyword Density?</h2>
+  <p>
+    Keyword density adalah persentase kemunculan suatu kata kunci dibandingkan dengan total jumlah kata dalam sebuah artikel. Ini digunakan untuk mengukur seberapa sering keyword digunakan dalam konten.
+  </p>
+
+  <h2>Kenapa Keyword Density Penting?</h2>
+  <ul>
+    <li>Membantu optimasi SEO on-page</li>
+    <li>Mencegah keyword stuffing</li>
+    <li>Meningkatkan relevansi konten</li>
+    <li>Membantu ranking di mesin pencari</li>
+  </ul>
+
+  <h2>Berapa Keyword Density yang Ideal?</h2>
+  <p>
+    Umumnya keyword density ideal berada di kisaran 1% hingga 3%. Terlalu tinggi bisa dianggap spam, terlalu rendah bisa kurang relevan.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Keyword Density Checker</summary>
+    <ul>
+      <li>Masukkan teks atau artikel</li>
+      <li>Tambahkan keyword utama (opsional)</li>
+      <li>Klik tombol cek</li>
+      <li>Lihat hasil analisis</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Hitung total kata</li>
+      <li>Analisis keyword utama</li>
+      <li>Top keyword otomatis</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function analyzeText(){
+  const text = document.getElementById("textInput").value.toLowerCase();
+  const keyword = document.getElementById("keywordInput").value.toLowerCase();
+  const resultBox = document.getElementById("result");
+
+  if(!text){
+    resultBox.innerHTML = "❌ Masukkan teks terlebih dahulu.";
+    return;
+  }
+
+  // remove punctuation
+  const cleanText = text.replace(/[^\w\s]/g, "");
+  const words = cleanText.split(/\s+/).filter(Boolean);
+  const totalWords = words.length;
+
+  // stopwords sederhana (bisa kamu tambah)
+  const stopwords = ["dan","yang","di","ke","dari","ini","itu","untuk","dengan","atau","pada"];
+
+  // hitung frekuensi
+  let freq = {};
+
+  words.forEach(word => {
+    if(stopwords.includes(word)) return;
+    freq[word] = (freq[word] || 0) + 1;
+  });
+
+  // urutkan top keyword
+  const sorted = Object.entries(freq)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,10);
+
+  let html = `<b>Total Kata:</b> ${totalWords}<br><br>`;
+
+  // keyword utama
+  if(keyword){
+    const count = words.filter(w => w === keyword).length;
+    const density = ((count / totalWords) * 100).toFixed(2);
+
+    html += `
+      <b>Keyword:</b> ${keyword}<br>
+      <b>Jumlah:</b> ${count}<br>
+      <b>Density:</b> ${density}%<br><br>
+    `;
+  }
+
+  // top keywords
+  html += "<b>Top Keywords:</b><br>";
+
+  sorted.forEach(([word, count])=>{
+    const density = ((count / totalWords) * 100).toFixed(2);
+    html += `${word} (${count}) - ${density}%<br>`;
+  });
+
+  resultBox.innerHTML = html;
+}
+</script>
+
+</MainLayout>

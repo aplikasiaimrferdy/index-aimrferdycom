@@ -1,0 +1,167 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "✨ JS Beautify Online",
+  description: "Format dan rapikan kode JavaScript secara online gratis. Mudah dibaca, rapi, dan langsung di browser.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>✨ JS Beautify Online Gratis</h1>
+  <p>
+    Rapikan dan format kode JavaScript agar lebih mudah dibaca.
+    Gratis, cepat, dan tanpa install.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>JavaScript Input</label>
+    <textarea id="input" class="tool-textarea" placeholder="Masukkan kode JS di sini..."></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="beautifyJS()">✨ Beautify</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Beautify</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil JS akan rapi di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk merapikan kode JavaScript</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu JS Beautify?</h2>
+  <p>
+    JS Beautify adalah proses merapikan kode JavaScript dengan menambahkan
+    indentasi, spasi, dan baris baru agar lebih mudah dibaca dan dipahami.
+  </p>
+
+  <h2>Kenapa JS Beautify Penting?</h2>
+  <ul>
+    <li>Membuat kode lebih readable</li>
+    <li>Mempermudah debugging</li>
+    <li>Standarisasi format kode</li>
+    <li>Meningkatkan produktivitas developer</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan JS Beautify</summary>
+    <p>
+      Masukkan kode JavaScript, lalu klik tombol Beautify.
+      Hasil akan langsung rapi dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Format JavaScript otomatis</li>
+      <li>Indentasi rapi</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Menggunakan JS Beautify?</summary>
+    <ul>
+      <li>Membaca kode JS yang berantakan</li>
+      <li>Debugging script</li>
+      <li>Kolaborasi tim developer</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.beautifyJS = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan JavaScript dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try {
+    let js = input;
+
+    // hapus spasi berlebih
+    js = js.replace(/\s+/g, ' ');
+
+    // newline setelah ; { }
+    js = js
+      .replace(/;/g, ";\n")
+      .replace(/{/g, "{\n")
+      .replace(/}/g, "\n}\n");
+
+    const lines = js.split("\n");
+    let indent = 0;
+
+    const formatted = lines.map(line => {
+      line = line.trim();
+
+      if (line.endsWith("}")) indent--;
+
+      const space = "  ".repeat(Math.max(indent, 0));
+      const newLine = space + line;
+
+      if (line.endsWith("{")) indent++;
+
+      return newLine;
+    });
+
+    result.value = formatted.join("\n").trim();
+
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "Gagal beautify JavaScript.";
+  }
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

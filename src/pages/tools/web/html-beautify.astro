@@ -1,0 +1,167 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "✨ HTML Beautify Online",
+  description: "Format dan rapikan kode HTML secara online gratis. Mudah dibaca, rapi, dan langsung di browser.",
+  category: "Web",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>✨ HTML Beautify Online Gratis</h1>
+  <p>
+    Rapikan dan format kode HTML agar lebih mudah dibaca.
+    Gratis, cepat, dan tanpa install.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>HTML Input</label>
+    <textarea id="input" class="tool-textarea" placeholder="Masukkan kode HTML di sini..."></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="beautifyHTML()">✨ Beautify</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Beautify</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil HTML akan rapi di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk merapikan kode HTML</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu HTML Beautify?</h2>
+  <p>
+    HTML Beautify adalah proses merapikan kode HTML dengan menambahkan indentasi,
+    spasi, dan baris baru agar mudah dibaca dan dikelola.
+  </p>
+
+  <h2>Kenapa HTML Beautify Penting?</h2>
+  <ul>
+    <li>Membuat kode lebih rapi dan readable</li>
+    <li>Mempermudah debugging HTML</li>
+    <li>Standarisasi format kode</li>
+    <li>Meningkatkan produktivitas developer</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan HTML Beautify</summary>
+    <p>
+      Masukkan kode HTML, lalu klik tombol Beautify.
+      Hasil akan langsung rapi dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Format HTML otomatis</li>
+      <li>Indentasi rapi</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Menggunakan HTML Beautify?</summary>
+    <ul>
+      <li>Membaca kode HTML yang berantakan</li>
+      <li>Debugging struktur halaman</li>
+      <li>Kolaborasi tim developer</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.beautifyHTML = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan HTML dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try {
+    let html = input
+      .replace(/>\s+</g, "><")       // hapus spasi antar tag
+      .replace(/</g, "\n<")         // newline sebelum tag
+      .trim();
+
+    const lines = html.split("\n");
+    let indent = 0;
+
+    const formatted = lines.map(line => {
+      line = line.trim();
+
+      // closing tag
+      if (line.match(/^<\/.+>/)) {
+        indent--;
+      }
+
+      const space = "  ".repeat(Math.max(indent, 0));
+      const newLine = space + line;
+
+      // opening tag (bukan self-closing)
+      if (line.match(/^<[^\/!][^>]*[^\/]>$/)) {
+        indent++;
+      }
+
+      return newLine;
+    });
+
+    result.value = formatted.join("\n").trim();
+
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "Gagal beautify HTML.";
+  }
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>
