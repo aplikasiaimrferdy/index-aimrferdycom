@@ -1,0 +1,309 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ Image to WebP Converter",
+  description:
+    "Konversi JPG, JPEG, dan PNG ke WebP online secara gratis. Kompres gambar dengan target ukuran di bawah 100 KB langsung di browser.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+    <header class="tool-header">
+      <span class="page-badge">IMAGE TOOLS</span>
+      <h1>Image to WebP Converter</h1>
+      <p>Konversi JPG, JPEG, atau PNG ke WebP dan optimalkan ukuran gambar dengan target di bawah 100 KB.</p>
+    </header>
+
+    <section class="tool-box" aria-label="Image to WebP Converter">
+      <div class="webp-drop" id="dropArea">
+        <input id="fileInput" type="file" accept="image/jpeg,image/png,image/jpg" hidden />
+        <div class="webp-drop-icon" aria-hidden="true">🖼️</div>
+        <h2>Pilih atau seret gambar ke sini</h2>
+        <p>Format JPG, JPEG, dan PNG · Maksimal 20 MB</p>
+        <button type="button" class="btn btn-primary" id="browseBtn">Pilih Gambar</button>
+      </div>
+
+      <div id="previewPanel" hidden>
+        <div class="webp-preview-grid">
+          <div class="webp-preview-card">
+            <span class="webp-preview-label">Gambar asli</span>
+            <img id="originalPreview" alt="Preview gambar asli" />
+            <p id="originalInfo"></p>
+          </div>
+          <div class="webp-preview-card">
+            <span class="webp-preview-label">Hasil WebP</span>
+            <img id="resultPreview" alt="Preview hasil WebP" />
+            <p id="resultInfo">Hasil konversi akan ditampilkan di sini.</p>
+          </div>
+        </div>
+
+        <div class="webp-settings">
+          <div class="webp-setting-row">
+            <label for="targetSize">Target ukuran file</label>
+            <select id="targetSize" class="tool-select">
+              <option value="100">Di bawah 100 KB</option>
+              <option value="200">Di bawah 200 KB</option>
+              <option value="300">Di bawah 300 KB</option>
+              <option value="500">Di bawah 500 KB</option>
+              <option value="0">Kualitas maksimal</option>
+            </select>
+          </div>
+          <div class="webp-setting-row">
+            <label for="quality">Kualitas: <span id="qualityLabel">85%</span></label>
+            <input id="quality" type="range" min="10" max="100" value="85" />
+          </div>
+          <p class="webp-note">Kompresi otomatis akan menyesuaikan kualitas dan dimensi gambar jika diperlukan untuk mencapai target ukuran.</p>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" id="convertBtn">Konversi ke WebP</button>
+          <button type="button" class="btn btn-secondary" id="resetBtn">Ganti Gambar</button>
+        </div>
+        <div id="status" class="tool-result" aria-live="polite" hidden></div>
+        <div id="resultSummary" class="webp-summary" hidden></div>
+        <div class="tool-actions" id="downloadArea" hidden>
+          <a class="tool-btn" id="downloadBtn" download="converted-image.webp">Download WebP</a>
+        </div>
+      </div>
+    </section>
+
+    <article class="tool-content">
+      <h2>Convert JPG, JPEG, dan PNG ke WebP Online</h2>
+      <p>Image to WebP Converter AI Mr Ferdy membantu mengubah gambar JPG, JPEG, dan PNG menjadi format WebP yang lebih efisien. Anda dapat mengoptimalkan ukuran file dengan pilihan target ukuran, termasuk kompresi gambar hingga di bawah 100 KB, langsung melalui browser.</p>
+
+      <h2>Fitur Image to WebP Converter</h2>
+      <ul>
+        <li>Mengubah JPG, JPEG, dan PNG menjadi WebP.</li>
+        <li>Target kompresi file di bawah 100 KB, 200 KB, 300 KB, atau 500 KB.</li>
+        <li>Pengaturan kualitas gambar sesuai kebutuhan.</li>
+        <li>Penyesuaian ukuran gambar otomatis untuk membantu mencapai target file.</li>
+        <li>Preview gambar asli dan hasil konversi.</li>
+        <li>Menampilkan ukuran file dan penghematan ukuran.</li>
+        <li>Download hasil WebP langsung ke perangkat.</li>
+        <li>Proses dilakukan di browser tanpa mengunggah gambar ke server.</li>
+      </ul>
+
+      <h2>Mengapa Menggunakan Format WebP?</h2>
+      <p>WebP merupakan format gambar yang dirancang untuk menghasilkan ukuran file yang efisien dengan kualitas visual yang baik. File gambar yang lebih ringan dapat membantu mengurangi beban transfer data saat halaman web memuat gambar, terutama pada website yang memiliki banyak konten visual.</p>
+
+      <h2>Kompres Gambar WebP di Bawah 100 KB</h2>
+      <p>Ukuran gambar yang kecil berguna untuk berbagai kebutuhan, seperti thumbnail, gambar artikel, aset website, dan gambar yang akan dibagikan secara online. Pilih target di bawah 100 KB untuk mencoba mengoptimalkan file. Tool akan menyesuaikan kualitas dan, bila perlu, dimensi gambar. Hasil akhir tetap bergantung pada gambar sumber, dimensi, dan kompleksitas visualnya.</p>
+
+      <h2>Cara Menggunakan Image to WebP Converter</h2>
+      <ol>
+        <li>Pilih gambar JPG, JPEG, atau PNG dari perangkat.</li>
+        <li>Pilih target ukuran file yang diinginkan.</li>
+        <li>Sesuaikan slider kualitas jika diperlukan.</li>
+        <li>Klik <strong>Konversi ke WebP</strong>.</li>
+        <li>Periksa preview, ukuran file, dan hasil optimasi.</li>
+        <li>Klik <strong>Download WebP</strong> untuk menyimpan hasil.</li>
+      </ol>
+
+      <h2>Apakah Gambar Diunggah ke Server?</h2>
+      <p>Tidak. Pemilihan, konversi, dan kompresi gambar dilakukan di browser menggunakan JavaScript dan Canvas. Gambar tidak dikirim ke server oleh tool ini. Proses dapat dilakukan secara lokal di perangkat selama browser mendukung fitur yang diperlukan.</p>
+
+      <h2>Image to WebP Converter AI Mr Ferdy</h2>
+      <p>Image to WebP Converter dari AI Mr Ferdy adalah tool praktis untuk mengubah dan mengoptimalkan gambar secara online. Gunakan target ukuran file untuk membantu menyiapkan gambar yang lebih ringan bagi website, konten digital, dan kebutuhan sehari-hari.</p>
+    </article>
+  </div>
+
+  <style>
+    .webp-drop{border:2px dashed var(--border,rgba(148,163,184,.35));border-radius:20px;padding:36px 20px;text-align:center;margin-bottom:24px;transition:border-color .2s,background .2s}
+    .webp-drop.dragover{border-color:#38bdf8;background:rgba(56,189,248,.08)}
+    .webp-drop-icon{font-size:2.5rem;margin-bottom:10px}
+    .webp-drop h2{font-size:1.2rem;margin:0 0 8px}
+    .webp-drop p{margin:0 0 18px;opacity:.75}
+    .webp-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0}
+    .webp-preview-card{border:1px solid var(--border,rgba(148,163,184,.25));border-radius:16px;padding:14px;min-width:0}
+    .webp-preview-label{font-weight:700;display:block;margin-bottom:10px}
+    .webp-preview-card img{display:block;width:100%;max-height:320px;object-fit:contain;border-radius:10px;background:rgba(148,163,184,.08)}
+    .webp-preview-card p{font-size:.9rem;margin:10px 0 0;overflow-wrap:anywhere}
+    .webp-settings{border:1px solid var(--border,rgba(148,163,184,.25));border-radius:16px;padding:18px;margin:20px 0}
+    .webp-setting-row{display:grid;gap:10px;margin-bottom:18px}
+    .webp-setting-row:last-child{margin-bottom:0}
+    .webp-setting-row label{font-weight:600}
+    .webp-setting-row input[type=range]{width:100%;accent-color:#38bdf8}
+    .webp-note{font-size:.9rem;opacity:.75;margin:12px 0 0}
+    .webp-summary{border:1px solid var(--border,rgba(148,163,184,.25));border-radius:14px;padding:16px;margin:16px 0;line-height:1.7}
+    #downloadBtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+    @media(max-width:640px){.webp-preview-grid{grid-template-columns:1fr}.webp-drop{padding:28px 14px}}
+  </style>
+
+  <script>
+    const fileInput = document.querySelector("#fileInput");
+    const dropArea = document.querySelector("#dropArea");
+    const browseBtn = document.querySelector("#browseBtn");
+    const previewPanel = document.querySelector("#previewPanel");
+    const originalPreview = document.querySelector("#originalPreview");
+    const resultPreview = document.querySelector("#resultPreview");
+    const originalInfo = document.querySelector("#originalInfo");
+    const resultInfo = document.querySelector("#resultInfo");
+    const targetSize = document.querySelector("#targetSize");
+    const quality = document.querySelector("#quality");
+    const qualityLabel = document.querySelector("#qualityLabel");
+    const convertBtn = document.querySelector("#convertBtn");
+    const resetBtn = document.querySelector("#resetBtn");
+    const status = document.querySelector("#status");
+    const resultSummary = document.querySelector("#resultSummary");
+    const downloadArea = document.querySelector("#downloadArea");
+    const downloadBtn = document.querySelector("#downloadBtn");
+
+    let currentFile = null;
+    let originalUrl = "";
+    let resultUrl = "";
+    let imageObject = null;
+
+    function showStatus(message, type = "success") {
+      status.hidden = false;
+      status.textContent = message;
+      status.dataset.type = type;
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      return `${(bytes / 1024).toFixed(bytes / 1024 < 10 ? 1 : 0)} KB`;
+    }
+
+    function clearResult() {
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+      resultUrl = "";
+      resultPreview.removeAttribute("src");
+      resultInfo.textContent = "Hasil konversi akan ditampilkan di sini.";
+      resultSummary.hidden = true;
+      resultSummary.textContent = "";
+      downloadArea.hidden = true;
+      downloadBtn.removeAttribute("href");
+    }
+
+    function loadFile(file) {
+      if (!file) return;
+      if (!["image/jpeg", "image/png"].includes(file.type)) {
+        showStatus("Format tidak didukung. Pilih file JPG, JPEG, atau PNG.", "error");
+        return;
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        showStatus("Ukuran file maksimal 20 MB.", "error");
+        return;
+      }
+      currentFile = file;
+      clearResult();
+      if (originalUrl) URL.revokeObjectURL(originalUrl);
+      originalUrl = URL.createObjectURL(file);
+      originalPreview.src = originalUrl;
+      originalInfo.textContent = `${file.name} · ${formatBytes(file.size)}`;
+      previewPanel.hidden = false;
+      showStatus("Gambar siap dikonversi.");
+    }
+
+    browseBtn.addEventListener("click", () => fileInput.click());
+    dropArea.addEventListener("click", (event) => {
+      if (event.target === dropArea || event.target.closest(".webp-drop-icon") || event.target.closest("h2") || event.target.closest("p")) fileInput.click();
+    });
+    fileInput.addEventListener("change", () => loadFile(fileInput.files[0]));
+
+    ["dragenter", "dragover"].forEach(type => dropArea.addEventListener(type, event => {
+      event.preventDefault();
+      dropArea.classList.add("dragover");
+    }));
+    ["dragleave", "drop"].forEach(type => dropArea.addEventListener(type, event => {
+      event.preventDefault();
+      dropArea.classList.remove("dragover");
+    }));
+    dropArea.addEventListener("drop", event => loadFile(event.dataTransfer.files[0]));
+
+    quality.addEventListener("input", () => {
+      qualityLabel.textContent = `${quality.value}%`;
+      clearResult();
+    });
+    targetSize.addEventListener("change", clearResult);
+
+    function canvasBlob(canvas, q) {
+      return new Promise(resolve => canvas.toBlob(resolve, "image/webp", q));
+    }
+
+    async function convertImage() {
+      if (!currentFile || !imageObject) {
+        showStatus("Pilih gambar terlebih dahulu.", "error");
+        return;
+      }
+      clearResult();
+      convertBtn.disabled = true;
+      convertBtn.textContent = "Memproses...";
+      try {
+        const targetKB = Number(targetSize.value);
+        let q = Number(quality.value) / 100;
+        let scale = 1;
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d", { alpha: true });
+        let blob = null;
+        const maxAttempts = targetKB ? 18 : 1;
+
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+          canvas.width = Math.max(1, Math.round(imageObject.width * scale));
+          canvas.height = Math.max(1, Math.round(imageObject.height * scale));
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(imageObject, 0, 0, canvas.width, canvas.height);
+          blob = await canvasBlob(canvas, q);
+          if (!blob) throw new Error("Browser tidak dapat membuat file WebP.");
+
+          if (!targetKB || blob.size <= targetKB * 1024) break;
+          if (q > 0.35) q = Math.max(0.35, q - 0.12);
+          else scale *= 0.85;
+        }
+
+        if (!blob) throw new Error("Konversi gagal.");
+        resultUrl = URL.createObjectURL(blob);
+        resultPreview.src = resultUrl;
+        resultInfo.textContent = `${canvas.width} × ${canvas.height}px · ${formatBytes(blob.size)} · Kualitas efektif ${Math.round(q * 100)}%`;
+        downloadBtn.href = resultUrl;
+        downloadBtn.download = (currentFile.name.replace(/\.(jpe?g|png)$/i, "") || "image") + ".webp";
+        downloadArea.hidden = false;
+
+        const savings = currentFile.size ? ((currentFile.size - blob.size) / currentFile.size) * 100 : 0;
+        resultSummary.hidden = false;
+        resultSummary.innerHTML = `<strong>Ukuran awal:</strong> ${formatBytes(currentFile.size)}<br><strong>Ukuran hasil:</strong> ${formatBytes(blob.size)}<br><strong>Perubahan ukuran:</strong> ${savings >= 0 ? `${savings.toFixed(1)}% lebih kecil` : `${Math.abs(savings).toFixed(1)}% lebih besar`}<br><strong>Dimensi:</strong> ${canvas.width} × ${canvas.height}px`;
+        if (targetKB && blob.size > targetKB * 1024) {
+          showStatus(`Konversi selesai, tetapi file masih di atas target ${targetKB} KB. Coba target lebih besar atau kualitas lebih rendah.`, "error");
+        } else {
+          showStatus("Konversi WebP berhasil.");
+        }
+      } catch (error) {
+        showStatus(error.message || "Terjadi kesalahan saat mengonversi gambar.", "error");
+      } finally {
+        convertBtn.disabled = false;
+        convertBtn.textContent = "Konversi ke WebP";
+      }
+    }
+
+    convertBtn.addEventListener("click", async () => {
+      if (!currentFile) return showStatus("Pilih gambar terlebih dahulu.", "error");
+      const img = new Image();
+      img.onload = () => {
+        imageObject = img;
+        convertImage();
+      };
+      img.onerror = () => showStatus("Gambar gagal dibaca.", "error");
+      img.src = originalUrl;
+    });
+
+    resetBtn.addEventListener("click", () => {
+      currentFile = null;
+      imageObject = null;
+      fileInput.value = "";
+      previewPanel.hidden = true;
+      if (originalUrl) URL.revokeObjectURL(originalUrl);
+      originalUrl = "";
+      clearResult();
+      status.hidden = true;
+      status.textContent = "";
+    });
+  </script>
+</MainLayout>
