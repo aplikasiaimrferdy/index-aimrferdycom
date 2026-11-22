@@ -1,0 +1,164 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+// ambil semua tools dalam folder pdf
+const modules = Object.entries(
+  import.meta.glob('./**/*.astro', { eager: true })
+);
+
+// filter category PDF
+const tools = modules
+  .map(([file, mod]) => {
+    if (!mod.meta) return null;
+
+    const url = file
+      .replace('/src/pages', '')
+      .replace('.astro', '');
+
+    return { url, ...mod.meta };
+  })
+  .filter(Boolean)
+  .filter(t => t.category?.toLowerCase().includes("pdf"));
+
+// featured
+const featured = tools.filter(t => t.featured);
+
+// stats
+const total = tools.length;
+
+// SEO JSON-LD
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "PDF Tools Online Gratis",
+  itemListElement: tools.map((tool, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: tool.title,
+    url: `https://aimrferdy.net${tool.url}`
+  }))
+};
+---
+
+<MainLayout 
+  title="PDF Tools Online Gratis Lengkap | AI Mr Ferdy"
+  description="Kumpulan tools PDF gratis: merge, split, unlock, convert PDF dan lainnya langsung di browser tanpa install."
+  pageCSS={["tools"]}>
+
+<div class="tools-container">
+
+  <!-- HERO -->
+  <section class="tools-hero">
+    <h1>📄 PDF Tools Online Gratis</h1>
+    <p>
+      Edit, convert, dan kelola file PDF langsung di browser tanpa install.
+    </p>
+  </section>
+
+  <!-- STATS -->
+  <section class="tools-stats">
+    <div><strong>{total}</strong><span>Tools</span></div>
+    <div><strong>100%</strong><span>Gratis</span></div>
+    <div><strong>Fast</strong><span>No Login</span></div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="tools-search">
+    <input 
+      id="searchTools"
+      type="text"
+      placeholder="Cari PDF tools..."
+      onInput="filterTools()"
+    />
+  </section>
+
+  <!-- FEATURED -->
+  {featured.length > 0 && (
+    <section>
+      <h2 class="section-title">🔥 Popular PDF Tools</h2>
+
+      <div class="tools-grid">
+        {featured.map(tool => (
+          <a href={tool.url} class="tool-card popular">
+            <div class="badge">HOT</div>
+            <h3>{tool.title}</h3>
+            <p>{tool.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- LIST -->
+  <section>
+    <h2 class="section-title">📂 Semua PDF Tools</h2>
+
+    <div class="tools-grid">
+      {tools.map(tool => (
+        <a href={tool.url} class="tool-card">
+          <h3>{tool.title}</h3>
+          <p>{tool.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- EMPTY -->
+  <div id="emptyState" class="tools-empty" style="display:none;">
+    Tidak ada tools ditemukan
+  </div>
+
+  <!-- SEO CONTENT -->
+  <section class="seo-content">
+
+    <h2>Apa Itu PDF Tools?</h2>
+    <p>
+      PDF tools adalah alat online untuk mengelola file PDF seperti merge,
+      split, convert, compress, dan unlock PDF tanpa perlu install software.
+    </p>
+
+    <h2>Fitur PDF Tools yang Tersedia</h2>
+    <ul>
+      <li>Merge PDF (gabung file)</li>
+      <li>Split PDF (pisah halaman)</li>
+      <li>Unlock PDF (hapus restriction)</li>
+      <li>Convert PDF ke format lain</li>
+    </ul>
+
+    <h2>Kenapa Menggunakan PDF Tools Online?</h2>
+    <p>
+      Dengan tools ini, kamu bisa mengedit PDF langsung di browser tanpa
+      install aplikasi tambahan. Semua gratis, cepat, dan mudah digunakan.
+    </p>
+
+    <p>
+      👉 <a href="/tools">Lihat semua tools lainnya</a>
+    </p>
+
+  </section>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+window.filterTools = function () {
+  const q = document.getElementById("searchTools").value.toLowerCase();
+  const cards = document.querySelectorAll(".tool-card");
+  let visible = 0;
+
+  cards.forEach(card => {
+    const match = card.innerText.toLowerCase().includes(q);
+    card.style.display = match ? "block" : "none";
+    if (match) visible++;
+  });
+
+  document.getElementById("emptyState").style.display = visible ? "none" : "block";
+};
+</script>
+
+<!-- SEO -->
+<script type="application/ld+json">
+{JSON.stringify(jsonLd)}
+</script>
+
+</MainLayout>

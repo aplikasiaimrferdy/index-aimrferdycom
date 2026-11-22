@@ -1,0 +1,149 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ JPG to PDF Converter",
+  description: "Convert gambar JPG ke PDF secara online gratis. Gabungkan banyak gambar jadi satu PDF dengan mudah.",
+  category: "PDF",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🖼️ JPG to PDF Converter</h1>
+  <p>
+    Ubah gambar JPG menjadi PDF. Bisa gabung banyak gambar jadi satu file.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload JPG (Bisa banyak)</label>
+    <input type="file" id="files" accept="image/jpeg,image/jpg" multiple />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="convert()">📄 Convert to PDF</button>
+  </div>
+
+  <!-- LIST -->
+  <div id="list" class="tool-result" style="display:none;"></div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="images.pdf">
+      ⬇️ Download PDF
+    </a>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu JPG ke PDF?</h2>
+  <p>
+    JPG ke PDF adalah proses mengubah gambar menjadi dokumen PDF
+    yang bisa dibaca di semua perangkat.
+  </p>
+
+  <h2>Kenapa Convert JPG ke PDF?</h2>
+  <ul>
+    <li>Gabungkan banyak gambar jadi satu file</li>
+    <li>Mudah dikirim & dicetak</li>
+    <li>Format standar dokumen</li>
+    <li>Cocok untuk scan dokumen</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload gambar → klik convert → download PDF.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Support banyak gambar</li>
+      <li>Tanpa upload server</li>
+      <li>Cepat & gratis</li>
+      <li>Auto urut sesuai upload</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.convert = async function(){
+  const files = document.getElementById("files").files;
+
+  if(!files.length){
+    alert("Upload minimal 1 gambar!");
+    return;
+  }
+
+  // load pdf-lib
+  if(!window.PDFLib){
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js";
+    s.onload = process;
+    document.head.appendChild(s);
+  } else {
+    process();
+  }
+
+  async function process(){
+    const { PDFDocument } = PDFLib;
+
+    const pdf = await PDFDocument.create();
+
+    let listHTML = "<strong>File diproses:</strong><br>";
+
+    for(let i=0;i<files.length;i++){
+      const file = files[i];
+      listHTML += `• ${file.name}<br>`;
+
+      const bytes = await file.arrayBuffer();
+
+      let image;
+      if(file.type.includes("png")){
+        image = await pdf.embedPng(bytes);
+      } else {
+        image = await pdf.embedJpg(bytes);
+      }
+
+      const page = pdf.addPage([image.width, image.height]);
+      page.drawImage(image, {
+        x: 0,
+        y: 0,
+        width: image.width,
+        height: image.height
+      });
+    }
+
+    document.getElementById("list").innerHTML = listHTML;
+    document.getElementById("list").style.display = "block";
+
+    const pdfBytes = await pdf.save();
+
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+
+    document.getElementById("downloadBtn").href = url;
+    document.getElementById("downloadWrap").style.display = "block";
+  }
+};
+</script>
+
+</MainLayout>

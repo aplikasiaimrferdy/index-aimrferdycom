@@ -1,0 +1,139 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔓 URL Decode Online",
+  description: "Decode URL encoded menjadi teks asli secara online gratis. Cepat, aman, tanpa install.",
+  category: "Encryption",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🔓 URL Decode Online Gratis</h1>
+  <p>
+    Ubah URL encoded menjadi teks asli dengan cepat langsung di browser.
+    Gratis dan tanpa install.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>URL Encoded</label>
+    <textarea id="input" class="tool-textarea" placeholder="Contoh: halo%20dunia%20online"></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="decodeURL()">🔓 Decode</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Decode</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk decode URL</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu URL Decode?</h2>
+  <p>
+    URL Decode adalah proses mengubah karakter yang telah di-encode dalam URL
+    seperti <code>%20</code> menjadi karakter aslinya seperti spasi.
+  </p>
+
+  <h2>Kenapa URL Decode Dibutuhkan?</h2>
+  <ul>
+    <li>Membaca query parameter dengan mudah</li>
+    <li>Debugging URL</li>
+    <li>Memahami data dari API</li>
+    <li>Mengembalikan teks ke bentuk asli</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Decode URL</summary>
+    <p>
+      Masukkan URL encoded, lalu klik tombol decode.
+      Hasil akan langsung muncul dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Decode URL cepat</li>
+      <li>Proses langsung di browser</li>
+      <li>Gratis tanpa login</li>
+      <li>Copy hasil sekali klik</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Menggunakan URL Decode?</summary>
+    <ul>
+      <li>Debugging URL</li>
+      <li>Membaca parameter query</li>
+      <li>Analisis link tracking</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.decodeURL = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan URL encoded dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try{
+    result.value = decodeURIComponent(input);
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "URL tidak valid.";
+  }
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

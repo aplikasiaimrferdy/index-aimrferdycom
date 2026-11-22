@@ -1,0 +1,162 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+// ambil semua tools dalam folder encryption
+const modules = Object.entries(
+  import.meta.glob('./**/*.astro', { eager: true })
+);
+
+// filter hanya category ENCRYPTION
+const tools = modules
+  .map(([file, mod]) => {
+    if (!mod.meta) return null;
+
+    const url = file
+      .replace('/src/pages', '')
+      .replace('.astro', '');
+
+    return { url, ...mod.meta };
+  })
+  .filter(Boolean)
+  .filter(t => t.category?.toLowerCase().trim() === "encryption");
+
+// featured
+const featured = tools.filter(t => t.featured);
+
+// stats
+const total = tools.length;
+
+// SEO JSON-LD
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Encryption Tools Online Gratis",
+  itemListElement: tools.map((tool, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: tool.title,
+    url: `https://aimrferdy.net${tool.url}`
+  }))
+};
+---
+
+<MainLayout 
+  title="Encryption Tools Online Gratis Lengkap | AI Mr Ferdy"
+  description="Kumpulan tools encryption gratis: Base64, HTML encode, URL encode, dan lainnya langsung di browser tanpa install."
+  pageCSS={["tools"]}>
+
+<div class="tools-container">
+
+  <!-- HERO -->
+  <section class="tools-hero">
+    <h1>Encryption Tools Online Gratis</h1>
+    <p>Encode, decode, dan olah data dengan cepat langsung di browser tanpa install.</p>
+  </section>
+
+  <!-- STATS -->
+  <section class="tools-stats">
+    <div><strong>{total}</strong><span>Tools</span></div>
+    <div><strong>100%</strong><span>Gratis</span></div>
+    <div><strong>Fast</strong><span>No Login</span></div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="tools-search">
+    <input 
+      id="searchTools"
+      type="text"
+      placeholder="Cari encryption tools..."
+      onInput="filterTools()"
+    />
+  </section>
+
+  <!-- FEATURED -->
+  {featured.length > 0 && (
+    <section>
+      <h2 class="section-title">🔥 Popular Encryption Tools</h2>
+
+      <div class="tools-grid">
+        {featured.map(tool => (
+          <a href={tool.url} class="tool-card popular">
+            <div class="badge">HOT</div>
+            <h3>{tool.title}</h3>
+            <p>{tool.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- LIST -->
+  <section>
+    <h2 class="section-title">📂 Semua Encryption Tools</h2>
+
+    <div class="tools-grid">
+      {tools.map(tool => (
+        <a href={tool.url} class="tool-card">
+          <h3>{tool.title}</h3>
+          <p>{tool.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- EMPTY -->
+  <div id="emptyState" class="tools-empty" style="display:none;">
+    Tidak ada tools ditemukan
+  </div>
+
+  <!-- SEO CONTENT -->
+  <section class="seo-content">
+    <h2>Apa Itu Encryption Tools?</h2>
+    <p>
+      Encryption tools adalah alat online untuk mengubah data menjadi format tertentu 
+      seperti encoding, hashing, atau decoding. Tools ini sering digunakan oleh developer, 
+      security engineer, dan pengguna umum untuk mengolah data dengan aman.
+    </p>
+
+    <h2>Fitur Encryption Tools yang Umum Digunakan</h2>
+    <ul>
+      <li>Base64 Encode & Decode</li>
+      <li>HTML Encode & Decode</li>
+      <li>URL Encode & Decode</li>
+      <li>Hash Generator (MD5, SHA256)</li>
+    </ul>
+
+    <h2>Kenapa Menggunakan Encryption Tools Online?</h2>
+    <p>
+      Dengan encryption tools online dari AI Mr Ferdy, kamu bisa encode dan decode data 
+      langsung di browser tanpa install software tambahan. Semua tools gratis, cepat, 
+      dan mudah digunakan.
+    </p>
+
+    <p>
+      👉 <a href="/tools">Lihat semua tools lainnya</a>
+    </p>
+  </section>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+window.filterTools = function () {
+  const q = document.getElementById("searchTools").value.toLowerCase();
+  const cards = document.querySelectorAll(".tool-card");
+  let visible = 0;
+
+  cards.forEach(card => {
+    const match = card.innerText.toLowerCase().includes(q);
+    card.style.display = match ? "block" : "none";
+    if (match) visible++;
+  });
+
+  document.getElementById("emptyState").style.display = visible ? "none" : "block";
+};
+</script>
+
+<!-- SEO -->
+<script type="application/ld+json">
+{JSON.stringify(jsonLd)}
+</script>
+
+</MainLayout>

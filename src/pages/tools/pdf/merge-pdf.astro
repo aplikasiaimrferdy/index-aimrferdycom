@@ -1,0 +1,142 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📄 Merge PDF (Gabung PDF)",
+  description: "Gabungkan beberapa file PDF menjadi satu secara online gratis. Cepat, aman, tanpa upload server.",
+  category: "PDF",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>📄 Merge PDF Online</h1>
+  <p>
+    Gabungkan beberapa file PDF menjadi satu dengan mudah dan cepat.
+    Tanpa upload server.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload PDF (Bisa banyak)</label>
+    <input type="file" id="files" accept="application/pdf" multiple />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="mergePDF()">📄 Merge PDF</button>
+  </div>
+
+  <!-- LIST FILE -->
+  <div id="fileList" class="tool-result" style="display:none;"></div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="merged.pdf">
+      ⬇️ Download PDF
+    </a>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Merge PDF?</h2>
+  <p>
+    Merge PDF adalah proses menggabungkan beberapa file PDF menjadi satu file.
+  </p>
+
+  <h2>Kenapa Perlu Merge PDF?</h2>
+  <ul>
+    <li>Menggabungkan dokumen</li>
+    <li>Merapikan file laporan</li>
+    <li>Memudahkan pengiriman file</li>
+    <li>Combine hasil scan</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload beberapa PDF → klik merge → download hasil.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Support banyak file</li>
+      <li>Tanpa upload server (aman)</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.mergePDF = async function(){
+  const input = document.getElementById("files");
+  const files = input.files;
+
+  if(!files.length){
+    alert("Upload minimal 2 PDF!");
+    return;
+  }
+
+  // load pdf-lib
+  if(!window.PDFLib){
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js";
+    s.onload = process;
+    document.head.appendChild(s);
+  } else {
+    process();
+  }
+
+  async function process(){
+    const { PDFDocument } = PDFLib;
+
+    const mergedPdf = await PDFDocument.create();
+
+    let listHTML = "<strong>File digabung:</strong><br>";
+
+    for(let i=0;i<files.length;i++){
+      const file = files[i];
+      listHTML += `• ${file.name}<br>`;
+
+      const bytes = await file.arrayBuffer();
+      const pdf = await PDFDocument.load(bytes);
+
+      const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+
+      pages.forEach(p => mergedPdf.addPage(p));
+    }
+
+    document.getElementById("fileList").innerHTML = listHTML;
+    document.getElementById("fileList").style.display = "block";
+
+    const mergedBytes = await mergedPdf.save();
+
+    const blob = new Blob([mergedBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+
+    const downloadBtn = document.getElementById("downloadBtn");
+    downloadBtn.href = url;
+
+    document.getElementById("downloadWrap").style.display = "block";
+  }
+};
+</script>
+
+</MainLayout>

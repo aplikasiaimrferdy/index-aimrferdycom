@@ -1,0 +1,120 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📄 MHTML / MHT to PDF Converter",
+  description: "Convert file MHTML atau MHT ke PDF secara online gratis. Cepat dan tanpa install.",
+  category: "PDF",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>📄 MHTML / MHT to PDF</h1>
+  <p>
+    Convert file MHTML atau MHT ke PDF langsung di browser.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload MHTML / MHT</label>
+    <input type="file" id="file" accept=".mhtml,.mht" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="convert()">📄 Convert to PDF</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <iframe id="viewer" class="tool-result" style="height:400px;"></iframe>
+  </div>
+
+  <div class="btn-group" id="printWrap" style="display:none;">
+    <button class="btn btn-secondary" onclick="downloadPDF()">⬇️ Download PDF</button>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+  <h2>Apa Itu MHTML?</h2>
+  <p>
+    MHTML adalah format arsip halaman web yang menyimpan HTML dan resource dalam satu file.
+  </p>
+
+  <h2>Kenapa Convert ke PDF?</h2>
+  <ul>
+    <li>Mudah dibagikan</li>
+    <li>Bisa dibuka di semua device</li>
+    <li>Cocok untuk dokumentasi</li>
+  </ul>
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>Upload file → preview → klik download PDF.</p>
+  </details>
+
+  <details>
+    <summary>Catatan</summary>
+    <ul>
+      <li>Tergantung struktur MHTML</li>
+      <li>Beberapa style mungkin tidak sempurna</li>
+      <li>Gunakan untuk file sederhana</li>
+    </ul>
+  </details>
+</section>
+
+<script is:inline>
+window.convert = function(){
+  const file = document.getElementById("file").files[0];
+
+  if(!file){
+    alert("Upload file dulu!");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    const content = e.target.result;
+
+    // extract HTML sederhana
+    const match = content.match(/<html[\\s\\S]*<\\/html>/i);
+
+    if(!match){
+      alert("Gagal membaca MHTML.");
+      return;
+    }
+
+    const html = match[0];
+
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+
+    document.getElementById("viewer").src = url;
+    document.getElementById("printWrap").style.display = "flex";
+  };
+
+  reader.readAsText(file);
+};
+
+window.downloadPDF = function(){
+  const iframe = document.getElementById("viewer");
+
+  iframe.contentWindow.focus();
+  iframe.contentWindow.print();
+};
+</script>
+
+</MainLayout>

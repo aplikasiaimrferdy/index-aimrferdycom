@@ -1,0 +1,159 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔐 Base64 Encode Decode Online",
+  description: "Encode dan decode Base64 secara online gratis. Cepat, aman, dan tanpa install.",
+  category: "Encryption",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🔐 Base64 Encode & Decode Online Gratis</h1>
+  <p>
+    Encode dan decode Base64 dengan cepat langsung di browser.
+    Gratis, aman, dan tanpa install.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Input</label>
+    <textarea id="input" class="tool-textarea" placeholder="Masukkan teks atau Base64..."></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="encodeText()">🔒 Encode</button>
+    <button class="btn btn-secondary" onclick="decodeText()">🔓 Decode</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk encode atau decode Base64</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Base64?</h2>
+  <p>
+    Base64 adalah metode encoding yang digunakan untuk mengubah data menjadi format teks ASCII.
+    Biasanya digunakan untuk mengirim data melalui media yang hanya mendukung teks,
+    seperti email, JSON, atau URL.
+  </p>
+
+  <h2>Kenapa Menggunakan Base64?</h2>
+  <ul>
+    <li>Mengubah data binary menjadi teks</li>
+    <li>Aman untuk dikirim melalui internet</li>
+    <li>Digunakan dalam API dan web development</li>
+    <li>Mendukung berbagai format data</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Base64 Tool</summary>
+    <p>
+      Masukkan teks atau Base64, lalu pilih encode atau decode.
+      Hasil akan langsung muncul dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Encode Base64</li>
+      <li>Decode Base64</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Menggunakan Base64?</summary>
+    <ul>
+      <li>Embedding gambar dalam HTML/CSS</li>
+      <li>Transfer data via API</li>
+      <li>Encoding file untuk keamanan ringan</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.encodeText = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan teks dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try {
+    result.value = btoa(unescape(encodeURIComponent(input)));
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "Gagal encode.";
+  }
+};
+
+window.decodeText = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan Base64 dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  try {
+    result.value = decodeURIComponent(escape(atob(input)));
+    document.getElementById("copyWrap").style.display = "block";
+  } catch(e){
+    result.value = "Base64 tidak valid.";
+  }
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

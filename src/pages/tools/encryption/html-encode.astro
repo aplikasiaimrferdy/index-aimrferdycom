@@ -1,0 +1,161 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔐 HTML Encode Decode Online",
+  description: "Encode dan decode HTML entities secara online gratis. Lindungi teks dari XSS dan tampilkan karakter spesial.",
+  category: "Encryption",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🔐 HTML Encode & Decode Online Gratis</h1>
+  <p>
+    Encode dan decode HTML entities dengan cepat langsung di browser.
+    Cocok untuk developer dan keamanan web.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Input</label>
+    <textarea id="input" class="tool-textarea" placeholder="Masukkan teks atau HTML..."></textarea>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="encodeHTML()">🔒 Encode</button>
+    <button class="btn btn-secondary" onclick="decodeHTML()">🔓 Decode</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil</label>
+    <textarea id="result" class="tool-textarea" placeholder="Hasil akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyResult()">📋 Copy</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk encode atau decode HTML</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu HTML Encode?</h2>
+  <p>
+    HTML Encode adalah proses mengubah karakter khusus seperti 
+    <code>&lt;</code>, <code>&gt;</code>, dan <code>&amp;</code> menjadi HTML entities.
+    Ini digunakan agar teks tidak dieksekusi sebagai HTML oleh browser.
+  </p>
+
+  <h2>Kenapa HTML Encode Penting?</h2>
+  <ul>
+    <li>Mencegah serangan XSS</li>
+    <li>Menampilkan kode HTML sebagai teks</li>
+    <li>Meningkatkan keamanan aplikasi web</li>
+    <li>Cocok untuk developer & blogger</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan HTML Encode</summary>
+    <p>
+      Masukkan teks atau HTML, lalu klik encode atau decode.
+      Hasil akan langsung muncul dan bisa kamu copy.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Encode HTML entities</li>
+      <li>Decode HTML entities</li>
+      <li>Proses cepat di browser</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Encode HTML?</summary>
+    <ul>
+      <li>Menampilkan kode di blog</li>
+      <li>Input user di form</li>
+      <li>Mencegah script injection</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.encodeHTML = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan teks dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  const encoded = input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+  result.value = encoded;
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.decodeHTML = function(){
+  const input = document.getElementById("input").value;
+  const result = document.getElementById("result");
+
+  if(!input){
+    alert("Masukkan teks dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = input;
+  result.value = textarea.value;
+
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyResult = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

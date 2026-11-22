@@ -1,0 +1,138 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔓 Unlock PDF (Remove Restrictions)",
+  description: "Hapus batasan PDF seperti copy & print secara online gratis. Aman dan tanpa upload server.",
+  category: "PDF",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🔓 Unlock PDF (Remove Restrictions)</h1>
+  <p>
+    Hapus pembatasan PDF seperti copy, print, dan edit.
+    Tanpa upload server, aman & cepat.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Upload PDF</label>
+    <input type="file" id="file" accept="application/pdf" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="unlock()">🔓 Unlock PDF</button>
+  </div>
+
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="unlocked.pdf">
+      ⬇️ Download PDF
+    </a>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Upload PDF untuk menghapus restriction</strong>
+  </p>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Unlock PDF?</h2>
+  <p>
+    Unlock PDF adalah proses menghapus pembatasan seperti tidak bisa copy,
+    print, atau edit pada file PDF.
+  </p>
+
+  <h2>Kenapa Perlu Unlock PDF?</h2>
+  <ul>
+    <li>Copy teks dari PDF</li>
+    <li>Print dokumen</li>
+    <li>Edit isi PDF</li>
+    <li>Mengakses file sendiri tanpa batasan</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Upload file PDF → klik unlock → download hasil.
+    </p>
+  </details>
+
+  <details>
+    <summary>Catatan Penting</summary>
+    <ul>
+      <li>Tidak membuka password PDF</li>
+      <li>Hanya menghapus restriction</li>
+      <li>Gunakan untuk file milik sendiri</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.unlock = async function(){
+  const file = document.getElementById("file").files[0];
+
+  if(!file){
+    alert("Upload PDF dulu!");
+    return;
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+
+  // Load PDF-lib dari CDN (hidden runtime)
+  if(!window.PDFLib){
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js";
+    s.onload = process;
+    document.head.appendChild(s);
+  } else {
+    process();
+  }
+
+  async function process(){
+    const { PDFDocument } = PDFLib;
+
+    try {
+      const pdfDoc = await PDFDocument.load(arrayBuffer, {
+        ignoreEncryption: true
+      });
+
+      const newPdf = await PDFDocument.create();
+      const pages = await newPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+
+      pages.forEach(p => newPdf.addPage(p));
+
+      const pdfBytes = await newPdf.save();
+
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+
+      const downloadBtn = document.getElementById("downloadBtn");
+      downloadBtn.href = url;
+
+      document.getElementById("downloadWrap").style.display = "block";
+
+    } catch(e){
+      alert("Gagal unlock. File mungkin benar-benar diproteksi password.");
+    }
+  }
+};
+</script>
+
+</MainLayout>
