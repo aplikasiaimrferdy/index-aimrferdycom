@@ -1,0 +1,185 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Free Fire Tools Lengkap (Redeem, Nickname, Style)",
+  description: "Generator kode FF, nickname keren, dan style nama Free Fire dalam satu halaman.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🔥 Free Fire Tools Lengkap</h1>
+
+<p class="tools-sub">
+Generator kode FF, nickname, dan style nama dalam satu tempat.
+</p>
+
+<!-- ================= REDEEM ================= -->
+<div class="tool-box">
+<h2>🎁 FF Redeem Generator</h2>
+
+<button class="btn-primary" onclick="generateCode()">Generate</button>
+<button class="btn-secondary" onclick="generateMultiple()">Generate x10 🔥</button>
+
+<div id="redeemResult" class="tool-result">Kode akan muncul di sini...</div>
+</div>
+
+<!-- ================= NICKNAME ================= -->
+<div class="tool-box">
+<h2>🎮 Nickname Generator</h2>
+
+<button class="btn-primary" onclick="generateNickname()">Generate Nickname</button>
+
+<div id="nickResult" class="tool-result">Nickname akan muncul di sini...</div>
+</div>
+
+<!-- ================= STYLE ================= -->
+<div class="tool-box">
+<h2>✨ FF Name Style</h2>
+
+<input type="text" id="nameInput" placeholder="Masukkan nama..." class="tool-input">
+
+<button class="btn-primary" onclick="generateStyle()">Buat Style</button>
+
+<div id="styleResult" class="tool-result">Hasil style akan muncul di sini...</div>
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Tools Free Fire Terbaik</h2>
+  <p>
+    Halaman ini menyediakan berbagai tools Free Fire seperti generator kode redeem, nickname keren, dan style nama unik untuk meningkatkan pengalaman bermain.
+  </p>
+
+  <h2>Kenapa Tools Ini Populer?</h2>
+  <ul>
+    <li>Gratis dan mudah digunakan</li>
+    <li>Sering viral di TikTok</li>
+    <li>Bisa langsung dipakai tanpa login</li>
+    <li>Cocok untuk semua pemain Free Fire</li>
+  </ul>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+// ================= SOUND =================
+const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3");
+
+// ================= UTIL =================
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function playSound(){
+  audio.currentTime = 0;
+  audio.play().catch(()=>{});
+}
+
+function generateRandomCode(){
+  let code = "";
+  for(let i = 0; i < 12; i++){
+    code += chars[Math.floor(Math.random()*chars.length)];
+  }
+  return code;
+}
+
+function copyCode(text){
+  navigator.clipboard.writeText(text);
+  alert("✅ Copied!");
+}
+
+// ================= REDEEM =================
+function generateCode(){
+  const box = document.getElementById("redeemResult");
+
+  playSound();
+  box.innerHTML = "⏳ Checking code...";
+
+  let progress = 0;
+
+  const interval = setInterval(()=>{
+    progress += 25;
+    box.innerHTML = `🔄 Checking... ${progress}%`;
+
+    if(progress >= 100){
+      clearInterval(interval);
+
+      const code = generateRandomCode();
+      const valid = Math.random() < 0.25;
+
+      box.innerHTML = `
+        🎯 <b>${code}</b><br><br>
+        ${valid ? "✅ Valid!" : "❌ Expired"}<br><br>
+        <button onclick="copyCode('${code}')">Copy</button>
+      `;
+    }
+  }, 200);
+}
+
+function generateMultiple(){
+  const box = document.getElementById("redeemResult");
+
+  playSound();
+  box.innerHTML = "⏳ Generating...";
+
+  setTimeout(()=>{
+    let html = "";
+
+    for(let i=0;i<10;i++){
+      const code = generateRandomCode();
+      const valid = Math.random() < 0.2;
+
+      html += `
+        <div>
+          <b>${code}</b> ${valid ? "✅" : "❌"}
+          <button onclick="copyCode('${code}')">Copy</button>
+        </div>
+      `;
+    }
+
+    box.innerHTML = html;
+
+  },1000);
+}
+
+// ================= NICKNAME =================
+function generateNickname(){
+  const names = ["Shadow","Ghost","Killer","Sniper","Dragon"];
+  const suffix = ["X","Pro","99","YT","FF"];
+
+  const n = names[Math.floor(Math.random()*names.length)];
+  const s = suffix[Math.floor(Math.random()*suffix.length)];
+
+  document.getElementById("nickResult").innerHTML = `<b>${n}${s}</b>`;
+}
+
+// ================= STYLE =================
+function generateStyle(){
+  const input = document.getElementById("nameInput").value;
+
+  if(!input){
+    document.getElementById("styleResult").innerHTML = "❌ Isi nama dulu";
+    return;
+  }
+
+  const styles = [
+    `★ ${input} ★`,
+    `『${input}』`,
+    `꧁${input}꧂`,
+    `⚡${input}⚡`,
+    `彡${input}彡`
+  ];
+
+  document.getElementById("styleResult").innerHTML = styles.join("<br>");
+}
+</script>
+
+</MainLayout>

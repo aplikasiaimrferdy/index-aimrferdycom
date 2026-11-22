@@ -1,0 +1,133 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Loot Simulator Game (Gacha & Random Drop)",
+  description: "Simulasikan loot box atau gacha game secara online dengan sistem rarity seperti common, rare, epic, dan legendary.",
+  category: "Gaming",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎁 Loot Simulator</h1>
+
+<p class="tools-sub">
+Simulasikan gacha atau loot box dengan berbagai rarity seperti di game.
+</p>
+
+<div class="tool-box">
+
+<button class="btn-primary" onclick="rollLoot()">
+Open Loot Box
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil loot akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Loot Simulator?</h2>
+  <p>
+    Loot Simulator adalah tools online yang mensimulasikan sistem gacha atau loot box seperti yang ada di banyak game modern. Dengan tools ini, kamu bisa merasakan sensasi mendapatkan item secara acak berdasarkan tingkat rarity.
+  </p>
+
+  <h2>Kenapa Loot System Menarik?</h2>
+  <ul>
+    <li>Memberikan sensasi kejutan saat membuka loot</li>
+    <li>Membuat game lebih seru dan adiktif</li>
+    <li>Mendorong pemain untuk terus mencoba</li>
+    <li>Memberikan pengalaman seperti gacha game</li>
+  </ul>
+
+  <h2>Tingkat Rarity dalam Loot</h2>
+  <p>
+    Umumnya loot dibagi menjadi beberapa tingkat seperti Common, Rare, Epic, dan Legendary. Semakin tinggi rarity, semakin kecil peluang untuk mendapatkannya.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Loot Simulator</summary>
+    <ul>
+      <li>Klik tombol Open Loot Box</li>
+      <li>Tunggu hasil loot muncul</li>
+      <li>Coba lagi untuk mendapatkan item langka</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Simulasi loot box dan gacha</li>
+      <li>Berbagai tingkat rarity</li>
+      <li>Hasil random setiap kali roll</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Untuk hiburan atau fun</li>
+      <li>Simulasi sistem gacha</li>
+      <li>Mengisi waktu luang</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function rollLoot(){
+  const resultBox = document.getElementById("result");
+
+  const lootTable = [
+    { name: "Pistol Skin", rarity: "Common", chance: 50 },
+    { name: "Armor Level 2", rarity: "Rare", chance: 30 },
+    { name: "Sniper Skin", rarity: "Epic", chance: 15 },
+    { name: "Legendary Weapon", rarity: "Legendary", chance: 5 }
+  ];
+
+  let roll = Math.random() * 100;
+  let cumulative = 0;
+  let reward = lootTable[0];
+
+  for (let item of lootTable) {
+    cumulative += item.chance;
+    if (roll <= cumulative) {
+      reward = item;
+      break;
+    }
+  }
+
+  let color = "#ccc";
+  if (reward.rarity === "Rare") color = "#4da6ff";
+  if (reward.rarity === "Epic") color = "#b84dff";
+  if (reward.rarity === "Legendary") color = "#ff9933";
+
+  resultBox.innerHTML = `
+    🎁 Kamu mendapatkan:<br><br>
+    <b style="color:${color}; font-size:20px;">
+      ${reward.name}
+    </b><br>
+    ⭐ Rarity: ${reward.rarity}
+  `;
+}
+</script>
+
+</MainLayout>

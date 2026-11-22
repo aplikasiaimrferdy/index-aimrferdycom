@@ -1,0 +1,151 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Random Team Generator Online (Bagi Tim Otomatis)",
+  description: "Bagi tim secara random untuk mabar, turnamen, atau scrim dengan mudah dan cepat.",
+  category: "Gaming",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>👥 Random Team Generator</h1>
+
+<p class="tools-sub">
+Bagi tim secara acak untuk mabar, scrim, atau turnamen dengan mudah.
+</p>
+
+<div class="tool-box">
+
+<textarea id="players" placeholder="Masukkan nama player (pisahkan dengan enter)" class="tool-input"></textarea>
+
+<select id="teamCount" class="tool-input">
+  <option value="2">2 Tim</option>
+  <option value="3">3 Tim</option>
+  <option value="4">4 Tim</option>
+</select>
+
+<button class="btn-primary" onclick="generateTeams()">
+Generate Tim
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil pembagian tim akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Random Team Generator?</h2>
+  <p>
+    Random Team Generator adalah tools online yang digunakan untuk membagi pemain ke dalam beberapa tim secara acak. Tools ini sangat cocok untuk mabar, turnamen kecil, scrim, atau event komunitas gaming.
+  </p>
+
+  <h2>Kenapa Perlu Membagi Tim Secara Random?</h2>
+  <ul>
+    <li>Membuat permainan lebih adil</li>
+    <li>Menghindari tim yang terlalu kuat atau lemah</li>
+    <li>Menambah keseruan dalam mabar</li>
+    <li>Cepat dan praktis tanpa hitung manual</li>
+  </ul>
+
+  <h2>Cocok Untuk Berbagai Game</h2>
+  <p>
+    Tools ini bisa digunakan untuk berbagai game seperti PUBG, Mobile Legends, Valorant, Free Fire, hingga game santai bersama teman.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Team Generator</summary>
+    <ul>
+      <li>Masukkan nama semua player (satu per baris)</li>
+      <li>Pilih jumlah tim</li>
+      <li>Klik generate</li>
+      <li>Lihat hasil pembagian tim</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Pembagian tim otomatis</li>
+      <li>Support banyak player</li>
+      <li>Random dan adil</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat mabar bareng teman</li>
+      <li>Untuk turnamen kecil</li>
+      <li>Scrim atau latihan tim</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function generateTeams(){
+  const input = document.getElementById("players").value.trim();
+  const teamCount = parseInt(document.getElementById("teamCount").value);
+  const resultBox = document.getElementById("result");
+
+  if (!input) {
+    resultBox.innerHTML = "❌ Masukkan nama player terlebih dahulu.";
+    return;
+  }
+
+  let players = input.split("\n").map(p => p.trim()).filter(p => p);
+
+  if (players.length < teamCount) {
+    resultBox.innerHTML = "❌ Jumlah player harus lebih banyak dari jumlah tim.";
+    return;
+  }
+
+  players = shuffle(players);
+
+  let teams = Array.from({ length: teamCount }, () => []);
+
+  players.forEach((player, index) => {
+    teams[index % teamCount].push(player);
+  });
+
+  let output = "";
+
+  teams.forEach((team, i) => {
+    output += `<div style="margin-bottom:10px;">
+      <b>Team ${i + 1}</b><br>
+      ${team.join("<br>")}
+    </div>`;
+  });
+
+  resultBox.innerHTML = output;
+}
+</script>
+
+</MainLayout>

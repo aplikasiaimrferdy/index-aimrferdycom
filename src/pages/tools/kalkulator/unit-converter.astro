@@ -1,0 +1,275 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Unit Converter Online",
+  description: "Konversi satuan panjang, berat, suhu, luas, volume, dan kecepatan dengan cepat dan akurat. Tool konversi terbaik untuk sehari-hari.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="unit-converter-app">
+      <h2>Unit Converter</h2>
+
+      <div class="form-group">
+        <label>Pilih Jenis Konversi</label>
+        <select id="converterType" class="tool-select" onchange="changeConverter()">
+          <option value="length">Panjang / Length</option>
+          <option value="weight">Berat / Weight</option>
+          <option value="temperature">Suhu / Temperature</option>
+          <option value="area">Luas / Area</option>
+          <option value="volume">Volume</option>
+        </select>
+      </div>
+
+      <div class="converter-inputs">
+        <div class="input-group">
+          <input type="number" id="inputValue" class="tool-input" value="1" oninput="convert()">
+          <select id="fromUnit" class="tool-select" onchange="convert()"></select>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="input-group">
+          <input type="number" id="outputValue" class="tool-input" readonly>
+          <select id="toUnit" class="tool-select" onchange="convert()"></select>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="swapUnits()">🔄 Tukar Satuan</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Unit Converter Online</h1>
+  <p>Konversi berbagai satuan dengan cepat dan akurat: Panjang, Berat, Suhu, Luas, Volume, dan banyak lagi.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Kenapa Perlu Unit Converter?</h2>
+  <p>
+    Tool ini sangat membantu untuk keperluan sehari-hari, belanja online internasional, memasak, sekolah, kuliah, 
+    maupun pekerjaan teknik dan bisnis.
+  </p>
+</section>
+
+<!-- COLLAPSE + FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Unit Converter</summary>
+    <ol>
+      <li>Pilih jenis konversi yang diinginkan</li>
+      <li>Masukkan nilai pada kolom kiri</li>
+      <li>Pilih satuan asal dan satuan tujuan</li>
+      <li>Hasil konversi akan muncul secara otomatis</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Unit Converter</summary>
+    <ul>
+      <li>Konversi otomatis real-time</li>
+      <li>Support Panjang, Berat, Suhu, Luas, Volume</li>
+      <li>Desain simpel dan responsif</li>
+      <li>Akurat dan cepat</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Pertanyaan yang Sering Ditanyakan (FAQ)</summary>
+    <div class="faq-list">
+      <h4>Apakah konversi ini akurat?</h4>
+      <p>Ya, menggunakan standar konversi internasional yang presisi.</p>
+
+      <h4>Apakah ada batasan penggunaan?</h4>
+      <p>Tidak ada. Bisa digunakan sebanyak yang Anda mau.</p>
+
+      <h4>Apakah data yang dimasukkan disimpan?</h4>
+      <p>Tidak. Semua perhitungan dilakukan di browser Anda.</p>
+    </div>
+  </details>
+</section>
+
+<!-- FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah Unit Converter ini akurat?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, menggunakan standar konversi resmi internasional." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah tool ini gratis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, 100% gratis tanpa batas." }
+    }
+  ]
+}
+</script>
+
+<script client:load>
+// Data konversi
+const converters = {
+  length: {
+    units: {
+      "km": 1000, "m": 1, "cm": 0.01, "mm": 0.001,
+      "mile": 1609.34, "yard": 0.9144, "feet": 0.3048, "inch": 0.0254
+    },
+    defaultFrom: "cm",
+    defaultTo: "m"
+  },
+  weight: {
+    units: {
+      "kg": 1, "g": 0.001, "mg": 0.000001,
+      "ton": 1000, "lb": 0.453592, "oz": 0.0283495
+    },
+    defaultFrom: "kg",
+    defaultTo: "g"
+  },
+  temperature: {
+    units: ["°C", "°F", "K"],
+    isTemp: true
+  },
+  area: {
+    units: {
+      "m²": 1, "km²": 1000000, "cm²": 0.0001, "ha": 10000,
+      "acre": 4046.86, "ft²": 0.092903
+    },
+    defaultFrom: "m²",
+    defaultTo: "ft²"
+  },
+  volume: {
+    units: {
+      "m³": 1, "L": 0.001, "ml": 0.000001,
+      "gal": 0.00378541, "cup": 0.000236588
+    },
+    defaultFrom: "L",
+    defaultTo: "ml"
+  }
+};
+
+function populateUnits(type) {
+  const fromSelect = document.getElementById('fromUnit');
+  const toSelect = document.getElementById('toUnit');
+  
+  fromSelect.innerHTML = '';
+  toSelect.innerHTML = '';
+
+  const data = converters[type];
+
+  if (data.isTemp) {
+    data.units.forEach(unit => {
+      fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+      toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+    });
+    fromSelect.value = "°C";
+    toSelect.value = "°F";
+  } else {
+    Object.keys(data.units).forEach(unit => {
+      fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+      toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+    });
+    fromSelect.value = data.defaultFrom;
+    toSelect.value = data.defaultTo;
+  }
+}
+
+function convert() {
+  const type = document.getElementById('converterType').value;
+  const input = parseFloat(document.getElementById('inputValue').value);
+  if (isNaN(input)) return;
+
+  const from = document.getElementById('fromUnit').value;
+  const to = document.getElementById('toUnit').value;
+  let result = 0;
+
+  const data = converters[type];
+
+  if (data.isTemp) {
+    // Suhu
+    let celsius = 0;
+    if (from === "°C") celsius = input;
+    else if (from === "°F") celsius = (input - 32) * 5/9;
+    else if (from === "K") celsius = input - 273.15;
+
+    if (to === "°C") result = celsius;
+    else if (to === "°F") result = celsius * 9/5 + 32;
+    else if (to === "K") result = celsius + 273.15;
+  } else {
+    // Konversi normal
+    const base = input * data.units[from];
+    result = base / data.units[to];
+  }
+
+  document.getElementById('outputValue').value = result.toFixed(6).replace(/\.?0+$/, '');
+}
+
+function swapUnits() {
+  const from = document.getElementById('fromUnit').value;
+  const to = document.getElementById('toUnit').value;
+  document.getElementById('fromUnit').value = to;
+  document.getElementById('toUnit').value = from;
+  convert();
+}
+
+function changeConverter() {
+  const type = document.getElementById('converterType').value;
+  populateUnits(type);
+  convert();
+}
+
+// Initialize
+window.onload = () => {
+  populateUnits('length');
+  convert();
+};
+</script>
+
+<style is:global>
+.unit-converter-app {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.converter-inputs {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.arrow {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--accent);
+  padding: 10px 0;
+}
+
+@media (max-width: 600px) {
+  .converter-inputs {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .arrow { transform: rotate(90deg); }
+}
+</style>
+
+</MainLayout>

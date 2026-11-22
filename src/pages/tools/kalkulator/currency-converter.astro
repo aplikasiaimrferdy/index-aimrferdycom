@@ -1,0 +1,167 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Currency Converter Online",
+  description: "Konversi mata uang real-time (IDR, USD, EUR, SGD, JPY, dll). Bisa bolak-balik dengan akurat.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="currency-app">
+      <h2>Currency Converter</h2>
+
+      <div class="converter-inputs">
+        <div class="input-group">
+          <input type="number" id="amount" class="tool-input" value="1000000" oninput="convertCurrency()">
+          <select id="fromCurrency" class="tool-select" onchange="convertCurrency()"></select>
+        </div>
+
+        <div class="arrow">⇄</div>
+
+        <div class="input-group">
+          <input type="number" id="result" class="tool-input" readonly>
+          <select id="toCurrency" class="tool-select" onchange="convertCurrency()"></select>
+        </div>
+      </div>
+
+      <div class="rate-info">
+        <small id="exchangeRate"></small>
+      </div>
+
+      <button class="btn-primary" onclick="swapCurrencies()">🔄 Tukar Mata Uang</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO, SEO, FAQ tetap sama seperti sebelumnya -->
+<section class="tool-hero">
+  <h1>Currency Converter Online</h1>
+  <p>Konversi Rupiah ke Dolar, Euro, Yen dan mata uang dunia lainnya secara real-time.</p>
+</section>
+
+<section class="tool-seo">
+  <h2>Kurs Mata Uang Real-Time</h2>
+  <p>Konversi bolak-balik yang akurat dan cepat.</p>
+</section>
+
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan</summary>
+    <ol>
+      <li>Masukkan jumlah uang</li>
+      <li>Pilih mata uang asal dan tujuan</li>
+      <li>Hasil otomatis muncul</li>
+      <li>Klik <strong>🔄 Tukar Mata Uang</strong> untuk membalik</li>
+    </ol>
+  </details>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Apakah bisa konversi bolak-balik?",
+    "acceptedAnswer": { "@type": "Answer", "text": "Ya, bisa IDR ke USD maupun USD ke IDR dengan akurat." }
+  }]
+}
+</script>
+
+<script client:load>
+const API_URL = "https://api.exchangerate-api.com/v4/latest/IDR";
+let exchangeRates = {};
+
+async function loadCurrencies() {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    exchangeRates = data.rates;
+
+    const currencies = Object.keys(exchangeRates).sort();
+    const fromSelect = document.getElementById('fromCurrency');
+    const toSelect = document.getElementById('toCurrency');
+
+    currencies.forEach(cur => {
+      fromSelect.innerHTML += `<option value="${cur}">${cur}</option>`;
+      toSelect.innerHTML += `<option value="${cur}">${cur}</option>`;
+    });
+
+    fromSelect.value = "IDR";
+    toSelect.value = "USD";
+
+    convertCurrency();
+  } catch (e) {
+    alert("Gagal mengambil data kurs. Silakan refresh halaman.");
+  }
+}
+
+function convertCurrency() {
+  const amount = parseFloat(document.getElementById('amount').value) || 0;
+  const from = document.getElementById('fromCurrency').value;
+  const to = document.getElementById('toCurrency').value;
+
+  if (amount <= 0 || !exchangeRates[from] || !exchangeRates[to]) return;
+
+  // Logika konversi yang benar
+  let result;
+  if (from === to) {
+    result = amount;
+  } else {
+    // Konversi melalui IDR sebagai base
+    const amountInIDR = amount * exchangeRates[from];   // Wait, no → fix:
+    // Correct formula: result = amount * (rate_to / rate_from)
+    result = amount * (exchangeRates[to] / exchangeRates[from]);
+  }
+
+  document.getElementById('result').value = result.toLocaleString('id-ID', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 6
+  });
+
+  // Tampilkan kurs
+  const rate = (exchangeRates[to] / exchangeRates[from]).toFixed(4);
+  document.getElementById('exchangeRate').textContent = 
+    `1 ${from} = ${rate} ${to}`;
+}
+
+function swapCurrencies() {
+  const fromVal = document.getElementById('fromCurrency').value;
+  const toVal = document.getElementById('toCurrency').value;
+
+  document.getElementById('fromCurrency').value = toVal;
+  document.getElementById('toCurrency').value = fromVal;
+
+  convertCurrency();
+}
+
+// Load data
+window.onload = loadCurrencies;
+</script>
+
+<style is:global>
+.currency-app { max-width: 700px; margin: 0 auto; }
+.converter-inputs {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+.input-group { flex: 1; min-width: 220px; }
+.arrow { font-size: 32px; color: var(--accent); }
+.rate-info { text-align: center; margin: 15px 0; color: var(--muted); }
+
+@media (max-width: 600px) {
+  .converter-inputs { flex-direction: column; }
+  .arrow { transform: rotate(90deg); }
+}
+</style>
+
+</MainLayout>

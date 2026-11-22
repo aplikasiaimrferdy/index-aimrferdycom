@@ -1,0 +1,122 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "DPI & eDPI Calculator Gaming Online",
+  description: "Hitung DPI dan eDPI untuk game FPS seperti Valorant, CS2, PUBG, dan Apex dengan akurat.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🖱️ DPI & eDPI Calculator</h1>
+
+<p class="tools-sub">
+Hitung DPI dan eDPI untuk mendapatkan setting mouse yang optimal di game FPS.
+</p>
+
+<div class="tool-box">
+
+<input type="number" id="dpi" placeholder="Masukkan DPI (contoh: 800)" class="tool-input">
+
+<input type="number" id="sensitivity" placeholder="Masukkan Sensitivity (contoh: 0.5)" class="tool-input">
+
+<button class="btn-primary" onclick="calculateEDPI()">
+Hitung eDPI
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu DPI dan eDPI?</h2>
+  <p>
+    DPI (Dots Per Inch) adalah tingkat sensitivitas mouse terhadap pergerakan fisik. Sedangkan eDPI adalah hasil kombinasi antara DPI dan sensitivity dalam game. eDPI digunakan oleh gamer untuk memastikan konsistensi aim di berbagai setting.
+  </p>
+
+  <h2>Kenapa eDPI Penting untuk Gamer?</h2>
+  <ul>
+    <li>Menjaga konsistensi aim di semua game FPS</li>
+    <li>Mempermudah penyesuaian setting mouse</li>
+    <li>Digunakan oleh pro player sebagai standar</li>
+    <li>Meningkatkan akurasi dan kontrol</li>
+  </ul>
+
+  <h2>Cara Menentukan DPI yang Ideal</h2>
+  <p>
+    Tidak ada DPI yang benar-benar terbaik untuk semua orang. Namun, banyak pemain profesional menggunakan kombinasi DPI rendah dan sensitivity yang disesuaikan untuk mendapatkan kontrol yang lebih presisi.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan DPI Calculator</summary>
+    <ul>
+      <li>Masukkan nilai DPI mouse kamu</li>
+      <li>Masukkan sensitivity dari game</li>
+      <li>Klik tombol hitung</li>
+      <li>Lihat hasil eDPI</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Hitung eDPI secara otomatis</li>
+      <li>Perhitungan cepat dan akurat</li>
+      <li>Cocok untuk semua game FPS</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat ingin optimasi setting mouse</li>
+      <li>Saat pindah game FPS</li>
+      <li>Untuk meniru setting pro player</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function calculateEDPI(){
+  const dpi = parseFloat(document.getElementById("dpi").value);
+  const sens = parseFloat(document.getElementById("sensitivity").value);
+  const resultBox = document.getElementById("result");
+
+  if (isNaN(dpi) || isNaN(sens) || dpi <= 0 || sens <= 0) {
+    resultBox.innerHTML = "❌ Masukkan nilai DPI dan sensitivity yang valid.";
+    return;
+  }
+
+  const edpi = dpi * sens;
+
+  resultBox.innerHTML = `
+    ✅ Hasil Perhitungan:<br><br>
+    DPI: <b>${dpi}</b><br>
+    Sensitivity: <b>${sens}</b><br><br>
+    🎯 eDPI: <b>${edpi.toFixed(2)}</b>
+  `;
+}
+</script>
+
+</MainLayout>

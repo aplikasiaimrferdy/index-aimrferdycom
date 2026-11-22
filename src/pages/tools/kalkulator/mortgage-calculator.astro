@@ -1,0 +1,137 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Mortgage Calculator Online (KPR)",
+  description: "Hitung cicilan KPR, uang muka, total bunga, dan total pembayaran untuk kredit rumah. Dilengkapi perhitungan realistis KPR Indonesia.",
+  category: "Kalkulator",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <h2>Mortgage Calculator (KPR)</h2>
+
+    <div class="form-group">
+      <label>Harga Properti (Rp)</label>
+      <input type="number" id="propertyPrice" class="tool-input" value="500000000" oninput="calculateMortgage()">
+    </div>
+
+    <div class="form-group">
+      <label>Uang Muka (%)</label>
+      <input type="number" id="downPaymentPercent" class="tool-input" value="20" oninput="calculateMortgage()">
+    </div>
+
+    <div class="form-group">
+      <label>Suku Bunga Tahunan (%)</label>
+      <input type="number" id="interestRate" class="tool-input" value="8.5" step="0.1" oninput="calculateMortgage()">
+    </div>
+
+    <div class="form-group">
+      <label>Jangka Waktu (Tahun)</label>
+      <input type="number" id="years" class="tool-input" value="15" oninput="calculateMortgage()">
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultBox" class="tool-result" style="display:none;">
+      <h3>Hasil Perhitungan KPR</h3>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;">
+        <div style="text-align:center;">
+          <div style="opacity:0.8; font-size:0.95rem;">Cicilan Bulanan</div>
+          <strong id="monthlyPayment" style="font-size:2rem; color:var(--accent);"></strong>
+        </div>
+        <div style="text-align:center;">
+          <div style="opacity:0.8; font-size:0.95rem;">Total Pembayaran</div>
+          <strong id="totalPayment"></strong>
+        </div>
+      </div>
+
+      <div class="tool-result">
+        <div style="display:flex; justify-content:space-between; padding:10px 0;">
+          <span>Uang Muka</span>
+          <strong id="downPayment"></strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:10px 0;">
+          <span>Jumlah Pinjaman</span>
+          <strong id="loanAmount"></strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:10px 0; border-top:1px solid var(--border); margin-top:8px; padding-top:12px;">
+          <span>Total Bunga</span>
+          <strong id="totalInterest" style="color:#ef4444;"></strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Mortgage Calculator (KPR)</h1>
+  <p>Hitung cicilan Kredit Pemilikan Rumah (KPR) dengan cepat dan akurat.</p>
+</section>
+
+<section class="tool-seo">
+  <h2>Apa Itu Mortgage Calculator?</h2>
+  <p>Tool ini membantu Anda memperkirakan cicilan bulanan, total bunga, dan uang muka sebelum mengajukan KPR ke bank.</p>
+</section>
+
+<script client:load>
+function calculateMortgage() {
+  const propertyPrice = parseFloat(document.getElementById('propertyPrice').value) || 0;
+  const downPercent = parseFloat(document.getElementById('downPaymentPercent').value) || 0;
+  const annualRate = parseFloat(document.getElementById('interestRate').value) || 0;
+  const years = parseFloat(document.getElementById('years').value) || 0;
+
+  if (propertyPrice <= 0 || years <= 0) {
+    document.getElementById('resultBox').style.display = 'none';
+    return;
+  }
+
+  const downPayment = propertyPrice * (downPercent / 100);
+  const loanAmount = propertyPrice - downPayment;
+  const months = years * 12;
+  const monthlyRate = annualRate / 100 / 12;
+
+  let monthlyPayment = 0;
+  if (monthlyRate > 0) {
+    monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                     (Math.pow(1 + monthlyRate, months) - 1);
+  } else {
+    monthlyPayment = loanAmount / months;
+  }
+
+  const totalPayment = monthlyPayment * months;
+  const totalInterest = totalPayment - loanAmount;
+
+  // Tampilkan hasil
+  document.getElementById('monthlyPayment').textContent = 
+    'Rp ' + Math.round(monthlyPayment).toLocaleString('id-ID');
+
+  document.getElementById('totalPayment').textContent = 
+    'Rp ' + Math.round(totalPayment).toLocaleString('id-ID');
+
+  document.getElementById('downPayment').textContent = 
+    'Rp ' + Math.round(downPayment).toLocaleString('id-ID');
+
+  document.getElementById('loanAmount').textContent = 
+    'Rp ' + Math.round(loanAmount).toLocaleString('id-ID');
+
+  document.getElementById('totalInterest').textContent = 
+    'Rp ' + Math.round(totalInterest).toLocaleString('id-ID');
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+// Auto calculate
+document.querySelectorAll('#propertyPrice, #downPaymentPercent, #interestRate, #years').forEach(input => {
+  input.addEventListener('input', calculateMortgage);
+});
+
+window.onload = calculateMortgage;
+</script>
+
+</MainLayout>

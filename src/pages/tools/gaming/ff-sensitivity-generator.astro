@@ -1,0 +1,166 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "FF Sensitivity Generator (Auto Headshot Settings)",
+  description: "Generate sensitivity Free Fire terbaik berdasarkan DPI dan gaya bermain untuk auto headshot.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎯 FF Sensitivity Generator</h1>
+
+<p class="tools-sub">
+Dapatkan setting sensitivity terbaik Free Fire untuk auto headshot.
+</p>
+
+<div class="tool-box">
+
+<select id="dpi" class="tool-input">
+  <option value="low">DPI Rendah (300-600)</option>
+  <option value="medium">DPI Sedang (600-1200)</option>
+  <option value="high">DPI Tinggi (1200+)</option>
+</select>
+
+<select id="playstyle" class="tool-input">
+  <option value="rush">Rusher</option>
+  <option value="sniper">Sniper</option>
+  <option value="balanced">Balanced</option>
+</select>
+
+<button class="btn-primary" onclick="generateSensitivity()">
+Generate Sensitivity
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Setting akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Sensitivity Free Fire?</h2>
+  <p>
+    Sensitivity adalah pengaturan yang menentukan kecepatan pergerakan aim saat bermain Free Fire. Setting yang tepat dapat membantu meningkatkan akurasi dan peluang headshot.
+  </p>
+
+  <h2>Kenapa Sensitivity Penting?</h2>
+  <ul>
+    <li>Meningkatkan akurasi tembakan</li>
+    <li>Mempermudah headshot</li>
+    <li>Meningkatkan kontrol recoil</li>
+    <li>Menyesuaikan gaya bermain</li>
+  </ul>
+
+  <h2>Tips Sensitivity FF Terbaik</h2>
+  <p>
+    Gunakan sensitivity yang sesuai dengan DPI perangkat dan gaya bermain kamu. Jangan terlalu tinggi atau terlalu rendah agar tetap stabil.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Tools Ini</summary>
+    <ul>
+      <li>Pilih DPI perangkat</li>
+      <li>Pilih gaya bermain</li>
+      <li>Klik generate</li>
+      <li>Gunakan setting di game</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Preset berdasarkan DPI</li>
+      <li>Optimasi gaya bermain</li>
+      <li>Gratis tanpa login</li>
+      <li>Hasil instan</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function generateSensitivity(){
+  const dpi = document.getElementById("dpi").value;
+  const style = document.getElementById("playstyle").value;
+  const resultBox = document.getElementById("result");
+
+  let sens = {
+    general: 100,
+    redDot: 100,
+    scope2x: 90,
+    scope4x: 80,
+    awm: 50,
+    freeLook: 70
+  };
+
+  // DPI adjustment
+  if(dpi === "low"){
+    sens.general = 100;
+    sens.redDot = 95;
+    sens.scope2x = 90;
+    sens.scope4x = 85;
+    sens.awm = 60;
+  }
+
+  if(dpi === "medium"){
+    sens.general = 95;
+    sens.redDot = 90;
+    sens.scope2x = 85;
+    sens.scope4x = 75;
+    sens.awm = 50;
+  }
+
+  if(dpi === "high"){
+    sens.general = 85;
+    sens.redDot = 80;
+    sens.scope2x = 75;
+    sens.scope4x = 65;
+    sens.awm = 45;
+  }
+
+  // playstyle adjustment
+  if(style === "rush"){
+    sens.redDot += 5;
+    sens.general += 5;
+  }
+
+  if(style === "sniper"){
+    sens.scope4x -= 5;
+    sens.awm -= 5;
+  }
+
+  if(style === "balanced"){
+    // no change
+  }
+
+  resultBox.innerHTML = `
+    🎯 <b>Hasil Sensitivity:</b><br><br>
+    General: ${sens.general}<br>
+    Red Dot: ${sens.redDot}<br>
+    2x Scope: ${sens.scope2x}<br>
+    4x Scope: ${sens.scope4x}<br>
+    AWM Scope: ${sens.awm}<br>
+    Free Look: ${sens.freeLook}<br><br>
+    🔥 Rekomendasi: Sesuaikan sedikit sesuai kenyamanan tangan kamu.
+  `;
+}
+</script>
+
+</MainLayout>

@@ -1,0 +1,162 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Crosshair Generator Online FPS (Valorant, CS2, PUBG)",
+  description: "Buat dan preview crosshair untuk game FPS seperti Valorant, CS2, dan PUBG secara online gratis.",
+  category: "Gaming",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎯 Crosshair Generator FPS</h1>
+
+<p class="tools-sub">
+Buat dan preview crosshair untuk game FPS seperti Valorant, CS2, dan PUBG.
+</p>
+
+<div class="tool-box">
+
+<label>Ukuran</label>
+<input type="range" id="size" min="5" max="50" value="20" class="tool-input">
+
+<label>Ketebalan</label>
+<input type="range" id="thickness" min="1" max="10" value="3" class="tool-input">
+
+<label>Gap (Jarak Tengah)</label>
+<input type="range" id="gap" min="0" max="20" value="5" class="tool-input">
+
+<label>Warna</label>
+<input type="color" id="color" value="#00ffcc" class="tool-input">
+
+<button class="btn-primary" onclick="updateCrosshair()">
+Update Crosshair
+</button>
+
+</div>
+
+<div class="tool-result">
+
+<canvas id="crosshairCanvas" width="200" height="200"></canvas>
+
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Crosshair Generator?</h2>
+  <p>
+    Crosshair Generator adalah tools online yang memungkinkan kamu membuat dan melihat preview crosshair secara langsung. Tools ini sangat berguna untuk pemain game FPS seperti Valorant, CS2, dan PUBG yang ingin mendapatkan aiming lebih akurat.
+  </p>
+
+  <h2>Kenapa Crosshair Penting di Game FPS?</h2>
+  <ul>
+    <li>Membantu meningkatkan akurasi tembakan</li>
+    <li>Menyesuaikan gaya bermain masing-masing player</li>
+    <li>Membuat target lebih mudah terlihat</li>
+    <li>Meningkatkan konsistensi aim</li>
+  </ul>
+
+  <h2>Custom Crosshair Sesuai Gaya Main</h2>
+  <p>
+    Setiap pemain memiliki preferensi crosshair yang berbeda. Dengan tools ini, kamu bisa menyesuaikan ukuran, warna, dan jarak crosshair sesuai kebutuhan bermain.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Crosshair Generator</summary>
+    <ul>
+      <li>Atur ukuran crosshair</li>
+      <li>Sesuaikan ketebalan garis</li>
+      <li>Atur jarak tengah (gap)</li>
+      <li>Pilih warna sesuai keinginan</li>
+      <li>Lihat preview secara langsung</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Preview crosshair real-time</li>
+      <li>Custom ukuran dan ketebalan</li>
+      <li>Pilih warna bebas</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat ingin meningkatkan akurasi aim</li>
+      <li>Mencoba setting crosshair baru</li>
+      <li>Menyesuaikan dengan game FPS tertentu</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function drawCrosshair(size, thickness, gap, color){
+  const canvas = document.getElementById("crosshairCanvas");
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = thickness;
+
+  // Horizontal kiri
+  ctx.beginPath();
+  ctx.moveTo(centerX - gap - size, centerY);
+  ctx.lineTo(centerX - gap, centerY);
+  ctx.stroke();
+
+  // Horizontal kanan
+  ctx.beginPath();
+  ctx.moveTo(centerX + gap, centerY);
+  ctx.lineTo(centerX + gap + size, centerY);
+  ctx.stroke();
+
+  // Vertical atas
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY - gap - size);
+  ctx.lineTo(centerX, centerY - gap);
+  ctx.stroke();
+
+  // Vertical bawah
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY + gap);
+  ctx.lineTo(centerX, centerY + gap + size);
+  ctx.stroke();
+}
+
+function updateCrosshair(){
+  const size = document.getElementById("size").value;
+  const thickness = document.getElementById("thickness").value;
+  const gap = document.getElementById("gap").value;
+  const color = document.getElementById("color").value;
+
+  drawCrosshair(size, thickness, gap, color);
+}
+
+// init
+updateCrosshair();
+</script>
+
+</MainLayout>

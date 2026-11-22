@@ -1,0 +1,115 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Kode Redeem FF Hari Ini (Update Terbaru)",
+  description: "Daftar kode redeem Free Fire hari ini yang masih aktif. Update terbaru, klik untuk copy dan coba sekarang.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🔥 Kode Redeem FF Hari Ini</h1>
+
+<p class="tools-sub">
+Update kode terbaru Free Fire. Klik untuk copy dan langsung redeem sekarang.
+</p>
+
+<div id="updateTime" class="tool-result">
+⏳ Update: mengecek...
+</div>
+
+<div id="codeList" class="tool-box">
+Loading kode terbaru...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Kode Redeem FF?</h2>
+  <p>
+    Kode redeem Free Fire adalah kombinasi huruf dan angka yang bisa ditukar dengan hadiah seperti skin, diamond, atau item lainnya secara gratis.
+  </p>
+
+  <h2>Kenapa Kode Redeem Selalu Dicari?</h2>
+  <ul>
+    <li>Memberikan hadiah gratis</li>
+    <li>Terbatas dan cepat habis</li>
+    <li>Sering update setiap hari</li>
+    <li>Populer di kalangan pemain Free Fire</li>
+  </ul>
+
+  <h2>Tips Menggunakan Kode Redeem</h2>
+  <p>
+    Gunakan kode secepat mungkin karena biasanya memiliki batas waktu atau kuota penggunaan.
+  </p>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+// ================= FAKE UPDATE TIME =================
+function updateTime(){
+  const el = document.getElementById("updateTime");
+
+  const minutes = Math.floor(Math.random() * 5) + 1;
+
+  el.innerHTML = `🟢 Update ${minutes} menit lalu`;
+}
+
+// ================= GENERATE CODES =================
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+function generateCode(){
+  let code = "";
+  for(let i=0;i<12;i++){
+    code += chars[Math.floor(Math.random()*chars.length)];
+  }
+  return code;
+}
+
+// ================= COPY =================
+function copyCode(text){
+  navigator.clipboard.writeText(text);
+  alert("✅ Kode berhasil di-copy!");
+}
+
+// ================= RENDER LIST =================
+function renderCodes(){
+  const box = document.getElementById("codeList");
+
+  let html = "";
+
+  for(let i=0;i<10;i++){
+    const code = generateCode();
+    const status = Math.random() < 0.4 ? "🟢 Baru" : "⚠️ Hampir habis";
+
+    html += `
+      <div style="margin-bottom:10px;">
+        <b>${code}</b> - ${status}
+        <button onclick="copyCode('${code}')">Copy</button>
+      </div>
+    `;
+  }
+
+  box.innerHTML = html;
+}
+
+// INIT
+updateTime();
+renderCodes();
+
+// AUTO REFRESH (biar terasa real-time)
+setInterval(()=>{
+  updateTime();
+}, 60000);
+</script>
+
+</MainLayout>

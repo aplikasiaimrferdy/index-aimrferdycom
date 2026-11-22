@@ -1,0 +1,179 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "📢 AI Ads Copy Generator",
+  description: "Buat teks iklan yang menarik dan meningkatkan penjualan untuk Facebook Ads, TikTok Ads, dan Google Ads.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>📢 AI Ads Copy Generator Gratis</h1>
+  <p>
+    Buat teks iklan yang menarik, persuasif, dan meningkatkan konversi.
+    Cocok untuk Facebook Ads, TikTok Ads, dan Google Ads.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Nama Produk / Layanan</label>
+    <input id="product" class="tool-input" placeholder="Contoh: Kursus Affiliate Marketing" />
+  </div>
+
+  <div class="form-group">
+    <label>Target Market</label>
+    <input id="market" class="tool-input" placeholder="Contoh: pemula yang ingin penghasilan online" />
+  </div>
+
+  <div class="form-group">
+    <label>Keunggulan / Benefit</label>
+    <textarea id="benefit" class="tool-textarea" placeholder="Contoh: mudah dipelajari, tanpa modal besar, terbukti menghasilkan"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Iklan</label>
+    <select id="style" class="tool-input">
+      <option value="soft">✨ Soft Selling</option>
+      <option value="hard">💰 Hard Selling</option>
+      <option value="curiosity">🤔 Curiosity</option>
+      <option value="emotional">❤️ Emotional</option>
+    </select>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generateAds()">🚀 Generate</button>
+  </div>
+
+  <div class="form-group">
+    <label>Hasil Ads Copy</label>
+    <textarea id="result" class="tool-textarea" placeholder="Teks iklan akan muncul di sini..."></textarea>
+  </div>
+
+  <!-- COPY -->
+  <div id="copyWrap" style="display:none; margin-top:10px;">
+    <button class="btn btn-secondary" onclick="copyAds()">📋 Copy Ads</button>
+  </div>
+
+  <p style="margin-top:15px;">
+    <strong>⬇️ Gunakan tool di atas untuk generate teks iklan</strong>
+  </p>
+
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Ads Copy Generator?</h2>
+  <p>
+    Ads Copy Generator adalah alat untuk membuat teks iklan secara otomatis
+    yang dirancang untuk menarik perhatian dan meningkatkan konversi.
+    Tools ini membantu marketer membuat copywriting yang lebih efektif.
+  </p>
+
+  <h2>Kenapa Ads Copy Penting?</h2>
+  <ul>
+    <li>Meningkatkan klik dan konversi</li>
+    <li>Membuat iklan lebih menarik</li>
+    <li>Menghemat waktu pembuatan konten</li>
+    <li>Meningkatkan ROI iklan</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Membuat Ads Copy</summary>
+    <p>
+      Masukkan nama produk, target market, dan keunggulan produk.
+      Pilih gaya iklan, lalu klik generate untuk mendapatkan teks iklan siap pakai.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate ads copy otomatis</li>
+      <li>Berbagai gaya copywriting</li>
+      <li>Cocok untuk semua platform iklan</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Ads Copy High Converting</summary>
+    <ul>
+      <li>Gunakan hook yang kuat</li>
+      <li>Fokus pada masalah & solusi</li>
+      <li>Gunakan call to action jelas</li>
+      <li>Gunakan emosi & urgency</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generateAds = function(){
+  const product = document.getElementById("product").value.trim();
+  const market = document.getElementById("market").value.trim();
+  const benefit = document.getElementById("benefit").value.trim();
+  const style = document.getElementById("style").value;
+  const result = document.getElementById("result");
+
+  if(!product || !market || !benefit){
+    alert("Isi semua field dulu!");
+    document.getElementById("copyWrap").style.display = "none";
+    return;
+  }
+
+  let ads = "";
+
+  if(style === "soft"){
+    ads = `✨ ${product}\n\nDirancang untuk ${market}, produk ini menawarkan ${benefit}.\n\nMulai perjalanan kamu sekarang dan rasakan manfaatnya 💖`;
+  }
+
+  if(style === "hard"){
+    ads = `🔥 ${product}\n\nSolusi terbaik untuk ${market}!\n\nKeunggulan:\n- ${benefit}\n\nKlik sekarang sebelum kehabisan 💰`;
+  }
+
+  if(style === "curiosity"){
+    ads = `🤔 Banyak ${market} belum tahu ini...\n\n${product} bisa memberikan ${benefit}.\n\nCoba sekarang sebelum terlambat!`;
+  }
+
+  if(style === "emotional"){
+    ads = `❤️ Kamu pantas mendapatkan yang terbaik.\n\nDengan ${product}, ${market} bisa merasakan ${benefit}.\n\nJangan tunda lagi, mulai sekarang!`;
+  }
+
+  result.value = ads;
+
+  document.getElementById("copyWrap").style.display = "block";
+};
+
+window.copyAds = function(){
+  const text = document.getElementById("result").value;
+  const btn = document.querySelector("#copyWrap button");
+
+  if(!text){
+    alert("Belum ada hasil!");
+    return;
+  }
+
+  navigator.clipboard.writeText(text);
+
+  btn.innerText = "✅ Copied!";
+  setTimeout(() => {
+    btn.innerText = "📋 Copy Ads";
+  }, 1500);
+};
+</script>
+
+</MainLayout>

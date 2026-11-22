@@ -1,0 +1,204 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Kalkulator Pajak Penghasilan (PPh 21) Online",
+  description: "Hitung PPh 21 bulanan dan tahunan dengan akurat. Termasuk PTKP, biaya jabatan, dan tarif progresif terbaru.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="tax-app">
+      <h2>Kalkulator PPh 21</h2>
+
+      <div class="form-group">
+        <label>Penghasilan Bruto per Bulan (Rp)</label>
+        <input type="number" id="monthlyIncome" class="tool-input" value="8500000" oninput="calculateTax()">
+      </div>
+
+      <div class="form-group">
+        <label>Status Perkawinan</label>
+        <select id="status" class="tool-select" onchange="calculateTax()">
+          <option value="TK0">TK/0 (Tidak Kawin, 0 Tanggungan)</option>
+          <option value="TK1">TK/1</option>
+          <option value="TK2">TK/2</option>
+          <option value="TK3">TK/3</option>
+          <option value="K0">K/0 (Kawin, 0 Tanggungan)</option>
+          <option value="K1" selected>K/1</option>
+          <option value="K2">K/2</option>
+          <option value="K3">K/3</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Biaya Jabatan (opsional)</label>
+        <input type="number" id="biayaJabatan" class="tool-input" value="500000" oninput="calculateTax()">
+      </div>
+
+      <button class="btn-primary" onclick="calculateTax()">Hitung Pajak</button>
+
+      <!-- RESULT -->
+      <div id="resultBox" class="tool-result" style="display:none;">
+        <h3>Hasil Perhitungan PPh 21</h3>
+        
+        <div class="tax-result">
+          <div class="result-row">
+            <span>Penghasilan Bruto Tahunan</span>
+            <strong id="brutoTahunan"></strong>
+          </div>
+          <div class="result-row">
+            <span>PTKP</span>
+            <strong id="ptkp"></strong>
+          </div>
+          <div class="result-row">
+            <span>Penghasilan Kena Pajak (PKP)</span>
+            <strong id="pkp"></strong>
+          </div>
+          <div class="result-row total">
+            <span>PPh 21 Terutang per Tahun</span>
+            <strong id="pphTahunan"></strong>
+          </div>
+          <div class="result-row total">
+            <span>PPh 21 per Bulan</span>
+            <strong id="pphBulanan" class="highlight"></strong>
+          </div>
+        </div>
+
+        <button class="btn-secondary" onclick="resetTax()" style="margin-top:20px; width:100%;">Hitung Ulang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Kalkulator Pajak Penghasilan (PPh 21)</h1>
+  <p>Hitung pajak penghasilan tahunan dan bulanan dengan tarif progresif terbaru.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Apa Itu Kalkulator PPh 21?</h2>
+  <p>
+    Tool ini membantu menghitung Pajak Penghasilan Pasal 21 berdasarkan penghasilan bruto, status perkawinan, dan PTKP terbaru. 
+    Sangat berguna bagi karyawan, freelancer, dan profesional.
+  </p>
+</section>
+
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Kalkulator PPh</summary>
+    <ol>
+      <li>Masukkan penghasilan bruto bulanan</li>
+      <li>Pilih status perkawinan dan tanggungan</li>
+      <li>Hasil PPh 21 tahunan & bulanan akan muncul</li>
+    </ol>
+  </details>
+</section>
+
+<script client:load>
+// PTKP 2025-2026 (dalam Rupiah)
+const PTKP = {
+  TK0: 54000000,
+  TK1: 58500000,
+  TK2: 63000000,
+  TK3: 67500000,
+  K0: 58500000,
+  K1: 63000000,
+  K2: 67500000,
+  K3: 72000000
+};
+
+function calculateTax() {
+  const monthlyBruto = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+  const status = document.getElementById('status').value;
+  let biayaJabatan = parseFloat(document.getElementById('biayaJabatan').value) || 0;
+
+  const annualBruto = monthlyBruto * 12;
+  
+  // Biaya Jabatan maksimal 5% atau Rp 500.000/bulan (Rp 6jt/tahun)
+  const maxBiayaJabatan = Math.min(biayaJabatan * 12, annualBruto * 0.05);
+  
+  const pkpBefore = annualBruto - maxBiayaJabatan;
+  const ptkp = PTKP[status];
+  let pkp = Math.max(0, pkpBefore - ptkp);
+
+  // Tarif Progresif PPh 21
+  let pph = 0;
+  if (pkp > 0) {
+    if (pkp <= 60000000) {
+      pph = pkp * 0.05;
+    } else if (pkp <= 250000000) {
+      pph = (60000000 * 0.05) + (pkp - 60000000) * 0.15;
+    } else if (pkp <= 500000000) {
+      pph = (60000000 * 0.05) + (190000000 * 0.15) + (pkp - 250000000) * 0.25;
+    } else if (pkp <= 5000000000) {
+      pph = (60000000 * 0.05) + (190000000 * 0.15) + (250000000 * 0.25) + (pkp - 500000000) * 0.30;
+    } else {
+      pph = (60000000 * 0.05) + (190000000 * 0.15) + (250000000 * 0.25) + (4500000000 * 0.30) + (pkp - 5000000000) * 0.35;
+    }
+  }
+
+  const pphMonthly = Math.round(pph / 12);
+
+  // Tampilkan hasil
+  document.getElementById('brutoTahunan').textContent = 'Rp ' + annualBruto.toLocaleString('id-ID');
+  document.getElementById('ptkp').textContent = 'Rp ' + ptkp.toLocaleString('id-ID');
+  document.getElementById('pkp').textContent = 'Rp ' + Math.round(pkp).toLocaleString('id-ID');
+  document.getElementById('pphTahunan').textContent = 'Rp ' + Math.round(pph).toLocaleString('id-ID');
+  document.getElementById('pphBulanan').textContent = 'Rp ' + pphMonthly.toLocaleString('id-ID');
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+function resetTax() {
+  document.getElementById('monthlyIncome').value = 8500000;
+  document.getElementById('status').value = "K1";
+  document.getElementById('biayaJabatan').value = 500000;
+  calculateTax();
+}
+
+// Auto calculate
+document.querySelectorAll('.tax-app input, .tax-app select').forEach(el => {
+  el.addEventListener('input', calculateTax);
+  el.addEventListener('change', calculateTax);
+});
+
+window.onload = calculateTax;
+</script>
+
+<style is:global>
+.tax-app { max-width: 680px; margin: 0 auto; }
+
+.tax-result .result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tax-result .result-row:last-child {
+  border-bottom: none;
+}
+
+.total {
+  font-weight: 600;
+  font-size: 16px;
+  background: #fef3c7;
+  padding: 16px !important;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+
+.highlight {
+  color: #dc2626;
+  font-size: 18px;
+}
+</style>
+
+</MainLayout>

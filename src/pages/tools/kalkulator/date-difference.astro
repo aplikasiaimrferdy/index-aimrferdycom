@@ -1,0 +1,114 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Date Difference Calculator",
+  description: "Hitung selisih tanggal dengan akurat. Menampilkan perbedaan dalam tahun, bulan, hari, minggu, dan total hari.",
+  category: "Kalkulator",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <h2>Date Difference Calculator</h2>
+
+    <div class="form-group">
+      <label>Tanggal Mulai</label>
+      <input type="date" id="startDate" class="tool-input">
+    </div>
+
+    <div class="form-group">
+      <label>Tanggal Akhir</label>
+      <input type="date" id="endDate" class="tool-input">
+    </div>
+
+    <div class="btn-group">
+      <button class="btn-primary" onclick="calculateDifference()">Hitung Selisih</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultBox" class="tool-result" style="display:none;">
+      <h3>Hasil Perhitungan</h3>
+      
+      <div id="mainResult" style="font-size:1.4rem; font-weight:600; text-align:center; margin:20px 0;"></div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:12px; margin:20px 0;">
+        <div class="tool-result" style="text-align:center;">
+          <div style="font-size:0.9rem; opacity:0.7;">Tahun</div>
+          <strong id="years" style="font-size:1.5rem;">0</strong>
+        </div>
+        <div class="tool-result" style="text-align:center;">
+          <div style="font-size:0.9rem; opacity:0.7;">Bulan</div>
+          <strong id="months" style="font-size:1.5rem;">0</strong>
+        </div>
+        <div class="tool-result" style="text-align:center;">
+          <div style="font-size:0.9rem; opacity:0.7;">Hari</div>
+          <strong id="days" style="font-size:1.5rem;">0</strong>
+        </div>
+        <div class="tool-result" style="text-align:center;">
+          <div style="font-size:0.9rem; opacity:0.7;">Total Hari</div>
+          <strong id="totalDays" style="font-size:1.5rem;">0</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO & SEO -->
+<section class="tool-hero">
+  <h1>Date Difference Calculator</h1>
+  <p>Hitung selisih antara dua tanggal dengan cepat dan akurat.</p>
+</section>
+
+<section class="tool-seo">
+  <h2>Apa Itu Date Difference Calculator?</h2>
+  <p>Tool ini berguna untuk menghitung jarak hari antara dua tanggal, masa kontrak, umur proyek, countdown acara, dll.</p>
+</section>
+
+<script client:load>
+function calculateDifference() {
+  const start = document.getElementById('startDate').value;
+  const end = document.getElementById('endDate').value;
+
+  if (!start || !end) return;
+
+  const date1 = new Date(start);
+  const date2 = new Date(end);
+
+  if (date1 > date2) {
+    alert("Tanggal akhir harus lebih besar dari tanggal mulai");
+    return;
+  }
+
+  const totalDays = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
+
+  let years = date2.getFullYear() - date1.getFullYear();
+  let months = date2.getMonth() - date1.getMonth();
+  let days = date2.getDate() - date1.getDate();
+
+  if (days < 0) {
+    months--;
+    const lastDay = new Date(date2.getFullYear(), date2.getMonth(), 0).getDate();
+    days += lastDay;
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  document.getElementById('mainResult').innerHTML = 
+    `${years} Tahun, ${months} Bulan, ${days} Hari`;
+
+  document.getElementById('years').textContent = years;
+  document.getElementById('months').textContent = months;
+  document.getElementById('days').textContent = days;
+  document.getElementById('totalDays').textContent = totalDays.toLocaleString('id-ID');
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+</script>
+
+</MainLayout>

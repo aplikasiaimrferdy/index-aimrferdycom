@@ -1,0 +1,144 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Event FF Terbaru Hari Ini (Update Free Fire)",
+  description: "Daftar event Free Fire terbaru hari ini. Dapatkan reward, skin, dan item gratis dari event FF terbaru.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🔥 Event FF Terbaru Hari Ini</h1>
+
+<p class="tools-sub">
+Cek event terbaru Free Fire dan klaim reward menarik sekarang juga.
+</p>
+
+<div id="updateTime" class="tool-result">
+⏳ Update: mengecek...
+</div>
+
+<div id="eventList" class="tool-box">
+Memuat event terbaru...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Event Free Fire?</h2>
+  <p>
+    Event Free Fire adalah aktivitas khusus dalam game yang memberikan hadiah seperti skin, bundle, diamond, dan item eksklusif secara gratis atau melalui misi tertentu.
+  </p>
+
+  <h2>Kenapa Event FF Selalu Ditunggu?</h2>
+  <ul>
+    <li>Hadiah gratis dan eksklusif</li>
+    <li>Event terbatas (limited time)</li>
+    <li>Sering update setiap minggu</li>
+    <li>Kesempatan mendapatkan item langka</li>
+  </ul>
+
+  <h2>Tips Mengikuti Event FF</h2>
+  <p>
+    Login setiap hari, selesaikan misi event, dan klaim reward sebelum waktu habis agar tidak ketinggalan hadiah menarik.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Mengikuti Event FF</summary>
+    <ul>
+      <li>Buka game Free Fire</li>
+      <li>Masuk ke menu event</li>
+      <li>Pilih event aktif</li>
+      <li>Selesaikan misi</li>
+      <li>Klaim reward</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Jenis Event Free Fire</summary>
+    <ul>
+      <li>Login reward harian</li>
+      <li>Spin & lucky draw</li>
+      <li>Top up bonus</li>
+      <li>Misi khusus event</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+// ================= UPDATE TIME =================
+function updateTime(){
+  const el = document.getElementById("updateTime");
+  const minutes = Math.floor(Math.random() * 10) + 1;
+  el.innerHTML = `🟢 Update ${minutes} menit lalu`;
+}
+
+// ================= EVENT DATA (SIMULASI) =================
+const events = [
+  {
+    title: "🎁 Event Login Harian",
+    reward: "Skin gratis & gold",
+  },
+  {
+    title: "🎰 Lucky Spin FF",
+    reward: "Bundle rare & diamond",
+  },
+  {
+    title: "💎 Top Up Bonus",
+    reward: "Bonus diamond + item",
+  },
+  {
+    title: "🔥 Misi Harian FF",
+    reward: "Token & crate",
+  },
+  {
+    title: "🎯 Event Elite Pass",
+    reward: "Skin eksklusif",
+  }
+];
+
+// ================= RENDER =================
+function renderEvents(){
+  const box = document.getElementById("eventList");
+  let html = "";
+
+  events.forEach(ev => {
+    const status = Math.random() < 0.5 ? "🟢 Baru" : "⚠️ Segera berakhir";
+
+    html += `
+      <div style="margin-bottom:12px;">
+        <b>${ev.title}</b><br>
+        🎁 Reward: ${ev.reward}<br>
+        ${status}<br>
+        <button onclick="alert('Buka game untuk klaim reward')">Lihat Event</button>
+      </div>
+    `;
+  });
+
+  box.innerHTML = html;
+}
+
+// INIT
+updateTime();
+renderEvents();
+
+// AUTO REFRESH
+setInterval(updateTime, 60000);
+</script>
+
+</MainLayout>

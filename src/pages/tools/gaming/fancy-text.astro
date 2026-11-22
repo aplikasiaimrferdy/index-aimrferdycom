@@ -1,0 +1,136 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Fancy Text Generator Gamer Keren & Unik",
+  description: "Ubah teks biasa jadi font keren, aesthetic, dan simbol unik untuk nickname FF, PUBG, ML, dan Valorant.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>✨ Fancy Text Generator Gamer</h1>
+
+<p class="tools-sub">
+Ubah teks biasa jadi tulisan keren, aesthetic, dan penuh simbol untuk nickname game.
+</p>
+
+<div class="tool-box">
+
+<input type="text" id="inputText" placeholder="Masukkan teks..." class="tool-input">
+
+<button class="btn-primary" onclick="generateFancy()">
+Generate Fancy Text
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Fancy Text Generator?</h2>
+  <p>
+    Fancy Text Generator adalah tools online gratis untuk mengubah teks biasa menjadi font unik, simbol keren, dan gaya tulisan aesthetic. Tools ini sangat populer di kalangan gamer untuk membuat nickname menarik di game seperti Free Fire, PUBG, Mobile Legends, dan Valorant.
+  </p>
+
+  <h2>Kenapa Fancy Text Banyak Digunakan Gamer?</h2>
+  <ul>
+    <li>Membuat nickname terlihat lebih keren dan berbeda</li>
+    <li>Menonjol di antara player lain</li>
+    <li>Cocok untuk branding akun gaming</li>
+    <li>Mudah digunakan tanpa aplikasi tambahan</li>
+  </ul>
+
+  <h2>Jenis Style yang Bisa Dibuat</h2>
+  <p>
+    Dengan tools ini, kamu bisa menghasilkan berbagai gaya teks seperti font aesthetic, simbol unik, hingga kombinasi karakter yang sering digunakan oleh pro player.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Fancy Text Generator</summary>
+    <ul>
+      <li>Masukkan teks yang ingin diubah</li>
+      <li>Klik tombol generate</li>
+      <li>Pilih hasil yang kamu suka</li>
+      <li>Copy dan gunakan di game</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Convert teks ke berbagai style keren</li>
+      <li>Support simbol dan font unik</li>
+      <li>Copy sekali klik</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat membuat nickname game</li>
+      <li>Untuk bio media sosial</li>
+      <li>Membuat nama squad atau clan</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function generateFancy() {
+  const text = document.getElementById("inputText").value.trim();
+  const resultBox = document.getElementById("result");
+
+  if (!text) {
+    resultBox.innerHTML = "❌ Masukkan teks terlebih dahulu.";
+    return;
+  }
+
+  const styles = [
+    t => t.split("").join(" "),
+    t => "「" + t + "」",
+    t => "『" + t + "』",
+    t => "꧁" + t + "꧂",
+    t => "亗 " + t + " 亗",
+    t => "乂 " + t + " 乂",
+    t => "★" + t + "★",
+    t => "✿ " + t + " ✿",
+    t => "ツ" + t + "ツ",
+    t => t.split("").map(c => c + "̶").join("")
+  ];
+
+  const results = styles.map(fn => fn(text));
+
+  resultBox.innerHTML = results.map(n => 
+    `<div style="margin:8px 0;">
+      ${n}
+      <button onclick="copyText('${n}')">Copy</button>
+    </div>`
+  ).join("");
+}
+
+function copyText(text){
+  navigator.clipboard.writeText(text);
+  alert("Copied: " + text);
+}
+</script>
+
+</MainLayout>

@@ -1,0 +1,125 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Tip Calculator Online",
+  description: "Hitung tip restoran, kafe, atau layanan dengan cepat. Bisa dibagi per orang dan menampilkan total tagihan.",
+  category: "Kalkulator",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <h2>Tip Calculator</h2>
+
+    <div class="form-group">
+      <label>Jumlah Tagihan (Rp)</label>
+      <input type="number" id="billAmount" class="tool-input" value="150000" oninput="calculateTip()">
+    </div>
+
+    <div class="form-group">
+      <label>Persentase Tip</label>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+        <button onclick="setTip(5)" class="btn-secondary">5%</button>
+        <button onclick="setTip(10)" class="btn-secondary">10%</button>
+        <button onclick="setTip(15)" class="btn-secondary active">15%</button>
+        <button onclick="setTip(20)" class="btn-secondary">20%</button>
+        <button onclick="setTip(25)" class="btn-secondary">25%</button>
+      </div>
+      <input type="number" id="customTip" class="tool-input" placeholder="Custom (%)" oninput="calculateTip()">
+    </div>
+
+    <div class="form-group">
+      <label>Jumlah Orang</label>
+      <input type="number" id="people" class="tool-input" value="2" min="1" oninput="calculateTip()">
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultBox" class="tool-result" style="display:none;">
+      <h3>Hasil Perhitungan Tip</h3>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;">
+        <div style="text-align:center;">
+          <div style="font-size:0.95rem; opacity:0.8;">Tip</div>
+          <strong id="tipAmount" style="font-size:1.8rem; color:var(--accent);"></strong>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:0.95rem; opacity:0.8;">Total Tagihan</div>
+          <strong id="totalAmount" style="font-size:1.8rem;"></strong>
+        </div>
+      </div>
+
+      <div class="tool-result" style="text-align:center; background:var(--card);">
+        <div style="font-size:0.95rem; opacity:0.8;">Per Orang</div>
+        <strong id="perPerson" style="font-size:1.6rem; color:var(--accent);"></strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Tip Calculator Online</h1>
+  <p>Hitung tip dengan cepat untuk restoran, kafe, driver online, dan layanan lainnya.</p>
+</section>
+
+<section class="tool-seo">
+  <h2>Kenapa Perlu Tip Calculator?</h2>
+  <p>Tool ini membantu Anda menghitung jumlah tip yang wajar dan membagi total tagihan secara adil antar teman atau keluarga.</p>
+</section>
+
+<script client:load>
+let currentTipPercent = 15;
+
+function setTip(percent) {
+  currentTipPercent = percent;
+  document.getElementById('customTip').value = '';
+  
+  // Reset active button
+  document.querySelectorAll('.btn-secondary').forEach(btn => {
+    btn.classList.remove('active');
+    if (parseInt(btn.textContent) === percent) {
+      btn.classList.add('active');
+    }
+  });
+  
+  calculateTip();
+}
+
+function calculateTip() {
+  const bill = parseFloat(document.getElementById('billAmount').value) || 0;
+  const people = parseFloat(document.getElementById('people').value) || 1;
+  let tipPercent = currentTipPercent;
+
+  const custom = parseFloat(document.getElementById('customTip').value);
+  if (custom) tipPercent = custom;
+
+  if (bill <= 0) {
+    document.getElementById('resultBox').style.display = 'none';
+    return;
+  }
+
+  const tipAmount = bill * (tipPercent / 100);
+  const totalAmount = bill + tipAmount;
+  const perPerson = totalAmount / people;
+
+  document.getElementById('tipAmount').textContent = 'Rp ' + tipAmount.toLocaleString('id-ID');
+  document.getElementById('totalAmount').textContent = 'Rp ' + totalAmount.toLocaleString('id-ID');
+  document.getElementById('perPerson').textContent = 'Rp ' + perPerson.toLocaleString('id-ID', {maximumFractionDigits: 0});
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+// Auto calculate
+document.querySelectorAll('#billAmount, #people, #customTip').forEach(input => {
+  input.addEventListener('input', calculateTip);
+});
+
+// Initial calculation
+window.onload = () => calculateTip();
+</script>
+
+</MainLayout>

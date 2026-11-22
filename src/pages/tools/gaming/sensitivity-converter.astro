@@ -1,0 +1,141 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Sensitivity Converter FPS Online (Valorant, CS2, PUBG, Apex)",
+  description: "Convert sensitivity antar game FPS seperti Valorant, CS2, PUBG, dan Apex secara akurat dan cepat.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎯 Sensitivity Converter FPS</h1>
+
+<p class="tools-sub">
+Convert sensitivity antar game FPS dengan akurat untuk menjaga konsistensi aim.
+</p>
+
+<div class="tool-box">
+
+<select id="fromGame" class="tool-input">
+  <option value="valorant">Valorant</option>
+  <option value="cs2">CS2</option>
+  <option value="pubg">PUBG</option>
+  <option value="apex">Apex Legends</option>
+</select>
+
+<input type="number" id="sensitivity" placeholder="Masukkan Sensitivity" class="tool-input">
+
+<select id="toGame" class="tool-input">
+  <option value="cs2">CS2</option>
+  <option value="valorant">Valorant</option>
+  <option value="pubg">PUBG</option>
+  <option value="apex">Apex Legends</option>
+</select>
+
+<button class="btn-primary" onclick="convertSensitivity()">
+Convert Sensitivity
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Sensitivity Converter?</h2>
+  <p>
+    Sensitivity Converter adalah tools online yang digunakan untuk mengubah sensitivity mouse dari satu game ke game lain. Tools ini sangat penting bagi pemain FPS seperti Valorant, CS2, PUBG, dan Apex Legends agar tetap mendapatkan feel aiming yang sama.
+  </p>
+
+  <h2>Kenapa Sensitivity Harus Konsisten?</h2>
+  <ul>
+    <li>Menjaga muscle memory saat aiming</li>
+    <li>Meningkatkan akurasi tembakan</li>
+    <li>Menghindari adaptasi ulang setiap pindah game</li>
+    <li>Membantu performa bermain lebih stabil</li>
+  </ul>
+
+  <h2>Game FPS yang Didukung</h2>
+  <p>
+    Tools ini mendukung konversi sensitivity antar game populer seperti Valorant, CS2, PUBG, dan Apex Legends menggunakan rasio yang umum digunakan oleh komunitas gamer.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Sensitivity Converter</summary>
+    <ul>
+      <li>Pilih game asal</li>
+      <li>Masukkan nilai sensitivity</li>
+      <li>Pilih game tujuan</li>
+      <li>Klik convert untuk melihat hasil</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Convert sensitivity antar game FPS</li>
+      <li>Perhitungan cepat dan akurat</li>
+      <li>Support banyak game populer</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat pindah dari satu game FPS ke game lain</li>
+      <li>Saat ingin menjaga konsistensi aim</li>
+      <li>Ketika sensitivity terasa berbeda</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+const ratios = {
+  valorant: 1,
+  cs2: 3.18,
+  pubg: 0.35,
+  apex: 0.63
+};
+
+function convertSensitivity() {
+  const fromGame = document.getElementById("fromGame").value;
+  const toGame = document.getElementById("toGame").value;
+  const sens = parseFloat(document.getElementById("sensitivity").value);
+  const resultBox = document.getElementById("result");
+
+  if (isNaN(sens) || sens <= 0) {
+    resultBox.innerHTML = "❌ Masukkan sensitivity yang valid.";
+    return;
+  }
+
+  const base = sens / ratios[fromGame];
+  const converted = base * ratios[toGame];
+
+  resultBox.innerHTML = `
+    ✅ Sensitivity dari <b>${fromGame.toUpperCase()}</b> ke <b>${toGame.toUpperCase()}</b>:<br><br>
+    <b>${converted.toFixed(4)}</b>
+  `;
+}
+</script>
+
+</MainLayout>

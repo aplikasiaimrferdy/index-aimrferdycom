@@ -1,0 +1,156 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🖼️ Text to Image Generator",
+  description: "Convert teks menjadi gambar dengan background dan warna custom. Cocok untuk quotes & caption.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>🖼️ Text to Image Generator</h1>
+  <p>
+    Ubah teks menjadi gambar menarik untuk sosial media, quotes, atau caption.
+  </p>
+</section>
+
+<!-- APP -->
+<section class="tool-box">
+
+  <div class="form-group">
+    <label>Masukkan Teks</label>
+    <textarea id="text" placeholder="Tulis teks kamu di sini..."></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Warna Background</label>
+    <input type="color" id="bgColor" value="#000000" />
+  </div>
+
+  <div class="form-group">
+    <label>Warna Text</label>
+    <input type="color" id="textColor" value="#ffffff" />
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="generate()">🎨 Generate Image</button>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="form-group">
+    <label>Preview</label>
+    <canvas id="canvas" class="tool-result"></canvas>
+  </div>
+
+  <!-- DOWNLOAD -->
+  <div id="downloadWrap" style="display:none;">
+    <a id="downloadBtn" class="btn btn-secondary" download="text-image.png">
+      ⬇️ Download Image
+    </a>
+  </div>
+
+</section>
+
+<!-- SEO -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Text to Image?</h2>
+  <p>
+    Text to Image adalah tools untuk mengubah teks menjadi gambar
+    yang bisa digunakan untuk sosial media, desain, atau konten.
+  </p>
+
+  <h2>Kenapa Pakai Tools Ini?</h2>
+  <ul>
+    <li>Bikin quote Instagram</li>
+    <li>Caption visual</li>
+    <li>Konten TikTok</li>
+    <li>Desain cepat tanpa aplikasi</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan</summary>
+    <p>
+      Masukkan teks → pilih warna → klik generate → download hasil.
+    </p>
+  </details>
+
+  <details>
+    <summary>Tips Desain</summary>
+    <ul>
+      <li>Gunakan kontras warna tinggi</li>
+      <li>Jangan terlalu banyak teks</li>
+      <li>Gunakan kalimat singkat & kuat</li>
+    </ul>
+  </details>
+
+</section>
+
+<script is:inline>
+window.generate = function(){
+  const text = document.getElementById("text").value;
+  const bgColor = document.getElementById("bgColor").value;
+  const textColor = document.getElementById("textColor").value;
+
+  if(!text){
+    alert("Masukkan teks dulu!");
+    return;
+  }
+
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = 800;
+  canvas.height = 400;
+
+  // background
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // text
+  ctx.fillStyle = textColor;
+  ctx.font = "bold 28px Arial";
+  ctx.textAlign = "center";
+
+  wrapText(ctx, text, canvas.width/2, 100, 600, 36);
+
+  const img = canvas.toDataURL("image/png");
+
+  const downloadBtn = document.getElementById("downloadBtn");
+  downloadBtn.href = img;
+
+  document.getElementById("downloadWrap").style.display = "block";
+};
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(" ");
+  let line = "";
+
+  for(let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + " ";
+    const metrics = ctx.measureText(testLine);
+    const testWidth = metrics.width;
+
+    if(testWidth > maxWidth && n > 0) {
+      ctx.fillText(line, x, y);
+      line = words[n] + " ";
+      y += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line, x, y);
+}
+</script>
+
+</MainLayout>

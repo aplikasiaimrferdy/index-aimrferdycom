@@ -1,0 +1,147 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Game Optimizer FPS Settings Online",
+  description: "Optimalkan setting game FPS berdasarkan spesifikasi PC untuk mendapatkan performa terbaik.",
+  category: "Gaming",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>⚙️ Game Optimizer FPS</h1>
+
+<p class="tools-sub">
+Dapatkan rekomendasi setting grafik game berdasarkan spesifikasi PC kamu.
+</p>
+
+<div class="tool-box">
+
+<select id="gpu" class="tool-input">
+  <option value="low">GPU Low (Intel HD / Vega)</option>
+  <option value="mid">GPU Mid (GTX 1050 / RX 570)</option>
+  <option value="high">GPU High (RTX / RX 6000+)</option>
+</select>
+
+<select id="ram" class="tool-input">
+  <option value="4">4 GB</option>
+  <option value="8">8 GB</option>
+  <option value="16">16 GB</option>
+  <option value="32">32 GB+</option>
+</select>
+
+<select id="cpu" class="tool-input">
+  <option value="low">CPU Low (Dual Core)</option>
+  <option value="mid">CPU Mid (i5 / Ryzen 5)</option>
+  <option value="high">CPU High (i7 / Ryzen 7+)</option>
+</select>
+
+<button class="btn-primary" onclick="optimizeGame()">
+Optimalkan Setting
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Rekomendasi akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Game Optimizer?</h2>
+  <p>
+    Game Optimizer adalah tools online yang membantu menentukan setting grafik terbaik berdasarkan spesifikasi PC atau laptop. Dengan pengaturan yang tepat, kamu bisa mendapatkan performa FPS yang lebih stabil tanpa lag.
+  </p>
+
+  <h2>Kenapa Setting Game Harus Dioptimalkan?</h2>
+  <ul>
+    <li>Meningkatkan FPS dan performa game</li>
+    <li>Mengurangi lag dan stuttering</li>
+    <li>Menyesuaikan dengan kemampuan hardware</li>
+    <li>Membuat pengalaman bermain lebih smooth</li>
+  </ul>
+
+  <h2>Faktor yang Mempengaruhi Performa Game</h2>
+  <p>
+    Performa game dipengaruhi oleh GPU, CPU, dan RAM. Kombinasi ketiganya menentukan apakah game bisa berjalan di setting low, medium, atau high.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Game Optimizer</summary>
+    <ul>
+      <li>Pilih kategori GPU kamu</li>
+      <li>Pilih jumlah RAM</li>
+      <li>Pilih jenis CPU</li>
+      <li>Klik tombol optimalkan</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Rekomendasi setting otomatis</li>
+      <li>Berdasarkan spesifikasi PC</li>
+      <li>Cocok untuk game FPS</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat game terasa lag</li>
+      <li>Setelah upgrade PC</li>
+      <li>Ingin FPS lebih stabil</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function optimizeGame(){
+  const gpu = document.getElementById("gpu").value;
+  const ram = parseInt(document.getElementById("ram").value);
+  const cpu = document.getElementById("cpu").value;
+  const resultBox = document.getElementById("result");
+
+  let setting = "Medium";
+  let fps = "60 FPS";
+
+  if (gpu === "low" || ram <= 4 || cpu === "low") {
+    setting = "Low";
+    fps = "30 - 60 FPS";
+  } 
+  else if (gpu === "mid" && ram >= 8 && cpu === "mid") {
+    setting = "Medium";
+    fps = "60 - 90 FPS";
+  } 
+  else if (gpu === "high" && ram >= 16 && cpu === "high") {
+    setting = "High / Ultra";
+    fps = "90 - 144+ FPS";
+  }
+
+  resultBox.innerHTML = `
+    ✅ Rekomendasi Setting:<br><br>
+    Grafik: <b>${setting}</b><br>
+    Estimasi FPS: <b>${fps}</b><br><br>
+    💡 Tips: Gunakan resolusi lebih rendah untuk FPS lebih tinggi.
+  `;
+}
+</script>
+
+</MainLayout>

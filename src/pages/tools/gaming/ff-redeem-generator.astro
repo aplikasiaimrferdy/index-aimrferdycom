@@ -1,0 +1,115 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "FF Redeem Code Generator Gratis (Free Fire)",
+  description: "Generate kode redeem Free Fire (FF) secara online. Coba keberuntunganmu mendapatkan reward gratis sekarang.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎁 FF Redeem Code Generator</h1>
+
+<p class="tools-sub">
+Generate kode redeem Free Fire secara acak dan coba keberuntunganmu mendapatkan reward gratis.
+</p>
+
+<div class="tool-box">
+
+<button class="btn-primary" onclick="generateCode()">
+Generate Kode FF
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Kode akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu FF Redeem Code Generator?</h2>
+  <p>
+    FF Redeem Code Generator adalah tools online yang mensimulasikan pembuatan kode redeem Free Fire secara acak. Banyak pemain menggunakan tools ini untuk mencoba mendapatkan kode unik yang bisa digunakan di situs resmi redeem.
+  </p>
+
+  <h2>Apakah Kode Ini Bisa Digunakan?</h2>
+  <p>
+    Kode yang dihasilkan bersifat simulasi dan tidak selalu valid di sistem resmi. Namun, tools ini tetap menarik untuk hiburan dan mencoba keberuntungan.
+  </p>
+
+  <h2>Kenapa Banyak Dicari?</h2>
+  <ul>
+    <li>Gratis dan mudah digunakan</li>
+    <li>Memberikan sensasi mendapatkan hadiah</li>
+    <li>Populer di kalangan pemain Free Fire</li>
+    <li>Sering viral di TikTok dan YouTube</li>
+  </ul>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Generator</summary>
+    <ul>
+      <li>Klik tombol generate</li>
+      <li>Copy kode yang muncul</li>
+      <li>Coba redeem di website resmi Free Fire</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate kode secara random</li>
+      <li>Tampilan simpel dan cepat</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tips Mendapatkan Reward FF</summary>
+    <ul>
+      <li>Ikuti event resmi dari Garena</li>
+      <li>Cek update kode redeem terbaru</li>
+      <li>Gunakan kode secepat mungkin sebelum expired</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function generateCode(){
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+
+  for(let i = 0; i < 12; i++){
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  const resultBox = document.getElementById("result");
+
+  const isLucky = Math.random() < 0.2;
+
+  resultBox.innerHTML = `
+    🎯 Kode kamu:<br><br>
+    <b style="font-size:22px;">${code}</b><br><br>
+    ${isLucky ? "✅ Kode terlihat valid! Coba redeem sekarang!" : "❌ Kode kemungkinan sudah digunakan atau expired."}
+  `;
+}
+</script>
+
+</MainLayout>

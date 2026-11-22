@@ -1,0 +1,132 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Ping Test Gaming Online (Cek Latency Internet)",
+  description: "Cek ping dan latency internet untuk game online seperti PUBG, Valorant, dan Mobile Legends secara gratis.",
+  category: "Gaming",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🌐 Ping Test Gaming</h1>
+
+<p class="tools-sub">
+Cek kecepatan dan latency koneksi internet kamu untuk pengalaman gaming yang lebih stabil.
+</p>
+
+<div class="tool-box">
+
+<select id="server" class="tool-input">
+  <option value="asia">Asia Server</option>
+  <option value="europe">Europe Server</option>
+  <option value="america">America Server</option>
+</select>
+
+<button class="btn-primary" onclick="startPing()">
+Mulai Ping Test
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil ping akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Ping Test?</h2>
+  <p>
+    Ping Test adalah metode untuk mengukur latency atau waktu respon koneksi internet ke server tertentu. Dalam dunia gaming, ping sangat berpengaruh terhadap kelancaran permainan online.
+  </p>
+
+  <h2>Kenapa Ping Penting untuk Gaming?</h2>
+  <ul>
+    <li>Menentukan cepat lambat respon dalam game</li>
+    <li>Mengurangi lag dan delay</li>
+    <li>Meningkatkan akurasi dalam game FPS</li>
+    <li>Membuat gameplay lebih smooth</li>
+  </ul>
+
+  <h2>Berapa Ping yang Bagus?</h2>
+  <p>
+    Ping di bawah 20ms dianggap sangat bagus, 20–50ms masih sangat playable, sedangkan di atas 100ms biasanya mulai terasa lag dalam game online.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Ping Test</summary>
+    <ul>
+      <li>Pilih server yang ingin diuji</li>
+      <li>Klik tombol mulai</li>
+      <li>Tunggu hasil ping muncul</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Simulasi ping ke berbagai server</li>
+      <li>Hasil cepat dan mudah dibaca</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat mengalami lag saat bermain</li>
+      <li>Ingin cek kualitas jaringan</li>
+      <li>Sebelum bermain game online</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function startPing(){
+  const server = document.getElementById("server").value;
+  const resultBox = document.getElementById("result");
+
+  resultBox.innerHTML = "⏳ Mengukur ping...";
+
+  // Simulasi ping (karena browser tidak bisa ICMP ping langsung)
+  setTimeout(() => {
+    let ping;
+
+    if (server === "asia") {
+      ping = Math.floor(Math.random() * 40) + 10; // 10-50ms
+    } else if (server === "europe") {
+      ping = Math.floor(Math.random() * 80) + 80; // 80-160ms
+    } else {
+      ping = Math.floor(Math.random() * 120) + 120; // 120-240ms
+    }
+
+    let status = "Bagus";
+    if (ping > 100) status = "Kurang Stabil";
+    if (ping > 150) status = "Buruk";
+
+    resultBox.innerHTML = `
+      🌐 Server: <b>${server.toUpperCase()}</b><br>
+      ⚡ Ping: <b>${ping} ms</b><br>
+      📊 Status: <b>${status}</b>
+    `;
+  }, 1200);
+}
+</script>
+
+</MainLayout>

@@ -1,0 +1,149 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "GPA Calculator Online",
+  description: "Hitung Indeks Prestasi Kumulatif (IPK / GPA) dengan mudah. Support sistem 4.0 dan penambahan mata kuliah secara dinamis.",
+  category: "Kalkulator",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <h2>GPA Calculator</h2>
+
+    <div class="form-group">
+      <label>Nama Mata Kuliah</label>
+      <input type="text" id="courseName" class="tool-input" placeholder="Contoh: Matematika">
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="form-group">
+        <label>SKS / Kredit</label>
+        <input type="number" id="credits" class="tool-input" value="3" min="1">
+      </div>
+      <div class="form-group">
+        <label>Nilai (Grade)</label>
+        <select id="grade" class="tool-select">
+          <option value="4.0">A (4.0)</option>
+          <option value="3.7">A- (3.7)</option>
+          <option value="3.3">B+ (3.3)</option>
+          <option value="3.0">B (3.0)</option>
+          <option value="2.7">B- (2.7)</option>
+          <option value="2.3">C+ (2.3)</option>
+          <option value="2.0">C (2.0)</option>
+          <option value="1.7">C- (1.7)</option>
+          <option value="1.3">D+ (1.3)</option>
+          <option value="1.0">D (1.0)</option>
+          <option value="0.0">E (0.0)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="addCourse()">+ Tambah Mata Kuliah</button>
+
+    <!-- Course List -->
+    <div id="courseList" class="tool-result" style="display:none; margin-top:20px; padding:0;"></div>
+
+    <!-- GPA Result -->
+    <div id="gpaResult" class="tool-result" style="display:none; margin-top:15px; text-align:center;">
+      <h3>Indeks Prestasi Kumulatif (IPK)</h3>
+      <div id="gpaValue" style="font-size:3rem; font-weight:700; color:var(--accent); margin:10px 0;"></div>
+      <div id="totalCredits"></div>
+    </div>
+
+    <div class="btn-group" style="margin-top:20px;">
+      <button class="btn-secondary" onclick="resetGPA()">Reset Semua</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>GPA Calculator Online</h1>
+  <p>Hitung IPK / GPA dengan cepat dan akurat. Support penambahan mata kuliah secara dinamis.</p>
+</section>
+
+<script client:load>
+let courses = [];
+
+function addCourse() {
+  const name = document.getElementById('courseName').value.trim();
+  const credits = parseFloat(document.getElementById('credits').value);
+  const grade = parseFloat(document.getElementById('grade').value);
+
+  if (!name || !credits || !grade) {
+    alert("Mohon lengkapi semua data mata kuliah!");
+    return;
+  }
+
+  courses.push({ name, credits, grade });
+
+  renderCourses();
+  calculateGPA();
+
+  // Reset input
+  document.getElementById('courseName').value = '';
+}
+
+function renderCourses() {
+  const container = document.getElementById('courseList');
+  container.style.display = 'block';
+  let html = `<h4 style="margin:15px 15px 10px;">Daftar Mata Kuliah (${courses.length})</h4>`;
+
+  courses.forEach((course, index) => {
+    html += `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 15px; border-bottom:1px solid var(--border);">
+        <div>
+          <strong>${course.name}</strong><br>
+          <small>${course.credits} SKS • Nilai ${course.grade}</small>
+        </div>
+        <button onclick="removeCourse(${index})" style="color:#ef4444; background:none; border:none; font-size:1.2rem; cursor:pointer;">×</button>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function removeCourse(index) {
+  courses.splice(index, 1);
+  renderCourses();
+  calculateGPA();
+}
+
+function calculateGPA() {
+  if (courses.length === 0) {
+    document.getElementById('gpaResult').style.display = 'none';
+    return;
+  }
+
+  let totalPoints = 0;
+  let totalCredits = 0;
+
+  courses.forEach(course => {
+    totalPoints += course.grade * course.credits;
+    totalCredits += course.credits;
+  });
+
+  const gpa = (totalPoints / totalCredits).toFixed(2);
+
+  document.getElementById('gpaValue').textContent = gpa;
+  document.getElementById('totalCredits').innerHTML = `
+    Total SKS: <strong>${totalCredits}</strong> | Total Mata Kuliah: <strong>${courses.length}</strong>
+  `;
+  document.getElementById('gpaResult').style.display = 'block';
+}
+
+function resetGPA() {
+  courses = [];
+  document.getElementById('courseList').style.display = 'none';
+  document.getElementById('gpaResult').style.display = 'none';
+  document.getElementById('courseName').value = '';
+}
+</script>
+
+</MainLayout>

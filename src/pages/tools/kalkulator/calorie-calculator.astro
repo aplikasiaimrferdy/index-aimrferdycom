@@ -1,0 +1,202 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Kalkulator Kalori Online",
+  description: "Hitung kebutuhan kalori harian (BMR + TDEE) berdasarkan usia, berat badan, tinggi badan, jenis kelamin, dan tingkat aktivitas. Akurat untuk diet & fitness.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="calorie-app">
+      <h2>Kalkulator Kalori Harian</h2>
+
+      <div class="form-group">
+        <label>Jenis Kelamin</label>
+        <select id="gender" class="tool-select" onchange="calculateCalories()">
+          <option value="male">Pria</option>
+          <option value="female">Wanita</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Usia (tahun)</label>
+        <input type="number" id="age" class="tool-input" value="25" oninput="calculateCalories()">
+      </div>
+
+      <div class="form-group">
+        <label>Berat Badan (kg)</label>
+        <input type="number" id="weight" class="tool-input" value="65" oninput="calculateCalories()">
+      </div>
+
+      <div class="form-group">
+        <label>Tinggi Badan (cm)</label>
+        <input type="number" id="height" class="tool-input" value="170" oninput="calculateCalories()">
+      </div>
+
+      <div class="form-group">
+        <label>Tingkat Aktivitas</label>
+        <select id="activity" class="tool-select" onchange="calculateCalories()">
+          <option value="1.2">Sedentary (Jarang Olahraga)</option>
+          <option value="1.375" selected>Lightly Active (Olahraga 1-3x seminggu)</option>
+          <option value="1.55">Moderately Active (Olahraga 3-5x seminggu)</option>
+          <option value="1.725">Very Active (Olahraga 6-7x seminggu)</option>
+          <option value="1.9">Super Active (Atlet / Kerja Fisik Berat)</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" onclick="calculateCalories()">Hitung Kebutuhan Kalori</button>
+
+      <!-- RESULT -->
+      <div id="resultBox" class="tool-result" style="display:none;">
+        <h3>Hasil Perhitungan Kalori</h3>
+        
+        <div class="calorie-result">
+          <div class="main-result">
+            <span>Kebutuhan Kalori Harian</span>
+            <strong id="tdee" class="big-number"></strong>
+            <small>kcal/hari</small>
+          </div>
+          
+          <div class="details">
+            <div><strong id="bmr"></strong> BMR (Basal Metabolic Rate)</div>
+            <div><strong id="maintenance"></strong> Maintenance Calories</div>
+          </div>
+        </div>
+
+        <button class="btn-secondary" onclick="resetCalorie()" style="margin-top:20px; width:100%;">Hitung Ulang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Kalkulator Kalori Online</h1>
+  <p>Hitung kebutuhan kalori harian Anda untuk menjaga berat badan, diet, atau bulking. Menggunakan rumus Mifflin-St Jeor yang akurat.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Apa Itu Kalkulator Kalori?</h2>
+  <p>
+    Tool ini menghitung Basal Metabolic Rate (BMR) dan Total Daily Energy Expenditure (TDEE) berdasarkan data tubuh Anda. 
+    Sangat berguna untuk program diet, penurunan berat badan, atau pembentukan otot.
+  </p>
+</section>
+
+<!-- FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Kalkulator Kalori</summary>
+    <ol>
+      <li>Pilih jenis kelamin</li>
+      <li>Masukkan usia, berat badan, dan tinggi badan</li>
+      <li>Pilih tingkat aktivitas harian</li>
+      <li>Hasil akan muncul secara otomatis</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Kalkulator Kalori</summary>
+    <ul>
+      <li>Menggunakan rumus Mifflin-St Jeor (paling akurat)</li>
+      <li>Perhitungan BMR + TDEE</li>
+      <li>5 tingkat aktivitas</li>
+      <li>Real-time calculation</li>
+      <li>Gratis dan tanpa login</li>
+    </ul>
+  </details>
+</section>
+
+<script client:load>
+function calculateCalories() {
+  const gender = document.getElementById('gender').value;
+  const age = parseFloat(document.getElementById('age').value) || 0;
+  const weight = parseFloat(document.getElementById('weight').value) || 0;
+  const height = parseFloat(document.getElementById('height').value) || 0;
+  const activity = parseFloat(document.getElementById('activity').value) || 1.2;
+
+  if (age <= 0 || weight <= 0 || height <= 0) return;
+
+  let bmr = 0;
+
+  if (gender === "male") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  const tdee = Math.round(bmr * activity);
+
+  document.getElementById('bmr').textContent = Math.round(bmr) + " kcal";
+  document.getElementById('tdee').textContent = tdee;
+  document.getElementById('maintenance').textContent = tdee + " kcal";
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+function resetCalorie() {
+  document.getElementById('age').value = 25;
+  document.getElementById('weight').value = 65;
+  document.getElementById('height').value = 170;
+  document.getElementById('activity').value = 1.375;
+  calculateCalories();
+}
+
+// Auto calculate
+document.querySelectorAll('.calorie-app input, .calorie-app select').forEach(el => {
+  el.addEventListener('input', calculateCalories);
+  el.addEventListener('change', calculateCalories);
+});
+
+window.onload = () => calculateCalories();
+</script>
+
+<style is:global>
+.calorie-app {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.calorie-result {
+  margin-top: 25px;
+}
+
+.main-result {
+  text-align: center;
+  padding: 25px;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: white;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.big-number {
+  display: block;
+  font-size: 48px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.details div {
+  background: var(--card);
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+</style>
+
+</MainLayout>

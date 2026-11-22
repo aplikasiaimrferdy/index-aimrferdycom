@@ -1,0 +1,304 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Business Card Generator Online",
+  description: "Buat kartu nama profesional secara gratis. Custom desain, warna, dan download dalam format PNG. Cocok untuk bisnis, freelancer, dan UMKM.",
+  category: "Generator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="business-card-app">
+      <!-- LEFT: FORM -->
+      <div class="bc-form">
+        <h2>Buat Kartu Nama</h2>
+
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="name" class="tool-input" placeholder="Nama Anda" value="Ferdy Ahmad">
+        </div>
+
+        <div class="form-group">
+          <label>Jabatan</label>
+          <input type="text" id="title" class="tool-input" placeholder="Jabatan" value="Founder & Developer">
+        </div>
+
+        <div class="form-group">
+          <label>Nama Perusahaan</label>
+          <input type="text" id="company" class="tool-input" placeholder="Nama Perusahaan" value="AI Mr Ferdy">
+        </div>
+
+        <div class="form-group">
+          <label>Nomor Telepon</label>
+          <input type="tel" id="phone" class="tool-input" placeholder="628xxxxxxxx" value="6281234567890">
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" class="tool-input" placeholder="email@contoh.com" value="ferdy@aimrferdy.com">
+        </div>
+
+        <div class="form-group">
+          <label>Website</label>
+          <input type="text" id="website" class="tool-input" placeholder="https://aimrferdy.com" value="https://aimrferdy.com">
+        </div>
+
+        <div class="form-group">
+          <label>Alamat (opsional)</label>
+          <input type="text" id="address" class="tool-input" placeholder="Alamat lengkap">
+        </div>
+
+        <div class="form-group">
+          <label>Warna Kartu</label>
+          <input type="color" id="cardColor" value="#1e3a8a" class="tool-input">
+        </div>
+
+        <button class="btn-primary" onclick="generateCard()">Generate Kartu Nama</button>
+      </div>
+
+      <!-- RIGHT: PREVIEW -->
+      <div class="bc-preview">
+        <h3>Preview Kartu Nama</h3>
+        <div class="card-container">
+          <div id="businessCard" class="business-card">
+            <div class="card-content">
+              <div id="cardName" class="card-name">Ferdy Ahmad</div>
+              <div id="cardTitle" class="card-title">Founder & Developer</div>
+              <div id="cardCompany" class="card-company">AI Mr Ferdy</div>
+              
+              <div class="card-contact">
+                <div id="cardPhone">📱 6281234567890</div>
+                <div id="cardEmail">✉️ ferdy@aimrferdy.com</div>
+                <div id="cardWebsite">🌐 aimrferdy.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="download-actions">
+          <button onclick="downloadPNG()" class="btn-primary">⬇️ Download PNG</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Business Card Generator Online Gratis</h1>
+  <p>Buat kartu nama profesional dalam hitungan detik. Custom warna, download PNG berkualitas tinggi. Cocok untuk freelancer, UMKM, dan perusahaan.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Kenapa Membutuhkan Business Card Digital?</h2>
+  <p>
+    Kartu nama digital memudahkan Anda berbagi kontak secara cepat melalui QR Code atau gambar. 
+    Lebih modern, ramah lingkungan, dan bisa dibagikan kapan saja melalui WhatsApp, email, atau media sosial.
+  </p>
+</section>
+
+<!-- COLLAPSE + FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Membuat Kartu Nama</summary>
+    <ol>
+      <li>Isi data pribadi dan perusahaan Anda</li>
+      <li>Pilih warna kartu sesuai keinginan</li>
+      <li>Klik tombol Generate Kartu Nama</li>
+      <li>Preview akan muncul secara real-time</li>
+      <li>Download dalam format PNG</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Business Card Generator</summary>
+    <ul>
+      <li>Desain modern dan profesional</li>
+      <li>Custom warna kartu</li>
+      <li>Live Preview</li>
+      <li>Download PNG berkualitas tinggi</li>
+      <li>Responsif di semua perangkat</li>
+      <li>Gratis tanpa watermark</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Pertanyaan yang Sering Ditanyakan (FAQ)</summary>
+    <div class="faq-list">
+      <h4>Apakah tool ini gratis?</h4>
+      <p>Ya, sepenuhnya gratis dan bisa digunakan tanpa batas.</p>
+
+      <h4>Bisa tambah logo perusahaan?</h4>
+      <p>Fitur logo akan ditambahkan di update berikutnya.</p>
+
+      <h4>Apakah hasil download berkualitas tinggi?</h4>
+      <p>Ya, dihasilkan dalam resolusi tinggi menggunakan HTML Canvas.</p>
+
+      <h4>Apakah data saya disimpan?</h4>
+      <p>Tidak. Semua proses dilakukan di browser Anda sendiri.</p>
+    </div>
+  </details>
+</section>
+
+<!-- FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah Business Card Generator ini gratis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, 100% gratis tanpa login dan tanpa watermark." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah kartu nama bisa didownload?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, Anda bisa mendownload hasil dalam format PNG berkualitas tinggi." }
+    }
+  ]
+}
+</script>
+
+<script client:load>
+function generateCard() {
+  const name = document.getElementById('name').value || "Nama Anda";
+  const title = document.getElementById('title').value || "Jabatan";
+  const company = document.getElementById('company').value || "Perusahaan";
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
+  const website = document.getElementById('website').value;
+  const color = document.getElementById('cardColor').value;
+
+  // Update Preview
+  document.getElementById('cardName').textContent = name;
+  document.getElementById('cardTitle').textContent = title;
+  document.getElementById('cardCompany').textContent = company;
+  document.getElementById('cardPhone').textContent = phone ? `📱 ${phone}` : '';
+  document.getElementById('cardEmail').textContent = email ? `✉️ ${email}` : '';
+  document.getElementById('cardWebsite').textContent = website ? `🌐 ${website.replace(/^https?:\/\//, '')}` : '';
+
+  // Apply color
+  document.getElementById('businessCard').style.background = color;
+}
+
+window.downloadPNG = function() {
+  const card = document.getElementById('businessCard');
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  
+  // Set canvas size (high resolution)
+  canvas.width = 800;
+  canvas.height = 480;
+  
+  // Create temporary image from card
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = card.outerHTML;
+  const tempCard = tempDiv.firstChild;
+  tempCard.style.width = '800px';
+  tempCard.style.height = '480px';
+  tempCard.style.transform = 'scale(1)';
+  
+  // Simple way: use html2canvas (we'll add CDN)
+  if (typeof html2canvas !== "undefined") {
+    html2canvas(card, { scale: 3 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'business-card.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  } else {
+    alert("Library html2canvas sedang dimuat...");
+  }
+};
+
+// Auto generate on input change
+const inputs = document.querySelectorAll('.bc-form input');
+inputs.forEach(input => {
+  input.addEventListener('input', generateCard);
+});
+document.getElementById('cardColor').addEventListener('input', generateCard);
+</script>
+
+<style is:global>
+.business-card-app {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+@media (max-width: 768px) {
+  .business-card-app { grid-template-columns: 1fr; }
+}
+
+.bc-form h2 { margin-bottom: 20px; }
+
+.card-container {
+  background: #f8fafc;
+  padding: 30px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.business-card {
+  width: 100%;
+  max-width: 420px;
+  height: 240px;
+  background: #1e3a8a;
+  color: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-name {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.card-title {
+  font-size: 15px;
+  opacity: 0.95;
+  margin-bottom: 18px;
+}
+
+.card-company {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.card-contact {
+  font-size: 13.5px;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.download-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+</style>
+
+<!-- html2canvas CDN -->
+<script client:load src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+</MainLayout>

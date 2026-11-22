@@ -1,0 +1,151 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Nickname Generator Gamer Keren & Unik",
+  description: "Buat nickname game keren untuk FF, PUBG, ML, Valorant dengan simbol unik dan aesthetic font secara gratis.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎮 Nickname Generator Gamer</h1>
+
+<p class="tools-sub">
+Buat nama game keren, unik, dan aesthetic untuk Free Fire, PUBG, ML, Valorant, dan lainnya.
+</p>
+
+<div class="tool-box">
+
+<input type="text" id="baseName" placeholder="Masukkan nama dasar (contoh: Ferdy)" class="tool-input">
+
+<select id="style" class="tool-input">
+  <option value="pro">Pro Player</option>
+  <option value="aesthetic">Aesthetic</option>
+  <option value="symbol">Symbol</option>
+  <option value="random">Random</option>
+</select>
+
+<button class="btn-primary" onclick="generateNick()">
+Generate Nickname
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil nickname akan muncul di sini...
+</div>
+
+</div>
+
+<script is:inline>
+function random(arr){
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function generateNick(){
+  const base = document.getElementById("baseName").value.trim() || "Player";
+  const style = document.getElementById("style").value;
+  const resultBox = document.getElementById("result");
+
+  const symbols = ["乂","々","ツ","么","〆","彡","×","•","『","』","亗"];
+  const suffix = ["Gaming","X","Pro","ID","YT","ツ","999","777","亗"];
+
+  let results = [];
+
+  for(let i=0;i<5;i++){
+    let name = base;
+
+    if(style === "pro"){
+      name = `${random(symbols)}${base}${random(symbols)}${random(suffix)}`;
+    }
+    else if(style === "aesthetic"){
+      name = `${base.split("").join(" ")} ${random(symbols)}`;
+    }
+    else if(style === "symbol"){
+      name = `${random(symbols)}${random(symbols)}${base}${random(symbols)}`;
+    }
+    else{
+      name = `${random(symbols)}${base}${Math.floor(Math.random()*999)}${random(suffix)}`;
+    }
+
+    results.push(name);
+  }
+
+  resultBox.innerHTML = results.map(n => 
+    `<div style="margin:8px 0;">
+      ${n} 
+      <button onclick="copyText('${n}')">Copy</button>
+    </div>`
+  ).join("");
+}
+
+function copyText(text){
+  navigator.clipboard.writeText(text);
+  alert("Copied: " + text);
+}
+</script>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu Nickname Generator Gamer?</h2>
+  <p>
+    Nickname Generator Gamer adalah tools online gratis untuk membuat nama game keren, unik, dan aesthetic. Cocok untuk digunakan di game populer seperti Free Fire, PUBG, Mobile Legends, dan Valorant.
+  </p>
+
+  <h2>Kenapa Nickname Keren Itu Penting?</h2>
+  <ul>
+    <li>Membuat akun terlihat lebih profesional</li>
+    <li>Meningkatkan identitas di dalam game</li>
+    <li>Lebih mudah dikenal oleh player lain</li>
+    <li>Cocok untuk branding konten gaming</li>
+  </ul>
+
+  <h2>Jenis Nickname yang Bisa Dibuat</h2>
+  <p>
+    Tools ini menyediakan berbagai style seperti pro player, aesthetic, simbol unik, hingga random generator yang bisa langsung kamu gunakan tanpa ribet.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan Nickname Generator</summary>
+    <p>
+      Masukkan nama dasar, pilih style nickname, lalu klik generate.
+      Kamu bisa langsung copy hasil nickname dan gunakan di game favoritmu.
+    </p>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Generate nickname otomatis</li>
+      <li>Banyak pilihan style keren</li>
+      <li>Copy sekali klik</li>
+      <li>Gratis tanpa login</li>
+      <li>Support semua game</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat membuat akun game baru</li>
+      <li>Ingin ganti nickname lama</li>
+      <li>Membuat nama squad atau clan</li>
+      <li>Branding channel gaming</li>
+    </ul>
+  </details>
+
+</section>
+
+</MainLayout>

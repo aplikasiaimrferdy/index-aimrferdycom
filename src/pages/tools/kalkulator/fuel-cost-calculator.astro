@@ -1,0 +1,106 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Fuel Cost Calculator Online",
+  description: "Hitung biaya bahan bakar perjalanan berdasarkan jarak, konsumsi BBM, dan harga bensin. Cocok untuk perencanaan trip darat.",
+  category: "Kalkulator",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <h2>Fuel Cost Calculator</h2>
+
+    <div class="form-group">
+      <label>Jarak Tempuh (Kilometer)</label>
+      <input type="number" id="distance" class="tool-input" value="450" oninput="calculateFuel()">
+    </div>
+
+    <div class="form-group">
+      <label>Konsumsi BBM (km/liter)</label>
+      <input type="number" id="efficiency" class="tool-input" value="12" step="0.1" oninput="calculateFuel()">
+    </div>
+
+    <div class="form-group">
+      <label>Harga BBM per Liter (Rp)</label>
+      <input type="number" id="fuelPrice" class="tool-input" value="10500" oninput="calculateFuel()">
+    </div>
+
+    <div class="form-group">
+      <label>Jumlah Perjalanan</label>
+      <input type="number" id="trips" class="tool-input" value="1" min="1" oninput="calculateFuel()">
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultBox" class="tool-result" style="display:none;">
+      <h3>Hasil Perhitungan Biaya BBM</h3>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;">
+        <div style="text-align:center;">
+          <div style="font-size:0.95rem; opacity:0.8;">Total BBM Digunakan</div>
+          <strong id="totalFuel" style="font-size:1.9rem; color:var(--accent);"></strong>
+          <small>Liter</small>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:0.95rem; opacity:0.8;">Total Biaya</div>
+          <strong id="totalCost" style="font-size:1.9rem;"></strong>
+        </div>
+      </div>
+
+      <div class="tool-result" style="text-align:center; margin-top:10px;">
+        <div>Biaya per Kilometer</div>
+        <strong id="costPerKm"></strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Fuel Cost Calculator</h1>
+  <p>Hitung estimasi biaya bahan bakar untuk perjalanan Anda dengan cepat dan akurat.</p>
+</section>
+
+<section class="tool-seo">
+  <h2>Kenapa Perlu Fuel Cost Calculator?</h2>
+  <p>Tool ini sangat membantu untuk merencanakan budget perjalanan jauh, mudik, touring, atau perjalanan bisnis.</p>
+</section>
+
+<script client:load>
+function calculateFuel() {
+  const distance = parseFloat(document.getElementById('distance').value) || 0;
+  const efficiency = parseFloat(document.getElementById('efficiency').value) || 0;
+  const fuelPrice = parseFloat(document.getElementById('fuelPrice').value) || 0;
+  const trips = parseFloat(document.getElementById('trips').value) || 1;
+
+  if (distance <= 0 || efficiency <= 0 || fuelPrice <= 0) {
+    document.getElementById('resultBox').style.display = 'none';
+    return;
+  }
+
+  const totalDistance = distance * trips;
+  const totalFuel = totalDistance / efficiency;
+  const totalCost = totalFuel * fuelPrice;
+  const costPerKm = fuelPrice / efficiency;
+
+  document.getElementById('totalFuel').textContent = totalFuel.toFixed(2);
+  document.getElementById('totalCost').textContent = 'Rp ' + Math.round(totalCost).toLocaleString('id-ID');
+  document.getElementById('costPerKm').textContent = 'Rp ' + costPerKm.toFixed(0) + ' / km';
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+// Auto calculate when input changes
+document.querySelectorAll('#distance, #efficiency, #fuelPrice, #trips').forEach(input => {
+  input.addEventListener('input', calculateFuel);
+});
+
+// Initial calculation
+window.onload = calculateFuel;
+</script>
+
+</MainLayout>

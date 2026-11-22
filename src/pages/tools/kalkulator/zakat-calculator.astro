@@ -1,0 +1,229 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Zakat Calculator Online",
+  description: "Hitung Zakat Fitrah, Zakat Mal, dan Zakat Penghasilan secara akurat sesuai syariat. Dilengkapi nisab terkini dan perhitungan otomatis.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="zakat-app">
+      <h2>Zakat Calculator</h2>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button onclick="switchTab(0)" class="tab-btn active">Zakat Fitrah</button>
+        <button onclick="switchTab(1)" class="tab-btn">Zakat Mal</button>
+        <button onclick="switchTab(2)" class="tab-btn">Zakat Penghasilan</button>
+      </div>
+
+      <!-- Zakat Fitrah -->
+      <div id="tab-0" class="tab-content active">
+        <div class="form-group">
+          <label>Jumlah Jiwa (orang)</label>
+          <input type="number" id="fitrahPeople" class="tool-input" value="4" oninput="calculateFitrah()">
+        </div>
+        <div class="form-group">
+          <label>Harga Beras per Kg (Rp)</label>
+          <input type="number" id="ricePrice" class="tool-input" value="18000" oninput="calculateFitrah()">
+        </div>
+        <div class="result-box" id="fitrahResult" style="display:none;"></div>
+      </div>
+
+      <!-- Zakat Mal -->
+      <div id="tab-1" class="tab-content">
+        <div class="form-group">
+          <label>Total Harta Kekayaan (Rp)</label>
+          <input type="number" id="wealth" class="tool-input" value="150000000" oninput="calculateZakatMal()">
+        </div>
+        <div class="form-group">
+          <label>Nisab Emas (gram) - default 85g</label>
+          <input type="number" id="nisabGold" class="tool-input" value="85" oninput="calculateZakatMal()">
+        </div>
+        <div class="result-box" id="malResult" style="display:none;"></div>
+      </div>
+
+      <!-- Zakat Penghasilan -->
+      <div id="tab-2" class="tab-content">
+        <div class="form-group">
+          <label>Penghasilan Bersih per Bulan (Rp)</label>
+          <input type="number" id="monthlyIncome" class="tool-input" value="8000000" oninput="calculateZakatIncome()">
+        </div>
+        <div class="result-box" id="incomeResult" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Zakat Calculator Online</h1>
+  <p>Hitung Zakat Fitrah, Zakat Mal, dan Zakat Penghasilan dengan mudah dan sesuai syariat Islam.</p>
+</section>
+
+<!-- SEO & FAQ -->
+<section class="tool-seo">
+  <h2>Mudah Hitung Zakat Anda</h2>
+  <p>Tool ini membantu umat Muslim menghitung zakat dengan cepat dan akurat berdasarkan ketentuan syariat.</p>
+</section>
+
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Zakat Calculator</summary>
+    <ol>
+      <li>Pilih jenis zakat yang ingin dihitung</li>
+      <li>Isi data yang diperlukan</li>
+      <li>Hasil perhitungan zakat akan muncul otomatis</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Zakat Calculator</summary>
+    <ul>
+      <li>Hitung Zakat Fitrah, Mal, dan Penghasilan</li>
+      <li>Perhitungan berdasarkan nisab emas</li>
+      <li>Real-time calculation</li>
+      <li>Gratis dan tanpa login</li>
+    </ul>
+  </details>
+</section>
+
+<script client:load>
+let currentTab = 0;
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.getElementById(`tab-${tab}`).classList.add('active');
+  
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === tab);
+  });
+}
+
+// Zakat Fitrah
+function calculateFitrah() {
+  const people = parseFloat(document.getElementById('fitrahPeople').value) || 0;
+  const ricePrice = parseFloat(document.getElementById('ricePrice').value) || 0;
+  
+  if (people <= 0 || ricePrice <= 0) return;
+
+  const zakatPerPerson = ricePrice * 2.5; // 2.5 kg beras
+  const totalZakat = zakatPerPerson * people;
+
+  document.getElementById('fitrahResult').style.display = 'block';
+  document.getElementById('fitrahResult').innerHTML = `
+    <strong>Zakat Fitrah:</strong><br>
+    Per orang: Rp ${zakatPerPerson.toLocaleString('id-ID')}<br>
+    <strong>Total untuk ${people} orang: Rp ${totalZakat.toLocaleString('id-ID')}</strong>
+  `;
+}
+
+// Zakat Mal
+function calculateZakatMal() {
+  const wealth = parseFloat(document.getElementById('wealth').value) || 0;
+  const nisabGram = parseFloat(document.getElementById('nisabGold').value) || 85;
+  
+  // Harga emas per gram (approx)
+  const goldPricePerGram = 1200000; 
+  const nisab = nisabGram * goldPricePerGram;
+
+  let zakat = 0;
+  let status = "";
+
+  if (wealth >= nisab) {
+    zakat = wealth * 0.025;
+    status = "✅ Wajib Zakat";
+  } else {
+    status = "❌ Belum mencapai nisab";
+  }
+
+  document.getElementById('malResult').style.display = 'block';
+  document.getElementById('malResult').innerHTML = `
+    <strong>Nisab saat ini:</strong> Rp ${nisab.toLocaleString('id-ID')}<br>
+    ${status}<br><br>
+    ${zakat > 0 ? `<strong>Zakat yang harus dikeluarkan: Rp ${zakat.toLocaleString('id-ID')}</strong>` : ''}
+  `;
+}
+
+// Zakat Penghasilan
+function calculateZakatIncome() {
+  const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+  const nisabIncome = 7000000; // approx nisab penghasilan bulanan
+
+  let zakat = 0;
+  let status = "";
+
+  if (income >= nisabIncome) {
+    zakat = income * 0.025;
+    status = "✅ Wajib Zakat";
+  } else {
+    status = "❌ Belum mencapai nisab";
+  }
+
+  document.getElementById('incomeResult').style.display = 'block';
+  document.getElementById('incomeResult').innerHTML = `
+    <strong>Status:</strong> ${status}<br>
+    ${zakat > 0 ? `<strong>Zakat Penghasilan per bulan: Rp ${zakat.toLocaleString('id-ID')}</strong>` : ''}
+  `;
+}
+
+// Auto calculate
+document.querySelectorAll('input').forEach(input => {
+  input.addEventListener('input', () => {
+    if (currentTab === 0) calculateFitrah();
+    if (currentTab === 1) calculateZakatMal();
+    if (currentTab === 2) calculateZakatIncome();
+  });
+});
+
+// Initial load
+window.onload = () => {
+  calculateFitrah();
+  calculateZakatMal();
+  calculateZakatIncome();
+};
+</script>
+
+<style is:global>
+.zakat-app { max-width: 700px; margin: 0 auto; }
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.result-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  line-height: 1.7;
+}
+</style>
+
+</MainLayout>

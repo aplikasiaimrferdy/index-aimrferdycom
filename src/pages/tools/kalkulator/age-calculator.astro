@@ -1,0 +1,212 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Age Calculator Online",
+  description: "Hitung usia secara akurat berdasarkan tanggal lahir. Tampilkan umur dalam tahun, bulan, hari, dan total hari. Gratis & Cepat.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="age-calculator-app">
+      <h2>Age Calculator</h2>
+      
+      <div class="form-group">
+        <label>Tanggal Lahir</label>
+        <input type="date" id="birthDate" class="tool-input">
+      </div>
+
+      <button class="btn-primary" onclick="calculateAge()">Hitung Usia</button>
+
+      <!-- RESULT -->
+      <div id="resultBox" class="tool-result" style="display: none;">
+        <h3>Hasil Perhitungan Usia</h3>
+        <div id="ageMain" class="age-main"></div>
+        
+        <div class="age-detail">
+          <div><strong id="years"></strong> Tahun</div>
+          <div><strong id="months"></strong> Bulan</div>
+          <div><strong id="days"></strong> Hari</div>
+        </div>
+
+        <div id="totalDays" class="total-days"></div>
+        
+        <button class="btn-secondary" onclick="resetCalculator()" style="margin-top: 20px;">Hitung Ulang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Age Calculator Online</h1>
+  <p>Hitung usia Anda secara tepat berdasarkan tanggal lahir. Menampilkan umur dalam tahun, bulan, hari, dan total hari hidup.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Apa Itu Age Calculator?</h2>
+  <p>
+    Age Calculator adalah alat online yang menghitung usia seseorang secara akurat berdasarkan tanggal lahir. 
+    Tool ini sangat berguna untuk keperluan administrasi, perencanaan ulang tahun, asuransi, dan keperluan pribadi.
+  </p>
+</section>
+
+<!-- COLLAPSE + FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Age Calculator</summary>
+    <ol>
+      <li>Pilih tanggal lahir Anda pada kolom input</li>
+      <li>Klik tombol <strong>Hitung Usia</strong></li>
+      <li>Hasil akan muncul secara detail (tahun, bulan, hari)</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Age Calculator</summary>
+    <ul>
+      <li>Perhitungan usia yang sangat akurat</li>
+      <li>Menampilkan tahun, bulan, dan hari</li>
+      <li>Total hari sejak lahir</li>
+      <li>Desain simpel dan responsif</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Pertanyaan yang Sering Ditanyakan (FAQ)</summary>
+    <div class="faq-list">
+      <h4>Apakah perhitungan usia ini akurat?</h4>
+      <p>Ya, sangat akurat karena menggunakan perhitungan tanggal yang presisi.</p>
+
+      <h4>Bisa menghitung usia orang lain?</h4>
+      <p>Bisa. Silakan masukkan tanggal lahir yang diinginkan.</p>
+
+      <h4>Apakah data tanggal lahir disimpan?</h4>
+      <p>Tidak. Semua perhitungan dilakukan di browser Anda sendiri.</p>
+    </div>
+  </details>
+</section>
+
+<!-- FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah Age Calculator ini akurat?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, perhitungan dilakukan dengan presisi tinggi menggunakan tanggal kalender." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah tool ini gratis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ya, sepenuhnya gratis dan dapat digunakan tanpa batas." }
+    }
+  ]
+}
+</script>
+
+<script client:load>
+function calculateAge() {
+  const birthDateStr = document.getElementById('birthDate').value;
+  
+  if (!birthDateStr) {
+    alert("Mohon pilih tanggal lahir!");
+    return;
+  }
+
+  const birthDate = new Date(birthDateStr);
+  const today = new Date();
+
+  if (birthDate > today) {
+    alert("Tanggal lahir tidak boleh lebih dari hari ini!");
+    return;
+  }
+
+  let years = today.getFullYear() - birthDate.getFullYear();
+  let months = today.getMonth() - birthDate.getMonth();
+  let days = today.getDate() - birthDate.getDate();
+
+  if (days < 0) {
+    months--;
+    const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  // Total days
+  const totalDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
+
+  // Tampilkan hasil
+  document.getElementById('ageMain').innerHTML = `
+    Usia Anda: <strong>${years} Tahun ${months} Bulan ${days} Hari</strong>
+  `;
+
+  document.getElementById('years').textContent = years;
+  document.getElementById('months').textContent = months;
+  document.getElementById('days').textContent = days;
+  document.getElementById('totalDays').innerHTML = `
+    Total hari sejak lahir: <strong>${totalDays.toLocaleString('id-ID')}</strong> hari
+  `;
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+function resetCalculator() {
+  document.getElementById('birthDate').value = '';
+  document.getElementById('resultBox').style.display = 'none';
+}
+</script>
+
+<style is:global>
+.age-calculator-app {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.age-main {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 20px 0;
+  line-height: 1.4;
+}
+
+.age-detail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+  font-size: 18px;
+}
+
+.age-detail div {
+  background: var(--card);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.total-days {
+  margin-top: 15px;
+  font-size: 16px;
+  padding: 12px;
+  background: #f0fdf4;
+  border-radius: 10px;
+  color: #166534;
+}
+</style>
+
+</MainLayout>

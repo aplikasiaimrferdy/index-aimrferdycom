@@ -1,0 +1,230 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Savings & Investment Calculator Online",
+  description: "Hitung tabungan dan investasi masa depan dengan bunga majemuk. Cocok untuk perencanaan keuangan, deposito, reksadana, saham, dan investasi lainnya.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="savings-app">
+      <h2>Savings & Investment Calculator</h2>
+
+      <div class="form-group">
+        <label>Modal Awal (Rp)</label>
+        <input type="number" id="initial" class="tool-input" value="10000000" oninput="calculateSavings()">
+      </div>
+
+      <div class="form-group">
+        <label>Setoran Bulanan (Rp)</label>
+        <input type="number" id="monthly" class="tool-input" value="500000" oninput="calculateSavings()">
+      </div>
+
+      <div class="form-group">
+        <label>Rate Bunga / Return per Tahun (%)</label>
+        <input type="number" id="rate" class="tool-input" value="7" step="0.1" oninput="calculateSavings()">
+      </div>
+
+      <div class="form-group">
+        <label>Jangka Waktu (Tahun)</label>
+        <input type="number" id="years" class="tool-input" value="10" oninput="calculateSavings()">
+      </div>
+
+      <button class="btn-primary" onclick="calculateSavings()">Hitung Proyeksi</button>
+
+      <!-- RESULT -->
+      <div id="resultBox" class="tool-result" style="display:none;">
+        <h3>Hasil Proyeksi Investasi</h3>
+        
+        <div class="savings-result">
+          <div class="result-item">
+            <span>Nilai Investasi Akhir</span>
+            <strong id="futureValue">Rp 0</strong>
+          </div>
+          <div class="result-item">
+            <span>Total Setoran</span>
+            <strong id="totalContribution">Rp 0</strong>
+          </div>
+          <div class="result-item">
+            <span>Total Keuntungan</span>
+            <strong id="totalInterest">Rp 0</strong>
+          </div>
+        </div>
+
+        <div class="breakdown">
+          <small id="breakdownText"></small>
+        </div>
+
+        <button class="btn-secondary" onclick="resetSavings()" style="margin-top:20px; width:100%;">Hitung Ulang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Savings & Investment Calculator</h1>
+  <p>Hitung berapa uang Anda di masa depan dengan bunga majemuk dan setoran rutin.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Apa Itu Savings Calculator?</h2>
+  <p>
+    Tool ini membantu Anda memproyeksikan pertumbuhan tabungan atau investasi dengan sistem bunga majemuk (compound interest). 
+    Sangat berguna untuk merencanakan masa depan, pensiun, pendidikan anak, atau target keuangan lainnya.
+  </p>
+</section>
+
+<!-- COLLAPSE + FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan Savings Calculator</summary>
+    <ol>
+      <li>Masukkan modal awal</li>
+      <li>Masukkan setoran bulanan (bisa 0)</li>
+      <li>Masukkan tingkat bunga/return tahunan</li>
+      <li>Masukkan jangka waktu dalam tahun</li>
+      <li>Hasil akan muncul secara otomatis</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur Savings Calculator</summary>
+    <ul>
+      <li>Menggunakan rumus bunga majemuk</li>
+      <li>Perhitungan modal awal + setoran rutin</li>
+      <li>Menampilkan total keuntungan</li>
+      <li>Real-time calculation</li>
+      <li>Gratis dan privasi aman</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Pertanyaan yang Sering Ditanyakan (FAQ)</summary>
+    <div class="faq-list">
+      <h4>Apakah bunga dihitung majemuk?</h4>
+      <p>Ya, tool ini menggunakan compound interest (bunga berbunga).</p>
+
+      <h4>Return berapa yang realistis?</h4>
+      <p>Deposito 4-7%, reksadana 8-15%, saham rata-rata 12-20% per tahun (tergantung risiko).</p>
+
+      <h4>Apakah data saya disimpan?</h4>
+      <p>Tidak. Semua perhitungan dilakukan di browser Anda.</p>
+    </div>
+  </details>
+</section>
+
+<script client:load>
+function calculateSavings() {
+  const initial = parseFloat(document.getElementById('initial').value) || 0;
+  const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+  const annualRate = parseFloat(document.getElementById('rate').value) || 0;
+  const years = parseFloat(document.getElementById('years').value) || 0;
+
+  if (years <= 0) {
+    document.getElementById('resultBox').style.display = 'none';
+    return;
+  }
+
+  const monthlyRate = annualRate / 100 / 12;
+  const totalMonths = years * 12;
+
+  // Future Value of initial investment
+  let futureValue = initial * Math.pow(1 + monthlyRate, totalMonths);
+
+  // Future Value of monthly contributions
+  if (monthly > 0 && monthlyRate > 0) {
+    futureValue += monthly * (Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate;
+  } else if (monthly > 0) {
+    futureValue += monthly * totalMonths;
+  }
+
+  const totalContribution = initial + (monthly * totalMonths);
+  const totalInterest = futureValue - totalContribution;
+
+  // Tampilkan hasil
+  document.getElementById('futureValue').textContent = 
+    'Rp ' + Math.round(futureValue).toLocaleString('id-ID');
+
+  document.getElementById('totalContribution').textContent = 
+    'Rp ' + Math.round(totalContribution).toLocaleString('id-ID');
+
+  document.getElementById('totalInterest').textContent = 
+    'Rp ' + Math.round(totalInterest).toLocaleString('id-ID');
+
+  document.getElementById('breakdownText').innerHTML = `
+    Dalam ${years} tahun dengan setoran bulanan Rp ${monthly.toLocaleString('id-ID')}, 
+    uang Anda diproyeksikan tumbuh menjadi <strong>Rp ${Math.round(futureValue).toLocaleString('id-ID')}</strong>
+  `;
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+function resetSavings() {
+  document.getElementById('initial').value = 10000000;
+  document.getElementById('monthly').value = 500000;
+  document.getElementById('rate').value = 7;
+  document.getElementById('years').value = 10;
+  calculateSavings();
+}
+
+// Auto calculate on input
+document.querySelectorAll('.savings-app input').forEach(input => {
+  input.addEventListener('input', calculateSavings);
+});
+
+// Initial calculation
+window.onload = () => calculateSavings();
+</script>
+
+<style is:global>
+.savings-app {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.savings-result {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.result-item {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.result-item span {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.result-item strong {
+  font-size: 22px;
+  color: var(--accent);
+}
+
+.breakdown {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f0fdf4;
+  border-radius: 10px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+</style>
+
+</MainLayout>

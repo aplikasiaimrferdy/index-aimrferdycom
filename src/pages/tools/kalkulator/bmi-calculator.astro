@@ -1,0 +1,257 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "BMI Calculator Online",
+  description: "Hitung Body Mass Index (BMI) secara akurat. Ketahui kategori berat badan Anda (Underweight, Normal, Overweight, Obese). Gratis & Mudah Digunakan.",
+  category: "Kalkulator",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <div class="bmi-app">
+      <!-- INPUT -->
+      <div class="bmi-input">
+        <h2>Hitung BMI Anda</h2>
+        
+        <div class="form-group">
+          <label>Berat Badan (kg)</label>
+          <input type="number" id="weight" class="tool-input" placeholder="Contoh: 65" step="0.1">
+        </div>
+
+        <div class="form-group">
+          <label>Tinggi Badan (cm)</label>
+          <input type="number" id="height" class="tool-input" placeholder="Contoh: 170">
+        </div>
+
+        <div class="form-group">
+          <label>Usia (opsional)</label>
+          <input type="number" id="age" class="tool-input" placeholder="Contoh: 25">
+        </div>
+
+        <div class="form-group">
+          <label>Jenis Kelamin</label>
+          <select id="gender" class="tool-select">
+            <option value="">Pilih Jenis Kelamin</option>
+            <option value="male">Pria</option>
+            <option value="female">Wanita</option>
+          </select>
+        </div>
+
+        <button class="btn-primary" onclick="calculateBMI()">Hitung BMI</button>
+      </div>
+
+      <!-- RESULT -->
+      <div class="bmi-result" id="resultBox" style="display:none;">
+        <h3>Hasil Perhitungan BMI</h3>
+        <div id="bmiValue" class="bmi-number"></div>
+        <div id="bmiCategory" class="bmi-category"></div>
+        <div id="bmiDescription" class="bmi-desc"></div>
+        
+        <button class="btn-secondary" onclick="resetBMI()" style="margin-top:20px;">Hitung Ulang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>BMI Calculator Online</h1>
+  <p>Hitung Indeks Massa Tubuh (BMI) Anda dengan cepat dan akurat. Ketahui apakah berat badan Anda ideal, kurang, atau berlebih.</p>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+  <h2>Apa Itu BMI?</h2>
+  <p>
+    BMI (Body Mass Index) adalah ukuran yang digunakan untuk menentukan kategori berat badan seseorang berdasarkan tinggi dan berat badan. 
+    Kalkulator BMI ini membantu Anda memantau kesehatan dan risiko penyakit terkait berat badan.
+  </p>
+
+  <h2>Kategori BMI</h2>
+  <ul>
+    <li><strong>Kurus (Underweight)</strong> : BMI &lt; 18.5</li>
+    <li><strong>Normal</strong> : BMI 18.5 – 24.9</li>
+    <li><strong>Kelebihan Berat (Overweight)</strong> : BMI 25 – 29.9</li>
+    <li><strong>Obesitas</strong> : BMI ≥ 30</li>
+  </ul>
+</section>
+
+<!-- COLLAPSE + FAQ -->
+<section class="tool-more">
+  <details>
+    <summary>Cara Menggunakan BMI Calculator</summary>
+    <ol>
+      <li>Masukkan berat badan dalam kilogram (kg)</li>
+      <li>Masukkan tinggi badan dalam sentimeter (cm)</li>
+      <li>Isi usia dan jenis kelamin (opsional)</li>
+      <li>Klik tombol <strong>Hitung BMI</strong></li>
+      <li>Lihat hasil dan penjelasannya</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Fitur BMI Calculator Ini</summary>
+    <ul>
+      <li>Perhitungan BMI yang akurat</li>
+      <li>Kategori warna berbeda untuk setiap status</li>
+      <li>Penjelasan hasil yang mudah dipahami</li>
+      <li>Support untuk pria dan wanita</li>
+      <li>Desain responsif & mobile friendly</li>
+      <li>Gratis dan tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Pertanyaan yang Sering Ditanyakan (FAQ)</summary>
+    <div class="faq-list">
+      <h4>Apakah BMI Calculator ini akurat?</h4>
+      <p>Ya, perhitungan menggunakan rumus standar BMI internasional. Namun, BMI bukan satu-satunya ukuran kesehatan.</p>
+
+      <h4>Apakah ada perbedaan BMI pria dan wanita?</h4>
+      <p>Rumus BMI sama untuk pria dan wanita. Namun interpretasi hasil bisa sedikit berbeda berdasarkan usia dan komposisi tubuh.</p>
+
+      <h4>Berapa BMI yang ideal?</h4>
+      <p>BMI ideal berada di rentang 18.5 – 24.9 (Normal).</p>
+
+      <h4>Apakah tool ini menyimpan data saya?</h4>
+      <p>Tidak. Semua perhitungan dilakukan di browser Anda, tidak ada data yang disimpan.</p>
+    </div>
+  </details>
+</section>
+
+<!-- FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah BMI Calculator ini akurat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ya, menggunakan rumus BMI standar internasional. Hasil cukup akurat untuk orang dewasa."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa BMI yang dianggap normal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BMI normal berada di antara 18.5 hingga 24.9."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah data yang saya masukkan aman?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ya, 100% aman karena perhitungan dilakukan di browser Anda sendiri."
+      }
+    }
+  ]
+}
+</script>
+
+<script client:load>
+function calculateBMI() {
+  const weight = parseFloat(document.getElementById('weight').value);
+  const heightCm = parseFloat(document.getElementById('height').value);
+  const age = parseFloat(document.getElementById('age').value);
+  const gender = document.getElementById('gender').value;
+
+  if (!weight || !heightCm || heightCm <= 0 || weight <= 0) {
+    alert("Mohon masukkan berat badan dan tinggi badan dengan benar!");
+    return;
+  }
+
+  const heightM = heightCm / 100;
+  const bmi = (weight / (heightM * heightM)).toFixed(1);
+
+  let category = "";
+  let color = "";
+  let description = "";
+
+  if (bmi < 18.5) {
+    category = "Kurus (Underweight)";
+    color = "#eab308";
+    description = "Berat badan Anda berada di bawah normal. Disarankan untuk meningkatkan asupan nutrisi dan konsultasi dengan dokter atau ahli gizi.";
+  } else if (bmi >= 18.5 && bmi <= 24.9) {
+    category = "Normal";
+    color = "#22c55e";
+    description = "Selamat! Berat badan Anda berada dalam kategori ideal. Pertahankan pola makan dan olahraga yang baik.";
+  } else if (bmi >= 25 && bmi <= 29.9) {
+    category = "Kelebihan Berat (Overweight)";
+    color = "#f97316";
+    description = "Berat badan Anda di atas normal. Disarankan untuk mengatur pola makan dan rutin berolahraga.";
+  } else {
+    category = "Obesitas";
+    color = "#ef4444";
+    description = "Berat badan Anda jauh di atas normal. Sangat disarankan berkonsultasi dengan dokter untuk penanganan lebih lanjut.";
+  }
+
+  // Tampilkan hasil
+  document.getElementById('bmiValue').innerHTML = `BMI: <strong>${bmi}</strong>`;
+  document.getElementById('bmiValue').style.color = color;
+  document.getElementById('bmiCategory').textContent = category;
+  document.getElementById('bmiCategory').style.color = color;
+  document.getElementById('bmiDescription').textContent = description;
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+
+function resetBMI() {
+  document.getElementById('resultBox').style.display = 'none';
+  document.getElementById('weight').value = '';
+  document.getElementById('height').value = '';
+  document.getElementById('age').value = '';
+  document.getElementById('gender').value = '';
+}
+</script>
+
+<style is:global>
+.bmi-app {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .bmi-app { grid-template-columns: 1fr; }
+}
+
+.bmi-input h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.bmi-number {
+  font-size: 52px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.bmi-category {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.bmi-desc {
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+</style>
+
+</MainLayout>

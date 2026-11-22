@@ -1,0 +1,168 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "FPS Calculator Gaming (Cek Estimasi FPS PC)",
+  description: "Hitung estimasi FPS game berdasarkan spesifikasi PC seperti GPU, CPU, dan RAM secara online.",
+  category: "Gaming",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎮 FPS Calculator</h1>
+
+<p class="tools-sub">
+Cek estimasi FPS berdasarkan spesifikasi PC kamu untuk pengalaman gaming terbaik.
+</p>
+
+<div class="tool-box">
+
+<select id="gpu" class="tool-input">
+  <option value="low">GPU Low (Intel HD / Vega)</option>
+  <option value="mid">GPU Mid (GTX 1050 / RX 570)</option>
+  <option value="high">GPU High (RTX / RX 6000+)</option>
+</select>
+
+<select id="cpu" class="tool-input">
+  <option value="low">CPU Low (Dual Core)</option>
+  <option value="mid">CPU Mid (i5 / Ryzen 5)</option>
+  <option value="high">CPU High (i7 / Ryzen 7+)</option>
+</select>
+
+<select id="ram" class="tool-input">
+  <option value="4">4 GB</option>
+  <option value="8">8 GB</option>
+  <option value="16">16 GB</option>
+  <option value="32">32 GB+</option>
+</select>
+
+<select id="game" class="tool-input">
+  <option value="valorant">Valorant</option>
+  <option value="cs2">CS2</option>
+  <option value="pubg">PUBG</option>
+  <option value="apex">Apex Legends</option>
+</select>
+
+<button class="btn-primary" onclick="calculateFPS()">
+Hitung FPS
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Estimasi FPS akan muncul di sini...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu FPS Calculator?</h2>
+  <p>
+    FPS Calculator adalah tools online untuk memperkirakan jumlah frame per second (FPS) yang bisa dihasilkan oleh PC atau laptop saat menjalankan game tertentu. FPS sangat penting untuk menentukan kelancaran gameplay.
+  </p>
+
+  <h2>Kenapa FPS Penting dalam Gaming?</h2>
+  <ul>
+    <li>FPS tinggi membuat gameplay lebih smooth</li>
+    <li>Meningkatkan responsivitas dalam game</li>
+    <li>Mengurangi stutter dan lag visual</li>
+    <li>Sangat penting untuk game FPS kompetitif</li>
+  </ul>
+
+  <h2>Faktor yang Mempengaruhi FPS</h2>
+  <p>
+    FPS dipengaruhi oleh GPU, CPU, RAM, serta setting grafik dalam game. Semakin tinggi spesifikasi hardware, semakin tinggi FPS yang dihasilkan.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan FPS Calculator</summary>
+    <ul>
+      <li>Pilih GPU yang sesuai dengan PC kamu</li>
+      <li>Pilih jenis CPU</li>
+      <li>Pilih kapasitas RAM</li>
+      <li>Pilih game yang ingin dicek</li>
+      <li>Klik tombol hitung</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Estimasi FPS berdasarkan spek PC</li>
+      <li>Support berbagai game FPS populer</li>
+      <li>Perhitungan cepat dan ringan</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Sebelum membeli game</li>
+      <li>Saat ingin upgrade PC</li>
+      <li>Untuk cek performa game tertentu</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+function calculateFPS(){
+  const gpu = document.getElementById("gpu").value;
+  const cpu = document.getElementById("cpu").value;
+  const ram = parseInt(document.getElementById("ram").value);
+  const game = document.getElementById("game").value;
+  const resultBox = document.getElementById("result");
+
+  let baseFPS = 60;
+
+  // GPU impact
+  if (gpu === "low") baseFPS -= 25;
+  if (gpu === "mid") baseFPS += 0;
+  if (gpu === "high") baseFPS += 40;
+
+  // CPU impact
+  if (cpu === "low") baseFPS -= 15;
+  if (cpu === "mid") baseFPS += 0;
+  if (cpu === "high") baseFPS += 25;
+
+  // RAM impact
+  if (ram <= 4) baseFPS -= 20;
+  if (ram === 8) baseFPS += 0;
+  if (ram >= 16) baseFPS += 15;
+
+  // Game weight
+  if (game === "valorant") baseFPS += 20;
+  if (game === "cs2") baseFPS += 5;
+  if (game === "pubg") baseFPS -= 10;
+  if (game === "apex") baseFPS -= 5;
+
+  if (baseFPS < 20) baseFPS = 20;
+
+  let quality = "Low";
+  if (baseFPS >= 60) quality = "Medium";
+  if (baseFPS >= 100) quality = "High";
+
+  resultBox.innerHTML = `
+    🎮 Game: <b>${game.toUpperCase()}</b><br>
+    ⚡ Estimasi FPS: <b>${baseFPS} FPS</b><br>
+    🎯 Rekomendasi Grafik: <b>${quality}</b>
+  `;
+}
+</script>
+
+</MainLayout>

@@ -1,0 +1,139 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "AFK Timer Online untuk Gamer",
+  description: "Gunakan AFK Timer untuk mengatur waktu idle saat bermain game agar tetap aman dari kick atau penalty.",
+  category: "Gaming",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>⏱️ AFK Timer Gamer</h1>
+
+<p class="tools-sub">
+Atur waktu AFK agar tidak terkena kick atau penalty di game online.
+</p>
+
+<div class="tool-box">
+
+<input type="number" id="minutes" placeholder="Masukkan waktu (menit)" class="tool-input">
+
+<button class="btn-primary" onclick="startTimer()">
+Mulai Timer
+</button>
+
+<button class="btn-secondary" onclick="resetTimer()">
+Reset
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Timer belum dimulai...
+</div>
+
+
+<!-- SEO CONTENT -->
+<section class="tool-seo">
+
+  <h2>Apa Itu AFK Timer?</h2>
+  <p>
+    AFK Timer adalah tools online yang membantu gamer mengatur waktu idle saat meninggalkan permainan. Dengan timer ini, kamu bisa kembali ke game sebelum terkena kick otomatis atau penalty dari sistem game.
+  </p>
+
+  <h2>Kenapa AFK Timer Penting?</h2>
+  <ul>
+    <li>Mencegah kick otomatis dari game</li>
+    <li>Menghindari penalty atau ban sementara</li>
+    <li>Membantu mengatur waktu istirahat</li>
+    <li>Cocok untuk game online kompetitif</li>
+  </ul>
+
+  <h2>Game yang Membutuhkan AFK Timer</h2>
+  <p>
+    Banyak game online seperti PUBG, Valorant, Mobile Legends, dan game FPS lainnya memiliki sistem AFK detection yang akan mengeluarkan pemain jika terlalu lama tidak aktif.
+  </p>
+
+</section>
+
+<!-- COLLAPSE -->
+<section class="tool-more">
+
+  <details open>
+    <summary>Cara Menggunakan AFK Timer</summary>
+    <ul>
+      <li>Masukkan waktu dalam menit</li>
+      <li>Klik tombol mulai</li>
+      <li>Tunggu timer berjalan</li>
+      <li>Kembali ke game sebelum waktu habis</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Fitur Tools Ini</summary>
+    <ul>
+      <li>Timer sederhana dan mudah digunakan</li>
+      <li>Notifikasi saat waktu habis</li>
+      <li>Gratis tanpa login</li>
+      <li>Berjalan langsung di browser</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Kapan Harus Menggunakan Tools Ini?</summary>
+    <ul>
+      <li>Saat harus meninggalkan game sebentar</li>
+      <li>Untuk menghindari AFK penalty</li>
+      <li>Mengatur waktu istirahat</li>
+    </ul>
+  </details>
+
+</section>
+
+</div>
+
+
+<script is:inline>
+let timerInterval;
+
+function startTimer(){
+  const minutes = parseInt(document.getElementById("minutes").value);
+  const resultBox = document.getElementById("result");
+
+  if (isNaN(minutes) || minutes <= 0){
+    resultBox.innerHTML = "❌ Masukkan waktu yang valid.";
+    return;
+  }
+
+  let time = minutes * 60;
+
+  clearInterval(timerInterval);
+
+  timerInterval = setInterval(() => {
+    const m = Math.floor(time / 60);
+    const s = time % 60;
+
+    resultBox.innerHTML = `⏳ ${m}m ${s}s`;
+
+    if (time <= 0){
+      clearInterval(timerInterval);
+      resultBox.innerHTML = "⏰ Waktu habis! Kembali ke game!";
+      alert("Waktu AFK habis!");
+    }
+
+    time--;
+  }, 1000);
+}
+
+function resetTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("result").innerHTML = "Timer di-reset.";
+}
+</script>
+
+</MainLayout>
