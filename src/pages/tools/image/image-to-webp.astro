@@ -53,6 +53,7 @@ export const meta = {
             <label for="targetSize">Target ukuran file</label>
             <select id="targetSize" class="tool-select">
               <option value="100" selected>Di bawah 100 KB</option>
+              <option value="50">Di bawah 50 KB</option>
               <option value="200">Di bawah 200 KB</option>
               <option value="300">Di bawah 300 KB</option>
               <option value="500">Di bawah 500 KB</option>
@@ -77,12 +78,12 @@ export const meta = {
 
     <article class="tool-content">
       <h2>Convert JPG, JPEG, dan PNG ke WebP Online</h2>
-      <p>Image to WebP Converter AI Mr Ferdy membantu mengubah gambar JPG, JPEG, dan PNG menjadi format WebP yang lebih efisien. Anda dapat mengoptimalkan ukuran file dengan pilihan target ukuran, termasuk kompresi gambar hingga di bawah 100 KB, langsung melalui browser.</p>
+      <p>Image to WebP Converter AI Mr Ferdy membantu mengubah gambar JPG, JPEG, dan PNG menjadi format WebP yang lebih efisien. Anda dapat mengoptimalkan ukuran file dengan pilihan target ukuran, termasuk pilihan target di bawah 50 KB dan 100 KB, langsung melalui browser.</p>
 
       <h2>Fitur Image to WebP Converter</h2>
       <ul>
         <li>Mengubah JPG, JPEG, dan PNG menjadi WebP.</li>
-        <li>Target kompresi file di bawah 100 KB, 200 KB, 300 KB, atau 500 KB.</li>
+        <li>Target kompresi file di bawah 50 KB, 100 KB, 200 KB, 300 KB, atau 500 KB.</li>
         <li>Pengaturan kualitas gambar sesuai kebutuhan.</li>
         <li>Penyesuaian ukuran gambar otomatis untuk membantu mencapai target file.</li>
         <li>Preview gambar asli dan hasil konversi.</li>
@@ -200,7 +201,14 @@ export const meta = {
       originalPreview.src = originalUrl;
       originalInfo.textContent = `${file.name} · ${formatBytes(file.size)}`;
       previewPanel.hidden = false;
-      showStatus("Gambar siap dikonversi.");
+      showStatus("Gambar dipilih. Konversi WebP sedang dimulai...");
+      const img = new Image();
+      img.onload = () => {
+        imageObject = img;
+        convertImage();
+      };
+      img.onerror = () => showStatus("Gambar gagal dibaca.", "error");
+      img.src = originalUrl;
     }
 
     browseBtn.addEventListener("click", () => fileInput.click());
@@ -223,7 +231,13 @@ export const meta = {
       qualityLabel.textContent = `${quality.value}%`;
       clearResult();
     });
-    targetSize.addEventListener("change", clearResult);
+    quality.addEventListener("change", () => {
+      if (imageObject) convertImage();
+    });
+    targetSize.addEventListener("change", () => {
+      clearResult();
+      if (imageObject) convertImage();
+    });
 
     function canvasBlob(canvas, q) {
       return new Promise(resolve => canvas.toBlob(resolve, "image/webp", q));
@@ -283,15 +297,9 @@ export const meta = {
       }
     }
 
-    convertBtn.addEventListener("click", async () => {
+    convertBtn.addEventListener("click", () => {
       if (!currentFile) return showStatus("Pilih gambar terlebih dahulu.", "error");
-      const img = new Image();
-      img.onload = () => {
-        imageObject = img;
-        convertImage();
-      };
-      img.onerror = () => showStatus("Gambar gagal dibaca.", "error");
-      img.src = originalUrl;
+      if (imageObject) convertImage();
     });
 
     resetBtn.addEventListener("click", () => {
