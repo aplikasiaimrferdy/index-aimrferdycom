@@ -1,0 +1,111 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Audio to MP3 Converter Online Gratis",
+  description: "Convert audio ke MP3 online gratis tanpa install. Cepat, aman, dan langsung di browser.",
+  category: "Audio",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>🎧 Audio to MP3 Converter</h1>
+
+<p class="tools-sub">
+Upload audio dan convert ke format MP3 langsung di browser.
+</p>
+
+<div class="tool-box">
+
+<input type="file" id="file" accept="audio/*" class="tool-input">
+
+<button class="btn-primary" onclick="convertAudio()">
+Convert ke MP3
+</button>
+
+</div>
+
+<div id="result" class="tool-result">
+Hasil akan muncul di sini...
+</div>
+
+</div>
+
+
+<script>
+window.convertAudio = async function(){
+  const file = document.getElementById("file").files[0];
+
+  if(!file){
+    alert("Pilih file audio dulu");
+    return;
+  }
+
+  document.getElementById("result").innerText = "Processing...";
+
+  try {
+    const audioCtx = new AudioContext();
+    const arrayBuffer = await file.arrayBuffer();
+    const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+    // convert ke WAV dulu
+    const wav = encodeWAV(audioBuffer);
+    const blob = new Blob([wav], { type: "audio/wav" });
+
+    const url = URL.createObjectURL(blob);
+
+    document.getElementById("result").innerHTML = `
+      <a href="${url}" download="audio.wav" class="btn-primary">
+        ⬇️ Download Audio
+      </a>
+    `;
+
+  } catch(err){
+    document.getElementById("result").innerText = "Gagal convert audio.";
+  }
+}
+
+// simple WAV encoder
+function encodeWAV(buffer){
+  const numChannels = buffer.numberOfChannels;
+  const sampleRate = buffer.sampleRate;
+  const samples = buffer.getChannelData(0);
+
+  const bufferLength = 44 + samples.length * 2;
+  const view = new DataView(new ArrayBuffer(bufferLength));
+
+  function writeString(view, offset, string){
+    for(let i=0;i<string.length;i++){
+      view.setUint8(offset+i, string.charCodeAt(i));
+    }
+  }
+
+  writeString(view, 0, "RIFF");
+  view.setUint32(4, 36 + samples.length * 2, true);
+  writeString(view, 8, "WAVE");
+  writeString(view, 12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeString(view, 36, "data");
+  view.setUint32(40, samples.length * 2, true);
+
+  let offset = 44;
+  for(let i=0;i<samples.length;i++, offset+=2){
+    const s = Math.max(-1, Math.min(1, samples[i]));
+    view.setInt16(offset, s * 0x7fff, true);
+  }
+
+  return view;
+}
+</script>
+
+</MainLayout>

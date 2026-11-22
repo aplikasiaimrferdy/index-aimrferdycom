@@ -1,0 +1,84 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+---
+
+<MainLayout 
+  title="Text to Speech Online Gratis"
+  description="Ubah teks menjadi suara online, bisa play & download MP3"
+  url="https://aimrferdy.net/tools/audio/text-to-speech"
+pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>🔊 Text to Speech</h1>
+  <p>Masukkan teks lalu klik play atau download.</p>
+
+  <!-- TEXT -->
+  <textarea id="text">
+Halo, ini adalah demo text to speech dari AI Mr Ferdy.
+Silakan ubah teks ini sesuai kebutuhan kamu.
+  </textarea>
+
+  <!-- LANG -->
+  <select id="lang">
+    <option value="id">Indonesia</option>
+    <option value="en">English</option>
+    <option value="ja">Japanese</option>
+  </select>
+
+  <!-- BUTTON -->
+  <div class="tts-buttons">
+    <button onclick="playTTS()">▶️ Play</button>
+    <button onclick="downloadTTS()">⬇️ Download MP3</button>
+  </div>
+
+  <!-- AUDIO -->
+  <audio id="audio" controls style="margin-top:10px; width:100%"></audio>
+
+</div>
+
+<script>
+function getTTSUrl(text, lang) {
+  return "https://translate.google.com/translate_tts?ie=UTF-8&q=" 
+    + encodeURIComponent(text) 
+    + "&tl=" + lang 
+    + "&client=tw-ob";
+}
+
+function playTTS() {
+  const text = document.getElementById("text").value.trim();
+  const lang = document.getElementById("lang").value;
+
+  if (!text) {
+    alert("Masukkan teks dulu");
+    return;
+  }
+
+  const audio = document.getElementById("audio");
+  const url = getTTSUrl(text, lang);
+
+  audio.src = url;
+  audio.play();
+}
+
+function downloadTTS() {
+  const text = document.getElementById("text").value.trim();
+  const lang = document.getElementById("lang").value;
+
+  if (!text) {
+    alert("Masukkan teks dulu");
+    return;
+  }
+
+  const url = getTTSUrl(text, lang);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "tts.mp3";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+</script>
+
+</MainLayout>
