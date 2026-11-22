@@ -63,7 +63,7 @@ export const meta = {
             <label for="quality">Kualitas: <span id="qualityLabel">85%</span></label>
             <input id="quality" type="range" min="10" max="100" value="85" />
           </div>
-          <p class="webp-note">Kompresi otomatis akan menyesuaikan kualitas dan dimensi gambar jika diperlukan untuk mencapai target ukuran.</p>
+          <p class="webp-note">Kompresi mengutamakan kualitas gambar. Jika target ukuran terlalu kecil, dimensi akan diturunkan secara bertahap dan hasil mungkin tidak mencapai target.</p>
         </div>
 
         <div class="btn-group">
@@ -244,7 +244,7 @@ export const meta = {
         let canvas = document.createElement("canvas");
         let ctx = canvas.getContext("2d", { alpha: true });
         let blob = null;
-        const maxAttempts = targetKB ? 18 : 1;
+        const maxAttempts = targetKB ? 28 : 1;
 
         for (let attempt = 0; attempt < maxAttempts; attempt++) {
           canvas.width = Math.max(1, Math.round(imageObject.width * scale));
@@ -255,8 +255,8 @@ export const meta = {
           if (!blob) throw new Error("Browser tidak dapat membuat file WebP.");
 
           if (!targetKB || blob.size <= targetKB * 1024) break;
-          if (q > 0.35) q = Math.max(0.35, q - 0.12);
-          else scale *= 0.85;
+          if (q > 0.65) q = Math.max(0.65, q - 0.07);
+          else scale *= 0.94;
         }
 
         if (!blob) throw new Error("Konversi gagal.");
