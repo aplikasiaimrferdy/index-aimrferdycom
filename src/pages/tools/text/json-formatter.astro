@@ -1,0 +1,97 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "JSON Formatter & Validator",
+  description: "Format dan validasi JSON secara online dengan mudah dan cepat.",
+  category: "Text",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="container tools-page">
+
+<h1>📦 JSON Formatter & Validator</h1>
+
+<p class="tools-sub">
+Rapikan JSON agar mudah dibaca dan cek apakah format JSON valid.
+</p>
+
+<!-- INPUT -->
+<div class="tool-box">
+
+<label>Input JSON</label>
+<textarea id="input" class="tool-textarea" placeholder='{"name":"John","age":25}'></textarea>
+
+<div class="btn-group">
+<button class="btn-primary" onclick="formatJSON()">Format</button>
+<button class="btn-secondary" onclick="minifyJSON()">Minify</button>
+<button class="btn-secondary" onclick="clearText()">Clear</button>
+</div>
+
+</div>
+
+<!-- RESULT -->
+<div id="result" class="tool-result">
+Hasil akan muncul di sini...
+</div>
+
+<div class="btn-group">
+<button class="btn-secondary" onclick="copyText()">Copy</button>
+</div>
+
+</div>
+
+
+
+<script>
+window.formatJSON = function(){
+  const input = document.getElementById("input").value;
+
+  if(!input){
+    alert("Masukkan JSON terlebih dahulu");
+    return;
+  }
+
+  try {
+    const parsed = JSON.parse(input);
+    const formatted = JSON.stringify(parsed, null, 2);
+    document.getElementById("result").innerText = formatted;
+  } catch(e){
+    document.getElementById("result").innerText = "❌ JSON tidak valid:\n" + e.message;
+  }
+}
+
+window.minifyJSON = function(){
+  const input = document.getElementById("input").value;
+
+  if(!input){
+    alert("Masukkan JSON terlebih dahulu");
+    return;
+  }
+
+  try {
+    const parsed = JSON.parse(input);
+    const minified = JSON.stringify(parsed);
+    document.getElementById("result").innerText = minified;
+  } catch(e){
+    document.getElementById("result").innerText = "❌ JSON tidak valid:\n" + e.message;
+  }
+}
+
+window.clearText = function(){
+  document.getElementById("input").value = "";
+  document.getElementById("result").innerText = "Hasil akan muncul di sini...";
+}
+
+window.copyText = function(){
+  const text = document.getElementById("result").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
+}
+</script>
+
+
+</MainLayout>

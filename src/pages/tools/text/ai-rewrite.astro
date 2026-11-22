@@ -1,0 +1,83 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "AI Rewrite Text",
+  description: "Parafrase teks otomatis dengan AI, cepat dan gratis",
+  category: "Text",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-container">
+
+  <h1>AI Rewrite Text Online</h1>
+  <p>Ubah kalimat menjadi versi baru secara otomatis tanpa mengubah makna.</p>
+
+  <!-- INPUT -->
+  <textarea 
+    id="inputText" 
+    placeholder="Masukkan teks di sini..."
+  ></textarea>
+
+  <!-- BUTTON -->
+  <button class="btn btn-primary" onclick="rewriteText()">🔄 Rewrite Text</button>
+
+  <!-- OUTPUT -->
+  <textarea 
+    id="outputText" 
+    placeholder="Hasil rewrite akan muncul di sini..."
+    readonly
+  ></textarea>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+window.rewriteText = function () {
+  const input = document.getElementById("inputText").value;
+
+  if (!input.trim()) {
+    alert("Masukkan teks terlebih dahulu!");
+    return;
+  }
+
+  // ⚡ SIMULASI rewrite sederhana (tanpa API)
+  let output = input
+    .replace(/saya/g, "aku")
+    .replace(/adalah/g, "merupakan")
+    .replace(/dan/g, "serta");
+
+  document.getElementById("outputText").value = output;
+};
+</script>
+
+<!-- SEO CONTENT -->
+<section class="seo-content">
+
+<h2>Apa Itu AI Rewrite Text?</h2>
+<p>
+AI Rewrite Text adalah tools untuk mengubah kalimat menjadi versi baru
+(parafrase) tanpa mengubah makna asli. Tools ini sangat berguna untuk
+penulis, blogger, dan pelajar.
+</p>
+
+<h2>Keunggulan Tools Ini</h2>
+<ul>
+  <li>Gratis tanpa login</li>
+  <li>Cepat dan mudah digunakan</li>
+  <li>Membantu menghindari duplikasi konten</li>
+</ul>
+
+<h2>Cara Menggunakan</h2>
+<ol>
+  <li>Masukkan teks ke dalam kolom input</li>
+  <li>Klik tombol rewrite</li>
+  <li>Salin hasil parafrase</li>
+</ol>
+
+</section>
+
+</MainLayout>

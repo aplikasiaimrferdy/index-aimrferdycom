@@ -1,0 +1,129 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Text to Speech (TTS)",
+  description: "Ubah teks menjadi suara online gratis tanpa install",
+  category: "Text",
+  icon: "🔊",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>🔊 Text to Speech</h1>
+  <p>Masukkan teks lalu klik play untuk mendengarkan suara.</p>
+
+  <!-- TEXTAREA -->
+ <textarea 
+  id="text"
+>Halo, ini adalah contoh text to speech dari AI Mr Ferdy.
+Kamu bisa mengubah suara, kecepatan, dan pitch sesuai kebutuhan.
+</textarea>
+
+  <!-- CONTROLS -->
+  <div class="tts-controls">
+
+    <select id="voice"></select>
+
+    <label>
+      Speed
+      <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+    </label>
+
+    <label>
+      Pitch
+      <input type="range" id="pitch" min="0" max="2" step="0.1" value="1">
+    </label>
+
+  </div>
+
+  <!-- BUTTON -->
+  <div class="tts-buttons">
+    <button onclick="speak()">▶️ Play</button>
+    <button onclick="pause()">⏸ Pause</button>
+    <button onclick="resume()">⏯ Resume</button>
+    <button onclick="stop()">⏹ Stop</button>
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+let voices = [];
+
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+  const voiceSelect = document.getElementById("voice");
+
+  if (!voiceSelect) return;
+
+  voiceSelect.innerHTML = "";
+
+  voices.forEach((v, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = `${v.name} (${v.lang})`;
+    voiceSelect.appendChild(option);
+  });
+}
+
+// FIX: load voices properly
+function initVoices() {
+  loadVoices();
+
+  // beberapa browser butuh delay
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+  }
+}
+
+window.addEventListener("load", initVoices);
+
+function speak() {
+  const text = document.getElementById("text").value.trim();
+
+  if (!text) {
+    alert("Masukkan teks dulu");
+    return;
+  }
+
+  const utter = new SpeechSynthesisUtterance(text);
+
+  const voiceIndex = document.getElementById("voice").value;
+  const rate = parseFloat(document.getElementById("rate").value);
+  const pitch = parseFloat(document.getElementById("pitch").value);
+
+  if (voices.length > 0) {
+    utter.voice = voices[voiceIndex] || voices[0];
+  }
+
+  utter.rate = rate;
+  utter.pitch = pitch;
+
+  // penting biar tidak numpuk
+  speechSynthesis.cancel();
+
+  // FIX: delay kecil biar lebih stabil
+  setTimeout(() => {
+    speechSynthesis.speak(utter);
+  }, 100);
+}
+
+function pause() {
+  speechSynthesis.pause();
+}
+
+function resume() {
+  speechSynthesis.resume();
+}
+
+function stop() {
+  speechSynthesis.cancel();
+}
+</script>
+
+</MainLayout>

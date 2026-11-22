@@ -1,0 +1,152 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "Text to Speech Bahasa Indonesia",
+  description: "Ubah teks menjadi suara dengan natural. Support banyak suara pria & wanita Bahasa Indonesia.",
+  category: "Utility",
+  featured: false
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div>
+  <div class="tool-box">
+    <h2>Text to Speech - Bahasa Indonesia</h2>
+
+    <div class="form-group">
+      <label>Masukkan Teks</label>
+      <textarea id="textInput" class="tool-textarea" rows="6" placeholder="Ketik teks di sini..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Pilih Suara</label>
+      <select id="voiceSelect" class="tool-select"></select>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin:20px 0;">
+      <div class="form-group">
+        <label>Kecepatan (<span id="speedValue">1.0</span>x)</label>
+        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1" style="width:100%;">
+      </div>
+      <div class="form-group">
+        <label> nada (<span id="pitchValue">1.0</span>)</label>
+        <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1" style="width:100%;">
+      </div>
+      <div class="form-group">
+        <label>Volume (<span id="volumeValue">1.0</span>)</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="1" style="width:100%;">
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn-primary" onclick="speak()">▶️ Putar</button>
+      <button class="btn-secondary" onclick="pauseResume()">⏸️ Pause / Lanjut</button>
+      <button class="btn-secondary" onclick="stopSpeech()">⏹️ Stop</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <h1>Text to Speech Bahasa Indonesia</h1>
+  <p>Ubah teks menjadi suara yang natural dengan berbagai pilihan suara pria dan wanita.</p>
+</section>
+
+<script client:load>
+let utterance = null;
+let isPaused = false;
+
+function populateVoices() {
+  const select = document.getElementById('voiceSelect');
+  select.innerHTML = '';
+
+  const voices = speechSynthesis.getVoices();
+  
+  // Filter suara Bahasa Indonesia
+  const idVoices = voices.filter(voice => 
+    voice.lang.includes('id') || 
+    voice.name.toLowerCase().includes('indonesia')
+  );
+
+  if (idVoices.length > 0) {
+    idVoices.forEach(voice => {
+      const option = document.createElement('option');
+      option.value = voice.name;
+      option.textContent = `${voice.name} (${voice.lang}) - ${voice.gender || (voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('wanita') ? 'Wanita' : 'Pria')}`;
+      select.appendChild(option);
+    });
+  } else {
+    // Fallback semua suara
+    voices.forEach(voice => {
+      const option = document.createElement('option');
+      option.value = voice.name;
+      option.textContent = `${voice.name} (${voice.lang})`;
+      select.appendChild(option);
+    });
+  }
+}
+
+function speak() {
+  const text = document.getElementById('textInput').value.trim();
+  if (!text) {
+    alert("Mohon masukkan teks yang ingin dibacakan!");
+    return;
+  }
+
+  stopSpeech(); // Stop previous
+
+  utterance = new SpeechSynthesisUtterance(text);
+  
+  const selectedVoice = document.getElementById('voiceSelect').value;
+  const voices = speechSynthesis.getVoices();
+  const voice = voices.find(v => v.name === selectedVoice);
+  
+  if (voice) utterance.voice = voice;
+  
+  utterance.rate = parseFloat(document.getElementById('speed').value);
+  utterance.pitch = parseFloat(document.getElementById('pitch').value);
+  utterance.volume = parseFloat(document.getElementById('volume').value);
+
+  speechSynthesis.speak(utterance);
+}
+
+function pauseResume() {
+  if (!utterance) return;
+  
+  if (speechSynthesis.paused) {
+    speechSynthesis.resume();
+  } else {
+    speechSynthesis.pause();
+  }
+}
+
+function stopSpeech() {
+  speechSynthesis.cancel();
+  utterance = null;
+}
+
+// Event listeners untuk slider
+document.getElementById('speed').addEventListener('input', () => {
+  document.getElementById('speedValue').textContent = parseFloat(document.getElementById('speed').value).toFixed(1);
+});
+
+document.getElementById('pitch').addEventListener('input', () => {
+  document.getElementById('pitchValue').textContent = parseFloat(document.getElementById('pitch').value).toFixed(1);
+});
+
+document.getElementById('volume').addEventListener('input', () => {
+  document.getElementById('volumeValue').textContent = parseFloat(document.getElementById('volume').value).toFixed(1);
+});
+
+// Load voices
+speechSynthesis.onvoiceschanged = populateVoices;
+window.onload = () => {
+  populateVoices();
+  // Some browsers need this
+  setTimeout(populateVoices, 500);
+};
+</script>
+
+</MainLayout>

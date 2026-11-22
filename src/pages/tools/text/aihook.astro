@@ -1,0 +1,209 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "🔥 AI Hook TikTok Generator",
+  description: "Bikin hook viral yang bikin orang STOP SCROLL 🚀.",
+  category: "Text",
+  featured: true
+};
+---
+
+<MainLayout title={`${meta.title} | AI Mr Ferdy`} description={meta.description} pageCSS={["tools"]}>
+
+<div class="tool-box">
+
+  <h1>🔥 AI Hook TikTok Generator</h1>
+  <p class="desc">Bikin hook viral yang bikin orang STOP SCROLL 🚀</p>
+
+  <!-- FORM -->
+  <div class="form-group">
+    <label>Topik</label>
+    <input 
+      id="topic" 
+      placeholder="Contoh: jualan online, affiliate, motivasi..."
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Gaya Hook</label>
+    <select id="style">
+      <option value="shock">😱 Shock</option>
+      <option value="story">📖 Story</option>
+      <option value="problem">❗ Problem</option>
+      <option value="urgent">⚡ Urgent</option>
+    </select>
+  </div>
+
+  <!-- BUTTON -->
+  <div class="btn-group">
+    <button id="generateBtn" class="primary">🚀 Generate Hook</button>
+    <button id="copyBtn">📋 Copy</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="form-group">
+    <label>Hasil Hook</label>
+    <textarea 
+      id="result" 
+      placeholder="Hasil hook akan muncul di sini..."
+    ></textarea>
+  </div>
+
+</div>
+
+
+
+<section class="tool-seo">
+
+  <h2>AI Hook TikTok Generator Gratis</h2>
+
+  <p>
+    Gunakan <strong>AI Hook TikTok Generator</strong> untuk membuat kalimat pembuka yang menarik, viral, dan mampu menghentikan scroll audiens dalam hitungan detik. Tool ini membantu kamu menghasilkan hook TikTok untuk berbagai niche seperti bisnis online, affiliate marketing, motivasi, dan konten edukasi.
+  </p>
+
+  <p>
+    Dengan berbagai pilihan gaya seperti <strong>shock</strong>, <strong>story</strong>, <strong>problem</strong>, dan <strong>urgent</strong>, kamu bisa membuat hook yang sesuai dengan target audience dan meningkatkan engagement video TikTok kamu.
+  </p>
+
+  <h3>Kenapa Hook TikTok Itu Penting?</h3>
+  <p>
+    Hook adalah 3 detik pertama yang menentukan apakah penonton akan lanjut menonton atau scroll. Dengan hook yang tepat, kamu bisa meningkatkan watch time, engagement, dan peluang viral.
+  </p>
+
+  <h3>Fitur AI Hook Generator</h3>
+  <ul>
+    <li>🔥 Generate hook viral otomatis</li>
+    <li>⚡ Berbagai gaya hook (shock, story, problem, urgent)</li>
+    <li>📱 Cocok untuk semua niche TikTok</li>
+    <li>🚀 Gratis tanpa login</li>
+  </ul>
+
+  <h3>Cara Menggunakan</h3>
+  <ol>
+    <li>Masukkan topik konten kamu</li>
+    <li>Pilih gaya hook</li>
+    <li>Klik "Generate Hook"</li>
+    <li>Copy dan gunakan di video TikTok kamu</li>
+  </ol>
+
+</section>
+
+<section class="tool-more">
+
+  <details open>
+    <summary>📌 Cara Menggunakan AI Hook TikTok Generator</summary>
+    <p>
+      Masukkan topik konten TikTok kamu seperti jualan online, affiliate, atau motivasi.
+      Pilih gaya hook seperti shock, story, problem, atau urgent.
+      Klik tombol generate untuk mendapatkan hook viral yang siap digunakan.
+    </p>
+  </details>
+
+  <details>
+    <summary>🔥 Fitur AI Hook TikTok Generator</summary>
+    <ul>
+      <li>Generate hook viral otomatis</li>
+      <li>Pilihan gaya hook (shock, story, problem, urgent)</li>
+      <li>Cocok untuk semua niche TikTok</li>
+      <li>Gratis tanpa login</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>🚀 Kenapa Hook TikTok Itu Penting?</summary>
+    <p>
+      Hook adalah 3 detik pertama yang menentukan apakah penonton akan lanjut menonton atau scroll.
+      Dengan hook yang kuat, kamu bisa meningkatkan watch time, engagement, dan peluang viral di TikTok.
+    </p>
+  </details>
+
+  <details>
+    <summary>💡 Tips Bikin Hook TikTok Viral</summary>
+    <ul>
+      <li>Gunakan kata yang bikin penasaran (STOP, Jangan, Rahasia)</li>
+      <li>Langsung ke inti masalah</li>
+      <li>Buat emosi (shock, takut, penasaran)</li>
+      <li>Hindari pembukaan yang terlalu panjang</li>
+    </ul>
+  </details>
+
+</section>
+
+
+
+
+<script is:inline>
+  const btn = document.getElementById("generateBtn");
+  const copyBtn = document.getElementById("copyBtn");
+
+  const topicInput = document.getElementById("topic");
+  const styleSelect = document.getElementById("style");
+  const result = document.getElementById("result");
+
+  btn.addEventListener("click", () => {
+    const topic = topicInput.value.trim();
+    const style = styleSelect.value;
+
+    if (!topic) {
+      alert("Isi topik dulu!");
+      return;
+    }
+
+    let hooks = [];
+
+    switch (style) {
+      case "shock":
+        hooks = [
+          `STOP! ${topic} ini bisa bikin kamu gagal total 😱`,
+          `90% orang salah tentang ${topic}... kamu juga?`,
+          `Jangan mulai ${topic} sebelum tahu ini!`
+        ];
+        break;
+
+      case "story":
+        hooks = [
+          `Dulu aku gagal di ${topic}, sampai akhirnya ngerti ini...`,
+          `Awalnya aku kira ${topic} itu mudah... ternyata salah besar`,
+          `Cerita nyata: bagaimana ${topic} mengubah hidupku`
+        ];
+        break;
+
+      case "problem":
+        hooks = [
+          `Kenapa ${topic} kamu nggak berkembang? Ini alasannya`,
+          `Masalah terbesar di ${topic} yang orang nggak sadar`,
+          `Kalau ${topic} kamu stuck, ini penyebabnya`
+        ];
+        break;
+
+      case "urgent":
+        hooks = [
+          `Kalau kamu masih lakukan ini di ${topic}, STOP sekarang!`,
+          `Waktu kamu hampir habis kalau masih begini di ${topic}`,
+          `Segera ubah cara ${topic} kamu sebelum terlambat!`
+        ];
+        break;
+    }
+
+    // random hasil
+    const random = hooks[Math.floor(Math.random() * hooks.length)];
+    result.value = random;
+  });
+
+  // COPY
+  copyBtn.addEventListener("click", () => {
+    if (!result.value) {
+      alert("Belum ada hasil!");
+      return;
+    }
+
+    navigator.clipboard.writeText(result.value);
+    copyBtn.innerText = "✅ Copied!";
+    
+    setTimeout(() => {
+      copyBtn.innerText = "📋 Copy";
+    }, 1500);
+  });
+</script>
+
