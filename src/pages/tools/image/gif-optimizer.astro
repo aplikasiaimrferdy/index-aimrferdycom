@@ -1,736 +1,1024 @@
+
 ---
 import MainLayout from "../../../layouts/MainLayout.astro";
 
 export const meta = {
-  title: "🖼️ GIF WebP Optimizer",
+  title: "GIF Optimizer - Kompresi, Resize dan Konversi GIF ke WebP",
   description:
-    "Kompres GIF animasi, resize ukuran gambar, dan konversi GIF ke Animated WebP secara online. Optimalkan ukuran file langsung di browser.",
-  category: "Image",
-  featured: true
+    "Optimalkan GIF secara online. Kompres ukuran GIF, resize animasi, atur kualitas, dan konversi GIF ke Animated WebP langsung di browser."
 };
 ---
 
-<MainLayout
-  title={`${meta.title} | AI Mr Ferdy`}
-  description={meta.description}
-  pageCSS={["tool"]}
->
-
-
-  <div class="page-tools">
-
+<MainLayout title={meta.title} description={meta.description}>
+  <div class="page-tools gif-optimizer">
     <header class="tool-header">
-      <span class="page-badge">IMAGE TOOLS</span>
-      <h1>GIF & WebP Optimizer</h1>
+      <h1>GIF Optimizer</h1>
       <p>
-        Kompres GIF animasi, ubah dimensi gambar, dan konversi ke Animated
-        WebP dengan ukuran lebih ringan tanpa kehilangan animasi.
+        Kompres GIF, ubah ukuran animasi, dan konversi GIF ke Animated WebP
+        langsung di browser.
       </p>
     </header>
 
-    <section class="tool-box" aria-label="GIF and WebP Optimizer">
+    <section class="tool-box">
+      <div class="tool-content">
 
-      <div class="gif-drop" id="dropArea">
-        <input
-          id="fileInput"
-          type="file"
-          accept="image/gif"
-          hidden
-        />
+        <div class="gif-upload" id="gifDropZone">
+          <input
+            type="file"
+            id="gifInput"
+            accept="image/gif"
+            hidden
+          />
 
-        <div class="gif-drop-icon" aria-hidden="true">🎞️</div>
-        <h2>Pilih atau seret GIF ke sini</h2>
-        <p>Format GIF animasi · Maksimal 100 MB</p>
+          <div class="upload-icon" aria-hidden="true">GIF</div>
+          <h2>Pilih file GIF</h2>
+          <p>Seret dan letakkan file GIF di sini atau pilih dari perangkat.</p>
 
-        <button type="button" class="btn btn-primary" id="browseBtn">
-          Pilih GIF
-        </button>
-      </div>
+          <button type="button" class="gif-button" id="selectGif">
+            Pilih File GIF
+          </button>
 
-      <div id="previewPanel" hidden>
-
-        <div class="gif-preview-grid">
-
-          <div class="gif-preview-card">
-            <span class="gif-preview-label">GIF Original</span>
-
-            <div class="gif-image-wrap">
-              <img id="originalPreview" alt="Preview GIF original" />
-            </div>
-
-            <p id="originalInfo"></p>
-          </div>
-
-          <div class="gif-preview-card">
-            <span class="gif-preview-label">Hasil Optimasi</span>
-
-            <div class="gif-image-wrap">
-              <img id="resultPreview" alt="Preview hasil optimasi GIF atau WebP" />
-            </div>
-
-            <p id="resultInfo">
-              Hasil optimasi akan ditampilkan di sini.
-            </p>
-
-            <div class="tool-actions" id="downloadArea" hidden>
-              <a
-                class="tool-btn"
-                id="downloadBtn"
-                download="optimized.gif"
-              >
-                Download Hasil
-              </a>
-            </div>
-          </div>
-
+          <small>File diproses secara lokal di browser.</small>
         </div>
 
-        <div class="gif-settings">
+        <div class="gif-workspace" id="gifWorkspace" hidden>
 
-          <h2>Pengaturan Optimasi</h2>
+          <div class="gif-file-info">
+            <div>
+              <strong id="fileName">-</strong>
+              <span id="fileDetails">-</span>
+            </div>
+            <button type="button" class="gif-reset" id="resetGif">
+              Ganti File
+            </button>
+          </div>
 
-          <div class="gif-setting-grid">
+          <div class="gif-preview-grid">
+            <div class="gif-preview-card">
+              <h3>GIF Asli</h3>
+              <div class="gif-preview">
+                <img id="originalPreview" alt="Preview GIF asli" />
+              </div>
+              <p id="originalInfo">-</p>
+            </div>
 
-            <div class="gif-setting-row">
-              <label for="outputFormat">Format Output</label>
-              <select id="outputFormat" class="tool-select">
-                <option value="gif">Optimized GIF</option>
+            <div class="gif-preview-card">
+              <h3>Hasil Optimasi</h3>
+              <div class="gif-preview">
+                <img id="resultPreview" alt="Preview hasil optimasi" />
+                <span id="previewPlaceholder">Belum ada hasil</span>
+              </div>
+              <p id="resultInfo">-</p>
+            </div>
+          </div>
+
+          <div class="gif-settings">
+            <h2>Pengaturan Optimasi</h2>
+
+            <div class="gif-setting-group">
+              <label for="outputFormat">Format hasil</label>
+              <select id="outputFormat">
+                <option value="gif">GIF</option>
                 <option value="webp">Animated WebP</option>
               </select>
             </div>
 
             <div class="gif-setting-row">
-              <label for="width">Lebar (px)</label>
-              <input
-                id="width"
-                class="tool-input"
-                type="number"
-                min="1"
-                max="4096"
-                placeholder="Lebar"
-              />
+              <div class="gif-setting-group">
+                <label for="resizeWidth">Lebar (px)</label>
+                <input
+                  type="number"
+                  id="resizeWidth"
+                  min="1"
+                  max="4096"
+                  placeholder="Otomatis"
+                />
+              </div>
+
+              <div class="gif-setting-group">
+                <label for="resizeHeight">Tinggi (px)</label>
+                <input
+                  type="number"
+                  id="resizeHeight"
+                  min="1"
+                  max="4096"
+                  placeholder="Otomatis"
+                />
+              </div>
             </div>
 
-            <div class="gif-setting-row">
-              <label for="height">Tinggi (px)</label>
-              <input
-                id="height"
-                class="tool-input"
-                type="number"
-                min="1"
-                max="4096"
-                placeholder="Tinggi"
-              />
-            </div>
+            <p class="gif-hint">
+              Kosongkan lebar dan tinggi untuk mempertahankan ukuran asli.
+              Isi salah satu saja untuk mempertahankan rasio aspek.
+              Jika keduanya diisi, gambar akan mengikuti kedua ukuran tersebut.
+            </p>
 
-            <div class="gif-setting-row">
-              <label for="colors">Jumlah Warna GIF</label>
-              <select id="colors" class="tool-select">
-                <option value="256">256 warna</option>
-                <option value="128">128 warna</option>
+            <div class="gif-setting-group" id="gifColorSetting">
+              <label for="colorCount">
+                Jumlah warna GIF
+                <strong id="colorValue">128 warna</strong>
+              </label>
+              <select id="colorCount">
+                <option value="32">32 warna - Kompresi tinggi</option>
                 <option value="64">64 warna</option>
-                <option value="32">32 warna</option>
+                <option value="128" selected>128 warna - Seimbang</option>
+                <option value="256">256 warna - Kualitas tinggi</option>
               </select>
             </div>
 
+            <div class="gif-setting-group" id="webpQualitySetting" hidden>
+              <label for="webpQuality">
+                Kualitas WebP
+                <strong id="qualityValue">75%</strong>
+              </label>
+              <input
+                type="range"
+                id="webpQuality"
+                min="1"
+                max="100"
+                value="75"
+              />
+              <div class="gif-range-labels">
+                <span>Ukuran kecil</span>
+                <span>Kualitas tinggi</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="gif-button gif-button-primary"
+              id="optimizeGif"
+            >
+              Optimalkan GIF
+            </button>
+
+            <div class="gif-progress" id="gifProgress" hidden>
+              <div class="gif-progress-track">
+                <div id="progressBar"></div>
+              </div>
+              <p id="progressText">Menyiapkan FFmpeg...</p>
+            </div>
+
+            <div class="gif-status" id="gifStatus" role="status" aria-live="polite"></div>
           </div>
 
-          <label class="gif-checkbox">
-            <input type="checkbox" id="keepRatio" checked />
-            <span>Pertahankan rasio asli</span>
-          </label>
+          <div class="gif-result" id="gifResult" hidden>
+            <h2>Hasil Optimasi</h2>
 
-          <div class="gif-setting-row gif-quality">
-            <label for="quality">
-              Kualitas WebP:
-              <strong id="qualityLabel">75%</strong>
-            </label>
+            <div class="gif-result-stats">
+              <div>
+                <span>Ukuran asli</span>
+                <strong id="beforeSize">-</strong>
+              </div>
+              <div>
+                <span>Ukuran hasil</span>
+                <strong id="afterSize">-</strong>
+              </div>
+              <div>
+                <span>Penghematan</span>
+                <strong id="savedSize">-</strong>
+              </div>
+            </div>
 
-            <input
-              id="quality"
-              type="range"
-              min="10"
-              max="100"
-              value="75"
-            />
+            <a
+              href="#"
+              class="gif-button gif-download"
+              id="downloadGif"
+              download
+            >
+              Download Hasil
+            </a>
           </div>
 
-          <p class="gif-note">
-            Pengaturan kualitas digunakan untuk Animated WebP.
-            Jumlah warna digunakan untuk optimasi GIF. Resize akan
-            mengubah dimensi seluruh frame animasi.
-          </p>
-
         </div>
-
-        <div class="btn-group">
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="convertBtn"
-          >
-            Optimasi Sekarang
-          </button>
-
-          <button
-            type="button"
-            class="btn btn-secondary"
-            id="resetBtn"
-          >
-            Ganti GIF
-          </button>
-        </div>
-
-        <div
-          id="status"
-          class="tool-result"
-          aria-live="polite"
-          hidden
-        ></div>
-
-        <div class="gif-progress" id="progressArea" hidden>
-          <div class="gif-progress-track">
-            <div id="progressBar"></div>
-          </div>
-          <span id="progressLabel">0%</span>
-        </div>
-
-        <div
-          id="resultSummary"
-          class="gif-summary"
-          hidden
-        ></div>
-
       </div>
     </section>
 
-    <article class="tool-content">
-
-      <h2>GIF Compressor dan Animated WebP Converter</h2>
-
+    <section class="gif-information">
+      <h2>Optimasi GIF Online</h2>
       <p>
-        GIF & WebP Optimizer AI Mr Ferdy merupakan tool online untuk
-        mengompres GIF animasi, mengubah dimensi gambar, dan mengonversi
-        GIF ke format Animated WebP. Proses optimasi dilakukan langsung
-        di browser menggunakan FFmpeg WebAssembly.
+        GIF Optimizer membantu mengurangi ukuran file animasi GIF,
+        mengubah dimensi gambar, serta mengonversi GIF menjadi Animated WebP.
+        Seluruh proses dilakukan di browser menggunakan FFmpeg WebAssembly.
       </p>
 
-      <h2>Fitur GIF & WebP Optimizer</h2>
-
+      <h2>Fitur GIF Optimizer</h2>
       <ul>
-        <li>Kompres GIF animasi untuk mengurangi ukuran file.</li>
-        <li>Resize GIF berdasarkan lebar dan tinggi.</li>
-        <li>Mempertahankan rasio dimensi gambar.</li>
-        <li>Mengatur jumlah warna GIF hingga 256 warna.</li>
-        <li>Konversi GIF ke Animated WebP.</li>
-        <li>Pengaturan kualitas output WebP.</li>
-        <li>Preview animasi original dan hasil optimasi.</li>
-        <li>Menampilkan ukuran file sebelum dan sesudah kompresi.</li>
-        <li>Download hasil GIF atau WebP langsung ke perangkat.</li>
-        <li>Mendukung transparansi pada GIF.</li>
-        <li>Pemrosesan dilakukan secara lokal di browser.</li>
+        <li>Kompres GIF dengan pengaturan jumlah warna.</li>
+        <li>Resize animasi GIF sesuai kebutuhan.</li>
+        <li>Konversi GIF menjadi Animated WebP.</li>
+        <li>Pengaturan kualitas hasil WebP.</li>
+        <li>Preview dan perbandingan ukuran file.</li>
       </ul>
-
-      <h2>Cara Kompres GIF Online</h2>
-
-      <ol>
-        <li>Pilih file GIF animasi dari perangkat.</li>
-        <li>Atur lebar dan tinggi sesuai kebutuhan.</li>
-        <li>Aktifkan pertahankan rasio jika ingin menjaga proporsi gambar.</li>
-        <li>Pilih format GIF atau Animated WebP.</li>
-        <li>Atur jumlah warna atau kualitas WebP.</li>
-        <li>Klik Optimasi Sekarang.</li>
-        <li>Periksa hasil animasi dan ukuran file.</li>
-        <li>Klik Download Hasil untuk menyimpan file.</li>
-      </ol>
-
-      <h2>Perbedaan GIF dan Animated WebP</h2>
-
-      <p>
-        GIF merupakan format gambar animasi yang mendukung transparansi
-        sederhana dan memiliki batas maksimum 256 warna dalam satu frame.
-        Sementara itu, Animated WebP mendukung animasi, transparansi,
-        serta kompresi lossy dan lossless. Animated WebP dapat menghasilkan
-        ukuran file yang lebih kecil, tergantung pada karakteristik gambar
-        dan pengaturan kualitas.
-      </p>
-
-      <h2>Mengapa Perlu Resize GIF?</h2>
-
-      <p>
-        GIF dengan dimensi besar dapat menghasilkan ukuran file yang
-        cukup tinggi. Resize membantu mengurangi jumlah piksel pada
-        setiap frame sehingga ukuran file dapat menjadi lebih ringan.
-        Hal ini berguna untuk logo animasi, banner website, thumbnail,
-        dan konten digital lainnya.
-      </p>
-
-      <h2>Apakah Animasi dan Transparansi Tetap Dipertahankan?</h2>
-
-      <p>
-        Tool ini memproses seluruh frame animasi, bukan hanya gambar
-        pertama. Transparansi GIF juga dipertahankan melalui proses
-        pembuatan dan penggunaan palette. Namun, hasil visual dapat
-        berubah tergantung jumlah warna, ukuran, dan kualitas kompresi
-        yang digunakan.
-      </p>
-
-      <h2>Apakah File GIF Diunggah ke Server?</h2>
-
-      <p>
-        Tidak. File diproses langsung di browser menggunakan
-        FFmpeg WebAssembly. File original tidak dikirim ke server
-        oleh tool ini. Library FFmpeg perlu dimuat terlebih dahulu
-        melalui koneksi internet saat pertama kali digunakan.
-      </p>
-
-      <h2>GIF & WebP Optimizer AI Mr Ferdy</h2>
-
-      <p>
-        GIF & WebP Optimizer AI Mr Ferdy membantu mengoptimalkan
-        file animasi untuk kebutuhan website dan konten digital.
-        Gunakan fitur kompresi dan resize untuk menyiapkan animasi
-        dengan dimensi dan ukuran file yang sesuai kebutuhan.
-      </p>
-
-    </article>
+    </section>
   </div>
+</MainLayout>
 
-  <style>
-    .gif-drop {
-      border: 2px dashed var(--border, rgba(148,163,184,.35));
-      border-radius: 20px;
-      padding: 36px 20px;
-      text-align: center;
-      margin-bottom: 24px;
-      transition: border-color .2s, background .2s;
-    }
-
-    .gif-drop.dragover {
-      border-color: #38bdf8;
-      background: rgba(56,189,248,.08);
-    }
-
-    .gif-drop-icon {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    .gif-drop h2 {
-      font-size: 1.2rem;
-      margin: 0 0 8px;
-    }
-
-    .gif-drop p {
-      margin: 0 0 18px;
-      opacity: .75;
-    }
-
-    .gif-preview-grid {
-      display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap: 16px;
-      margin: 20px 0;
-    }
-
-    .gif-preview-card {
-      border: 1px solid var(--border,rgba(148,163,184,.25));
-      border-radius: 16px;
-      padding: 14px;
-      min-width: 0;
-    }
-
-    .gif-preview-label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .gif-image-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 180px;
-      padding: 12px;
-      border-radius: 10px;
-      background-color: rgba(148,163,184,.08);
-      background-image:
-        linear-gradient(45deg,#aaa 25%,transparent 25%),
-        linear-gradient(-45deg,#aaa 25%,transparent 25%),
-        linear-gradient(45deg,transparent 75%,#aaa 75%),
-        linear-gradient(-45deg,transparent 75%,#aaa 75%);
-      background-size: 20px 20px;
-      background-position: 0 0,0 10px,10px -10px,-10px 0;
-    }
-
-    .gif-image-wrap img {
-      display: block;
-      max-width: 100%;
-      max-height: 320px;
-      object-fit: contain;
-    }
-
-    .gif-preview-card p {
-      font-size: .9rem;
-      margin: 10px 0 0;
-      overflow-wrap: anywhere;
-    }
-
-    .gif-settings {
-      border: 1px solid var(--border,rgba(148,163,184,.25));
-      border-radius: 16px;
-      padding: 18px;
-      margin: 20px 0;
-    }
-
-    .gif-settings h2 {
-      font-size: 1.15rem;
-      margin: 0 0 20px;
-    }
-
-    .gif-setting-grid {
-      display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap: 16px;
-    }
-
-    .gif-setting-row {
-      display: grid;
-      gap: 9px;
-      min-width: 0;
-    }
-
-    .gif-setting-row label {
-      font-weight: 600;
-      font-size: .92rem;
-    }
-
-    .gif-setting-row input[type="number"],
-    .gif-setting-row select {
-      width: 100%;
-      min-width: 0;
-      padding: 12px;
-      border-radius: 9px;
-      border: 1px solid var(--border,rgba(148,163,184,.3));
-      background: var(--background,transparent);
-      color: inherit;
-    }
-
-    .gif-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin: 18px 0;
-      cursor: pointer;
-    }
-
-    .gif-checkbox input {
-      accent-color: #38bdf8;
-      width: 17px;
-      height: 17px;
-    }
-
-    .gif-quality {
-      margin-top: 18px;
-    }
-
-    .gif-quality input {
-      width: 100%;
-      accent-color: #38bdf8;
-    }
-
-    .gif-note {
-      font-size: .88rem;
-      opacity: .75;
-      line-height: 1.7;
-      margin: 18px 0 0;
-    }
-
-    .gif-progress {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 18px 0;
-    }
-
-    .gif-progress-track {
-      height: 9px;
-      flex: 1;
-      background: var(--border,rgba(148,163,184,.2));
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    #progressBar {
-      width: 0;
-      height: 100%;
-      background: #38bdf8;
-      transition: width .2s;
-    }
-
-    #progressLabel {
-      font-size: .85rem;
-      font-weight: 700;
-      min-width: 40px;
-      text-align: right;
-    }
-
-    .gif-summary {
-      border: 1px solid var(--border,rgba(148,163,184,.25));
-      border-radius: 14px;
-      padding: 16px;
-      margin: 16px 0;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    #downloadBtn {
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    @media(max-width:640px) {
-      .gif-preview-grid,
-      .gif-setting-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .gif-drop {
-        padding: 28px 14px;
-      }
-    }
-  </style>
-
-
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
-<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
-<script>
-
-const { FFmpeg } = FFmpegWASM;
-const { fetchFile, toBlobURL } = FFmpegUtil;
-
-const ffmpeg = new FFmpeg();
-
-const $ = id => document.getElementById(id);
-
-let originalFile = null;
-let resultBlob = null;
-let resultURL = null;
-let originalURL = null;
-let outputName = "";
-
-const input = $("fileInput");
-const dropZone = $("dropZone");
-
-$("browseBtn").onclick = () => input.click();
-
-input.onchange = () => {
-  if (input.files[0]) loadFile(input.files[0]);
-};
-
-dropZone.ondragover = e => {
-  e.preventDefault();
-  dropZone.classList.add("dragover");
-};
-
-dropZone.ondragleave = () => {
-  dropZone.classList.remove("dragover");
-};
-
-dropZone.ondrop = e => {
-  e.preventDefault();
-  dropZone.classList.remove("dragover");
-
-  const file = e.dataTransfer.files[0];
-
-  if (file?.type === "image/gif") {
-    loadFile(file);
-  } else {
-    alert("Silakan pilih file GIF.");
+<style>
+  .gif-optimizer {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
   }
-};
 
-function formatSize(bytes) {
-  if (bytes < 1024) return bytes + " B";
-  if (bytes < 1048576) return (bytes / 1024).toFixed(2) + " KB";
-  return (bytes / 1048576).toFixed(2) + " MB";
-}
+  .gif-optimizer .tool-header {
+    margin-bottom: 24px;
+  }
 
-function loadFile(file) {
-  if (originalURL) URL.revokeObjectURL(originalURL);
-  if (resultURL) URL.revokeObjectURL(resultURL);
+  .gif-optimizer .tool-header h1 {
+    margin: 0 0 10px;
+  }
 
-  originalFile = file;
-  originalURL = URL.createObjectURL(file);
-  resultBlob = null;
+  .gif-optimizer .tool-header p {
+    margin: 0;
+    line-height: 1.7;
+  }
 
-  $("originalPreview").src = originalURL;
-  $("originalInfo").textContent =
-    `${file.name} · ${formatSize(file.size)}`;
+  .gif-optimizer .tool-box {
+    padding: 22px;
+    border: 1px solid var(--sab-border-color, #d9dfe5);
+    border-radius: 16px;
+    background: var(--sab-bg-light, #fff);
+  }
 
-  $("resultCard").hidden = true;
-  $("workspace").hidden = false;
+  .gif-optimizer .gif-upload {
+    padding: 42px 20px;
+    text-align: center;
+    border: 2px dashed var(--sab-border-color, #d9dfe5);
+    border-radius: 14px;
+    transition: border-color .2s, background .2s;
+  }
 
-  const img = new Image();
+  .gif-optimizer .gif-upload.is-dragover {
+    border-color: var(--sab-primary, #5148e4);
+    background: rgba(81, 72, 228, .05);
+  }
 
-  img.onload = () => {
-    $("width").value = img.naturalWidth;
-    $("height").value = img.naturalHeight;
-    $("width").dataset.ratio = img.naturalWidth / img.naturalHeight;
-  };
+  .gif-optimizer .upload-icon {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 16px;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--sab-bg-light, #f3f7f9);
+    font-size: 19px;
+    font-weight: 800;
+  }
 
-  img.src = originalURL;
-}
+  .gif-optimizer .gif-upload h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+  }
 
-$("keepRatio").onchange = () => {
-  $("height").disabled = $("keepRatio").checked;
-};
+  .gif-optimizer .gif-upload p {
+    margin: 0 0 18px;
+    font-size: 14px;
+  }
 
-$("width").oninput = () => {
-  if (!$("keepRatio").checked) return;
+  .gif-optimizer .gif-upload small {
+    display: block;
+    margin-top: 14px;
+    opacity: .7;
+  }
 
-  const ratio = Number($("width").dataset.ratio);
+  .gif-optimizer .gif-button {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 20px;
+    border: 0;
+    border-radius: 9px;
+    background: var(--sab-primary, #5148e4);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity .2s, transform .2s;
+  }
 
-  if (ratio && Number($("width").value) > 0) {
-    $("height").value = Math.round(
-      Number($("width").value) / ratio
+  .gif-optimizer .gif-button:hover {
+    opacity: .88;
+    transform: translateY(-1px);
+  }
+
+  .gif-optimizer .gif-button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .gif-optimizer .gif-workspace {
+    margin-top: 24px;
+  }
+
+  .gif-optimizer .gif-file-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--sab-border-color, #d9dfe5);
+  }
+
+  .gif-optimizer .gif-file-info strong,
+  .gif-optimizer .gif-file-info span {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+
+  .gif-optimizer .gif-file-info span {
+    margin-top: 5px;
+    font-size: 12px;
+    opacity: .7;
+  }
+
+  .gif-optimizer .gif-reset {
+    padding: 8px 12px;
+    border: 1px solid var(--sab-border-color, #d9dfe5);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .gif-optimizer .gif-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 22px;
+  }
+
+  .gif-optimizer .gif-preview-card {
+    min-width: 0;
+  }
+
+  .gif-optimizer .gif-preview-card h3 {
+    margin: 0 0 10px;
+    font-size: 15px;
+  }
+
+  .gif-optimizer .gif-preview {
+    position: relative;
+    display: flex;
+    min-height: 180px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 12px;
+    border: 1px solid var(--sab-border-color, #d9dfe5);
+    border-radius: 10px;
+    background-color: var(--sab-bg-light, #f3f7f9);
+    background-image:
+      linear-gradient(45deg, rgba(128,128,128,.08) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(128,128,128,.08) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(128,128,128,.08) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(128,128,128,.08) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  }
+
+  .gif-optimizer .gif-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+  }
+
+  .gif-optimizer .gif-preview p,
+  .gif-optimizer .gif-preview span {
+    font-size: 13px;
+    opacity: .65;
+  }
+
+  .gif-optimizer .gif-preview-card > p {
+    margin: 8px 0 0;
+    font-size: 12px;
+    opacity: .75;
+  }
+
+  .gif-optimizer .gif-settings {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--sab-border-color, #d9dfe5);
+  }
+
+  .gif-optimizer .gif-settings h2,
+  .gif-optimizer .gif-result h2 {
+    margin: 0 0 18px;
+    font-size: 19px;
+  }
+
+  .gif-optimizer .gif-setting-group {
+    display: grid;
+    gap: 9px;
+    margin-bottom: 18px;
+  }
+
+  .gif-optimizer .gif-setting-group label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 650;
+  }
+
+  .gif-optimizer .gif-setting-group label strong {
+    font-size: 12px;
+    opacity: .75;
+  }
+
+  .gif-optimizer .gif-setting-group input:not([type="range"]),
+  .gif-optimizer .gif-setting-group select {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--sab-border-color, #d9dfe5);
+    border-radius: 8px;
+    background: var(--sab-bg-light, #fff);
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+  }
+
+  .gif-optimizer .gif-setting-group input[type="range"] {
+    width: 100%;
+    accent-color: var(--sab-primary, #5148e4);
+  }
+
+  .gif-optimizer .gif-setting-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .gif-optimizer .gif-hint {
+    margin: -8px 0 18px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: .7;
+  }
+
+  .gif-optimizer .gif-range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    opacity: .65;
+  }
+
+  .gif-optimizer .gif-button-primary {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .gif-optimizer .gif-progress {
+    margin-top: 18px;
+  }
+
+  .gif-optimizer .gif-progress-track {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--sab-border-color, #d9dfe5);
+  }
+
+  .gif-optimizer .gif-progress-track div {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--sab-primary, #5148e4);
+    transition: width .2s;
+  }
+
+  .gif-optimizer .gif-progress p {
+    margin: 9px 0 0;
+    font-size: 12px;
+    opacity: .75;
+  }
+
+  .gif-optimizer .gif-status {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .gif-optimizer .gif-result {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--sab-border-color, #d9dfe5);
+  }
+
+  .gif-optimizer .gif-result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .gif-optimizer .gif-result-stats div {
+    padding: 13px;
+    border: 1px solid var(--sab-border-color, #d9dfe5);
+    border-radius: 10px;
+  }
+
+  .gif-optimizer .gif-result-stats span,
+  .gif-optimizer .gif-result-stats strong {
+    display: block;
+  }
+
+  .gif-optimizer .gif-result-stats span {
+    margin-bottom: 7px;
+    font-size: 11px;
+    opacity: .7;
+  }
+
+  .gif-optimizer .gif-result-stats strong {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .gif-optimizer .gif-download {
+    width: 100%;
+  }
+
+  .gif-optimizer .gif-information {
+    margin-top: 30px;
+    line-height: 1.8;
+  }
+
+  .gif-optimizer .gif-information h2 {
+    margin: 24px 0 8px;
+    font-size: 19px;
+  }
+
+  .gif-optimizer .gif-information p,
+  .gif-optimizer .gif-information ul {
+    font-size: 14px;
+  }
+
+  @media (max-width: 600px) {
+    .gif-optimizer .tool-box {
+      padding: 15px;
+    }
+
+    .gif-optimizer .gif-preview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gif-optimizer .gif-preview {
+      min-height: 150px;
+    }
+
+    .gif-optimizer .gif-result-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- FFmpeg UMD dan util CDN -->
+<script
+  is:inline
+  src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"
+></script>
+<script
+  is:inline
+  src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"
+></script>
+
+<script is:inline>
+(() => {
+  const input = document.getElementById("gifInput");
+  const selectButton = document.getElementById("selectGif");
+  const dropZone = document.getElementById("gifDropZone");
+  const workspace = document.getElementById("gifWorkspace");
+  const resetButton = document.getElementById("resetGif");
+  const optimizeButton = document.getElementById("optimizeGif");
+
+  const originalPreview = document.getElementById("originalPreview");
+  const resultPreview = document.getElementById("resultPreview");
+  const previewPlaceholder = document.getElementById("previewPlaceholder");
+
+  const fileName = document.getElementById("fileName");
+  const fileDetails = document.getElementById("fileDetails");
+  const originalInfo = document.getElementById("originalInfo");
+  const resultInfo = document.getElementById("resultInfo");
+
+  const outputFormat = document.getElementById("outputFormat");
+  const resizeWidth = document.getElementById("resizeWidth");
+  const resizeHeight = document.getElementById("resizeHeight");
+  const colorCount = document.getElementById("colorCount");
+  const webpQuality = document.getElementById("webpQuality");
+
+  const colorSetting = document.getElementById("gifColorSetting");
+  const webpQualitySetting = document.getElementById("webpQualitySetting");
+  const colorValue = document.getElementById("colorValue");
+  const qualityValue = document.getElementById("qualityValue");
+
+  const progressBox = document.getElementById("gifProgress");
+  const progressBar = document.getElementById("progressBar");
+  const progressText = document.getElementById("progressText");
+  const statusBox = document.getElementById("gifStatus");
+
+  const resultBox = document.getElementById("gifResult");
+  const beforeSize = document.getElementById("beforeSize");
+  const afterSize = document.getElementById("afterSize");
+  const savedSize = document.getElementById("savedSize");
+  const downloadLink = document.getElementById("downloadGif");
+
+  let selectedFile = null;
+  let resultURL = null;
+  let originalURL = null;
+  let ffmpeg = null;
+  let ffmpegLoaded = false;
+  let processing = false;
+
+  const CORE_BASE =
+    "https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd";
+
+  function formatBytes(bytes) {
+    if (!Number.isFinite(bytes)) return "-";
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function setStatus(message, type = "") {
+    statusBox.textContent = message;
+    statusBox.dataset.type = type;
+  }
+
+  function setProgress(percent, message) {
+    progressBox.hidden = false;
+    progressBar.style.width = Math.max(0, Math.min(100, percent)) + "%";
+    progressText.textContent = message;
+  }
+
+  function clearResult() {
+    if (resultURL) {
+      URL.revokeObjectURL(resultURL);
+      resultURL = null;
+    }
+
+    resultPreview.removeAttribute("src");
+    resultPreview.hidden = true;
+    previewPlaceholder.hidden = false;
+    resultInfo.textContent = "-";
+    resultBox.hidden = true;
+    downloadLink.removeAttribute("href");
+  }
+
+  function resetAll() {
+    selectedFile = null;
+    input.value = "";
+
+    if (originalURL) {
+      URL.revokeObjectURL(originalURL);
+      originalURL = null;
+    }
+
+    clearResult();
+
+    originalPreview.removeAttribute("src");
+    workspace.hidden = true;
+    dropZone.hidden = false;
+    progressBox.hidden = true;
+    statusBox.textContent = "";
+    optimizeButton.disabled = false;
+  }
+
+  function loadFile(file) {
+    if (!file) return;
+
+    if (!file.type.includes("gif") && !file.name.toLowerCase().endsWith(".gif")) {
+      setStatus("Silakan pilih file GIF yang valid.", "error");
+      return;
+    }
+
+    if (file.size === 0) {
+      setStatus("File kosong atau tidak dapat dibaca.", "error");
+      return;
+    }
+
+    selectedFile = file;
+
+    if (originalURL) URL.revokeObjectURL(originalURL);
+    originalURL = URL.createObjectURL(file);
+
+    clearResult();
+
+    originalPreview.src = originalURL;
+    originalPreview.hidden = false;
+
+    fileName.textContent = file.name;
+    fileDetails.textContent = formatBytes(file.size);
+    originalInfo.textContent = formatBytes(file.size);
+
+    workspace.hidden = false;
+    dropZone.hidden = true;
+
+    setStatus("");
+    progressBox.hidden = true;
+
+    const bitmap = new Image();
+    bitmap.onload = () => {
+      resizeWidth.value = bitmap.naturalWidth;
+      resizeHeight.value = bitmap.naturalHeight;
+      fileDetails.textContent =
+        bitmap.naturalWidth + " × " + bitmap.naturalHeight +
+        " px · " + formatBytes(file.size);
+    };
+    bitmap.src = originalURL;
+  }
+
+  async function makeBlobURL(url, mimeType) {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Gagal mengambil file FFmpeg Core: " + response.status);
+    }
+
+    const blob = await response.blob();
+    return URL.createObjectURL(
+      new Blob([blob], { type: mimeType })
     );
   }
-};
 
-$("quality").oninput = () => {
-  $("qualityValue").textContent = $("quality").value;
-};
+  async function loadFFmpeg() {
+    if (ffmpegLoaded) return;
 
-async function initFFmpeg() {
-  if (ffmpeg.loaded) return;
+    const ffmpegAPI = window.FFmpegWASM;
+    const utilAPI = window.FFmpegUtil;
 
-  const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
-
-  await ffmpeg.load({
-    coreURL: await toBlobURL(
-      `${base}/ffmpeg-core.js`, "text/javascript"
-    ),
-    wasmURL: await toBlobURL(
-      `${base}/ffmpeg-core.wasm`, "application/wasm"
-    )
-  });
-}
-
-$("processBtn").onclick = async () => {
-  if (!originalFile) return;
-
-  const btn = $("processBtn");
-  btn.disabled = true;
-
-  $("progressWrap").hidden = false;
-  $("resultCard").hidden = true;
-  $("status").textContent = "Menyiapkan FFmpeg...";
-
-  try {
-    await initFFmpeg();
-
-    const width = Math.max(1, Number($("width").value));
-    const height = Math.max(1, Number($("height").value));
-    const format = $("format").value;
-    const quality = Number($("quality").value);
-    const colors = $("colors").value;
-
-    if (!width || !height || width > 4096 || height > 4096) {
-      throw new Error("Dimensi harus antara 1 sampai 4096 px.");
+    if (!ffmpegAPI || !ffmpegAPI.FFmpeg) {
+      throw new Error(
+        "Library FFmpeg tidak berhasil dimuat. Periksa koneksi CDN atau konfigurasi worker."
+      );
     }
 
-    $("status").textContent = "Memproses animasi...";
+    ffmpeg = new ffmpegAPI.FFmpeg();
 
-    const inputName = "original.gif";
-    const outputFile = format === "gif"
-      ? "optimized.gif"
-      : "optimized.webp";
-
-    await ffmpeg.writeFile(
-      inputName,
-      await fetchFile(originalFile)
-    );
-
-    const scale = `scale=${width}:${height}:flags=lanczos`;
-
-    let args;
-
-    if (format === "gif") {
-      args = [
-        "-i", inputName,
-        "-vf",
-        `${scale},split[s0][s1];[s0]palettegen=max_colors=${colors}[p];[s1][p]paletteuse=dither=bayer`,
-        "-loop", "0",
-        outputFile
-      ];
-    } else {
-      args = [
-        "-i", inputName,
-        "-vf", scale,
-        "-c:v", "libwebp",
-        "-lossless", "0",
-        "-quality", String(quality),
-        "-compression_level", "6",
-        "-loop", "0",
-        "-an",
-        outputFile
-      ];
-    }
-
-    await ffmpeg.exec(args);
-
-    const data = await ffmpeg.readFile(outputFile);
-
-    resultBlob = new Blob([data], {
-      type: format === "gif"
-        ? "image/gif"
-        : "image/webp"
+    ffmpeg.on("log", ({ message }) => {
+      if (message) {
+        progressText.textContent = message;
+      }
     });
 
-    if (resultURL) URL.revokeObjectURL(resultURL);
-    resultURL = URL.createObjectURL(resultBlob);
+    const toBlobURL =
+      utilAPI && utilAPI.toBlobURL
+        ? utilAPI.toBlobURL
+        : makeBlobURL;
 
-    outputName =
-      originalFile.name.replace(/\.gif$/i, "") +
-      "-optimized." + format;
+    const coreURL = await toBlobURL(
+      CORE_BASE + "/ffmpeg-core.js",
+      "text/javascript"
+    );
 
-    $("resultPreview").src = resultURL;
+    const wasmURL = await toBlobURL(
+      CORE_BASE + "/ffmpeg-core.wasm",
+      "application/wasm"
+    );
 
-    const saved = originalFile.size - resultBlob.size;
-    const percentage = (saved / originalFile.size) * 100;
+    await ffmpeg.load({
+      coreURL,
+      wasmURL
+    });
 
-    $("resultInfo").textContent =
-      `Original: ${formatSize(originalFile.size)} · ` +
-      `Hasil: ${formatSize(resultBlob.size)} · ` +
-      (saved > 0
-        ? `Hemat ${percentage.toFixed(1)}%`
-        : `Ukuran bertambah ${Math.abs(percentage).toFixed(1)}%`);
-
-    $("resultCard").hidden = false;
-    $("status").textContent = "Optimasi selesai!";
-
-    await ffmpeg.deleteFile(inputName);
-    await ffmpeg.deleteFile(outputFile);
-
-  } catch (error) {
-    console.error(error);
-    $("status").textContent = "Gagal: " + error.message;
-  } finally {
-    btn.disabled = false;
+    ffmpegLoaded = true;
   }
-};
 
-$("downloadBtn").onclick = () => {
-  if (!resultBlob) return;
+  function getScaleFilter() {
+    const width = parseInt(resizeWidth.value, 10);
+    const height = parseInt(resizeHeight.value, 10);
 
-  const link = document.createElement("a");
-  link.href = resultURL;
-  link.download = outputName;
-  link.click();
-};
+    const validWidth =
+      Number.isInteger(width) && width > 0 && width <= 4096;
+    const validHeight =
+      Number.isInteger(height) && height > 0 && height <= 4096;
 
+    if (!validWidth && !validHeight) return null;
+
+    if (validWidth && validHeight) {
+      return `scale=${width}:${height}:flags=lanczos`;
+    }
+
+    if (validWidth) {
+      return `scale=${width}:-1:flags=lanczos`;
+    }
+
+    return `scale=-1:${height}:flags=lanczos`;
+  }
+
+  async function optimize() {
+    if (!selectedFile || processing) return;
+
+    processing = true;
+    optimizeButton.disabled = true;
+    clearResult();
+    setStatus("");
+    setProgress(5, "Memuat FFmpeg WebAssembly...");
+
+    let outputName = "";
+    let outputMime = "";
+
+    try {
+      await loadFFmpeg();
+
+      setProgress(20, "Membaca file GIF...");
+
+      const inputName = "source.gif";
+      const outputFormatValue = outputFormat.value;
+      const scale = getScaleFilter();
+
+      await ffmpeg.writeFile(
+        inputName,
+        new Uint8Array(await selectedFile.arrayBuffer())
+      );
+
+      const args = ["-y", "-i", inputName];
+
+      if (outputFormatValue === "gif") {
+        const colors = parseInt(colorCount.value, 10);
+        const filters = [];
+
+        if (scale) {
+          filters.push(scale);
+        }
+
+        const scalePart = filters.length
+          ? filters.join(",") + ","
+          : "";
+
+        args.push(
+          "-filter_complex",
+          `[0:v]${scalePart}split[a][b];[a]palettegen=max_colors=${colors}:reserve_transparent=1[p];[b][p]paletteuse=dither=sierra2_4a`
+        );
+
+        args.push(
+          "-gifflags",
+          "+transdiff",
+          "-loop",
+          "0",
+          "output.gif"
+        );
+
+        outputName = "output.gif";
+        outputMime = "image/gif";
+      } else {
+        if (scale) {
+          args.push("-vf", scale);
+        }
+
+        const quality = parseInt(webpQuality.value, 10);
+
+        args.push(
+          "-c:v",
+          "libwebp",
+          "-lossless",
+          "0",
+          "-quality",
+          String(quality),
+          "-compression_level",
+          "6",
+          "-loop",
+          "0",
+          "-an",
+          "-vsync",
+          "0",
+          "-f",
+          "webp",
+          "output.webp"
+        );
+
+        outputName = "output.webp";
+        outputMime = "image/webp";
+      }
+
+      setProgress(35, "Memproses animasi...");
+
+      await ffmpeg.exec(args);
+
+      setProgress(90, "Menyiapkan hasil...");
+
+      const outputData = await ffmpeg.readFile(outputName);
+      const outputBlob = new Blob([outputData], { type: outputMime });
+
+      if (!outputBlob.size) {
+        throw new Error("Hasil optimasi kosong. Silakan coba pengaturan lain.");
+      }
+
+      resultURL = URL.createObjectURL(outputBlob);
+
+      resultPreview.src = resultURL;
+      resultPreview.hidden = false;
+      previewPlaceholder.hidden = true;
+
+      resultInfo.textContent = formatBytes(outputBlob.size);
+
+      const difference = selectedFile.size - outputBlob.size;
+      const percentage = selectedFile.size
+        ? (difference / selectedFile.size) * 100
+        : 0;
+
+      beforeSize.textContent = formatBytes(selectedFile.size);
+      afterSize.textContent = formatBytes(outputBlob.size);
+
+      if (difference >= 0) {
+        savedSize.textContent =
+          formatBytes(difference) + " (" + percentage.toFixed(1) + "%)";
+      } else {
+        savedSize.textContent =
+          "Bertambah " + formatBytes(Math.abs(difference));
+      }
+
+      const baseName = selectedFile.name.replace(/\.gif$/i, "");
+      downloadLink.href = resultURL;
+      downloadLink.download =
+        baseName + (outputFormatValue === "gif" ? "-optimized.gif" : ".webp");
+
+      resultBox.hidden = false;
+
+      setProgress(100, "Optimasi selesai.");
+      setStatus("File berhasil diproses.", "success");
+
+      await ffmpeg.deleteFile(inputName);
+      await ffmpeg.deleteFile(outputName);
+
+    } catch (error) {
+      console.error("GIF Optimizer:", error);
+
+      const message = error && error.message
+        ? error.message
+        : "Terjadi kesalahan saat memproses file.";
+
+      setStatus(
+        "Gagal memproses: " + message,
+        "error"
+      );
+
+      setProgress(0, "Proses tidak berhasil.");
+    } finally {
+      processing = false;
+      optimizeButton.disabled = false;
+    }
+  }
+
+  selectButton.addEventListener("click", () => input.click());
+
+  input.addEventListener("change", event => {
+    loadFile(event.target.files[0]);
+  });
+
+  resetButton.addEventListener("click", resetAll);
+  optimizeButton.addEventListener("click", optimize);
+
+  outputFormat.addEventListener("change", () => {
+    const isWebP = outputFormat.value === "webp";
+    colorSetting.hidden = isWebP;
+    webpQualitySetting.hidden = !isWebP;
+    clearResult();
+  });
+
+  colorCount.addEventListener("change", () => {
+    colorValue.textContent = colorCount.value + " warna";
+    clearResult();
+  });
+
+  webpQuality.addEventListener("input", () => {
+    qualityValue.textContent = webpQuality.value + "%";
+    clearResult();
+  });
+
+  resizeWidth.addEventListener("input", clearResult);
+  resizeHeight.addEventListener("input", clearResult);
+
+  ["dragenter", "dragover"].forEach(eventName => {
+    dropZone.addEventListener(eventName, event => {
+      event.preventDefault();
+      dropZone.classList.add("is-dragover");
+    });
+  });
+
+  ["dragleave", "drop"].forEach(eventName => {
+    dropZone.addEventListener(eventName, event => {
+      event.preventDefault();
+      dropZone.classList.remove("is-dragover");
+    });
+  });
+
+  dropZone.addEventListener("drop", event => {
+    const file = event.dataTransfer.files[0];
+    loadFile(file);
+  });
+
+  window.addEventListener("beforeunload", () => {
+    if (originalURL) URL.revokeObjectURL(originalURL);
+    if (resultURL) URL.revokeObjectURL(resultURL);
+  });
+})();
 </script>
-</MainLayout>
