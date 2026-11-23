@@ -504,4 +504,233 @@ export const meta = {
   </style>
 
 
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+<script>
+
+const { FFmpeg } = FFmpegWASM;
+const { fetchFile, toBlobURL } = FFmpegUtil;
+
+const ffmpeg = new FFmpeg();
+
+const $ = id => document.getElementById(id);
+
+let originalFile = null;
+let resultBlob = null;
+let resultURL = null;
+let originalURL = null;
+let outputName = "";
+
+const input = $("fileInput");
+const dropZone = $("dropZone");
+
+$("browseBtn").onclick = () => input.click();
+
+input.onchange = () => {
+  if (input.files[0]) loadFile(input.files[0]);
+};
+
+dropZone.ondragover = e => {
+  e.preventDefault();
+  dropZone.classList.add("dragover");
+};
+
+dropZone.ondragleave = () => {
+  dropZone.classList.remove("dragover");
+};
+
+dropZone.ondrop = e => {
+  e.preventDefault();
+  dropZone.classList.remove("dragover");
+
+  const file = e.dataTransfer.files[0];
+
+  if (file?.type === "image/gif") {
+    loadFile(file);
+  } else {
+    alert("Silakan pilih file GIF.");
+  }
+};
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1048576) return (bytes / 1024).toFixed(2) + " KB";
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function loadFile(file) {
+  if (originalURL) URL.revokeObjectURL(originalURL);
+  if (resultURL) URL.revokeObjectURL(resultURL);
+
+  originalFile = file;
+  originalURL = URL.createObjectURL(file);
+  resultBlob = null;
+
+  $("originalPreview").src = originalURL;
+  $("originalInfo").textContent =
+    `${file.name} · ${formatSize(file.size)}`;
+
+  $("resultCard").hidden = true;
+  $("workspace").hidden = false;
+
+  const img = new Image();
+
+  img.onload = () => {
+    $("width").value = img.naturalWidth;
+    $("height").value = img.naturalHeight;
+    $("width").dataset.ratio = img.naturalWidth / img.naturalHeight;
+  };
+
+  img.src = originalURL;
+}
+
+$("keepRatio").onchange = () => {
+  $("height").disabled = $("keepRatio").checked;
+};
+
+$("width").oninput = () => {
+  if (!$("keepRatio").checked) return;
+
+  const ratio = Number($("width").dataset.ratio);
+
+  if (ratio && Number($("width").value) > 0) {
+    $("height").value = Math.round(
+      Number($("width").value) / ratio
+    );
+  }
+};
+
+$("quality").oninput = () => {
+  $("qualityValue").textContent = $("quality").value;
+};
+
+async function initFFmpeg() {
+  if (ffmpeg.loaded) return;
+
+  const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+
+  await ffmpeg.load({
+    coreURL: await toBlobURL(
+      `${base}/ffmpeg-core.js`, "text/javascript"
+    ),
+    wasmURL: await toBlobURL(
+      `${base}/ffmpeg-core.wasm`, "application/wasm"
+    )
+  });
+}
+
+$("processBtn").onclick = async () => {
+  if (!originalFile) return;
+
+  const btn = $("processBtn");
+  btn.disabled = true;
+
+  $("progressWrap").hidden = false;
+  $("resultCard").hidden = true;
+  $("status").textContent = "Menyiapkan FFmpeg...";
+
+  try {
+    await initFFmpeg();
+
+    const width = Math.max(1, Number($("width").value));
+    const height = Math.max(1, Number($("height").value));
+    const format = $("format").value;
+    const quality = Number($("quality").value);
+    const colors = $("colors").value;
+
+    if (!width || !height || width > 4096 || height > 4096) {
+      throw new Error("Dimensi harus antara 1 sampai 4096 px.");
+    }
+
+    $("status").textContent = "Memproses animasi...";
+
+    const inputName = "original.gif";
+    const outputFile = format === "gif"
+      ? "optimized.gif"
+      : "optimized.webp";
+
+    await ffmpeg.writeFile(
+      inputName,
+      await fetchFile(originalFile)
+    );
+
+    const scale = `scale=${width}:${height}:flags=lanczos`;
+
+    let args;
+
+    if (format === "gif") {
+      args = [
+        "-i", inputName,
+        "-vf",
+        `${scale},split[s0][s1];[s0]palettegen=max_colors=${colors}[p];[s1][p]paletteuse=dither=bayer`,
+        "-loop", "0",
+        outputFile
+      ];
+    } else {
+      args = [
+        "-i", inputName,
+        "-vf", scale,
+        "-c:v", "libwebp",
+        "-lossless", "0",
+        "-quality", String(quality),
+        "-compression_level", "6",
+        "-loop", "0",
+        "-an",
+        outputFile
+      ];
+    }
+
+    await ffmpeg.exec(args);
+
+    const data = await ffmpeg.readFile(outputFile);
+
+    resultBlob = new Blob([data], {
+      type: format === "gif"
+        ? "image/gif"
+        : "image/webp"
+    });
+
+    if (resultURL) URL.revokeObjectURL(resultURL);
+    resultURL = URL.createObjectURL(resultBlob);
+
+    outputName =
+      originalFile.name.replace(/\.gif$/i, "") +
+      "-optimized." + format;
+
+    $("resultPreview").src = resultURL;
+
+    const saved = originalFile.size - resultBlob.size;
+    const percentage = (saved / originalFile.size) * 100;
+
+    $("resultInfo").textContent =
+      `Original: ${formatSize(originalFile.size)} · ` +
+      `Hasil: ${formatSize(resultBlob.size)} · ` +
+      (saved > 0
+        ? `Hemat ${percentage.toFixed(1)}%`
+        : `Ukuran bertambah ${Math.abs(percentage).toFixed(1)}%`);
+
+    $("resultCard").hidden = false;
+    $("status").textContent = "Optimasi selesai!";
+
+    await ffmpeg.deleteFile(inputName);
+    await ffmpeg.deleteFile(outputFile);
+
+  } catch (error) {
+    console.error(error);
+    $("status").textContent = "Gagal: " + error.message;
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+$("downloadBtn").onclick = () => {
+  if (!resultBlob) return;
+
+  const link = document.createElement("a");
+  link.href = resultURL;
+  link.download = outputName;
+  link.click();
+};
+
+</script>
 </MainLayout>
