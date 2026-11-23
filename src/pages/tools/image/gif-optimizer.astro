@@ -1,0 +1,925 @@
+
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+
+export const meta = {
+  title: "GIF & WebP Optimizer",
+  description:
+    "Kompres GIF animasi, resize ukuran gambar, dan konversi GIF ke Animated WebP secara online. Optimalkan ukuran file langsung di browser.",
+  category: "Image",
+  featured: true
+};
+---
+
+<MainLayout
+  title={`${meta.title} | AI Mr Ferdy`}
+  description={meta.description}
+  pageCSS={["tool"]}
+>
+  <div class="page-tools">
+
+    <header class="tool-header">
+      <span class="page-badge">IMAGE TOOLS</span>
+      <h1>GIF & WebP Optimizer</h1>
+      <p>
+        Kompres GIF animasi, ubah dimensi gambar, dan konversi ke Animated
+        WebP dengan ukuran lebih ringan tanpa kehilangan animasi.
+      </p>
+    </header>
+
+    <section class="tool-box" aria-label="GIF and WebP Optimizer">
+
+      <div class="gif-drop" id="dropArea">
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/gif"
+          hidden
+        />
+
+        <div class="gif-drop-icon" aria-hidden="true">🎞️</div>
+        <h2>Pilih atau seret GIF ke sini</h2>
+        <p>Format GIF animasi · Maksimal 100 MB</p>
+
+        <button type="button" class="btn btn-primary" id="browseBtn">
+          Pilih GIF
+        </button>
+      </div>
+
+      <div id="previewPanel" hidden>
+
+        <div class="gif-preview-grid">
+
+          <div class="gif-preview-card">
+            <span class="gif-preview-label">GIF Original</span>
+
+            <div class="gif-image-wrap">
+              <img id="originalPreview" alt="Preview GIF original" />
+            </div>
+
+            <p id="originalInfo"></p>
+          </div>
+
+          <div class="gif-preview-card">
+            <span class="gif-preview-label">Hasil Optimasi</span>
+
+            <div class="gif-image-wrap">
+              <img id="resultPreview" alt="Preview hasil optimasi GIF atau WebP" />
+            </div>
+
+            <p id="resultInfo">
+              Hasil optimasi akan ditampilkan di sini.
+            </p>
+
+            <div class="tool-actions" id="downloadArea" hidden>
+              <a
+                class="tool-btn"
+                id="downloadBtn"
+                download="optimized.gif"
+              >
+                Download Hasil
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="gif-settings">
+
+          <h2>Pengaturan Optimasi</h2>
+
+          <div class="gif-setting-grid">
+
+            <div class="gif-setting-row">
+              <label for="outputFormat">Format Output</label>
+              <select id="outputFormat" class="tool-select">
+                <option value="gif">Optimized GIF</option>
+                <option value="webp">Animated WebP</option>
+              </select>
+            </div>
+
+            <div class="gif-setting-row">
+              <label for="width">Lebar (px)</label>
+              <input
+                id="width"
+                class="tool-input"
+                type="number"
+                min="1"
+                max="4096"
+                placeholder="Lebar"
+              />
+            </div>
+
+            <div class="gif-setting-row">
+              <label for="height">Tinggi (px)</label>
+              <input
+                id="height"
+                class="tool-input"
+                type="number"
+                min="1"
+                max="4096"
+                placeholder="Tinggi"
+              />
+            </div>
+
+            <div class="gif-setting-row">
+              <label for="colors">Jumlah Warna GIF</label>
+              <select id="colors" class="tool-select">
+                <option value="256">256 warna</option>
+                <option value="128">128 warna</option>
+                <option value="64">64 warna</option>
+                <option value="32">32 warna</option>
+              </select>
+            </div>
+
+          </div>
+
+          <label class="gif-checkbox">
+            <input type="checkbox" id="keepRatio" checked />
+            <span>Pertahankan rasio asli</span>
+          </label>
+
+          <div class="gif-setting-row gif-quality">
+            <label for="quality">
+              Kualitas WebP:
+              <strong id="qualityLabel">75%</strong>
+            </label>
+
+            <input
+              id="quality"
+              type="range"
+              min="10"
+              max="100"
+              value="75"
+            />
+          </div>
+
+          <p class="gif-note">
+            Pengaturan kualitas digunakan untuk Animated WebP.
+            Jumlah warna digunakan untuk optimasi GIF. Resize akan
+            mengubah dimensi seluruh frame animasi.
+          </p>
+
+        </div>
+
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="convertBtn"
+          >
+            Optimasi Sekarang
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="resetBtn"
+          >
+            Ganti GIF
+          </button>
+        </div>
+
+        <div
+          id="status"
+          class="tool-result"
+          aria-live="polite"
+          hidden
+        ></div>
+
+        <div class="gif-progress" id="progressArea" hidden>
+          <div class="gif-progress-track">
+            <div id="progressBar"></div>
+          </div>
+          <span id="progressLabel">0%</span>
+        </div>
+
+        <div
+          id="resultSummary"
+          class="gif-summary"
+          hidden
+        ></div>
+
+      </div>
+    </section>
+
+    <article class="tool-content">
+
+      <h2>GIF Compressor dan Animated WebP Converter</h2>
+
+      <p>
+        GIF & WebP Optimizer AI Mr Ferdy merupakan tool online untuk
+        mengompres GIF animasi, mengubah dimensi gambar, dan mengonversi
+        GIF ke format Animated WebP. Proses optimasi dilakukan langsung
+        di browser menggunakan FFmpeg WebAssembly.
+      </p>
+
+      <h2>Fitur GIF & WebP Optimizer</h2>
+
+      <ul>
+        <li>Kompres GIF animasi untuk mengurangi ukuran file.</li>
+        <li>Resize GIF berdasarkan lebar dan tinggi.</li>
+        <li>Mempertahankan rasio dimensi gambar.</li>
+        <li>Mengatur jumlah warna GIF hingga 256 warna.</li>
+        <li>Konversi GIF ke Animated WebP.</li>
+        <li>Pengaturan kualitas output WebP.</li>
+        <li>Preview animasi original dan hasil optimasi.</li>
+        <li>Menampilkan ukuran file sebelum dan sesudah kompresi.</li>
+        <li>Download hasil GIF atau WebP langsung ke perangkat.</li>
+        <li>Mendukung transparansi pada GIF.</li>
+        <li>Pemrosesan dilakukan secara lokal di browser.</li>
+      </ul>
+
+      <h2>Cara Kompres GIF Online</h2>
+
+      <ol>
+        <li>Pilih file GIF animasi dari perangkat.</li>
+        <li>Atur lebar dan tinggi sesuai kebutuhan.</li>
+        <li>Aktifkan pertahankan rasio jika ingin menjaga proporsi gambar.</li>
+        <li>Pilih format GIF atau Animated WebP.</li>
+        <li>Atur jumlah warna atau kualitas WebP.</li>
+        <li>Klik Optimasi Sekarang.</li>
+        <li>Periksa hasil animasi dan ukuran file.</li>
+        <li>Klik Download Hasil untuk menyimpan file.</li>
+      </ol>
+
+      <h2>Perbedaan GIF dan Animated WebP</h2>
+
+      <p>
+        GIF merupakan format gambar animasi yang mendukung transparansi
+        sederhana dan memiliki batas maksimum 256 warna dalam satu frame.
+        Sementara itu, Animated WebP mendukung animasi, transparansi,
+        serta kompresi lossy dan lossless. Animated WebP dapat menghasilkan
+        ukuran file yang lebih kecil, tergantung pada karakteristik gambar
+        dan pengaturan kualitas.
+      </p>
+
+      <h2>Mengapa Perlu Resize GIF?</h2>
+
+      <p>
+        GIF dengan dimensi besar dapat menghasilkan ukuran file yang
+        cukup tinggi. Resize membantu mengurangi jumlah piksel pada
+        setiap frame sehingga ukuran file dapat menjadi lebih ringan.
+        Hal ini berguna untuk logo animasi, banner website, thumbnail,
+        dan konten digital lainnya.
+      </p>
+
+      <h2>Apakah Animasi dan Transparansi Tetap Dipertahankan?</h2>
+
+      <p>
+        Tool ini memproses seluruh frame animasi, bukan hanya gambar
+        pertama. Transparansi GIF juga dipertahankan melalui proses
+        pembuatan dan penggunaan palette. Namun, hasil visual dapat
+        berubah tergantung jumlah warna, ukuran, dan kualitas kompresi
+        yang digunakan.
+      </p>
+
+      <h2>Apakah File GIF Diunggah ke Server?</h2>
+
+      <p>
+        Tidak. File diproses langsung di browser menggunakan
+        FFmpeg WebAssembly. File original tidak dikirim ke server
+        oleh tool ini. Library FFmpeg perlu dimuat terlebih dahulu
+        melalui koneksi internet saat pertama kali digunakan.
+      </p>
+
+      <h2>GIF & WebP Optimizer AI Mr Ferdy</h2>
+
+      <p>
+        GIF & WebP Optimizer AI Mr Ferdy membantu mengoptimalkan
+        file animasi untuk kebutuhan website dan konten digital.
+        Gunakan fitur kompresi dan resize untuk menyiapkan animasi
+        dengan dimensi dan ukuran file yang sesuai kebutuhan.
+      </p>
+
+    </article>
+  </div>
+
+  <style>
+    .gif-drop {
+      border: 2px dashed var(--border, rgba(148,163,184,.35));
+      border-radius: 20px;
+      padding: 36px 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      transition: border-color .2s, background .2s;
+    }
+
+    .gif-drop.dragover {
+      border-color: #38bdf8;
+      background: rgba(56,189,248,.08);
+    }
+
+    .gif-drop-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .gif-drop h2 {
+      font-size: 1.2rem;
+      margin: 0 0 8px;
+    }
+
+    .gif-drop p {
+      margin: 0 0 18px;
+      opacity: .75;
+    }
+
+    .gif-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .gif-preview-card {
+      border: 1px solid var(--border,rgba(148,163,184,.25));
+      border-radius: 16px;
+      padding: 14px;
+      min-width: 0;
+    }
+
+    .gif-preview-label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .gif-image-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      padding: 12px;
+      border-radius: 10px;
+      background-color: rgba(148,163,184,.08);
+      background-image:
+        linear-gradient(45deg,#aaa 25%,transparent 25%),
+        linear-gradient(-45deg,#aaa 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#aaa 75%),
+        linear-gradient(-45deg,transparent 75%,#aaa 75%);
+      background-size: 20px 20px;
+      background-position: 0 0,0 10px,10px -10px,-10px 0;
+    }
+
+    .gif-image-wrap img {
+      display: block;
+      max-width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+    }
+
+    .gif-preview-card p {
+      font-size: .9rem;
+      margin: 10px 0 0;
+      overflow-wrap: anywhere;
+    }
+
+    .gif-settings {
+      border: 1px solid var(--border,rgba(148,163,184,.25));
+      border-radius: 16px;
+      padding: 18px;
+      margin: 20px 0;
+    }
+
+    .gif-settings h2 {
+      font-size: 1.15rem;
+      margin: 0 0 20px;
+    }
+
+    .gif-setting-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .gif-setting-row {
+      display: grid;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .gif-setting-row label {
+      font-weight: 600;
+      font-size: .92rem;
+    }
+
+    .gif-setting-row input[type="number"],
+    .gif-setting-row select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border-radius: 9px;
+      border: 1px solid var(--border,rgba(148,163,184,.3));
+      background: var(--background,transparent);
+      color: inherit;
+    }
+
+    .gif-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 18px 0;
+      cursor: pointer;
+    }
+
+    .gif-checkbox input {
+      accent-color: #38bdf8;
+      width: 17px;
+      height: 17px;
+    }
+
+    .gif-quality {
+      margin-top: 18px;
+    }
+
+    .gif-quality input {
+      width: 100%;
+      accent-color: #38bdf8;
+    }
+
+    .gif-note {
+      font-size: .88rem;
+      opacity: .75;
+      line-height: 1.7;
+      margin: 18px 0 0;
+    }
+
+    .gif-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .gif-progress-track {
+      height: 9px;
+      flex: 1;
+      background: var(--border,rgba(148,163,184,.2));
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    #progressBar {
+      width: 0;
+      height: 100%;
+      background: #38bdf8;
+      transition: width .2s;
+    }
+
+    #progressLabel {
+      font-size: .85rem;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .gif-summary {
+      border: 1px solid var(--border,rgba(148,163,184,.25));
+      border-radius: 14px;
+      padding: 16px;
+      margin: 16px 0;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    #downloadBtn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media(max-width:640px) {
+      .gif-preview-grid,
+      .gif-setting-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gif-drop {
+        padding: 28px 14px;
+      }
+    }
+  </style>
+
+  <script>
+    import { FFmpeg } from "@ffmpeg/ffmpeg";
+    import { toBlobURL } from "@ffmpeg/util";
+
+    const $ = (id) => document.getElementById(id);
+
+    const fileInput = $("fileInput");
+    const dropArea = $("dropArea");
+    const browseBtn = $("browseBtn");
+    const previewPanel = $("previewPanel");
+
+    const originalPreview = $("originalPreview");
+    const resultPreview = $("resultPreview");
+
+    const originalInfo = $("originalInfo");
+    const resultInfo = $("resultInfo");
+
+    const outputFormat = $("outputFormat");
+    const widthInput = $("width");
+    const heightInput = $("height");
+    const keepRatio = $("keepRatio");
+    const colors = $("colors");
+    const quality = $("quality");
+
+    const qualityLabel = $("qualityLabel");
+    const convertBtn = $("convertBtn");
+    const resetBtn = $("resetBtn");
+
+    const status = $("status");
+    const progressArea = $("progressArea");
+    const progressBar = $("progressBar");
+    const progressLabel = $("progressLabel");
+
+    const resultSummary = $("resultSummary");
+    const downloadArea = $("downloadArea");
+    const downloadBtn = $("downloadBtn");
+
+    const MAX_FILE_SIZE = 100 * 1024 * 1024;
+
+    let currentFile = null;
+    let originalUrl = "";
+    let resultUrl = "";
+    let originalWidth = 0;
+    let originalHeight = 0;
+    let ffmpeg = null;
+    let processing = false;
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1048576) {
+        return `${(bytes / 1024).toFixed(1)} KB`;
+      }
+      return `${(bytes / 1048576).toFixed(2)} MB`;
+    }
+
+    function showStatus(message, type = "success") {
+      status.hidden = false;
+      status.textContent = message;
+      status.dataset.type = type;
+    }
+
+    function setProgress(value) {
+      const percent = Math.max(0, Math.min(100, value));
+      progressBar.style.width = `${percent}%`;
+      progressLabel.textContent = `${Math.round(percent)}%`;
+    }
+
+    function clearResult() {
+      if (resultUrl) URL.revokeObjectURL(resultUrl);
+
+      resultUrl = "";
+
+      resultPreview.removeAttribute("src");
+      resultInfo.textContent = "Hasil optimasi akan ditampilkan di sini.";
+
+      resultSummary.hidden = true;
+      resultSummary.textContent = "";
+
+      downloadArea.hidden = true;
+      downloadBtn.removeAttribute("href");
+    }
+
+    function loadFile(file) {
+      if (!file) return;
+
+      if (file.type !== "image/gif" &&
+          !file.name.toLowerCase().endsWith(".gif")) {
+        showStatus("Format tidak didukung. Pilih file GIF.", "error");
+        return;
+      }
+
+      if (file.size > MAX_FILE_SIZE) {
+        showStatus("Ukuran file maksimal 100 MB.", "error");
+        return;
+      }
+
+      if (processing) return;
+
+      currentFile = file;
+      clearResult();
+
+      if (originalUrl) URL.revokeObjectURL(originalUrl);
+
+      originalUrl = URL.createObjectURL(file);
+
+      originalPreview.src = originalUrl;
+      originalInfo.textContent =
+        `${file.name} · ${formatBytes(file.size)}`;
+
+      previewPanel.hidden = false;
+      progressArea.hidden = true;
+
+      const img = new Image();
+
+      img.onload = () => {
+        originalWidth = img.naturalWidth;
+        originalHeight = img.naturalHeight;
+
+        widthInput.value = originalWidth;
+        heightInput.value = originalHeight;
+
+        showStatus("GIF berhasil dimuat. Atur optimasi sesuai kebutuhan.");
+      };
+
+      img.onerror = () => {
+        showStatus("GIF gagal dibaca oleh browser.", "error");
+      };
+
+      img.src = originalUrl;
+    }
+
+    browseBtn.addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      loadFile(fileInput.files[0]);
+    });
+
+    ["dragenter", "dragover"].forEach((eventName) => {
+      dropArea.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropArea.classList.add("dragover");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      dropArea.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropArea.classList.remove("dragover");
+      });
+    });
+
+    dropArea.addEventListener("drop", (event) => {
+      loadFile(event.dataTransfer.files[0]);
+    });
+
+    widthInput.addEventListener("input", () => {
+      if (!keepRatio.checked || !originalWidth) return;
+
+      const width = Number(widthInput.value);
+
+      if (width > 0) {
+        heightInput.value = Math.round(
+          width * originalHeight / originalWidth
+        );
+      }
+    });
+
+    heightInput.addEventListener("input", () => {
+      if (!keepRatio.checked || !originalHeight) return;
+
+      const height = Number(heightInput.value);
+
+      if (height > 0) {
+        widthInput.value = Math.round(
+          height * originalWidth / originalHeight
+        );
+      }
+    });
+
+    quality.addEventListener("input", () => {
+      qualityLabel.textContent = `${quality.value}%`;
+    });
+
+    keepRatio.addEventListener("change", () => {
+      if (keepRatio.checked && originalWidth && originalHeight) {
+        heightInput.value = Math.round(
+          Number(widthInput.value) * originalHeight / originalWidth
+        );
+      }
+    });
+
+    function getDimensions() {
+      const width = Number(widthInput.value);
+      const height = Number(heightInput.value);
+
+      if (
+        !Number.isInteger(width) ||
+        !Number.isInteger(height) ||
+        width < 1 ||
+        height < 1 ||
+        width > 4096 ||
+        height > 4096
+      ) {
+        throw new Error("Dimensi harus antara 1 sampai 4096 piksel.");
+      }
+
+      return { width, height };
+    }
+
+    async function loadEngine() {
+      if (ffmpeg?.loaded) return ffmpeg;
+
+      showStatus("Memuat mesin FFmpeg WebAssembly...");
+
+      const engine = new FFmpeg();
+
+      engine.on("progress", ({ progress }) => {
+        setProgress(progress * 100);
+      });
+
+      const baseURL =
+        "https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd";
+
+      await engine.load({
+        coreURL: await toBlobURL(
+          `${baseURL}/ffmpeg-core.js`,
+          "text/javascript"
+        ),
+        wasmURL: await toBlobURL(
+          `${baseURL}/ffmpeg-core.wasm`,
+          "application/wasm"
+        )
+      });
+
+      ffmpeg = engine;
+
+      return engine;
+    }
+
+    async function convertImage() {
+      if (!currentFile || processing) return;
+
+      let inputName = "original.gif";
+      let outputName = "";
+      let engine;
+
+      processing = true;
+      convertBtn.disabled = true;
+      convertBtn.textContent = "Memproses...";
+
+      clearResult();
+      progressArea.hidden = false;
+      setProgress(0);
+
+      try {
+        const { width, height } = getDimensions();
+
+        const format = outputFormat.value;
+        const qualityValue = Number(quality.value);
+        const colorCount = Number(colors.value);
+
+        outputName = format === "gif"
+          ? "optimized.gif"
+          : "optimized.webp";
+
+        engine = await loadEngine();
+
+        showStatus("Membaca GIF original...");
+
+        await engine.writeFile(
+          inputName,
+          new Uint8Array(await currentFile.arrayBuffer())
+        );
+
+        let args;
+
+        if (format === "gif") {
+          const filter =
+            `[0:v]scale=${width}:${height}:flags=lanczos,split[s0][s1];` +
+            `[s0]palettegen=max_colors=${colorCount}:reserve_transparent=1[p];` +
+            `[s1][p]paletteuse=dither=bayer:alpha_threshold=128`;
+
+          args = [
+            "-y",
+            "-i", inputName,
+            "-filter_complex", filter,
+            "-loop", "0",
+            outputName
+          ];
+
+        } else {
+          args = [
+            "-y",
+            "-i", inputName,
+            "-vf", `scale=${width}:${height}:flags=lanczos`,
+            "-c:v", "libwebp_anim",
+            "-quality", String(qualityValue),
+            "-compression_level", "6",
+            "-loop", "0",
+            "-an",
+            outputName
+          ];
+        }
+
+        showStatus("Mengoptimalkan seluruh frame animasi...");
+
+        const exitCode = await engine.exec(args);
+
+        if (exitCode !== 0) {
+          throw new Error(
+            "FFmpeg gagal memproses file. Coba GIF yang lebih kecil."
+          );
+        }
+
+        const data = await engine.readFile(outputName);
+
+        if (!data.length) {
+          throw new Error("Hasil optimasi kosong.");
+        }
+
+        const mimeType = format === "gif"
+          ? "image/gif"
+          : "image/webp";
+
+        const blob = new Blob([data], { type: mimeType });
+
+        clearResult();
+
+        resultUrl = URL.createObjectURL(blob);
+        resultPreview.src = resultUrl;
+
+        const extension = format;
+        const baseName = currentFile.name.replace(/\.gif$/i, "");
+
+        downloadBtn.href = resultUrl;
+        downloadBtn.download = `${baseName}-optimized.${extension}`;
+        downloadBtn.textContent = `Download ${extension.toUpperCase()}`;
+
+        downloadArea.hidden = false;
+
+        const saved = currentFile.size - blob.size;
+        const percentage = saved / currentFile.size * 100;
+
+        resultInfo.textContent =
+          `${width} × ${height}px · ${formatBytes(blob.size)}`;
+
+        resultSummary.hidden = false;
+        resultSummary.innerHTML = `
+          <strong>Ukuran original:</strong> ${formatBytes(currentFile.size)}<br>
+          <strong>Ukuran hasil:</strong> ${formatBytes(blob.size)}<br>
+          <strong>Dimensi:</strong> ${width} × ${height}px<br>
+          <strong>Format:</strong> ${format.toUpperCase()}<br>
+          <strong>Perubahan ukuran:</strong>
+          ${saved >= 0
+            ? `${percentage.toFixed(1)}% lebih kecil`
+            : `${Math.abs(percentage).toFixed(1)}% lebih besar`}
+        `;
+
+        setProgress(100);
+
+        if (saved > 0) {
+          showStatus("Optimasi berhasil! Ukuran file berhasil dikurangi.");
+        } else {
+          showStatus(
+            "Optimasi selesai, tetapi ukuran file lebih besar dari original.",
+            "error"
+          );
+        }
+
+      } catch (error) {
+        console.error(error);
+
+        showStatus(
+          error.message || "Terjadi kesalahan saat mengoptimalkan GIF.",
+          "error"
+        );
+
+      } finally {
+        if (engine) {
+          try {
+            await engine.deleteFile(inputName);
+            if (outputName) await engine.deleteFile(outputName);
+          } catch (error) {
+            console.warn("Pembersihan file sementara gagal:", error);
+          }
+        }
+
+        processing = false;
+        convertBtn.disabled = false;
+        convertBtn.textContent = "Optimasi Sekarang";
+      }
+    }
+
+    convertBtn.addEventListener("click", convertImage);
+
+    resetBtn.addEventListener("click", () => {
+      if (processing) return;
+
+      currentFile = null;
+      originalWidth = 0;
+      originalHeight = 0;
+
+      fileInput.value = "";
+      widthInput.value = "";
+      heightInput.value = "";
+
+      previewPanel.hidden = true;
+      progressArea.hidden = true;
+      status.hidden = true;
+
+      if (originalUrl) URL.revokeObjectURL(originalUrl);
+
+      originalUrl = "";
+
+      clearResult();
+    });
+  </script>
+
+</MainLayout>
